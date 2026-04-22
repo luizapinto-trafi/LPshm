@@ -4,6 +4,7 @@ import { useTranslation } from "next-i18next/pages";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import { TruekindBraPagePath } from "@/landings/truekind-bra-offer/truekindBraCdn";
+import { GrunsPagePath } from "@/landings/gruns-first-order/grunsCdn";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -30,11 +31,17 @@ const StyledP = styled.p`
   margin: 0 0 var(--space-600) 0;
 `;
 
-const StyledHint = styled.p`
-  color: var(--ink-500);
-  font-size: 12px;
-  line-height: 1.4;
-  margin: var(--space-400) 0 0 0;
+const StyledLandings = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+`;
+
+const StyledLandingCard = styled.div`
+  padding: var(--space-500);
+  background: var(--ink-050);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--ink-200);
 `;
 
 const StyledCta = styled(Link)`
@@ -61,14 +68,38 @@ const StyledCta = styled(Link)`
   }
 `;
 
+const StyledGrunsCta = styled(StyledCta)`
+  background: var(--gruns-primary);
+  &:hover {
+    background: var(--gruns-primary-light);
+  }
+`;
+
+const StyledHint = styled.p`
+  color: var(--ink-500);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: var(--space-400) 0 0 0;
+`;
+
 export const HomePage = () => {
   const { t } = useTranslation("common");
   return (
     <StyledMain>
       <StyledH1>{t("home.title")}</StyledH1>
       <StyledP>{t("home.lead")}</StyledP>
-      <StyledCta href={TruekindBraPagePath}>{t("home.truekindCta")}</StyledCta>
-      <StyledHint>{t("home.truekindHint")}</StyledHint>
+
+      <StyledLandings>
+        <StyledLandingCard>
+          <StyledCta href={TruekindBraPagePath}>{t("home.truekindCta")}</StyledCta>
+          <StyledHint>{t("home.truekindHint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledGrunsCta href={GrunsPagePath}>{t("home.grunsCta")}</StyledGrunsCta>
+          <StyledHint>{t("home.grunsHint")}</StyledHint>
+        </StyledLandingCard>
+      </StyledLandings>
     </StyledMain>
   );
 };
