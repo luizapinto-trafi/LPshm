@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;}
+  .card{padding:24px 28px;display:flex;flex-direction:column;gap:12px;}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .meta{font-size:11px;color:var(--fg-3);font-family:ui-monospace,monospace;}
+  .tag{display:inline-flex;align-items:center;justify-content:center;padding:2px 8px;font-family:var(--font-body);font-size:12px;font-weight:700;line-height:16px;letter-spacing:.02em;}
+  .tag-red{background:var(--danger);color:#fff;border-radius:var(--radius-md);}
+  .tag-red-sq{background:var(--danger);color:#fff;border-radius:var(--radius-md);width:40px;height:40px;font-size:14px;flex-direction:column;}
+  .tag-out{background:transparent;color:var(--ink-900);border:1px solid var(--ink-900);border-radius:var(--radius-md);}
+  .tag-mint{background:var(--mint-100);color:var(--mint-700);border-radius:var(--radius-md);}
+  .tag-rose{background:var(--coral-100);color:var(--coral-700);border-radius:var(--radius-md);}
+  .tag-cream{background:var(--coral-050);color:var(--ink-900);border-radius:var(--radius-md);}
+  .tag-gray{background:var(--ink-100);color:var(--fg-3);border-radius:var(--radius-md);text-decoration:line-through;}
+  .tag-large{padding:4px 10px;font-size:14px;line-height:20px;}
+</style></head><body>
+  <div class="card">
+    <div class="row">
+      <span class="tag tag-red">-30% OFF</span>
+      <span class="tag tag-red tag-large">SALE</span>
+      <span class="tag tag-red-sq">-30%</span>
+      <span class="tag tag-out">NEW</span>
+      <span class="tag tag-out tag-large">Best Seller</span>
+    </div>
+    <div class="row">
+      <span class="tag tag-mint">Free Shipping</span>
+      <span class="tag tag-rose">Limited time</span>
+      <span class="tag tag-cream">Club Exclusive</span>
+      <span class="tag tag-gray">-20% OFF</span>
+    </div>
+    <div class="meta">Tags · Discount (red square + pill), Outline dark, Mint/Rose/Creamy badges, Disabled strike-through</div>
+  </div>
+</body></html>

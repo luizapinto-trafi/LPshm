@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;font-family:var(--font-body);}
+  .card{padding:32px 36px;display:grid;grid-template-columns:1fr 1fr;gap:32px 40px;}
+  .row{display:flex;flex-direction:column;gap:14px;}
+  .tier{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);}
+  .note{font-size:12px;color:var(--fg-3);line-height:18px;}
+  .lockup{display:flex;align-items:center;gap:18px;min-height:76px;}
+  .lockup img{display:block;}
+  .on-dark{background:var(--ink-900);padding:18px 22px;border-radius:var(--radius-lg);display:inline-flex;align-items:center;gap:18px;}
+  .iso-row{display:flex;align-items:center;gap:24px;}
+  .iso-chip{display:flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:var(--radius-lg);border:1px solid var(--ink-200);}
+  .iso-chip.dark{background:var(--ink-900);border-color:var(--ink-900);}
+  .iso-chip.cream{background:var(--cream-300);}
+  .iso-chip img{width:44px;height:44px;}
+  .divider{grid-column:1/-1;height:1px;background:var(--ink-200);margin:4px 0 0;}
+  .header{grid-column:1/-1;font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--ink-900);margin-bottom:-8px;}
+</style></head><body>
+  <div class="card">
+
+    <div class="header">Shapermint — master brand</div>
+
+    <div class="row">
+      <div class="tier">Primary wordmark</div>
+      <div class="lockup"><img src="../assets/logos/shapermint-logo.svg" alt="Shapermint" height="34"/></div>
+      <div class="note">Default lockup · use on white or cream backgrounds · min height 24px web / 16px print.</div>
+    </div>
+
+    <div class="row">
+      <div class="tier">Inverse</div>
+      <div class="lockup">
+        <div class="on-dark"><img src="../assets/logos/shapermint-logo.svg" alt="Shapermint" height="30" style="filter:invert(1);"/></div>
+      </div>
+      <div class="note">On #292929 ink, imagery, and coral-500 sale moments.</div>
+    </div>
+
+    <div class="row">
+      <div class="tier">Iso / icon-only</div>
+      <div class="iso-row">
+        <div class="iso-chip"><img src="../assets/logos/shapermint-iso.svg" alt="S"/></div>
+        <div class="iso-chip cream"><img src="../assets/logos/shapermint-iso.svg" alt="S"/></div>
+        <div class="iso-chip dark"><img src="../assets/logos/shapermint-iso.svg" alt="S" style="filter:invert(1);"/></div>
+      </div>
+      <div class="note">App icon, favicon, avatar, narrow nav. Never redraw — use the SVG.</div>
+    </div>
+
+    <div class="row">
+      <div class="tier">Scale (reference)</div>
+      <div class="lockup" style="gap:24px;flex-wrap:wrap;">
+        <img src="../assets/logos/shapermint-logo.svg" height="44" alt=""/>
+        <img src="../assets/logos/shapermint-logo.svg" height="28" alt=""/>
+        <img src="../assets/logos/shapermint-logo.svg" height="18" alt=""/>
+      </div>
+      <div class="note">Desktop header · mobile header · inline/footer.</div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="header" style="margin-top:4px;">Shapermint Club — subscription sub-brand</div>
+
+    <div class="row">
+      <div class="tier">Club wordmark</div>
+      <div class="lockup"><img src="../assets/logos/shapermint-club-logo.svg" alt="Shapermint Club" height="34"/></div>
+      <div class="note">The Shapermint master sits on the left in ink; “Club” extends in wine (#3E1515) to signal the membership program.</div>
+    </div>
+
+    <div class="row">
+      <div class="tier">Club iso</div>
+      <div class="iso-row">
+        <div class="iso-chip"><img src="../assets/logos/shapermint-club-iso.svg" alt="Club"/></div>
+        <div class="iso-chip cream"><img src="../assets/logos/shapermint-club-iso.svg" alt="Club"/></div>
+        <div class="iso-chip dark"><img src="../assets/logos/shapermint-club-iso.svg" alt="Club" style="filter:invert(1);"/></div>
+      </div>
+      <div class="note">Use only inside Club/subscription contexts — cart upsells, member dashboard, Club-only emails.</div>
+    </div>
+
+  </div>
+</body></html>

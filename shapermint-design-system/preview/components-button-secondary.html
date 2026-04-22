@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;}
+  .card{padding:24px 28px;}
+  .row{display:flex; align-items:center; gap: 10px; flex-wrap:wrap;}
+  .stack{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+  .meta{font-size:11px;color:var(--fg-3);font-family:ui-monospace,monospace;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:16px;border-radius:var(--radius-lg);height:48px;padding:0 28px;}
+  .btn-outline{background:transparent;color:var(--ink-900);border:1px solid var(--ink-900);}
+  .btn-outline:hover{background:var(--ink-900);color:#fff;}
+  .btn-sec{background:var(--ink-100);color:var(--ink-900);border:0;}
+  .btn-sec:hover{background:var(--ink-200);}
+  .btn-text{background:transparent;color:var(--ink-900);font-weight:700;border:0;padding:0;height:auto;}
+  .btn-text:hover{text-decoration:underline;color:var(--coral-500);}
+  .btn-text-sm{font-size:14px;line-height:22px;}
+</style></head><body>
+  <div class="card stack">
+    <div class="row">
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-sec">Secondary</button>
+      <button class="btn btn-text">Text button</button>
+      <button class="btn btn-text btn-text-sm">Small text button</button>
+    </div>
+    <div class="meta">Secondary · outlined #292929 / filled neutral · text-button = underline on hover</div>
+  </div>
+</body></html>

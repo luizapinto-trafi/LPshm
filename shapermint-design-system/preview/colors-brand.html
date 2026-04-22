@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root { color-scheme: light; }
+  html, body { margin:0; padding:0; background: #fff; font-family: var(--font-body); }
+  .card { padding: 22px 28px 28px; box-sizing: border-box; }
+  .grp-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); font-weight: 700; margin: 0 0 10px; }
+  .grp-label + .grp-label { margin-top: 20px; }
+  .row { display: grid; grid-template-columns: repeat(11, 1fr); gap: 8px; margin-bottom: 6px; }
+  .swatch { display: flex; flex-direction: column; min-width: 0; }
+  .chip { aspect-ratio: 1/1; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,.06); }
+  .name { font-size: 10px; font-weight: 600; color: var(--fg-1); margin-top: 6px; line-height: 1.2; }
+  .hex { font-size: 9px; color: var(--fg-3); font-family: ui-monospace, SFMono-Regular, monospace; line-height: 1.3; }
+  .star { color: var(--coral-500); }
+</style></head>
+<body>
+  <div class="card">
+
+    <p class="grp-label">Coral — primary brand</p>
+    <div class="row">
+      <div class="swatch"><div class="chip" style="background:var(--coral-900)"></div><div class="name">Coral 900</div><div class="hex">#3E1515</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-800)"></div><div class="name">Coral 800</div><div class="hex">#5A271E</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-700)"></div><div class="name">Coral 700</div><div class="hex">#882A2B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-600)"></div><div class="name">Coral 600</div><div class="hex">#B14E3D</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-500)"></div><div class="name">Coral 500 <span class="star">★</span></div><div class="hex">#C64844</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-450)"></div><div class="name">Coral 450</div><div class="hex">#D4605B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-400)"></div><div class="name">Coral 400</div><div class="hex">#DD8D8B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-300)"></div><div class="name">Coral 300 <span class="star">★</span></div><div class="hex">#F7A08B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-200)"></div><div class="name">Coral 200</div><div class="hex">#FBD0C7</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-100)"></div><div class="name">Coral 100</div><div class="hex">#FCE7E3</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--coral-050)"></div><div class="name">Coral 050</div><div class="hex">#FFF6EF</div></div>
+    </div>
+
+    <p class="grp-label">Toffee — warm editorial neutrals</p>
+    <div class="row">
+      <div class="swatch"><div class="chip" style="background:var(--toffee-900)"></div><div class="name">Toffee 900</div><div class="hex">#513125</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-700)"></div><div class="name">Toffee 700</div><div class="hex">#A2624A</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-600)"></div><div class="name">Toffee 600</div><div class="hex">#CA7A5D</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-500)"></div><div class="name">Toffee 500</div><div class="hex">#D8AB8C</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-300)"></div><div class="name">Toffee 300</div><div class="hex">#EACABE</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-200)"></div><div class="name">Toffee 200</div><div class="hex">#F7ECE4</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--toffee-100)"></div><div class="name">Toffee 100</div><div class="hex">#FBF7F4</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--cream-300)"></div><div class="name">Cream 300</div><div class="hex">#FFE9D8</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--cream-200)"></div><div class="name">Cream 200</div><div class="hex">#FFF3E3</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--cream-100)"></div><div class="name">Cream 100</div><div class="hex">#FAF7F2</div></div>
+      <div class="swatch"></div>
+    </div>
+
+    <p class="grp-label">Mint / Teal — secondary accent</p>
+    <div class="row">
+      <div class="swatch"><div class="chip" style="background:var(--mint-900)"></div><div class="name">Mint 900</div><div class="hex">#1E4C42</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-700)"></div><div class="name">Mint 700</div><div class="hex">#3D9883</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-600)"></div><div class="name">Mint 600</div><div class="hex">#4CBEA4</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-500)"></div><div class="name">Mint 500 <span class="star">★</span></div><div class="hex">#5EAD9B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-400)"></div><div class="name">Mint 400</div><div class="hex">#70CBB6</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-300)"></div><div class="name">Mint 300</div><div class="hex">#B7E5DB</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-200)"></div><div class="name">Mint 200</div><div class="hex">#DBF2ED</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-100)"></div><div class="name">Mint 100</div><div class="hex">#DFEFEB</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--mint-050)"></div><div class="name">Mint 050</div><div class="hex">#EFF7F5</div></div>
+      <div class="swatch"></div><div class="swatch"></div>
+    </div>
+
+    <p class="grp-label">Blue — link & editorial</p>
+    <div class="row">
+      <div class="swatch"><div class="chip" style="background:var(--blue-900)"></div><div class="name">Blue 900</div><div class="hex">#04263E</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-800)"></div><div class="name">Blue 800</div><div class="hex">#084D7C</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-700)"></div><div class="name">Blue 700 <span class="star">★</span></div><div class="hex">#0A609B</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-500)"></div><div class="name">Blue 500</div><div class="hex">#387EAF</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-400)"></div><div class="name">Blue 400</div><div class="hex">#93BBD6</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-200)"></div><div class="name">Blue 200</div><div class="hex">#CEDFEB</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--blue-100)"></div><div class="name">Blue 100</div><div class="hex">#E3EFF0</div></div>
+      <div class="swatch"></div><div class="swatch"></div><div class="swatch"></div><div class="swatch"></div>
+    </div>
+
+    <p class="grp-label">Gold — ratings & highlights</p>
+    <div class="row">
+      <div class="swatch"><div class="chip" style="background:var(--gold-700)"></div><div class="name">Gold 700</div><div class="hex">#B69710</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-600)"></div><div class="name">Gold 600 <span class="star">★</span></div><div class="hex">#E5BD15</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-500)"></div><div class="name">Gold 500</div><div class="hex">#EECC3F</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-400)"></div><div class="name">Gold 400</div><div class="hex">#F2D96F</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-300)"></div><div class="name">Gold 300</div><div class="hex">#F6E59D</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-200)"></div><div class="name">Gold 200</div><div class="hex">#FAF1CC</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-100)"></div><div class="name">Gold 100</div><div class="hex">#FFFEFA</div></div>
+      <div class="swatch"></div><div class="swatch"></div><div class="swatch"></div><div class="swatch"></div>
+    </div>
+
+  </div>
+</body></html>

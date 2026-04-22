@@ -1,0 +1,378 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Shapermint — Dropdown</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#FAF8F5;font-family:var(--font-body);color:var(--ink-900);}
+  *{box-sizing:border-box;}
+  .page{display:grid;grid-template-columns:180px 1fr;gap:32px;max-width:1320px;padding:32px 40px 80px;}
+  /* Sticky TOC */
+  .toc{position:sticky;top:24px;align-self:start;font-size:12px;display:flex;flex-direction:column;gap:2px;padding-top:6px;}
+  .toc a{color:var(--fg-3);text-decoration:none;padding:6px 10px;border-radius:6px;line-height:1.3;}
+  .toc a:hover{background:#fff;color:var(--ink-900);}
+  .toc .toc-h{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--ink-900);padding:0 10px 6px;margin-top:8px;}
+  .toc .toc-h:first-child{margin-top:0;}
+
+  /* Section */
+  section{scroll-margin-top:20px;}
+  section + section{margin-top:40px;}
+  h1{font-family:var(--font-display);font-size:24px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em;}
+  .page-sub{font-size:13px;color:var(--fg-3);margin:0 0 28px;max-width:680px;line-height:1.55;}
+  h2{font-family:var(--font-display);font-size:15px;font-weight:700;margin:0 0 2px;letter-spacing:-.005em;display:flex;align-items:baseline;gap:10px;}
+  h2 .count{font-family:var(--font-body);font-size:11px;color:var(--fg-3);font-weight:500;letter-spacing:0;}
+  .sub{font-size:12px;color:var(--fg-3);margin:0 0 14px;max-width:680px;line-height:1.5;}
+
+  /* Card grid — each variant in its own tile */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .card{background:#fff;border:1px solid var(--ink-200);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:120px;}
+  .card.tall{min-height:160px;}
+  .card.pad-sm{padding:14px;}
+  .card .cap{display:flex;align-items:center;justify-content:space-between;}
+  .card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-3);font-weight:700;}
+  .card .stage{flex:1;display:flex;align-items:center;justify-content:flex-start;position:relative;}
+  .card.center .stage{justify-content:center;}
+
+  /* full-width card that spans the grid */
+  .card.span-2{grid-column:span 2;}
+  .card.span-full{grid-column:1/-1;}
+
+  /* Dropdown trigger */
+  .dd{position:relative;display:inline-flex;align-items:center;gap:12px;min-width:200px;height:48px;padding:0 16px;
+      background:#fff;border:1px solid var(--ink-300);border-radius:var(--radius-lg);
+      font-family:var(--font-body);font-size:15px;color:var(--ink-900);cursor:pointer;user-select:none;}
+  .dd .val{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .dd .placeholder{color:var(--ink-500);}
+  .dd .caret{flex:none;width:14px;height:14px;color:var(--ink-700);font-size:12px;display:inline-flex;align-items:center;justify-content:center;transition:transform .15s;}
+  .dd:hover{border-color:var(--ink-700);}
+  .dd.focused{border-color:var(--ink-900);box-shadow:0 0 0 3px rgba(138,183,227,.55);}
+  .dd.error{border-color:var(--sale);}
+  .dd.error.focused{box-shadow:0 0 0 3px rgba(198,72,68,.20);}
+  .dd.disabled{background:var(--ink-100);color:var(--ink-400);cursor:not-allowed;border-color:var(--ink-200);}
+  .dd.disabled .caret{color:var(--ink-400);}
+  .dd.open .caret{transform:rotate(180deg);}
+  .dd.sm{height:36px;min-width:56px;padding:0 10px;font-size:13px;gap:8px;}
+
+  /* Field wrapper */
+  .field{display:flex;flex-direction:column;gap:6px;width:100%;}
+  .field-lbl{font-size:12px;color:var(--ink-900);font-weight:600;}
+  .field-lbl .req{color:var(--sale);}
+  .hint{font-size:11px;color:var(--fg-3);}
+  .hint.err{color:var(--sale);}
+
+  /* Menu (panel) — shown inline in cards */
+  .menu{background:#fff;border-radius:var(--radius-lg);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.06);
+        border:1px solid var(--ink-200);padding:6px 0;max-height:260px;overflow-y:auto;width:100%;}
+  .menu.popover{position:absolute;top:calc(100% + 6px);left:0;width:240px;z-index:5;}
+  .menu .search{margin:6px 8px 8px;height:34px;border:1px solid var(--ink-200);border-radius:var(--radius-md);
+                display:flex;align-items:center;gap:8px;padding:0 10px;color:var(--ink-500);font-size:12px;}
+  .menu .search input{border:0;outline:0;flex:1;font-family:var(--font-body);font-size:12px;color:var(--ink-900);background:transparent;}
+
+  /* Menu item */
+  .mi{display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;font-size:13px;color:var(--ink-900);cursor:pointer;}
+  .mi .title{font-weight:600;}
+  .mi .desc{color:var(--fg-3);font-weight:400;font-size:12px;}
+  .mi .check{margin-left:auto;color:var(--ink-900);width:14px;height:14px;opacity:0;font-size:12px;}
+  .mi.selected .check{opacity:1;}
+  .mi:hover{background:var(--ink-100);}
+  .mi.hover{background:var(--ink-100);}
+  .mi.focused{outline:2px solid #8AB7E3;outline-offset:-2px;background:rgba(138,183,227,.12);border-radius:6px;}
+  .mi.disabled{color:var(--ink-400);cursor:not-allowed;}
+  .mi.disabled:hover{background:transparent;}
+
+  /* List item (checkbox/radio) */
+  .li{display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;font-size:13px;color:var(--ink-900);cursor:pointer;}
+  .li .ctrl{flex:none;width:18px;height:18px;border:1.5px solid var(--ink-300);border-radius:4px;background:#fff;display:inline-flex;align-items:center;justify-content:center;color:#fff;}
+  .li.radio .ctrl{border-radius:50%;}
+  .li.checked .ctrl{background:var(--coral-500);border-color:var(--coral-500);}
+  .li.checked .ctrl svg{display:block;}
+  .li .ctrl svg{display:none;width:10px;height:10px;}
+  .li.radio.checked .ctrl::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff;}
+  .li.radio.checked .ctrl svg{display:none;}
+  .li .title{font-weight:600;}
+  .li .desc{color:var(--fg-3);font-weight:400;font-size:12px;}
+  .li:hover{background:var(--ink-100);}
+  .li.hover{background:var(--ink-100);}
+  .li.focused{outline:2px solid #8AB7E3;outline-offset:-2px;background:rgba(138,183,227,.12);border-radius:6px;}
+  .li.disabled{color:var(--ink-400);cursor:not-allowed;}
+  .li.disabled .ctrl{background:var(--ink-100);border-color:var(--ink-200);}
+  .li.disabled:hover{background:transparent;}
+
+  /* Country */
+  .dd.country{min-width:86px;padding-left:8px;padding-right:10px;gap:6px;}
+  .dd.country.wide{min-width:104px;}
+  .flag{width:22px;height:22px;border-radius:50%;overflow:hidden;flex:none;background:#eee;}
+  .flag svg{display:block;width:100%;height:100%;}
+  .ci{display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;cursor:pointer;font-size:13px;}
+  .ci .name{font-weight:600;color:var(--ink-900);}
+  .ci .meta{color:var(--fg-3);font-size:12px;margin-left:4px;}
+  .ci .check{margin-left:auto;color:var(--ink-900);opacity:0;width:14px;height:14px;font-size:12px;}
+  .ci.selected .check{opacity:1;}
+  .ci:hover{background:var(--ink-100);}
+
+  /* Scrollbar */
+  .menu::-webkit-scrollbar, .sb-box::-webkit-scrollbar{width:12px;}
+  .menu::-webkit-scrollbar-track, .sb-box::-webkit-scrollbar-track{background:transparent;}
+  .menu::-webkit-scrollbar-thumb, .sb-box::-webkit-scrollbar-thumb{
+    background:var(--ink-200);border-radius:999px;border:3px solid #fff;min-height:32px;}
+  .menu:hover::-webkit-scrollbar-thumb, .sb-box:hover::-webkit-scrollbar-thumb{background:var(--ink-300);}
+  .sb-box{background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius-md);overflow-y:auto;padding:12px;color:var(--fg-3);font-size:12px;line-height:1.6;}
+
+  /* Spec table */
+  .spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;background:#fff;border:1px solid var(--ink-200);border-radius:10px;overflow:hidden;font-size:11px;}
+  .spec > div{padding:10px 14px;border-right:1px solid var(--ink-200);border-bottom:1px solid var(--ink-200);}
+  .spec > div:last-child{border-right:0;}
+  .spec .k{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-3);font-weight:700;margin-bottom:4px;}
+  .spec .v{color:var(--ink-900);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;}
+
+  /* Full-width "open" showcase uses the popover menu in-place */
+  .popover-wrap{position:relative;display:inline-block;}
+
+  /* Responsive */
+  @media (max-width:900px){
+    .page{grid-template-columns:1fr;}
+    .toc{position:static;flex-direction:row;flex-wrap:wrap;overflow-x:auto;}
+  }
+</style></head><body>
+
+<div class="page">
+
+  <nav class="toc">
+    <div class="toc-h">Dropdown</div>
+    <a href="#input">Dropdown input</a>
+    <a href="#item">Menu item</a>
+    <a href="#list">List item</a>
+    <a href="#qty">Quantity selector</a>
+    <a href="#country">Country / currency</a>
+    <a href="#scroll">Scrollbar</a>
+    <a href="#spec">Specs</a>
+  </nav>
+
+  <main>
+    <h1>Dropdown</h1>
+    <p class="page-sub">Select controls, menu panels, and list rows. All 48 px triggers (36 px compact) with <code>--radius-lg</code>, <code>--ink-300</code> borders, and <code>--coral-500</code> selection fills.</p>
+
+    <!-- ============ INPUT DROPDOWN ============ -->
+    <section id="input">
+      <h2>Dropdown input <span class="count">7 states</span></h2>
+      <p class="sub">Primary select. Same geometry as input — 48 px tall, 8 px radius, caret right-aligned.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="cap"><span class="lbl">Default</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item</span><div class="dd"><span class="val placeholder">Select an Item</span><span class="caret">▾</span></div></div></div>
+        </div>
+        <div class="card">
+          <div class="cap"><span class="lbl">Hover</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item</span><div class="dd" style="border-color:var(--ink-700)"><span class="val placeholder">Select an Item</span><span class="caret">▾</span></div></div></div>
+        </div>
+        <div class="card">
+          <div class="cap"><span class="lbl">Focused</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item</span><div class="dd focused"><span class="val placeholder">Select an Item</span><span class="caret">▾</span></div></div></div>
+        </div>
+        <div class="card">
+          <div class="cap"><span class="lbl">Filled</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item</span><div class="dd"><span class="val">Menu Item</span><span class="caret">▾</span></div></div></div>
+        </div>
+        <div class="card">
+          <div class="cap"><span class="lbl">Error</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item <span class="req">*</span></span><div class="dd error"><span class="val">Menu Item</span><span class="caret">▾</span></div><span class="hint err">Hint text</span></div></div>
+        </div>
+        <div class="card">
+          <div class="cap"><span class="lbl">Disabled</span></div>
+          <div class="stage"><div class="field"><span class="field-lbl">Select an Item</span><div class="dd disabled"><span class="val placeholder">Select an Item</span><span class="caret">▾</span></div></div></div>
+        </div>
+        <div class="card span-2 tall">
+          <div class="cap"><span class="lbl">Open</span><span class="lbl" style="color:var(--ink-400)">trigger + menu</span></div>
+          <div class="stage" style="align-items:flex-start;gap:16px;flex-wrap:wrap;">
+            <div class="dd focused open" style="width:240px;"><span class="val">Menu Item</span><span class="caret">▾</span></div>
+            <div class="menu" style="width:240px;">
+              <div class="mi selected"><span class="title">Menu Item</span><span class="desc">Menu item</span><span class="check">✓</span></div>
+              <div class="mi hover"><span class="title">Menu Item</span><span class="desc">Menu item</span></div>
+              <div class="mi"><span class="title">Menu Item</span><span class="desc">Menu item</span></div>
+              <div class="mi"><span class="title">Menu Item</span><span class="desc">Menu item</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MENU ITEM ============ -->
+    <section id="item">
+      <h2>Menu item <span class="count">5 states · 40 px</span></h2>
+      <p class="sub">Text-only row. Title + optional secondary label. Checkmark on selected.</p>
+      <div class="cards">
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Default</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;"><div class="mi"><span class="title">Menu Item</span><span class="desc">Menu item</span></div></div></div>
+        </div>
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Hover</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;"><div class="mi hover"><span class="title">Menu Item</span><span class="desc">Menu item</span></div></div></div>
+        </div>
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Selected</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;"><div class="mi selected"><span class="title">Menu Item</span><span class="desc">Menu item</span><span class="check">✓</span></div></div></div>
+        </div>
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Focused</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;padding:2px;"><div class="mi focused"><span class="title">Menu Item</span><span class="desc">Menu item</span></div></div></div>
+        </div>
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Disabled</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;"><div class="mi disabled"><span class="title">Menu Item</span><span class="desc">Menu item</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIST ITEM ============ -->
+    <section id="list">
+      <h2>List item <span class="count">checkbox + radio · 44 px</span></h2>
+      <p class="sub">Row with a leading control. Checkbox for multi-select, radio for single-select. Fills with <code>--coral-500</code>.</p>
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Checkbox</span><span class="lbl" style="color:var(--ink-400)">5 states</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;">
+            <div class="li"><span class="ctrl"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="title">Default</span></div>
+            <div class="li hover"><span class="ctrl"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="title">Hover</span></div>
+            <div class="li checked"><span class="ctrl"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="title">Checked</span></div>
+            <div class="li checked focused"><span class="ctrl"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="title">Focused</span></div>
+            <div class="li disabled"><span class="ctrl"></span><span class="title">Disabled</span></div>
+          </div></div>
+        </div>
+        <div class="card pad-sm">
+          <div class="cap"><span class="lbl">Radio</span><span class="lbl" style="color:var(--ink-400)">5 states</span></div>
+          <div class="stage"><div style="width:100%;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;">
+            <div class="li radio"><span class="ctrl"></span><span class="title">Default</span></div>
+            <div class="li radio hover"><span class="ctrl"></span><span class="title">Hover</span></div>
+            <div class="li radio checked"><span class="ctrl"></span><span class="title">Checked</span></div>
+            <div class="li radio checked focused"><span class="ctrl"></span><span class="title">Focused</span></div>
+            <div class="li radio disabled"><span class="ctrl"></span><span class="title">Disabled</span></div>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QTY SELECTOR ============ -->
+    <section id="qty">
+      <h2>Quantity selector <span class="count">compact · 36 px</span></h2>
+      <p class="sub">Used inline in cart rows and PDP. Opens a scrollable numeric list with checkmark on current value.</p>
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));">
+        <div class="card center">
+          <div class="cap"><span class="lbl">Default</span></div>
+          <div class="stage"><div class="dd sm"><span class="val">1</span><span class="caret">▾</span></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">Hover</span></div>
+          <div class="stage"><div class="dd sm" style="border-color:var(--ink-700)"><span class="val">1</span><span class="caret">▾</span></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">Focused</span></div>
+          <div class="stage"><div class="dd sm focused"><span class="val">1</span><span class="caret">▾</span></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">Disabled</span></div>
+          <div class="stage"><div class="dd sm disabled"><span class="val">1</span><span class="caret">▾</span></div></div>
+        </div>
+        <div class="card tall span-2" style="grid-column:span 2;">
+          <div class="cap"><span class="lbl">Open</span></div>
+          <div class="stage" style="gap:14px;align-items:flex-start;">
+            <div class="dd sm focused open"><span class="val">1</span><span class="caret">▾</span></div>
+            <div class="menu" style="width:100px;max-height:200px;">
+              <div class="mi selected" style="height:34px;"><span class="title">1</span><span class="check">✓</span></div>
+              <div class="mi hover" style="height:34px;"><span class="title">2</span></div>
+              <div class="mi" style="height:34px;"><span class="title">3</span></div>
+              <div class="mi" style="height:34px;"><span class="title">4</span></div>
+              <div class="mi" style="height:34px;"><span class="title">5</span></div>
+              <div class="mi" style="height:34px;"><span class="title">6</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COUNTRY DROPDOWN ============ -->
+    <section id="country">
+      <h2>Country / currency <span class="count">short + wide</span></h2>
+      <p class="sub">Flag-first trigger. Short = flag + dial code (<code>+1</code>). Wide = flag + currency (<code>USD</code>). Menu is searchable.</p>
+      <div class="cards">
+        <div class="card center">
+          <div class="cap"><span class="lbl">Short · default</span></div>
+          <div class="stage"><div class="dd country"><span class="flag">${/*…*/''}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="3" width="24" height="1.8" fill="#fff"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="val">+1</span><span class="caret">▾</span></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">Wide · default</span></div>
+          <div class="stage"><div class="dd country wide"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="3" width="24" height="1.8" fill="#fff"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="val">USD</span><span class="caret">▾</span></div></div>
+        </div>
+
+        <div class="card tall span-2">
+          <div class="cap"><span class="lbl">Short · open + search</span></div>
+          <div class="stage" style="gap:14px;align-items:flex-start;">
+            <div class="dd country focused open"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="3" width="24" height="1.8" fill="#fff"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="val">+1</span><span class="caret">▾</span></div>
+            <div class="menu" style="width:260px;">
+              <div class="search"><span>🔍</span><input placeholder="Typing example"></div>
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="name">United States</span><span class="meta">+1</span></div>
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#AA151B"/><rect y="6" width="24" height="12" fill="#F1BF00"/></svg></span><span class="name">Spain</span><span class="meta">+34</span></div>
+              <div class="ci selected"><span class="flag"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><rect width="6" height="24" fill="#D52B1E"/><rect x="18" width="6" height="24" fill="#D52B1E"/></svg></span><span class="name">Canada</span><span class="meta">+1</span><span class="check">✓</span></div>
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><rect width="8" height="24" fill="#169B62"/><rect x="16" width="8" height="24" fill="#FF883E"/></svg></span><span class="name">Ireland</span><span class="meta">+353</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card tall span-2">
+          <div class="cap"><span class="lbl">Wide · open</span></div>
+          <div class="stage" style="gap:14px;align-items:flex-start;">
+            <div class="dd country wide focused open"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="3" width="24" height="1.8" fill="#fff"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="val">USD</span><span class="caret">▾</span></div>
+            <div class="menu" style="width:240px;">
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#B22234"/><rect y="6.6" width="24" height="1.8" fill="#fff"/><rect y="10.2" width="24" height="1.8" fill="#fff"/><rect y="13.8" width="24" height="1.8" fill="#fff"/><rect y="17.4" width="24" height="1.8" fill="#fff"/><rect width="10" height="10" fill="#3C3B6E"/></svg></span><span class="name">United States</span><span class="meta">USD</span></div>
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#fff"/><rect width="6" height="24" fill="#D52B1E"/><rect x="18" width="6" height="24" fill="#D52B1E"/></svg></span><span class="name">Canada</span><span class="meta">CAD</span></div>
+              <div class="ci"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#012169"/><path d="M0 0l24 24M24 0L0 24" stroke="#fff" stroke-width="2.5"/><path d="M12 0v24M0 12h24" stroke="#fff" stroke-width="4"/><path d="M12 0v24M0 12h24" stroke="#C8102E" stroke-width="2.5"/></svg></span><span class="name">United Kingdom</span><span class="meta">GBP</span></div>
+              <div class="ci selected"><span class="flag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#012169"/></svg></span><span class="name">Australia</span><span class="meta">AUD</span><span class="check">✓</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCROLLBAR ============ -->
+    <section id="scroll">
+      <h2>Scrollbar <span class="count">12 px · pill</span></h2>
+      <p class="sub">Applied globally inside dropdown menus and any scrollable panel. Thumb <code>--ink-200</code>, hover <code>--ink-300</code>, 3 px white inset, <code>--radius-full</code>.</p>
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));">
+        <div class="card center">
+          <div class="cap"><span class="lbl">120 px</span></div>
+          <div class="stage"><div class="sb-box" style="height:110px;width:100%;"><div style="height:400px;"></div></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">180 px</span></div>
+          <div class="stage"><div class="sb-box" style="height:170px;width:100%;"><div style="height:600px;"></div></div></div>
+        </div>
+        <div class="card center">
+          <div class="cap"><span class="lbl">Hover thumb</span></div>
+          <div class="stage"><div class="sb-box" style="height:170px;width:100%;" onmouseenter="this.classList.add('hov')"><div style="height:600px;"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPECS ============ -->
+    <section id="spec">
+      <h2>Specs <span class="count">tokens</span></h2>
+      <div class="spec">
+        <div><div class="k">Trigger height</div><div class="v">48 / 36 px</div></div>
+        <div><div class="k">Radius</div><div class="v">--radius-lg (8)</div></div>
+        <div><div class="k">Border</div><div class="v">--ink-300 → ink-700 hover → ink-900 focus</div></div>
+        <div><div class="k">Focus ring</div><div class="v">3 px rgba(138,183,227,.55)</div></div>
+        <div><div class="k">Error</div><div class="v">--sale</div></div>
+        <div><div class="k">Menu radius</div><div class="v">--radius-lg</div></div>
+        <div><div class="k">Menu shadow</div><div class="v">--shadow-md</div></div>
+        <div><div class="k">Menu item h</div><div class="v">40 px</div></div>
+        <div><div class="k">List item h</div><div class="v">44 px</div></div>
+        <div><div class="k">Control fill</div><div class="v">--coral-500</div></div>
+        <div><div class="k">Flag</div><div class="v">24 × 24 circle</div></div>
+        <div><div class="k">Font</div><div class="v">Avenir Next LT Pro</div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body></html>
