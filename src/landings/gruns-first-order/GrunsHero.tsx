@@ -33,6 +33,7 @@ const StyledRating = styled.div`
   display: flex;
   align-items: center;
   gap: var(--space-200);
+  font-family: var(--font-body);
   font-size: 14px;
   color: var(--gruns-dark);
 `;
@@ -43,6 +44,7 @@ const StyledStars = styled.div`
 `;
 
 const StyledHeading = styled.h1`
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 700;
   line-height: 1.1;
@@ -66,6 +68,7 @@ const StyledFeature = styled.li`
   display: flex;
   align-items: center;
   gap: var(--space-200);
+  font-family: var(--font-body);
   font-size: 15px;
   color: var(--gruns-dark);
   &:before {
@@ -83,6 +86,7 @@ const StyledFeature = styled.li`
 `;
 
 const StyledSubtext = styled.p`
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   color: var(--gruns-dark);
@@ -96,6 +100,7 @@ const StyledSold = styled.div`
   color: var(--gruns-dark);
   padding: var(--space-200) var(--space-400);
   border-radius: var(--radius-md);
+  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
@@ -107,6 +112,7 @@ const StyledCta = styled.a`
   justify-content: center;
   background: var(--gruns-primary);
   color: var(--white);
+  font-family: var(--font-display);
   font-size: 16px;
   font-weight: 600;
   padding: var(--space-400) var(--space-600);
@@ -125,6 +131,7 @@ const StyledRiskFree = styled.div`
   display: flex;
   align-items: center;
   gap: var(--space-200);
+  font-family: var(--font-body);
   font-size: 14px;
   color: var(--gruns-dark);
   &:before {
@@ -156,6 +163,7 @@ const StyledBadge = styled.div`
   padding: var(--space-300);
   border-radius: var(--radius-full);
   text-align: center;
+  font-family: var(--font-display);
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 10;
@@ -184,6 +192,7 @@ const StyledClinicians = styled.div`
   display: flex;
   align-items: center;
   gap: var(--space-300);
+  font-family: var(--font-body);
   font-size: 13px;
   max-width: 280px;
 `;
@@ -193,6 +202,7 @@ const StyledCliniciansBadge = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;

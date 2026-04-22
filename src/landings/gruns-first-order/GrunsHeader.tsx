@@ -15,6 +15,7 @@ const StyledAnnouncement = styled.div`
   color: var(--gruns-dark);
   text-align: center;
   padding: var(--space-200) var(--space-400);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
 `;
@@ -57,6 +58,7 @@ const StyledNav = styled.nav`
 
 const StyledNavLink = styled.a`
   color: var(--white);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -89,6 +91,7 @@ const StyledIconLink = styled.a`
   align-items: center;
   gap: var(--space-100);
   color: var(--white);
+  font-family: var(--font-body);
   font-size: 14px;
   text-decoration: none;
   &:hover {
