@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:github": "bash scripts/verify-github-ssh.sh"
   },
   "dependencies": {
     "i18next": "^26.0.6",

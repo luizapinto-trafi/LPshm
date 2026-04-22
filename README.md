@@ -1,5 +1,25 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
+## Git: SSH con GitHub
+
+El remoto `origin` apunta a **SSH**: `git@github.com:trafilea/SHMLandingPages.git`.
+
+**Comprobar o arreglar la conexión** (añade `github.com` a `known_hosts` si falta, luego `git fetch`):
+
+```bash
+npm run check:github
+# o: ./scripts/verify-github-ssh.sh
+```
+
+- **Host key verification failed** — el script suele corregirlo. Si persiste, revisa `~/.ssh/known_hosts`.
+- **Permission denied (publickey)** — añade tu clave a GitHub (Settings → SSH) y carga la privada, p. ej. en macOS: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` ([docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
+
+Cambiar el remoto a **HTTPS** (p. ej. con `gh auth login` o token):
+
+```bash
+git remote set-url origin https://github.com/trafilea/SHMLandingPages.git
+```
+
 ## Getting Started
 
 First, run the development server:
