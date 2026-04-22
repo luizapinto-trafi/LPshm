@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;}
+  .card{padding:20px 28px;display:flex;gap:18px;align-items:flex-start;}
+  .tile{width:180px;background:#fff;display:flex;flex-direction:column;gap:8px;}
+  .img{aspect-ratio:1/1;background:#f3eee9 center/cover no-repeat;border-radius: var(--radius-md);}
+  .title{font-family:var(--font-body);font-weight:600;font-size:14px;line-height:20px;color:var(--ink-900);}
+  .prices{display:flex;align-items:baseline;gap:6px;font-family:var(--font-body);}
+  .strike{color:var(--fg-muted);text-decoration:line-through;font-size:13px;}
+  .sale{color:var(--coral-500);font-weight:700;font-size:16px;}
+  .swatches{display:flex;gap:6px;}
+  .sw{width:16px;height:16px;border-radius: var(--radius-full);border:1px solid var(--ink-200);}
+  .more{font-size:11px;color:var(--fg-3);margin-left:4px;align-self:center;}
+  .tag{position:absolute;top:8px;left:8px;background:var(--danger);color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:var(--radius-md);}
+  .wrap{position:relative;}
+  .meta{font-size:11px;color:var(--fg-3);font-family:ui-monospace,monospace;position:absolute;bottom:8px;left:28px;}
+</style></head><body>
+  <div class="card">
+    <div class="tile">
+      <div class="wrap"><div class="img" style="background-image:url(../assets/product-hero.png)"></div><span class="tag">-30%</span></div>
+      <div class="title">Empetua® All-Day High-Waisted Shaper Panty</div>
+      <div class="prices"><span class="strike">$69.90</span><span class="sale">$48.93</span></div>
+      <div class="swatches"><span class="sw" style="background:#000"></span><span class="sw" style="background:#D3AB91"></span><span class="sw" style="background:#7A3A3E"></span><span class="sw" style="background:#3E4A63"></span><span class="more">+2 more</span></div>
+    </div>
+    <div class="tile">
+      <div class="wrap"><div class="img" style="background-image:url(../assets/product-hero.png)"></div></div>
+      <div class="title">Truekind® Daily Comfort Wireless Bra</div>
+      <div class="prices"><span class="sale" style="color:var(--ink-900);">$29.90</span></div>
+      <div class="swatches"><span class="sw" style="background:#D3AB91"></span><span class="sw" style="background:#000"></span><span class="sw" style="background:#fff;border-color:var(--ink-300)"></span></div>
+    </div>
+    <div class="tile">
+      <div class="wrap"><div class="img" style="background-image:url(../assets/product-hero.png)"></div><span class="tag" style="background:var(--ink-900)">BEST SELLER</span></div>
+      <div class="title">Empetua® Tummy-Control Leggings</div>
+      <div class="prices"><span class="strike">$59.90</span><span class="sale">$39.90</span></div>
+    </div>
+  </div>
+</body></html>

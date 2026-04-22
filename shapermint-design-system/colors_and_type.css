@@ -1,0 +1,356 @@
+/* ─────────────────────────────────────────────────────────────
+   Shapermint Design System — Colors & Typography
+   Derived from the SHM_Components Figma file (Trafilea).
+   ───────────────────────────────────────────────────────────── */
+
+/* ─── Fonts ──────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("fonts/AvenirNextLTPro-It.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("fonts/AvenirNextLTPro-Demi.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("fonts/AvenirNextLTPro-DemiIt.otf") format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("fonts/AvenirNextLTPro-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* "Avenir Next" — body-weight variants (Regular/Medium/Demi/Bold) — are
+   reused visually from the LT Pro file, since no separate Avenir Next
+   .otf files were provided. This is a FLAGGED SUBSTITUTION. */
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/AvenirNextLTPro-It.otf") format("opentype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/AvenirNextLTPro-Demi.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/AvenirNextLTPro-Demi.otf") format("opentype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/AvenirNextLTPro-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* ─── Tokens ─────────────────────────────────────────────────── */
+:root {
+  /* Type families */
+  --font-display: "Avenir Next LT Pro", "Avenir Next", -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Avenir Next", "Avenir Next LT Pro", -apple-system, "Segoe UI", sans-serif;
+
+  /* Core neutrals — from the top-30 color table */
+  --ink-1000:   #000000;   /* True black, hero/promo */
+  --ink-900:    #292929;   /* Primary text — most-used color in the file */
+  --ink-700:    #3A3A3A;   /* Secondary body, hover */
+  --ink-600:    #5A5A5A;   /* Tertiary/meta */
+  --ink-500:    #808080;   /* Disabled label */
+  --ink-400:    #A6A6A6;   /* Stroke gray, muted */
+  --ink-300:    #BBBBBB;   /* Divider darker */
+  --ink-200:    #E5E5E5;   /* Hairline divider */
+  --ink-150:    #EFEFEF;   /* Subtle border */
+  --ink-100:    #F5F5F5;   /* Sand background */
+  --ink-050:    #F7F7F7;   /* Very subtle row tint */
+  --white:      #FFFFFF;
+
+  /* Brand — Coral/Peach family (primary brand accent) */
+  --coral-900:  #3E1515;   /* Deepest coral — hero overlay text */
+  --coral-800:  #5A271E;   /* Very dark coral */
+  --coral-700:  #882A2B;   /* Dark coral / deep red */
+  --coral-650:  #8B2929;   /* Rose depth */
+  --coral-600:  #B14E3D;   /* Warm brick */
+  --coral-550:  #B83335;   /* Strong rose */
+  --coral-500:  #C64844;   /* ★ Primary brand coral — used on CTAs / sale */
+  --coral-450:  #D4605B;   /* Hover tone */
+  --coral-400:  #DD8D8B;   /* Muted rose */
+  --coral-350:  #E97A5F;   /* Warm coral (photo-adjacent) */
+  --coral-300:  #F7A08B;   /* ★ Peach accent — SHM icon background */
+  --coral-250:  #F5BAB0;   /* Soft peach */
+  --coral-200:  #FBD0C7;   /* Light peach — promo tint */
+  --coral-150:  #F3D6D6;   /* Powder rose */
+  --coral-100:  #FCE7E3;   /* Pale rose */
+  --coral-075:  #FDF1EF;   /* Rose 20 — section background */
+  --coral-050:  #FFF6EF;   /* ★ Creamy / rose-tinted neutral background */
+
+  /* Warm neutrals — Toffee / Sand scale (cream backgrounds, editorial strips) */
+  --toffee-900: #513125;   /* Deepest toffee */
+  --toffee-700: #A2624A;   /* Earthy brown */
+  --toffee-600: #CA7A5D;   /* Terracotta */
+  --toffee-500: #D8AB8C;   /* Warm tan */
+  --toffee-300: #EACABE;   /* Pale sand */
+  --toffee-200: #F7ECE4;   /* Very light cream */
+  --toffee-100: #FBF7F4;   /* Near-white warm */
+
+  /* Brand — Mint / Teal family (secondary accent) */
+  --mint-900:   #1E4C42;   /* Deep forest */
+  --mint-700:   #3D9883;   /* Strong mint — success dark */
+  --mint-600:   #4CBEA4;   /* Saturated mint */
+  --mint-500:   #5EAD9B;   /* ★ Mint accent */
+  --mint-400:   #70CBB6;   /* Bright mint */
+  --mint-300:   #B7E5DB;   /* Soft mint */
+  --mint-200:   #DBF2ED;   /* Light mint */
+  --mint-100:   #DFEFEB;   /* Mint 20 — success/background */
+  --mint-050:   #EFF7F5;   /* Whisper mint */
+
+  /* Blue / Link family */
+  --blue-900:   #04263E;   /* Midnight */
+  --blue-800:   #084D7C;   /* Deep navy */
+  --blue-700:   #0A609B;   /* ★ Link blue */
+  --blue-500:   #387EAF;   /* Mid-blue accent */
+  --blue-400:   #93BBD6;   /* Dusty blue */
+  --blue-200:   #CEDFEB;   /* Pale blue */
+  --blue-100:   #E3EFF0;   /* Air blue */
+
+  /* Gold / Yellow family — ratings, badges, editorial highlights */
+  --gold-700:   #B69710;   /* Dark gold */
+  --gold-600:   #E5BD15;   /* ★ Rating-star gold */
+  --gold-500:   #EECC3F;   /* Signature yellow */
+  --gold-400:   #F2D96F;   /* Soft gold */
+  --gold-300:   #F6E59D;   /* Pale gold */
+  --gold-200:   #FAF1CC;   /* Cream gold */
+  --gold-100:   #FFFEFA;   /* Warm white */
+
+  /* Cream / warm neutrals (hero, promo strips) */
+  --cream-300:  #FFE9D8;   /* Promo strip — "LOVE10" bar */
+  --cream-200:  #FFF3E3;   /* Full-bleed section tint */
+  --cream-100:  #FAF7F2;   /* Off-white */
+
+  /* ─── Status palette ──────────────────────────────────────────
+     Dedicated semantic stacks for system feedback (added from the
+     secondary Figma "Status" sheet — not overlapping brand colors).
+     ──────────────────────────────────────────────────────────── */
+
+  /* Success (green) */
+  --success-700: #0E800A;  /* ★ Confirmed / paid */
+  --success-500: #16C410;  /* Bright success */
+  --success-100: #DFEFE7;  /* Success background */
+
+  /* Warning (amber) */
+  --warning-700: #C07318;  /* Dark amber */
+  --warning-500: #FB9B2A;  /* ★ Warning orange */
+  --warning-100: #FFF1DC;  /* Warning background */
+
+  /* Error (red) — distinct from brand coral */
+  --error-700:   #B01E1E;  /* Dark red */
+  --error-500:   #EA2424;  /* ★ Error red — form errors, destructive */
+  --error-100:   #FCE1E1;  /* Error background */
+
+  /* Info (indigo/blue) — distinct from link blue */
+  --info-800:    #060080;  /* Deep indigo */
+  --info-500:    #0C00FF;  /* ★ Info / badge indigo */
+  --info-100:    #E4E3FC;  /* Info background */
+
+  /* Cool neutrals — ancillary grayscale used in forms & chips */
+  --cool-900:    #1C1C1F;
+  --cool-800:    #2F2F33;
+  --cool-700:    #606066;
+  --cool-600:    #75747A;
+  --cool-500:    #939399;
+  --cool-300:    #B7B7BD;
+  --cool-200:    #D5D5DB;
+  --cool-150:    #EBEBEB;
+  --cool-100:    #F0F0F7;
+  --cool-050:    #FAFAFC;
+
+  /* Functional */
+  --sale:       #C64844;   /* ★ Canonical sale red (== coral-500) — used on every discount tag */
+  --danger:     var(--error-500);
+  --link:       var(--blue-700);
+
+  /* Semantic surfaces */
+  --bg:              var(--white);
+  --bg-subtle:       var(--ink-100);
+  --bg-raised:       var(--white);
+  --bg-promo:        var(--cream-300);
+  --bg-mint:         var(--mint-100);
+  --bg-rose:         var(--coral-100);
+  --bg-creamy:       var(--coral-050);
+
+  /* Semantic foreground */
+  --fg-1:            var(--ink-900);   /* Primary text */
+  --fg-2:            var(--ink-700);   /* Body secondary */
+  --fg-3:            var(--ink-600);   /* Meta */
+  --fg-muted:        var(--ink-400);
+  --fg-disabled:     var(--ink-400);
+  --fg-inverse:      var(--white);
+  --fg-link:         var(--link);
+  --fg-danger:       var(--error-500);
+  --fg-warning:      var(--warning-700);
+  --fg-success:      var(--success-700);
+  --fg-info:         var(--info-500);
+
+  /* Semantic status backgrounds */
+  --bg-success:      var(--success-100);
+  --bg-warning:      var(--warning-100);
+  --bg-error:        var(--error-100);
+  --bg-info:         var(--info-100);
+
+  /* Semantic borders */
+  --border-strong:   var(--ink-900);   /* Selected / outline-dark button */
+  --border:          var(--ink-200);   /* Hairline default */
+  --border-subtle:   var(--ink-150);
+  --border-focus:    var(--ink-900);
+
+  /* Brand semantic */
+  --brand:           var(--coral-500); /* Primary brand */
+  --brand-soft:      var(--coral-300); /* Peach */
+  --accent-mint:     var(--mint-500);
+
+  /* Radii — canonical token set (see preview/spacing-radii.html).
+     These are the ONLY radii allowed in Shapermint designs. */
+  --radius-none: 0;           /* 0 rem */
+  --radius-md:   4px;         /* 0.25 rem — tags, small chips, thumbnails */
+  --radius-lg:   8px;         /* 0.5 rem — buttons, inputs, cards, size chips */
+  --radius-xl:   16px;        /* 1 rem — large cards, modals, hero image wells */
+  --radius-full: 9999px;      /* pills, avatars, color dots, count badges */
+
+  /* Legacy aliases — map the old r-N tokens onto the canonical set so
+     any in-flight CSS using --r-* keeps working without inventing new radii. */
+  --r-0:    var(--radius-none);
+  --r-1:    var(--radius-md);    /* 2px → 4px (collapsed to md) */
+  --r-2:    var(--radius-md);    /* 4px */
+  --r-3:    var(--radius-lg);    /* 8px */
+  --r-4:    var(--radius-lg);    /* 12px → 8px (collapsed to lg) */
+  --r-5:    var(--radius-xl);    /* 16px */
+  --r-pill: var(--radius-full);
+
+  /* Spacing — canonical 17-token scale (see preview/spacing-scale.html).
+     These are the ONLY spacing values allowed in Shapermint designs.
+     Naming mirrors the Figma spacing sheet (space-0 … space-2000). */
+  --space-0:    0;
+  --space-025:  2px;     /* 0.125 rem */
+  --space-050:  4px;     /* 0.25  rem */
+  --space-075:  6px;     /* 0.375 rem */
+  --space-100:  8px;     /* 0.5   rem */
+  --space-150:  12px;    /* 0.75  rem */
+  --space-200:  16px;    /* 1     rem */
+  --space-250:  20px;    /* 1.25  rem */
+  --space-300:  24px;    /* 1.5   rem */
+  --space-400:  32px;    /* 2     rem */
+  --space-500:  40px;    /* 2.5   rem */
+  --space-600:  48px;    /* 3     rem */
+  --space-800:  64px;    /* 4     rem */
+  --space-1000: 80px;    /* 5     rem */
+  --space-1200: 96px;    /* 6     rem */
+  --space-1600: 128px;   /* 8     rem */
+  --space-2000: 160px;   /* 10    rem */
+
+  /* Legacy aliases — keep old --s-* tokens working; mapped onto the
+     canonical set. Prefer --space-* in new code. */
+  --s-1:  var(--space-050);    /* 4px  */
+  --s-2:  var(--space-100);    /* 8px  */
+  --s-3:  var(--space-150);    /* 12px */
+  --s-4:  var(--space-200);    /* 16px */
+  --s-5:  var(--space-250);    /* 20px */
+  --s-6:  var(--space-300);    /* 24px */
+  --s-7:  var(--space-400);    /* 32px */
+  --s-8:  var(--space-500);    /* 40px */
+  --s-9:  var(--space-600);    /* 48px */
+  --s-10: var(--space-800);    /* 60 → 64px (collapsed to canonical) */
+  --s-11: var(--space-1000);   /* 80px */
+  --s-12: var(--space-1200);   /* 120 → 96px (collapsed to canonical) */
+
+  /* Elevation — observed `0px 2px 4px 0px rgba(0,0,0,0.1)` in nav/menus */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,.10);           /* ★ Core nav shadow */
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+  --shadow-inset: inset 0 0 0 1px var(--border);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(.2,.8,.2,1);
+  --ease-inout:  cubic-bezier(.4,0,.2,1);
+  --dur-fast:    120ms;
+  --dur-base:    200ms;
+  --dur-slow:    320ms;
+
+  /* ─── Type scale — observed from Figma ─── */
+  --t-xs:    10px;
+  --t-sm:    12px;
+  --t-base:  14px;   /* body — highest-frequency size in the file */
+  --t-md:    16px;
+  --t-lg:    18px;
+  --t-xl:    20px;
+  --t-2xl:   24px;
+  --t-3xl:   30px;
+  --t-4xl:   40px;
+  --t-5xl:   68px;   /* observed once, Avenir Next Heavy 68 — hero */
+
+  /* Semantic type */
+  --h1-size: 40px;  --h1-weight: 700;  --h1-leading: 100%;
+  --h2-size: 30px;  --h2-weight: 600;  --h2-leading: 120%;
+  --h3-size: 24px;  --h3-weight: 700;  --h3-leading: 120%;
+  --h4-size: 20px;  --h4-weight: 600;  --h4-leading: 130%;
+  --h5-size: 18px;  --h5-weight: 600;  --h5-leading: 140%;
+
+  --body-size: 16px; --body-weight: 400; --body-leading: 24px;
+  --small-size: 14px; --small-leading: 22px;
+  --caption-size: 12px; --caption-leading: 16px;
+  --overline-size: 10px; --overline-leading: 14px;
+}
+
+/* ─── Base defaults ──────────────────────────────────────────── */
+html, body {
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  line-height: var(--body-leading);
+  color: var(--fg-1);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .h1 { font-family: var(--font-display); font-size: var(--h1-size); font-weight: var(--h1-weight); line-height: var(--h1-leading); letter-spacing: -0.01em; margin: 0; color: var(--fg-1); }
+h2, .h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: var(--h2-weight); line-height: var(--h2-leading); margin: 0; color: var(--fg-1); }
+h3, .h3 { font-family: var(--font-display); font-size: var(--h3-size); font-weight: var(--h3-weight); line-height: var(--h3-leading); margin: 0; color: var(--fg-1); }
+h4, .h4 { font-family: var(--font-display); font-size: var(--h4-size); font-weight: var(--h4-weight); line-height: var(--h4-leading); margin: 0; color: var(--fg-1); }
+h5, .h5 { font-family: var(--font-display); font-size: var(--h5-size); font-weight: var(--h5-weight); line-height: var(--h5-leading); margin: 0; color: var(--fg-1); }
+
+.p-lg, .lead { font-size: var(--t-lg); line-height: 28px; }
+.p    { font-size: var(--body-size); line-height: var(--body-leading); }
+.small { font-size: var(--small-size); line-height: var(--small-leading); color: var(--fg-2); }
+.caption { font-size: var(--caption-size); line-height: var(--caption-leading); color: var(--fg-3); }
+.overline { font-size: var(--overline-size); line-height: var(--overline-leading); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--fg-2); }
+
+.mono { font-variant-numeric: tabular-nums; }
+
+a { color: inherit; text-underline-offset: 2px; }
+a:hover { text-decoration: underline; }
+
+hr { border: 0; border-top: 1px solid var(--border); margin: var(--s-6) 0; }

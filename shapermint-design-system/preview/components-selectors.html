@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;}
+  .card{padding:20px 28px;display:flex;flex-direction:column;gap:14px;}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .meta{font-size:11px;color:var(--fg-3);font-family:ui-monospace,monospace;}
+  /* color picker swatch */
+  .cp{width:36px;height:36px;border-radius: var(--radius-full);display:inline-block;border:1px solid var(--ink-200);position:relative;cursor:pointer;}
+  .cp.sel{outline:2px solid var(--ink-900);outline-offset:2px;}
+  /* checkbox */
+  .cbox{width:16px;height:16px;border:1.5px solid var(--ink-900);border-radius:var(--radius-md);display:inline-flex;align-items:center;justify-content:center;background:#fff;}
+  .cbox.on{background:var(--ink-900);}
+  .cbox.on::after{content:"";width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px);}
+  .row.lbl{gap:8px;align-items:center;font-family:var(--font-body);font-size:14px;color:var(--ink-900);}
+  /* radio */
+  .radio{width:20px;height:20px;border-radius: var(--radius-full);border:1.5px solid var(--ink-900);display:inline-flex;align-items:center;justify-content:center;background:#fff;}
+  .radio.on::after{content:"";width:10px;height:10px;border-radius: var(--radius-full);background:var(--ink-900);}
+  /* qty */
+  .qty{display:inline-flex;border:1px solid var(--ink-300);border-radius: var(--radius-lg);overflow:hidden;height:40px;}
+  .qty>button{width:40px;height:100%;background:#fff;border:0;font-size:16px;color:var(--ink-900);cursor:pointer;}
+  .qty>span{min-width:40px;text-align:center;line-height:40px;font-weight:600;}
+</style></head><body>
+  <div class="card">
+    <div class="row">
+      <span class="cp" style="background:#000"></span>
+      <span class="cp sel" style="background:#D3AB91"></span>
+      <span class="cp" style="background:#fff"></span>
+      <span class="cp" style="background:#3E4A63"></span>
+      <span class="cp" style="background:#7A3A3E"></span>
+      <span class="cp" style="background:#5EAD9B"></span>
+      <span class="meta" style="margin-left:auto">Color picker · 36px · pill · selected = outline</span>
+    </div>
+    <div class="row">
+      <span class="row lbl"><span class="cbox on"></span> 1st Item (selected)</span>
+      <span class="row lbl"><span class="cbox"></span> 2nd Item</span>
+      <span class="row lbl"><span class="radio on"></span> Express</span>
+      <span class="row lbl"><span class="radio"></span> Standard</span>
+      <span class="qty"><button>−</button><span>2</span><button>+</button></span>
+    </div>
+    <div class="meta">Checkbox / radio / color picker / QTY stepper · all flat, #292929 strokes.</div>
+  </div>
+</body></html>

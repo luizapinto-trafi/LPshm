@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin:0; background:#fff; font-family: var(--font-body); }
+  .wrap { padding: 24px 28px; }
+  .intro { font-size: 12px; color: var(--fg-3); max-width: 640px; line-height: 1.5; margin: 0 0 20px; }
+  .intro strong { color: var(--fg-1); }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; max-width: 640px; border: 1px solid var(--ink-200); border-radius: var(--radius-md); overflow: hidden; }
+  th, td { padding: 14px 18px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--ink-200); }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--fg-2); background: #fff; }
+  td.tok { width: 38%; }
+  .chip { display:inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--ink-100); color: var(--ink-900); padding: 4px 10px; border-radius: var(--radius-md); }
+  .val { display: flex; align-items: center; gap: 18px; }
+  .sq { width: 44px; height: 44px; background: var(--coral-200); border: 2px solid var(--coral-300); flex: none; }
+  .meta { font-size: 13px; color: var(--fg-2); }
+  .meta b { color: var(--fg-1); font-weight: 700; }
+  .use { font-size: 11px; color: var(--fg-3); margin-top: 2px; }
+</style></head>
+<body>
+  <div class="wrap">
+    <p class="intro">These are the <strong>five canonical radii</strong> used across Shapermint. <strong>Use only these tokens</strong> — any value in between (6, 10, 12px, 999px) is off-system. Tokens are defined as CSS custom properties in <code>colors_and_type.css</code>.</p>
+
+    <table>
+      <thead>
+        <tr><th>Token</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tok"><span class="chip">radius-none</span></td>
+          <td><div class="val"><div class="sq" style="border-radius:var(--radius-none)"></div><div><div class="meta"><b>0px</b> · 0 rem</div><div class="use">Flush edges, full-bleed imagery, section rows</div></div></div></td>
+        </tr>
+        <tr>
+          <td class="tok"><span class="chip">radius-md</span></td>
+          <td><div class="val"><div class="sq" style="border-radius:var(--radius-md)"></div><div><div class="meta"><b>4px</b> · 0.25 rem</div><div class="use">Tags, small chips, thumbnail tiles, checkboxes</div></div></div></td>
+        </tr>
+        <tr>
+          <td class="tok"><span class="chip">radius-lg</span></td>
+          <td><div class="val"><div class="sq" style="border-radius:var(--radius-lg)"></div><div><div class="meta"><b>8px</b> · 0.5 rem</div><div class="use">★ Default — buttons, inputs, cards, size chips, modals</div></div></div></td>
+        </tr>
+        <tr>
+          <td class="tok"><span class="chip">radius-xl</span></td>
+          <td><div class="val"><div class="sq" style="border-radius:var(--radius-xl)"></div><div><div class="meta"><b>16px</b> · 1 rem</div><div class="use">Large cards, hero image wells, bottom sheets</div></div></div></td>
+        </tr>
+        <tr>
+          <td class="tok"><span class="chip">radius-full</span></td>
+          <td><div class="val"><div class="sq" style="border-radius:var(--radius-full)"></div><div><div class="meta"><b>9999px</b></div><div class="use">Pills, avatars, color dots, count badges</div></div></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body></html>
