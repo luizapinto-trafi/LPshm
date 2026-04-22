@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { TruekindBraCtaLink } from "./TruekindBraCtaLink";
 import { TruekindBraShopPdp } from "./truekindBraCdn";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";

@@ -1,5 +1,11 @@
 {
   "welcome": "Welcome",
+  "home": {
+    "title": "Shapermint design lab",
+    "lead": "The full Truekind offer landing is not the home page (/). It lives at a dedicated URL so we can add more landings in this repo. Use the button to open the Wireless Contour Bra UI, or type the path in the address bar.",
+    "truekindCta": "Open — Truekind Wireless Contour Bra",
+    "truekindHint": "Path: /pages/truekind-supportive-comfort-wireless-shaping-bra-offer-page-1 — add ?variant=40278561292422 to test variant deep-linking on the product block."
+  },
   "catalog": {
     "title": "Component Catalog"
   }

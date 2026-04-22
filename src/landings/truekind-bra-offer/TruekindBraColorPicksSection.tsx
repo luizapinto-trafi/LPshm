@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { TruekindBraCtaLink } from "./TruekindBraCtaLink";
 import { TruekindBraCdn, TruekindBraShopPdp } from "./truekindBraCdn";
 

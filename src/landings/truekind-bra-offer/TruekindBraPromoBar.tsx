@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 
 const StyledBar = styled.div`
   position: relative;
@@ -14,7 +14,13 @@ const StyledBar = styled.div`
   font-weight: 600;
   letter-spacing: 0.1em;
   line-height: 1.2;
-  padding: var(--space-200) var(--space-400);
+  /* ~44px band so header stack aligns with in-browser measurement (~45px to header top) */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-400);
+  box-sizing: border-box;
 `;
 
 export const TruekindBraPromoBar = () => {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { TruekindBraCdn, TruekindBraShopPdp } from "./truekindBraCdn";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
 

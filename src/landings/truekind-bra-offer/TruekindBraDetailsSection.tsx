@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 
 const StyledSection = styled.section`
   background: var(--white);

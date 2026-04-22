@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { TruekindBraCdn } from "./truekindBraCdn";
 
 const StyledSection = styled.section`
