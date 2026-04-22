@@ -1,5 +1,11 @@
 # Cursor Rules — SHM Landing Pages Design Lab
 
+## Shapermint design system
+
+- Fuentes, variables de color, espaciado, radios y sombras: usar el archivo ya importado en `src/styles/globals.css` (`shapermint-design-system/colors_and_type.css` — p. ej. `var(--coral-500)`, `var(--space-400)`).
+- Para imágenes y SVGS compartidos del pack: preferir el alias `@shapermint/...` (ruta en `shapermint-design-system/`). Ver `shapermint-design-system/README.md` para la escala estricta de espacios, radios y voz de marca.
+- **No** introducir modo oscuro a nivel de página: el DS es solo claros; `globals.css` fija `color-scheme: only light` coherente con el README del DS.
+
 ## Styled Components
 - All styled component variables **must** be prefixed with `Styled` (e.g. `StyledContainer`, `StyledHeading`).
 - Do not use `className` for layout or theming — compose with styled components instead.
