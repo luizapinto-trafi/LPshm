@@ -1,0 +1,339 @@
+{
+  "metaTitle": "Grüns | Comprehensive Daily Nutrition",
+  "metaDescription": "60+ ingredients. 21 vitamins & minerals. Daily tasty gummies to fill your nutrition gaps. Save 52% + Free Shipping on your first order.",
+  "a11y": {
+    "skipToContent": "Skip to Content",
+    "cart": "View Cart",
+    "account": "Account",
+    "logoHome": "Grüns — Home"
+  },
+  "announcement": {
+    "text": "NEW! Strawberry Vanilla OLIPOP®",
+    "subtext": "Grab this dreamy, creamy flavor before it's gone.",
+    "cta": "Shop Now"
+  },
+  "header": {
+    "shopAdults": "Shop Adults",
+    "shopKids": "Shop Kids",
+    "account": "Account",
+    "cart": "Cart"
+  },
+  "hero": {
+    "rating": "4.8",
+    "starsAlt": "stars",
+    "reviews": "85,000 reviews",
+    "members": "1,000,000+ members",
+    "discount": "52% OFF NOW",
+    "mainHeading": "You Have Nutrition Gaps. Grüns Fills Them.",
+    "features": [
+      "60+ Ingredients. 21 vitamins & minerals.",
+      "6g Fiber. 3x More Than Leading Greens Powders.",
+      "3rd Party & Clinically Tested."
+    ],
+    "subtext": "No Powder. No Pills. No Blender. Just Daily Tasty Gummies.",
+    "sold": "100M+ Gummies Sold",
+    "cta": "Save 52% + Free Shipping",
+    "riskFree": "Try It Risk-Free For 30 Days",
+    "fillGap": "Fill your nutrition gaps"
+  },
+  "testimonials": {
+    "title": "What 1 Million+ Love About Grüns",
+    "reviews": {
+      "chelsea": {
+        "quote": "My Body Is Finally Working With Me. Within 5 days, I was going to the bathroom every single day. By day 14, chronic bloating basically gone. I feel lighter and more energized and honestly, my body is finally working with me then against me.",
+        "author": "Chelsea W."
+      },
+      "jason": {
+        "quote": "Easier to Win the Day with Grüns. I'm always on the go and I don't let that be an excuse. It's easy to pack these rather than a bunch of pills and powders. It's just easier to win the day with Grüns.",
+        "author": "Jason S."
+      },
+      "carson": {
+        "quote": "Stop the Energy Roller Coaster. These gummies are changing the game. They boost energy naturally without the mess of powders or the crash of energy drinks. If you want to stop the energy roller coaster, grab Grüns!",
+        "author": "Carson N."
+      },
+      "nicole": {
+        "quote": "Get Your Health Back on Track. I would absolutely recommend these to any moms who are needing some energy or anyone that just wants to get their health back on track.",
+        "author": "Nicole M."
+      }
+    },
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "research": {
+    "eyebrow": "The Research Shows",
+    "heading": "90% of US Adults don't meet recommended daily nutrient intake",
+    "subtext": "Your nutrition gaps may be bigger than you think",
+    "source": "Source"
+  },
+  "benefits": {
+    "eyebrow": "Meet Grüns.",
+    "heading": "Daily Nutrition Support Made Delicious.",
+    "items": [
+      {
+        "title": "Fills Nutrition Gaps Most Diets Miss",
+        "description": "Nutrient gap support from 21 vitamins and minerals, plus organic fruits, veggies, and antioxidants — the nutrients most aren't getting enough of."
+      },
+      {
+        "title": "6g Prebiotic Fiber for Gut Health",
+        "description": "Prebiotic fiber feeds the good bacteria in your gut to support digestion, nutrient absorption, and, well, softer poops."
+      },
+      {
+        "title": "Immune Support",
+        "description": "Vitamin C, D, Zinc, antioxidants, and adaptogens for immune function and occasional stress support — year-round, not just flu season."
+      },
+      {
+        "title": "Feel Energized Without the Crash",
+        "description": "B vitamins, Iron, and Vitamin C work together to support natural energy production — no caffeine or energy drink jitters."
+      }
+    ]
+  },
+  "whatsInside": {
+    "eyebrow": "What's Inside",
+    "heading": "Each Daily Pack Contains More...",
+    "items": [
+      { "emoji": "🥦", "text": "Prebiotic Fiber than 1 cup of broccoli", "description": "Prebiotic fiber feeds the good bacteria in your gut, supporting soft poops and smooth digestion." },
+      { "emoji": "🍃", "text": "Vitamin B9 than 5 cups of spinach", "description": "Folate (Vitamin b9) supports healthy mood balance." },
+      { "emoji": "🥕", "text": "Vitamin A than 2 cups of carrots", "description": "Important for vision, skin, and your immune system's first line of defense." },
+      { "emoji": "🐟", "text": "Vitamin B12 than a 2 oz salmon fillet", "description": "B12 supports cell energy production." },
+      { "emoji": "🍊", "text": "Vitamin C than 1 orange", "description": "Supports your immune system and helps your body build collagen." },
+      { "emoji": "🫘", "text": "Iron than 4g of lentils", "description": "Iron supports energy metabolism." }
+    ],
+    "summary": "One Daily Pack. 60+ ingredients. 21 Vitamins & Minerals. 6g fiber.",
+    "cta": "See Full Ingredient List",
+    "badges": [
+      "No synthetic dyes",
+      "No synthetic sweeteners",
+      "No junk"
+    ]
+  },
+  "results": {
+    "heading": "Real Results From Real Users",
+    "subtext": "Because your health isn't just about you, it's what keeps everything else running. And that's exactly what we're here for.",
+    "clinicians": {
+      "badge": "Clinicians' Choice",
+      "text": "1,600+ clinicians shared this with their patients without compensation",
+      "verified": "Verified by FrontrowMD"
+    },
+    "quality": {
+      "heading": "Quality Ingredients You Can Trust",
+      "description": "Our gummies are regularly tested across labeled vitamins and minerals to ensure label claims are accurate and clear of contaminants.",
+      "tests": [
+        "70 different pesticides screened and cleared",
+        "16 different contaminants screened and cleared",
+        "4 types of heavy metals screened and cleared",
+        "9 microbial contaminants screened and cleared"
+      ]
+    },
+    "offer": "Website Exclusive Offer:",
+    "offerSub": "Save 52% + Free Shipping"
+  },
+  "product": {
+    "title": "Grüns Superfood Gummies",
+    "subtitle": "60+ potent ingredients to revive whole body vitality in great tasting gummies.",
+    "features": [
+      "Promotes mental clarity + energy",
+      "Supports immunity + stress relief",
+      "Supports digestion and gut health",
+      "Clinically tested for nutrient absorption"
+    ],
+    "rating": "4.8/5.0 (85,000), 1M+ Customers",
+    "flavorLabel": "Select Flavor:",
+    "flavors": {
+      "original": {
+        "name": "Original",
+        "description": "Where fresh strawberries meets clean greens."
+      },
+      "olipop": {
+        "name": "New Strawberry Vanilla",
+        "badge": "OLIPOP®",
+        "description": "Bright, ripe strawberry with creamy vanilla twist."
+      }
+    },
+    "sugarLabel": "Select Sugar Level",
+    "sugarOptions": ["Low Sugar", "Sugar-Free"],
+    "quantityLabel": "Select Quantity",
+    "quantityBadge": "Buy 2 Save 5%",
+    "offerLabel": "Select Offer",
+    "offers": {
+      "popular": {
+        "badge": "Most Popular: Get 49% Off",
+        "type": "Subscribe & Save",
+        "description": "28 packs each 4 weeks",
+        "priceCurrent": "$40.80",
+        "priceOriginal": "$79.99",
+        "perDay": "$1.46/day",
+        "benefits": [
+          "FAST & FREE Shipping On First Order",
+          "Pause Or Cancel Any Time",
+          "30-Day Guarantee"
+        ]
+      },
+      "onetime": {
+        "type": "One Time Purchase",
+        "description": "28 packs delivered once",
+        "priceCurrent": "$54.40",
+        "priceOriginal": "$79.99",
+        "perDay": "$1.94/day",
+        "note": "No Free Shipping",
+        "note2": "Discount on first order only"
+      }
+    },
+    "cta": "Start Now",
+    "discountBadge": "Limited Time Discount Auto-Applied ✅ You're saving on this order",
+    "trustBadges": [
+      "30-day guarantee",
+      "Clinically and 3rd party tested",
+      "HSA/FSA eligible with Truemed"
+    ]
+  },
+  "whyGruns": {
+    "heading": "Why Grüns?",
+    "items": [
+      { "title": "Comprehensive:", "text": "Nutrition that works. Grüns replaces handfuls of health products at a fraction of the cost." },
+      { "title": "Delicious:", "text": "A habit that tastes so good, you'll actually want to keep it." },
+      { "title": "Portable:", "text": "Designed to fit whenever and wherever you want your nutrition. Just grab and go." },
+      { "title": "No Mess, No Stress:", "text": "No more gagging on pills, sloshing chalky powders, or cleaning messy counters." }
+    ]
+  },
+  "ingredients": {
+    "heading": "Ingredients & Allergies",
+    "sections": [
+      {
+        "title": "Ingredients",
+        "content": "Grüns contains over 20 vitamins & minerals including Vitamin A, Vitamin B6, Vitamin B12, Vitamin C, Vitamin D3, Vitamin E, Vitamin K2, Biotin, Folate, Niacin, Pantothenic Acid, Vitamin B2, Thiamine, Chromium, Copper, Iodine, Manganese, Molybdenum, Selenium, Zinc, and Iron. Grüns also contains dozens of organic and key nutrient ingredients such as whole food fruits, vegetables, super mushrooms, prebiotics, adaptogens, and antioxidants. Grüns are gluten-free, dairy-free, nut-free, vegan, non-GMO, and contain no synthetic sweeteners, no synthetic dyes. Lastly, Grüns has a pectin base which is a fruit fiber. No gelatin."
+      },
+      {
+        "title": "Allergies",
+        "content": "Grüns is plant-based and vegan. These gummies are free from gluten, dairy, and nuts. No synthetic sweeteners, no synthetic dyes."
+      }
+    ]
+  },
+  "science": {
+    "heading": "Science & Certifications",
+    "clinicallyTested": {
+      "title": "Clinically Tested",
+      "content": "We put Grüns to the test in 2025 through a gold standard clinical study: randomized, double blind, and placebo controlled. Here were the results—your body absorbs the nutrients. Participants showed meaningful increases in key nutrients, measured in the blood. It's validation that gummies aren't just convenient. They're effective."
+    },
+    "thirdParty": {
+      "title": "Third Party Testing",
+      "content": "Every lot of our products undergoes rigorous testing to ensure quality and purity across label claims, heavy metals, and microbial contaminants. In addition, we regularly conduct third-party laboratory testing to validate that our gummies meet label claims across vitamins and minerals and surpass quality and safety standards across 99 pesticides, heavy metals, and microbial contaminants."
+    },
+    "certifications": {
+      "title": "Certifications",
+      "content": "Manufactured in NSF, GMP, and FDA registered facilities in the U.S. & Canada, and thoroughly tested for heavy metals and contaminants."
+    }
+  },
+  "directions": {
+    "heading": "Directions",
+    "content": "Each large pouch of Grüns contains 28 individual packs. Grab a single pack daily and enjoy the small handful of green gummy bears inside for comprehensive nutrition."
+  },
+  "benefitsAccordion": {
+    "heading": "Benefits",
+    "content": "Grüns supports digestion, immune health, energy metabolism, and normal cognitive function — plus nutrients that help maintain healthy hair, skin, and nails — all in one convenient and delicious daily pack of gummies. Our hope is this tasty daily habit can replace a big shelf in your medicine cabinet."
+  },
+  "guarantee": {
+    "heading": "We Stand Behind Every Order.",
+    "subheading": "Try it Risk-Free.",
+    "content": "We're so confident you'll love Grüns that we want it to be risk-free for you. We offer a 30-day guarantee so you can try Grüns.",
+    "founder": "Chad Janis, Grüns Founder"
+  },
+  "vsThem": {
+    "heading": "Us vs. Them",
+    "subheading": "The easiest, tastiest way to fill your nutrition gaps.",
+    "columns": [
+      {
+        "title": "Powders",
+        "cons": [
+          "Time consuming, inconvenient",
+          "Messy, too much dishwashing",
+          "Not very tasty, hard to get down",
+          "Covers basic vitamins & minerals",
+          "Often free from artificial colors"
+        ]
+      },
+      {
+        "title": "Grüns",
+        "pros": [
+          "Delicious gummy bears you'll actually take",
+          "60+ ingredients with 21 vitamins & minerals",
+          "6g prebiotic fiber for gut health",
+          "Greens, superfoods & adaptogens",
+          "Replaces multiple supplements in one pack"
+        ]
+      },
+      {
+        "title": "Other Gummies",
+        "cons": [
+          "Only a handful of basic vitamins",
+          "Loaded with sugar and artificial dyes",
+          "No fiber, greens, or superfoods",
+          "Need multiple bottles to cover the gaps",
+          "Covers basic vitamins & minerals"
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions",
+    "questions": [
+      {
+        "question": "What is the new OLIPOP® flavor about?",
+        "answer": "We joined forces with OLIPOP® to bring their fan-favorite Strawberry Vanilla flavor into your daily Grüns. Bright strawberry and creamy vanilla. Same greens you know — new flavor worth trying. 🍓"
+      },
+      {
+        "question": "When will my gummies arrive?",
+        "answer": "We're fast! Orders typically ship within 24 hours and on average arrive 3-5 days later."
+      },
+      {
+        "question": "What's inside each order?",
+        "answer": "All of our gummies ship in a larger pouch that contains 28 daily sachets. Sachet is a fancy word for our gummy pack. Our packs each contain a small handful of gummies for you to enjoy daily. So if you're ordering for yourself, you'll get 28 daily packs inside a larger pouch. We recommend ordering on subscription. You get better pricing, and we'll make sure you're always stocked up on your healthiest habit."
+      },
+      {
+        "question": "When will I feel something?",
+        "answer": "The timeline for experiencing the benefits of Grüns can vary from person to person. Some individuals may notice improvements within days or weeks, while for others, it may be more gradual. Consistent daily use is essential for the best results."
+      },
+      {
+        "question": "How do you handle returns or exchanges?",
+        "answer": "We want you to have the best experience with Grüns. We offer a simple 30-day guarantee on your first order. Refunds include the full value of your order (less a $5 handling fee and original shipping costs), and exchanges are free. We accept all refund requests within our policy with no hassle. If you have any questions about our guarantee, our Grüns Care Bears are always happy to help at care@gruns.co. This policy applies only to your initial purchase."
+      }
+    ]
+  },
+  "finalCta": {
+    "heading": "Still Here?",
+    "subheading": "That Means You Care More Than Most.",
+    "content": "Most adults don't realize how big their nutrition gap really is - but now you do. One daily pack of Grüns helps close the gap. And we offer a 30-day guarantee.",
+    "sold": "100M+ GUMMIES Sold",
+    "cta": "Close Your Nutrition Gap",
+    "riskFree": "Try It Risk-Free For 30 Days"
+  },
+  "footer": {
+    "newsletter": {
+      "heading": "Sign Up for 52% Off",
+      "phoneLabel": "Phone number",
+      "emailLabel": "Email address",
+      "ctaSms": "Subscribe to SMS updates",
+      "ctaEmail": "Email me instead",
+      "ctaText": "Text me instead",
+      "smsDisclaimer": "By providing your number and clicking the button, you agree to receive recurring auto-dialed marketing SMS (including cart reminders; AI content; artificial or prerecorded voices) and our Terms of Service (including arbitration). Consent is not required to purchase. Msg & data rates may apply. Msg frequency varies. Reply HELP for help; STOP to opt-out. View Privacy Policy.",
+      "emailDisclaimer": "By completing this form you are signing up to receive our emails and can unsubscribe at any time."
+    },
+    "navigation": {
+      "learn": {
+        "title": "Learn",
+        "links": ["Reviews", "Our Science", "How Grüns Works", "Our Story", "Find in Store", "FAQs"]
+      },
+      "connect": {
+        "title": "Connect",
+        "links": ["Refer a Friend", "Partners & Influencers", "Press Inquiries", "Make a Return", "Careers", "Account Login", "Contact Us", "Chance to Win Skylight Calendar"]
+      },
+      "usnacks": {
+        "title": "Ü Snacks",
+        "links": ["About", "Grüns Adults", "Grüns Kids", "Nütrops", "Immün", "Jüced"]
+      }
+    },
+    "social": ["Instagram", "TikTok", "YouTube", "Facebook"],
+    "disclaimer": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.",
+    "copyright": "© Copyright 2026, Grüns",
+    "legal": ["Refund policy", "Privacy policy", "Terms of service", "Shipping policy", "My Privacy Choices", "Authorized Resale Policy", "Accessibility"]
+  }
+}
