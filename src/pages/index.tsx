@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/pages/serverSideTranslation
 import type { GetStaticProps } from "next";
 import { TruekindBraPagePath } from "@/landings/truekind-bra-offer/truekindBraCdn";
 import { GrunsPagePath } from "@/landings/gruns-first-order/grunsCdn";
+import { StraplessPagePath } from "@/landings/strapless-landing/straplessCdn";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -98,6 +99,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledGrunsCta href={GrunsPagePath}>{t("home.grunsCta")}</StyledGrunsCta>
           <StyledHint>{t("home.grunsHint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={StraplessPagePath}>{t("home.straplessCta")}</StyledCta>
+          <StyledHint>{t("home.straplessHint")}</StyledHint>
         </StyledLandingCard>
       </StyledLandings>
     </StyledMain>
