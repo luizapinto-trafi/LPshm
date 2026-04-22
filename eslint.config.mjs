@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Shapermint DS: reference HTML/JSX kits, not part of the Next app source
+    "shapermint-design-system/**",
   ]),
 ]);
 
