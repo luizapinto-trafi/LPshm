@@ -1,5 +1,23 @@
 @import url("../../shapermint-design-system/colors_and_type.css");
 
+/* Grüns Design System Colors — Aligned with Shapermint DS tokens */
+:root {
+  /* Primary Greens — Grüns brand (complementary to Shapermint DS) */
+  --gruns-primary: #00582d;          /* Forest green (custom brand color) */
+  --gruns-primary-light: #1a7a4a;    /* Light forest */
+  --gruns-primary-dark: #003d1f;     /* Dark forest */
+
+  /* Accent Colors — Mapped to Shapermint DS Gold family */
+  --gruns-gold: var(--gold-500);     /* #EECC3F — Shapermint signature yellow */
+  --gruns-peach: var(--cream-300);   /* #FFE9D8 — Shapermint promo strip */
+  --gruns-cream: var(--coral-050);   /* #FFF6EF — Shapermint creamy background */
+
+  /* Neutral — Using Shapermint Ink scale */
+  --gruns-dark: var(--ink-900);      /* #292929 — Shapermint primary text */
+  --gruns-gray: var(--ink-600);      /* #5A5A5A — Shapermint tertiary */
+  --gruns-light-gray: var(--ink-100); /* #F5F5F5 — Shapermint sand */
+}
+
 html,
 body {
   max-width: 100vw;
@@ -28,3 +46,7 @@ a {
 html {
   color-scheme: only light;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

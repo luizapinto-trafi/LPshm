@@ -1,0 +1,16 @@
+{
+  "welcome": "Welcome",
+  "home": {
+    "title": "Landing Pages Design Lab",
+    "lead": "Multiple landing pages available. Each landing lives at a dedicated URL for clean separation.",
+    "truekindCta": "Open — Truekind Wireless Contour Bra",
+    "truekindHint": "Path: /pages/truekind-supportive-comfort-wireless-shaping-bra-offer-page-1 — Shapermint design system",
+    "grunsCta": "Open — Grüns First Order",
+    "grunsHint": "Path: /pages/gruns-first-order — Green nutrition gummies landing",
+    "straplessCta": "Open — Strapless landing",
+    "straplessHint": "Path: /pages/strapless-landing — Truekind® strapless bandeau (Shapermint DS)"
+  },
+  "catalog": {
+    "title": "Component Catalog"
+  }
+}

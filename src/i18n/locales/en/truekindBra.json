@@ -1,0 +1,165 @@
+{
+  "metaTitle": "Wireless Contour Bra",
+  "a11y": {
+    "skipToMain": "Skip to main content",
+    "cart": "View shopping bag"
+  },
+  "promoBar": "FREE SHIPPING OVER $80 & FREE EXCHANGES",
+  "header": {
+    "bestSellers": "Best Sellers",
+    "shapewear": "Shapewear",
+    "bras": "Bras",
+    "mothersDaySale": "Mother's Day Sale"
+  },
+  "hero": {
+    "kicker": "Wireless Contour Bra",
+    "title": "Wireless Contour Bra",
+    "subtitle": "Wire-free contour cups lift and support your bust for a smooth, shaped silhouette — without the dig, pinch, or pain of underwire.",
+    "cta": "SHOP WIRELESS CONTOUR BRA",
+    "imageAlt": "Wireless Contour Bra promotional banner"
+  },
+  "engineered": {
+    "title": "Engineered to change your mind about wireless bras",
+    "feature1Title": "WIRE-FREE LIFT TECHNOLOGY",
+    "feature1Body": "Light foam contour cups lift and shape your bust for a natural, supported look — without a single wire poking or digging.",
+    "feature1AssetAlt": "Woman wearing bra illustrating wire-free lift",
+    "feature1IconAlt": "Icon wire-free lift",
+    "feature2Title": "SMOOTHS BACK & SIDES",
+    "feature2Body": "The extra-wide band smooths your sides and back so there are no bulges or rolls under fitted tops — all-day, no readjusting.",
+    "feature2AssetAlt": "Bra back smoothing",
+    "feature2IconAlt": "Icon back smoothing",
+    "feature3Title": "UNMATCHED LIFT",
+    "feature3Body": "Light foam contour cups lift your bust into a natural, youthful shape — the kind of lift you'd expect from underwire, without a single wire touching your skin.",
+    "feature3AssetAlt": "Bra front lift",
+    "feature3IconAlt": "Icon lift",
+    "shopNow": "SHOP NOW"
+  },
+  "designDifference": {
+    "title": "Wire-free design marks the difference",
+    "bullet0": "Real lift and support",
+    "bullet1": "All-day comfort, zero pain",
+    "bullet2": "Shapes without flattening",
+    "bullet3": "Smooth and invisible under clothes",
+    "otherCamis": "Other Camis",
+    "shopNow": "SHOP NOW"
+  },
+  "compare": {
+    "row1Name": "Sarah M.",
+    "row1Label": "FEEL LIFTED AND SUPPORTED",
+    "row1Quote": "I used to dread putting on a bra every morning — underwires hurt, sports bras flattened me. This one lifts and shapes without a single pinch. I wore it 12 hours straight and forgot it was there.",
+    "row1ProductAlt": "Shapermint Truekind® Supportive Comfort Wireless Shaping Bra product",
+    "row2Name": "KAITLYN B.",
+    "row2Label": "SUPPORT, BUT AT A COST",
+    "row2Quote": "Sure, my underwire gives me lift — but by 2pm I'm counting the minutes until I can rip it off. The digging, the poking, the red marks… I'm done.",
+    "row2ProductAlt": "Competitor shapewear product",
+    "row3Name": "RACHEL M.",
+    "row3Label": "COMFORTABLE, BUT NO SHAPE",
+    "row3Quote": "I switched to sports bras for comfort but I looked completely flat under everything. No shape, no lift — just a compressed uniboob."
+  },
+  "bestSeller": {
+    "title": "It's our new Best Seller for a good reason",
+    "imageAlt": "Lifestyle and product video background",
+    "quote": "I haven't worn another bra since I got my first Contour Bra — the support and comfort are unreal. I ordered 3 more because the colors are gorgeous. There's no going back.",
+    "author": "EMILY S.",
+    "verifiedAlt": "Verified buyer",
+    "cta": "SHOP WIRELESS CONTOUR BRA"
+  },
+  "colorPick": {
+    "title": "Pick your color",
+    "white": {
+      "name": "Amanda K.",
+      "body": "I'm up and down a full cup size depending on the month, so the hook-and-eye closure is a lifesaver — I just adjust and it fits perfectly either way. Finally a wireless bra I don't have to replace every time my body changes.",
+      "cta": "SHOP WHITE"
+    },
+    "black": {
+      "name": "Linda T.",
+      "body": "I wear mostly fitted black tops for work and this bra completely disappears underneath. The adjustable straps don't slip — I went a full 10-hour shift without pulling them up once. That alone sold me on buying a second one.",
+      "cta": "SHOP BLACK"
+    },
+    "chai": {
+      "name": "Rachel S.",
+      "body": "I switched the straps to racerback for a tricky summer dress and it was completely invisible. Plus that extra-wide band smooths my back so well I stopped wearing a separate shapewear piece underneath. One less thing to deal with!",
+      "cta": "SHOP CHAI"
+    }
+  },
+  "product": {
+    "title": "Truekind® Supportive Comfort Wireless Shaping Bra",
+    "reviews": "{{count}} reviews",
+    "reviewsHref": "reviews on product page",
+    "savings": "Choose your savings:",
+    "colorLabel": "Color: Black, Black",
+    "colorSwatchBlackAlt": "Color Black",
+    "sizeLabel": "Size: Select your band and cup",
+    "addToCart": "ADD TO CART",
+    "sellingFastAlt": "Selling Fast",
+    "mothersDayAlt": "Mother's Day Sale"
+  },
+  "policy": {
+    "title": "60-Day Return Policy",
+    "badgeAlt": "Fit guarantee badge",
+    "lineBeforeBold": "Enjoy ",
+    "lineBold": "hassle-free exchanges within 60 days!",
+    "lineAfterBold": " Swap your product for any size, color, or style you love. No questions asked!"
+  },
+  "details": {
+    "makes": {
+      "title": "What Makes It Shapermint?",
+      "body": "This wireless shaping bra features modern foam cup technology that delivers the support of an underwire without the dig or discomfort. The wide band construction smooths your sides and back for a seamless silhouette under any top. No-slip adjustable straps stay put all day and keep you lifted without constant readjusting. With convertible strap options and an adjustable hook-and-eye closure, this bra adapts to your body's natural changes"
+    },
+    "sizeFit": {
+      "title": "Size & Fit",
+      "body": "True to size. Use our sizing tool to find your perfect fit."
+    },
+    "fabric": {
+      "title": "Fabric",
+      "body": "91% Nylon, 9% Spandex"
+    },
+    "care": {
+      "title": "Care Instructions",
+      "body": "Hand wash cold to preserve the foam cups and shape. Do not bleach. Lay flat to dry. Do not iron. Do not dry clean."
+    },
+    "sizeGuideCta": "Size and Fit Guide"
+  },
+  "faq": {
+    "title": "All Your Questions, Answered",
+    "q1": "Will it actually support me without an underwire?",
+    "a1": "Yes. The modern foam cups and wide band construction give you the lift and hold of a traditional underwire—without the poking, pinching, or end-of-day soreness. Over a million women have already made the switch.",
+    "q2": "Is it hard to put on?",
+    "a2": "Not at all. The adjustable hook-and-eye closure lets you ease in comfortably, and the stretchy fabric works with your body instead of against it. No wrestling, no contorting—just clasp and go.",
+    "q3": "What if it doesn't fit my body now?",
+    "a3": "Bodies change, and we get that. That's why you can try it risk-free. If you're not completely comfortable, we'll help you exchange for the right size or style—no stress.",
+    "q4": "Is this going to feel bulky or visible under clothes?",
+    "a4": "No. The smooth foam cups and seamless band lay flat against your body, so there's no awkward lines or bumps showing through your favorite tops. It's shaped to disappear under anything you wear. Think sleek support, not extra bulk—comfortable enough for all-day wear.",
+    "shop": "SHOP NOW",
+    "scrollTop": "SCROLL TO TOP"
+  },
+  "footer": {
+    "shapermintInfo": "Shapermint Info",
+    "infoAbout": "About Us",
+    "infoAmbassador": "Ambassador Program",
+    "infoBlog": "The Blog",
+    "infoRefer": "Refer a Friend",
+    "infoStore": "Find a Store",
+    "customerCare": "Customer Care",
+    "careHelp": "Help Center",
+    "careTrack": "Track your Order",
+    "careExchanges": "Exchanges & Returns",
+    "careSub": "Manage Subscriptions",
+    "careShip": "Shipping",
+    "careContact": "Contact Us",
+    "carePrivacy": "Privacy Policy",
+    "joinTitle": "Join Us & Get 10% OFF",
+    "joinHint": "By signing up you agree to subscribe to our newsletter for first access to sales and offers.",
+    "emailLabel": "Email address for newsletter",
+    "emailPlaceholder": "email@address.com",
+    "signUp": "SIGN UP",
+    "legalTerms": "Terms & Conditions",
+    "legalDns": "Do Not Sell My Information",
+    "legalPress": "Press & Inquiries",
+    "copyright": "© {{year}} Shapermint. All rights reserved."
+  },
+  "nav": {
+    "logoHomeAria": "Shapermint home"
+  },
+  "variantNote": "Selected product variant: {{id}}"
+}

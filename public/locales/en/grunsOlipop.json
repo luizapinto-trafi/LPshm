@@ -1,0 +1,192 @@
+{
+  "metaTitle": "Grüns & OLIPOP® Strawberry & Vanilla Gummies (Shapermint lab)",
+  "metaDescription": "Limited-time Grüns × OLIPOP® collab. Layout and copy aligned with gruns.co/pages/first-order-olipop — built with Shapermint design tokens for the design lab.",
+  "a11y": {
+    "skipToContent": "Skip to Content",
+    "logoHome": "Shapermint — Home",
+    "cart": "Cart",
+    "account": "Account"
+  },
+  "announcement": {
+    "line1": "🍓🍦NEW! Strawberry Vanilla OLIPOP®🍦🍓",
+    "line2": "Grab this dreamy, creamy flavor before it's gone."
+  },
+  "header": {
+    "shopAdults": "Shop Adults",
+    "shopKids": "Shop Kids"
+  },
+  "hero": {
+    "ratingLine": "4.8 stars from 85,000 reviews | 1,000,000+ members",
+    "titleLine1": "Two Gut Health Icons.",
+    "titleLine2": "One Perfect Collab.",
+    "title": "Two Gut Health Icons. One Perfect Collab.",
+    "bullets": [
+      "60+ Ingredients. 21 vitamins & minerals.",
+      "6g Prebiotic Fiber. Supports Gut Health.",
+      "Supports Energy, Immunity & Recovery."
+    ],
+    "collabLine": "OLIPOP® x Grüns Strawberry Vanilla — A Limited-Time Collab, Exclusively on Our Website.",
+    "sold": "100M+ Gummies Sold",
+    "cta": "Save 52% + Free Shipping",
+    "riskIntro": "Try It ",
+    "riskHighlight": "Risk-Free For 30 Days",
+    "heroImageAlt": "Grüns and OLIPOP® Strawberry & Vanilla gummies",
+    "heroStickerAlt": "OLIPOP® x Grüns collab"
+  },
+  "taste": {
+    "title": "The Taste of OLIPOP®. The Power of Grüns.",
+    "leadBefore": "We took the comprehensive nutrition of ",
+    "leadMark": "Grüns",
+    "leadAfter": " and paired it with the sweet Strawberry Vanilla taste of OLIPOP®’s classic flavor.",
+    "pillars": [
+      {
+        "title": "Gut Health",
+        "body": "Prebiotics feed good bacteria to boost nutrient absorption and digestion.",
+        "icon": "gut"
+      },
+      {
+        "title": "Immunity",
+        "body": "Immune support and occasional stress support from Vitamin C, D, Zinc, antioxidants, and adaptogens.",
+        "icon": "immunity"
+      },
+      {
+        "title": "Energy & Body",
+        "body": "Support recovery, strength, weight management, and metabolism.",
+        "icon": "energy"
+      },
+      {
+        "title": "Brain Health",
+        "body": "B-Vitamins, Vitamin C, and Vitamin D support brain health.",
+        "icon": "brain"
+      }
+    ],
+    "cta": "Try Grüns →",
+    "floatingCta": "Try Grüns →",
+    "collabImageAlt": "OLIPOP® Strawberry Vanilla with Grüns daily gummies"
+  },
+  "story": {
+    "title": "Your gut’s new power couple",
+    "body": "Hard launch alert. Meet OLIPOP® x Grüns. the most symbiotic relationship ever. Strawberry-vanilla-y, limited-edition, and unlike your last situationship, actually good for you.",
+    "badge": "New Strawberry Vanilla Flavor!",
+    "offerTitle": "Limited Time Offer! Save Up To 52% on Your First Order!"
+  },
+  "offers": {
+    "trustLine": "4.8/5.0 (85,000+), 1M+ customers",
+    "productTitle": "Grüns Superfood Gummies",
+    "productLead": "60+ potent ingredients to revive whole body vitality in great tasting gummies.",
+    "bullets": [
+      "Supports digestion and gut health",
+      "Promotes mental clarity + energy",
+      "Supports immunity + stress relief"
+    ],
+    "flavorLabel": "Select Flavor",
+    "flavorNew": "New Strawberry Vanilla",
+    "flavorOriginal": "Original",
+    "flavorHint": "Bright, ripe strawberry with creamy vanilla twist.",
+    "subscribeTitle": "Most Popular: Get 49% Off",
+    "subscribeSub": "Subscribe & save · 28 packs each 4 weeks",
+    "subscribePriceWas": "$84.98",
+    "subscribePriceNow": "$43.35",
+    "subscribePerDay": "$1.55/day",
+    "otpTitle": "One Time Purchase",
+    "otpSub": "28 packs delivered once",
+    "otpPrice": "$57.79",
+    "otpPerDay": "$2.06/day",
+    "subscribeBullets": [
+      "30-Day Guarantee",
+      "FAST & FREE Shipping on first order",
+      "Pause or cancel any time",
+      "Online exclusive"
+    ],
+    "otpBullets": [
+      "No free shipping",
+      "Discount on first order only"
+    ],
+    "cta": "Start Now"
+  },
+  "stats": {
+    "deficientTitle": "Modern Living Leaves Our Bodies Deficient",
+    "stat1": "61%",
+    "stat1Body": "of Americans experience weekly digestive issues like bloating, abdominal pain, or irregularity.¹",
+    "stat2": "90%",
+    "stat2Body": "of U.S. adults don’t meet recommended daily nutrient intake—including vitamins and minerals found in Grüns.²",
+    "cta": "Save 52% + Free Shipping",
+    "snackTitle": "Snackable, Packable, Tested",
+    "snackLead": "We know Grüns is delicious and convenient, but we wanted to understand what happens after the honeymoon. Here’s what thousands of customers reported after 3 months of Grüns.",
+    "snackStats": [
+      { "value": "95%", "body": "of users take Grüns at least 4–6× per week with 80% taking Grüns daily.*" },
+      { "value": "67%", "body": "say their overall health and well-being have improved.*" },
+      { "value": "67%", "body": "experienced better, more regular digestion.*" },
+      { "value": "52%", "body": "feel more energized throughout the day.*" }
+    ],
+    "snackFoot": "*In a post purchase survey of 3k+ customers who’ve been using Grüns daily.",
+    "qualityTitle": "Quality You Can Trust",
+    "qualityLead": "Our gummies are regularly tested for all 21 vitamins & minerals to ensure label claims are accurate and clear of contaminants, including:",
+    "qualityList": [
+      "70 different pesticides",
+      "4 types of heavy metals",
+      "16 different contaminants",
+      "9 microbial contaminants"
+    ]
+  },
+  "reviews": {
+    "title": "Join 1,000,000+ Others Filling Nutrition Gaps",
+    "items": [
+      {
+        "headline": "Creamy, fruity, and nothing like those powders",
+        "quote": "Not usually a fruity flavor person but strawberry vanilla is really good. Creamy and light. Been looking forward to it every morning",
+        "author": "Ashley W."
+      },
+      {
+        "headline": "Flavor is way better than I expected",
+        "quote": "This collab is legit. Creamy and fruity at the same time. Already told everyone at work about it!",
+        "author": "Jake P."
+      },
+      {
+        "headline": "Almost skipped this one, glad I didn’t",
+        "quote": "My friend convinced me to try it. Strawberry vanilla is really good. Definitely not too sweet. Hope they bring this one back",
+        "author": "Karen F."
+      }
+    ],
+    "disclaimer": "Testimonials featured in videos or other promotional materials may include individuals who have received compensation, free product, or other incentives."
+  },
+  "closing": {
+    "vsTitle": "Us vs. Them",
+    "vsBody": "Not overhyped or overpriced. Just comprehensive nutrition made enjoyable and for everyone.",
+    "fumbleTitle": "Don’t Fumble the Bag",
+    "fumbleBody": "You never know what you have until it’s out of stock. Don’t miss out on Strawberry Vanilla.",
+    "fumbleCta": "Stock Up While You Can!",
+    "questionsTitle": "Any last questions?",
+    "questionsCta": "No? Try Grüns Now →"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": [
+      {
+        "q": "What is the new OLIPOP® flavor about?",
+        "a": "We joined forces with OLIPOP® to bring their fan-favorite Strawberry Vanilla flavor into your daily Grüns. Bright strawberry and creamy vanilla. Same greens you know — new flavor worth trying. 🍓 (Demo layout — Shapermint design lab.)"
+      },
+      {
+        "q": "I’m subscribed. How do I get Grüns OLIPOP® on my next order?",
+        "a": "In production, you’ll manage swaps in your Grüns account. This demo is for layout only; links point to shapermint.com for CTAs."
+      },
+      {
+        "q": "When will my gummies arrive?",
+        "a": "We’re fast! Orders typically ship within 24 hours and on average arrive 3–5 days later."
+      },
+      {
+        "q": "What’s inside each order? What am I getting?",
+        "a": "All of our gummies ship in a larger pouch that contains 28 daily sachets — a small handful of gummies to enjoy each day for comprehensive nutrition."
+      },
+      {
+        "q": "When will I feel something?",
+        "a": "The timeline can vary. Some people notice changes within days or weeks; for others it’s more gradual. Consistent daily use matters most."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease. Demo page — Shapermint design lab.",
+    "copyright": "© Shapermint design lab",
+    "shapermint": "Shapermint.com"
+  }
+}

@@ -1,5 +1,37 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
+## Git y GitHub
+
+El remoto por defecto del equipo suele ser **HTTPS**:  
+`https://github.com/trafilea/SHMLandingPages.git`.
+
+### HTTPS + GitHub CLI (recomendado si ya usas `gh`)
+
+Una vez tengas sesión en la CLI (`gh auth login`), enlaza Git para que use esas credenciales:
+
+```bash
+gh auth setup-git
+```
+
+Comprueba con:
+
+```bash
+npm run check:github
+# o: ./scripts/verify-github-ssh.sh
+```
+
+- **Repository not found** (HTTPS) — suele ser falta de login o sin permiso al repo; ejecuta `gh auth login` y `gh auth setup-git`, o confirma acceso a la organización `trafilea`.
+
+### SSH (alternativa)
+
+```bash
+git remote set-url origin git@github.com:trafilea/SHMLandingPages.git
+npm run check:github
+```
+
+- **Host key verification failed** — el script añade `github.com` a `known_hosts` cuando el remoto es SSH.
+- **Permission denied (publickey)** — clave en GitHub y en el agente, p. ej. macOS: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` ([docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
+
 ## Getting Started
 
 First, run the development server:
