@@ -1,0 +1,179 @@
+{
+  "metaTitle": "Shapermint × OLIPOP® — Strawberry & Vanilla (demo landing)",
+  "metaDescription": "Limited-time collab story, built with Shapermint design tokens and assets. Demo layout inspired by gruns.co/pages/first-order-olipop.",
+  "a11y": {
+    "skipToContent": "Skip to Content",
+    "logoHome": "Shapermint — Home",
+    "cart": "Cart",
+    "account": "Account"
+  },
+  "announcement": {
+    "line1": "NEW! Strawberry Vanilla OLIPOP®",
+    "line2": "Grab this dreamy, creamy flavor before it's gone."
+  },
+  "header": {
+    "shopAdults": "Shop Adults",
+    "shopKids": "Shop Kids"
+  },
+  "hero": {
+    "ratingLine": "4.8 stars from 85,000 reviews | 1,000,000+ members",
+    "title": "Two wellness icons. One perfect collab.",
+    "bullets": [
+      "60+ Ingredients. 21 vitamins & minerals.",
+      "6g Prebiotic Fiber. Supports gut health.",
+      "Supports energy, immunity & recovery."
+    ],
+    "collabLine": "OLIPOP® × Shapermint Strawberry Vanilla — Limited-time story, built for our design lab.",
+    "sold": "100M+ packs loved worldwide",
+    "cta": "Save up to 52% + Free Shipping",
+    "riskIntro": "Try It ",
+    "riskHighlight": "Risk-Free For 30 Days"
+  },
+  "taste": {
+    "title": "The Taste of OLIPOP®. The Power of Grüns.",
+    "leadBefore": "We took the comprehensive nutrition of ",
+    "leadMark": "Grüns",
+    "leadAfter": " and paired it with the sweet Strawberry Vanilla taste of OLIPOP®’s classic flavor.",
+    "pillars": [
+      {
+        "title": "Gut Health",
+        "body": "Prebiotics feed good bacteria to boost nutrient absorption and digestion.",
+        "icon": "gut"
+      },
+      {
+        "title": "Immunity",
+        "body": "Immune support and occasional stress support from Vitamin C, D, Zinc, antioxidants, and adaptogens.",
+        "icon": "immunity"
+      },
+      {
+        "title": "Energy & Body",
+        "body": "Support recovery, strength, weight management, and metabolism.",
+        "icon": "energy"
+      },
+      {
+        "title": "Brain Health",
+        "body": "B-Vitamins, Vitamin C, and Vitamin D support brain health.",
+        "icon": "brain"
+      }
+    ],
+    "cta": "View offers →",
+    "collabImageAlt": "OLIPOP Strawberry Vanilla with daily gummies — placeholder for final art"
+  },
+  "story": {
+    "title": "Your gut’s new power couple",
+    "body": "Hard launch energy: OLIPOP® × Shapermint — strawberry-vanilla-y, limited-edition, and unlike your last situationship, actually good for you.",
+    "badge": "New Strawberry Vanilla flavor!",
+    "offerTitle": "Limited time — save up to 52% on your first order"
+  },
+  "offers": {
+    "trustLine": "4.8/5.0 (85,000+), 1M+ customers",
+    "productTitle": "Daily wellness gummies",
+    "productLead": "60+ potent ingredients to revive whole-body vitality in great-tasting daily packs.",
+    "bullets": [
+      "Supports digestion and gut health",
+      "Promotes mental clarity + energy",
+      "Supports immunity + stress relief"
+    ],
+    "flavorLabel": "Select flavor",
+    "flavorNew": "New Strawberry Vanilla",
+    "flavorOriginal": "Original",
+    "flavorHint": "Bright strawberry with a creamy vanilla twist.",
+    "subscribeTitle": "Most popular: Subscribe & save",
+    "subscribeSub": "28 packs every 4 weeks",
+    "subscribePriceWas": "$84.98",
+    "subscribePriceNow": "$43.35",
+    "subscribePerDay": "$1.55/day",
+    "otpTitle": "One-time purchase",
+    "otpSub": "28 packs delivered once",
+    "otpPrice": "$57.79",
+    "otpPerDay": "$2.06/day",
+    "subscribeBullets": [
+      "30-day guarantee",
+      "Fast & free shipping on first order",
+      "Pause or cancel anytime"
+    ],
+    "otpBullets": ["No free shipping", "Discount on first order only"],
+    "cta": "Start now"
+  },
+  "stats": {
+    "deficientTitle": "Modern living leaves our bodies deficient",
+    "stat1": "61%",
+    "stat1Body": "of Americans experience weekly digestive issues like bloating, abdominal pain, or irregularity.",
+    "stat2": "90%",
+    "stat2Body": "of U.S. adults don’t meet recommended daily nutrient intake — including vitamins and minerals in a daily stack like this.",
+    "cta": "Save 52% + Free Shipping",
+    "snackTitle": "Snackable, packable, tested",
+    "snackLead": "After the honeymoon, consistency wins. Here’s what thousands of customers reported after 3 months.",
+    "snackStats": [
+      { "value": "95%", "body": "take it at least 4–6× per week; 80% daily.*" },
+      { "value": "67%", "body": "say overall health and well-being improved.*" },
+      { "value": "67%", "body": "experienced better, more regular digestion.*" },
+      { "value": "52%", "body": "feel more energized throughout the day.*" }
+    ],
+    "snackFoot": "*Post-purchase survey of 3k+ daily users — illustrative copy for this demo.",
+    "qualityTitle": "Quality you can trust",
+    "qualityLead": "Rigorously tested for label accuracy and contaminants, including:",
+    "qualityList": [
+      "70 different pesticides",
+      "4 types of heavy metals",
+      "16 different contaminants",
+      "9 microbial contaminants"
+    ]
+  },
+  "reviews": {
+    "title": "Join 1,000,000+ others filling nutrition gaps",
+    "items": [
+      {
+        "headline": "Creamy, fruity, and nothing like those powders",
+        "quote": "Not usually a fruity flavor person but strawberry vanilla is really good — creamy and light.",
+        "author": "Ashley W."
+      },
+      {
+        "headline": "Flavor is way better than I expected",
+        "quote": "This collab is legit. Creamy and fruity at the same time. Already told everyone at work.",
+        "author": "Jake P."
+      },
+      {
+        "headline": "Almost skipped this one, glad I didn't",
+        "quote": "Strawberry vanilla is really good. Definitely not too sweet. Hope they bring this one back.",
+        "author": "Karen F."
+      }
+    ],
+    "disclaimer": "Testimonials may include individuals who received compensation, free product, or other incentives."
+  },
+  "closing": {
+    "vsTitle": "Us vs. them",
+    "vsBody": "Not overhyped or overpriced — comprehensive nutrition made enjoyable and for everyone.",
+    "fumbleTitle": "Don’t fumble the bag",
+    "fumbleBody": "You never know what you have until it’s out of stock. Don’t miss out on Strawberry Vanilla.",
+    "fumbleCta": "Stock up while you can",
+    "questionsTitle": "Any last questions?",
+    "questionsCta": "No? View offers →"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": [
+      {
+        "q": "What is the new OLIPOP® flavor about?",
+        "a": "We joined forces with OLIPOP® to bring Strawberry Vanilla into your daily ritual — bright strawberry, creamy vanilla, same greens-forward habit. Demo copy only."
+      },
+      {
+        "q": "When will my order arrive?",
+        "a": "Demo timeline: most orders ship within 24 hours and arrive in 3–5 business days."
+      },
+      {
+        "q": "What’s inside each order?",
+        "a": "Each pouch contains 28 daily sachets — one small handful of gummies per day for comprehensive nutrition."
+      },
+      {
+        "q": "When will I feel something?",
+        "a": "Everyone’s different. Some notice changes in days or weeks; consistency matters most."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "*These statements have not been evaluated by the Food and Drug Administration. This demo page is not a product claim.",
+    "copyright": "© Shapermint design lab — demo layout",
+    "shapermint": "Shapermint.com"
+  }
+}
