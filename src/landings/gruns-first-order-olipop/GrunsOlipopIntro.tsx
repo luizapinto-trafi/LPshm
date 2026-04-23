@@ -1,203 +1,127 @@
-import styled from "styled-components";
+import Image from "next/image";
 import { useTranslation } from "next-i18next/pages";
+import { GrunsOlipopCdn, GrunsOlipopGallery } from "./grunsOlipopCdn";
 
-const StyledSection = styled.section`
-  background: linear-gradient(
-    165deg,
-    var(--coral-100) 0%,
-    var(--coral-050) 42%,
-    var(--cream-200) 100%
+function CtaPillWithBadge({ className = "" }: { className?: string }) {
+  const { t } = useTranslation("grunsOlipop");
+  return (
+    <div className={`flex w-full max-w-[440px] flex-col items-stretch ${className}`}>
+      <div className="relative -mb-3 flex w-full flex-col">
+        <span
+          className="relative z-10 mx-auto inline-flex rounded-full border border-ink-1000 bg-gold-500 px-2.5 py-1 font-display text-[11px] font-bold uppercase tracking-wide text-ink-1000"
+          style={{ marginLeft: "auto", marginRight: "auto" }}
+        >
+          {t("hero.sold")}
+        </span>
+        <a
+          href="#offers"
+          className="relative z-0 -mt-2 inline-flex w-full items-center justify-center rounded-full border-2 border-ink-1000 bg-coral-600 px-5 pb-4 pt-7 font-display text-base font-bold text-ink-1000 shadow-brutal no-underline transition hover:bg-coral-550 active:translate-x-0.5 active:translate-y-0.5 active:shadow-brutal-active sm:text-lg"
+        >
+          {t("hero.cta")}
+        </a>
+      </div>
+    </div>
   );
-  padding: var(--space-1200) var(--space-1000);
-  @media (max-width: 800px) {
-    padding: var(--space-800) var(--space-400);
-  }
-`;
-
-const StyledInner = styled.div`
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: var(--space-600);
-`;
-
-const StyledStars = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--space-200);
-  font-size: 14px;
-  color: var(--gruns-dark);
-  font-family: var(--font-body);
-`;
-
-const StyledStarRow = styled.span`
-  color: var(--gruns-gold);
-  letter-spacing: 2px;
-  font-size: 18px;
-`;
-
-const StyledHeroTitle = styled.h1`
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.8vw, 2rem);
-  font-weight: 700;
-  line-height: 1.15;
-  color: var(--gruns-dark);
-  margin: 0;
-`;
-
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-300);
-`;
-
-const StyledLi = styled.li`
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-200);
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: var(--gruns-dark);
-  &::before {
-    content: "✓";
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gruns-primary);
-    color: var(--white);
-    border-radius: var(--radius-full);
-    font-size: 11px;
-    font-weight: 700;
-  }
-`;
-
-const StyledCollab = styled.p`
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--gruns-dark);
-  margin: 0;
-`;
-
-/** CTA stack: Shapermint DS tokens (gold + coral + ink) — badge overlaps pill button */
-const StyledCtaCluster = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  margin-inline: auto;
-`;
-
-const StyledHeroBadge = styled.span`
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: calc(-1 * var(--space-300));
-  padding: 8px 10px;
-  background: var(--gold-500);
-  color: var(--ink-1000);
-  border: 1px solid var(--ink-1000);
-  border-radius: var(--radius-full);
-  font-family: var(--font-display);
-  font-size: clamp(11px, 1.9vw, 13px);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  text-align: center;
-`;
-
-const StyledHeroCta = styled.a`
-  position: relative;
-  z-index: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 440px;
-  padding: 28px 40px 20px;
-  margin: 0;
-  background: var(--coral-600);
-  color: var(--ink-1000);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(15px, 2.4vw, 18px);
-  line-height: 1.15;
-  text-align: center;
-  text-decoration: none;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--ink-1000);
-  box-shadow: 3px 3px 0 0 var(--ink-1000);
-  transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
-  &:hover {
-    background: var(--coral-550);
-  }
-  &:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 0 var(--ink-1000);
-  }
-  &:focus-visible {
-    outline: 3px solid var(--coral-300);
-    outline-offset: 3px;
-  }
-`;
-
-const StyledRisk = styled.p`
-  margin: var(--space-500) 0 0;
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--ink-1000);
-  text-align: center;
-`;
-
-const StyledRiskUnderline = styled.span`
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-`;
+}
 
 export const GrunsOlipopIntro = () => {
   const { t } = useTranslation("grunsOlipop");
   const bullets = t("hero.bullets", { returnObjects: true }) as string[];
   return (
-    <StyledSection>
-      <StyledInner>
-        <StyledStars>
-          <StyledStarRow aria-hidden>★★★★★</StyledStarRow>
-          <span>{t("hero.ratingLine")}</span>
-        </StyledStars>
-        <StyledHeroTitle>{t("hero.title")}</StyledHeroTitle>
-        <StyledList>
-          {bullets.map((b) => (
-            <StyledLi key={b}>{b}</StyledLi>
-          ))}
-        </StyledList>
-        <StyledCollab>{t("hero.collabLine")}</StyledCollab>
-        <StyledCtaCluster>
-          <StyledHeroBadge>{t("hero.sold")}</StyledHeroBadge>
-          <StyledHeroCta href="#offers">{t("hero.cta")}</StyledHeroCta>
-        </StyledCtaCluster>
-        <StyledRisk>
-          {t("hero.riskIntro")}
-          <StyledRiskUnderline>{t("hero.riskHighlight")}</StyledRiskUnderline>
-        </StyledRisk>
-      </StyledInner>
-    </StyledSection>
+    <section className="bg-gradient-to-b from-white from-0% via-coral-100/90 via-40% to-cream-200 to-100% py-10 md:py-16">
+      <div className="mx-auto flex w-full max-w-7xl flex-col-reverse items-center gap-8 px-4 sm:px-6 md:flex-row md:items-stretch md:gap-10 md:px-8 lg:gap-14">
+        {/* copy */}
+        <div className="z-10 flex w-full min-w-0 max-w-lg flex-1 flex-col items-center gap-3 text-left md:max-w-[50%] md:items-start md:gap-5">
+          <a
+            className="flex w-full max-w-sm items-center gap-3 self-center no-underline hover:opacity-90 sm:max-w-md md:justify-start"
+            href="#reviews"
+          >
+            <div className="relative h-9 w-16 shrink-0 overflow-hidden rounded border border-dashed border-ink-200 bg-ink-100 sm:h-10 sm:w-20">
+              <Image
+                src={GrunsOlipopCdn.seal}
+                alt=""
+                fill
+                className="object-contain p-0.5"
+                sizes="80px"
+              />
+            </div>
+            <div className="min-w-0 text-gruns-dark">
+              <div className="text-base leading-none text-gruns-gold" aria-hidden>
+                ★★★★★
+              </div>
+              <p className="mt-0.5 font-body text-xs text-ink-700 sm:text-sm">{t("hero.ratingLine")}</p>
+            </div>
+          </a>
+
+          <h1 className="text-center font-display text-3xl font-black leading-[1.08] tracking-tight text-ink-1000 sm:text-4xl md:max-w-none md:text-left md:text-5xl md:leading-tight">
+            {t("hero.titleLine1")} <br className="hidden md:block" />
+            <span className="text-coral-600">
+              <strong className="font-extrabold">{t("hero.titleLine2")}</strong>
+            </span>
+          </h1>
+
+          <div className="w-full self-center sm:max-w-sm md:hidden">
+            <CtaPillWithBadge className="items-center" />
+          </div>
+
+          <ul className="mt-1 w-full list-none pl-0">
+            {bullets.map((b) => (
+              <li
+                className="mb-0 flex min-h-8 items-center gap-2.5 pl-0 font-body text-sm font-medium text-ink-900 sm:text-base"
+                key={b}
+              >
+                <span
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gruns-primary text-[0.6rem] font-extrabold text-white"
+                  aria-hidden
+                >
+                  ✓
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          <p className="max-w-xl text-center text-[15px] font-bold text-ink-800 sm:text-base md:max-w-none md:text-left">
+            {t("hero.collabLine")}
+          </p>
+
+          <div className="hidden w-full self-start md:mt-1 md:block">
+            <CtaPillWithBadge />
+          </div>
+
+          <p className="w-full self-center text-center text-sm text-ink-1000 sm:text-[15px] md:self-start md:text-left">
+            {t("hero.riskIntro")}
+            <strong className="cursor-pointer font-bold underline decoration-1 underline-offset-2">
+              {t("hero.riskHighlight")}
+            </strong>
+          </p>
+        </div>
+
+        {/* product */}
+        <div className="flex w-full min-w-0 max-w-md flex-1 items-center justify-center self-center sm:max-w-md md:max-w-[50%] md:justify-end">
+          <div className="relative w-full max-w-md">
+            <div className="relative aspect-[6/5] w-full max-h-[32rem] overflow-hidden rounded-2xl border-2 border-ink-1000 bg-ink-100 shadow-brutal">
+              <Image
+                src={GrunsOlipopGallery[0]!}
+                alt={t("hero.heroImageAlt")}
+                width={600}
+                height={500}
+                className="h-full w-full object-contain p-0"
+                priority
+              />
+            </div>
+            <div className="absolute -left-2 -top-3 z-10 w-[32%] max-w-[7.5rem] -rotate-6 overflow-hidden rounded-full border-2 border-ink-1000 bg-white p-0 shadow-brutal-sm sm:-left-3 sm:-top-4">
+              <Image
+                src={GrunsOlipopGallery[2]!}
+                alt={t("hero.heroStickerAlt")}
+                width={120}
+                height={120}
+                className="h-full w-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
-};
+}

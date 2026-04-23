@@ -4,7 +4,6 @@
  * Assets y tokens: Shapermint DS + cdn.shapermint.com + @shapermint/assets.
  */
 import Head from "next/head";
-import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import type { GetStaticProps, NextPage } from "next";
@@ -16,37 +15,27 @@ import { GrunsOlipopOffers } from "@/landings/gruns-first-order-olipop/GrunsOlip
 import { GrunsOlipopTrust } from "@/landings/gruns-first-order-olipop/GrunsOlipopTrust";
 import { GrunsOlipopFaq } from "@/landings/gruns-first-order-olipop/GrunsOlipopFaq";
 import { GrunsOlipopFooter } from "@/landings/gruns-first-order-olipop/GrunsOlipopFooter";
-
-const StyledSkip = styled.a`
-  position: absolute;
-  left: -10000px;
-  top: 0;
-  z-index: 200;
-  padding: var(--space-200) var(--space-400);
-  background: var(--gruns-primary);
-  color: var(--white);
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  &:focus {
-    left: var(--space-400);
-    top: var(--space-200);
-  }
-`;
+import { GrunsOlipopFloatCta } from "@/landings/gruns-first-order-olipop/GrunsOlipopFloatCta";
 
 const GrunsFirstOrderOlipopPage: NextPage = () => {
   const { t } = useTranslation("grunsOlipop");
   const site = "https://www.shapermint.com";
   return (
-    <>
+    <div className="font-body text-ink-900">
       <Head>
         <title>{t("metaTitle")}</title>
         <meta name="description" content={t("metaDescription")} />
         <link rel="canonical" href={`${site}${GrunsOlipopPagePath}`} />
       </Head>
       <GrunsOlipopHeader />
-      <StyledSkip href="#main-content">{t("a11y.skipToContent")}</StyledSkip>
-      <main id="main-content" tabIndex={-1} style={{ outline: "none" }}>
+      <a
+        href="#main-content"
+        className="absolute left-[-10000px] top-0 z-[200] rounded-md bg-gruns-primary px-4 py-2 text-sm font-semibold text-white focus:left-4 focus:top-2"
+      >
+        {t("a11y.skipToContent")}
+      </a>
+      <GrunsOlipopFloatCta />
+      <main id="main-content" tabIndex={-1} className="outline-none" role="main">
         <GrunsOlipopIntro />
         <GrunsOlipopMid />
         <GrunsOlipopOffers />
@@ -54,7 +43,7 @@ const GrunsFirstOrderOlipopPage: NextPage = () => {
         <GrunsOlipopFaq />
       </main>
       <GrunsOlipopFooter />
-    </>
+    </div>
   );
 };
 

@@ -1,230 +1,122 @@
-import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
-
-const StyledBlock = styled.section`
-  padding: var(--space-1200) var(--space-1000);
-  background: var(--white);
-  @media (max-width: 800px) {
-    padding: var(--space-800) var(--space-400);
-  }
-`;
-
-const StyledInner = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-`;
-
-const StyledH2 = styled.h2`
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.8vw, 2rem);
-  font-weight: 700;
-  color: var(--gruns-dark);
-  text-align: center;
-  margin: 0 0 var(--space-800) 0;
-`;
-
-const StyledGrid2 = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-600);
-  margin-bottom: var(--space-800);
-  @media (max-width: 700px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledStat = styled.div`
-  text-align: center;
-  padding: var(--space-600);
-  border-radius: var(--radius-xl);
-  background: var(--gruns-cream);
-  border: 1px solid var(--ink-100);
-`;
-
-const StyledBig = styled.p`
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  font-weight: 800;
-  font-family: var(--font-display);
-  color: var(--gruns-primary);
-  margin: 0 0 var(--space-300) 0;
-`;
-
-const StyledCta = styled.a`
-  display: table;
-  margin: var(--space-600) auto 0;
-  background: var(--gruns-primary);
-  color: var(--white);
-  font-weight: 600;
-  padding: var(--space-400) var(--space-600);
-  border-radius: var(--radius-xl);
-  text-decoration: none;
-  &:hover {
-    background: var(--gruns-primary-light);
-  }
-`;
-
-const StyledSnackGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-500);
-  margin-top: var(--space-800);
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledSnack = styled.div`
-  padding: var(--space-500);
-  border-radius: var(--radius-lg);
-  background: var(--ink-050);
-`;
-
-const StyledList = styled.ul`
-  margin: var(--space-400) auto 0;
-  max-width: 520px;
-  padding-left: 1.2rem;
-  color: var(--gruns-dark);
-  line-height: 1.55;
-`;
-
-const StyledReviews = styled.div`
-  margin-top: var(--space-1200);
-  display: grid;
-  gap: var(--space-500);
-`;
-
-const StyledReview = styled.article`
-  padding: var(--space-500);
-  border: 1px solid var(--ink-200);
-  border-radius: var(--radius-xl);
-  background: var(--white);
-`;
-
-const StyledVs = styled.section`
-  margin-top: var(--space-1200);
-  padding: var(--space-800);
-  border-radius: var(--radius-xl);
-  background: var(--gruns-primary);
-  color: var(--white);
-  text-align: center;
-`;
-
-const StyledFumble = styled.section`
-  margin-top: var(--space-800);
-  text-align: center;
-  padding: var(--space-800) 0;
-`;
-
-const StyledLink = styled.a`
-  display: inline-flex;
-  margin-top: var(--space-400);
-  font-weight: 600;
-  color: var(--coral-500);
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
 
 export const GrunsOlipopTrust = () => {
   const { t } = useTranslation("grunsOlipop");
-  const snackStats = t("stats.snackStats", { returnObjects: true }) as Array<{
-    value: string;
-    body: string;
-  }>;
+  const snackStats = t("stats.snackStats", { returnObjects: true }) as { value: string; body: string }[];
   const qualityList = t("stats.qualityList", { returnObjects: true }) as string[];
-  const reviews = t("reviews.items", { returnObjects: true }) as Array<{
+  const reviews = t("reviews.items", { returnObjects: true }) as {
     headline: string;
     quote: string;
     author: string;
-  }>;
-  return (
-    <StyledBlock>
-      <StyledInner>
-        <StyledH2>{t("stats.deficientTitle")}</StyledH2>
-        <StyledGrid2>
-          <StyledStat>
-            <StyledBig>{t("stats.stat1")}</StyledBig>
-            <p style={{ margin: 0, lineHeight: 1.5 }}>{t("stats.stat1Body")}</p>
-          </StyledStat>
-          <StyledStat>
-            <StyledBig>{t("stats.stat2")}</StyledBig>
-            <p style={{ margin: 0, lineHeight: 1.5 }}>{t("stats.stat2Body")}</p>
-          </StyledStat>
-        </StyledGrid2>
-        <StyledCta href="#offers">{t("stats.cta")}</StyledCta>
+  }[];
 
-        <StyledH2 style={{ marginTop: "var(--space-1200)" }}>{t("stats.snackTitle")}</StyledH2>
-        <p
-          style={{
-            textAlign: "center",
-            maxWidth: 640,
-            margin: "0 auto var(--space-600)",
-            lineHeight: 1.55,
-            color: "var(--gruns-gray)",
-          }}
+  return (
+    <section className="bg-white px-4 py-10 sm:px-6 sm:py-20 md:px-8">
+      <div className="mx-auto max-w-3xl">
+        <h2 className="mb-8 text-center font-display text-xl font-bold text-gruns-dark sm:mb-10 sm:text-2xl">
+          {t("stats.deficientTitle")}
+        </h2>
+        <div className="mb-8 grid grid-cols-1 gap-5 sm:mb-10 md:grid-cols-2 md:gap-6">
+          <div className="rounded-2xl border border-ink-100 bg-gruns-cream p-5 text-center sm:p-6">
+            <p className="mb-2 font-display text-4xl font-extrabold text-gruns-primary sm:text-5xl">
+              {t("stats.stat1")}
+            </p>
+            <p className="m-0 leading-relaxed text-gruns-dark">{t("stats.stat1Body")}</p>
+          </div>
+          <div className="rounded-2xl border border-ink-100 bg-gruns-cream p-5 text-center sm:p-6">
+            <p className="mb-2 font-display text-4xl font-extrabold text-gruns-primary sm:text-5xl">
+              {t("stats.stat2")}
+            </p>
+            <p className="m-0 leading-relaxed text-gruns-dark">{t("stats.stat2Body")}</p>
+          </div>
+        </div>
+        <a
+          className="mx-auto mt-2 table rounded-xl bg-gruns-primary px-5 py-3.5 text-center text-base font-semibold text-white no-underline transition hover:bg-gruns-primary-light sm:px-6"
+          href="#offers"
         >
+          {t("stats.cta")}
+        </a>
+
+        <h2 className="mb-3 mt-16 text-center font-display text-xl font-bold text-gruns-dark sm:mb-4 sm:mt-20 sm:text-2xl">
+          {t("stats.snackTitle")}
+        </h2>
+        <p className="mx-auto mb-6 max-w-2xl text-center text-base leading-relaxed text-gruns-gray sm:mb-8">
           {t("stats.snackLead")}
         </p>
-        <StyledSnackGrid>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
           {snackStats.map((s) => (
-            <StyledSnack key={s.value + s.body}>
-              <StyledBig style={{ fontSize: "2.25rem", textAlign: "center" }}>{s.value}</StyledBig>
-              <p style={{ margin: 0, textAlign: "center", fontSize: 14 }}>{s.body}</p>
-            </StyledSnack>
+            <div className="rounded-xl bg-ink-50 p-4 sm:p-5" key={s.value + s.body}>
+              <p className="text-center font-display text-3xl font-extrabold text-gruns-primary sm:text-4xl">
+                {s.value}
+              </p>
+              <p className="m-0 mt-1.5 text-center text-sm text-gruns-dark">{s.body}</p>
+            </div>
           ))}
-        </StyledSnackGrid>
-        <p style={{ textAlign: "center", fontSize: 12, marginTop: 24, color: "var(--ink-500)" }}>
-          {t("stats.snackFoot")}
-        </p>
+        </div>
+        <p className="mt-4 text-center text-xs text-ink-500 sm:mt-5">{t("stats.snackFoot")}</p>
 
-        <StyledH2 style={{ marginTop: "var(--space-1200)" }}>{t("stats.qualityTitle")}</StyledH2>
-        <p style={{ textAlign: "center", color: "var(--gruns-gray)", marginBottom: 16 }}>
-          {t("stats.qualityLead")}
-        </p>
-        <StyledList>
+        <h2 className="mb-3 mt-16 text-center font-display text-xl font-bold text-gruns-dark sm:mt-20 sm:text-2xl">
+          {t("stats.qualityTitle")}
+        </h2>
+        <p className="mb-3 text-center text-base text-gruns-gray sm:mb-4">{t("stats.qualityLead")}</p>
+        <ul className="mx-auto max-w-lg list-decimal pl-5 text-left text-base leading-relaxed text-gruns-dark sm:pl-6">
           {qualityList.map((item) => (
-            <li key={item}>{item}</li>
+            <li className="mb-1" key={item}>
+              {item}
+            </li>
           ))}
-        </StyledList>
+        </ul>
 
-        <StyledReviews>
-          <StyledH2>{t("reviews.title")}</StyledH2>
-          {reviews.map((r) => (
-            <StyledReview key={r.author}>
-              <div style={{ color: "var(--gruns-gold)", letterSpacing: 2, marginBottom: 8 }}>★★★★★</div>
-              <h3 style={{ margin: "0 0 8px", fontSize: 17 }}>{r.headline}</h3>
-              <p style={{ margin: "0 0 12px", lineHeight: 1.5, color: "var(--gruns-gray)" }}>{r.quote}</p>
-              <footer style={{ fontWeight: 600, fontSize: 14 }}>— {r.author}</footer>
-            </StyledReview>
-          ))}
-          <p style={{ fontSize: 12, color: "var(--ink-500)", textAlign: "center" }}>
-            {t("reviews.disclaimer")}
-          </p>
-        </StyledReviews>
-
-        <StyledVs>
-          <h2 style={{ margin: "0 0 12px", fontSize: "clamp(1.35rem, 3vw, 1.75rem)" }}>
-            {t("closing.vsTitle")}
+        <div className="mt-16 grid gap-5 sm:mt-20" id="reviews">
+          <h2 className="text-center font-display text-xl font-bold text-gruns-dark sm:text-2xl">
+            {t("reviews.title")}
           </h2>
-          <p style={{ margin: 0, opacity: 0.95, lineHeight: 1.5 }}>{t("closing.vsBody")}</p>
-        </StyledVs>
+          {reviews.map((r) => (
+            <article
+              className="rounded-2xl border border-ink-200 bg-white p-4 sm:p-5"
+              key={r.author}
+            >
+              <div className="mb-2 text-gruns-gold" style={{ letterSpacing: 2 }} aria-hidden>
+                ★★★★★
+              </div>
+              <h3 className="mb-2 text-lg font-bold text-ink-900">{r.headline}</h3>
+              <p className="m-0 mb-3 text-base leading-relaxed text-gruns-gray">{r.quote}</p>
+              <footer className="text-sm font-semibold text-ink-900">— {r.author}</footer>
+            </article>
+          ))}
+          <p className="text-center text-xs text-ink-500">{t("reviews.disclaimer")}</p>
+        </div>
 
-        <StyledFumble>
-          <h2 style={{ margin: "0 0 12px", fontFamily: "var(--font-display)" }}>
+        <div className="mt-12 rounded-2xl bg-gruns-primary px-5 py-8 text-center text-white sm:mt-16 sm:px-8 sm:py-10">
+          <h2 className="m-0 mb-3 text-xl font-bold sm:text-2xl">{t("closing.vsTitle")}</h2>
+          <p className="m-0 text-base leading-relaxed opacity-95">{t("closing.vsBody")}</p>
+        </div>
+
+        <div className="mt-10 text-center sm:mt-12">
+          <h2 className="mb-2 font-display text-xl font-bold text-gruns-dark sm:text-2xl">
             {t("closing.fumbleTitle")}
           </h2>
-          <p style={{ margin: 0, maxWidth: 520, marginInline: "auto", lineHeight: 1.5 }}>
+          <p className="mx-auto mb-4 max-w-lg text-base leading-relaxed text-gruns-dark">
             {t("closing.fumbleBody")}
           </p>
-          <StyledLink href="#offers">{t("closing.fumbleCta")}</StyledLink>
-        </StyledFumble>
+          <a
+            className="mt-1 inline-block font-semibold text-coral-500 no-underline hover:underline"
+            href="#offers"
+          >
+            {t("closing.fumbleCta")}
+          </a>
+        </div>
 
-        <StyledH2>{t("closing.questionsTitle")}</StyledH2>
-        <StyledCta href="#offers" style={{ marginTop: 16 }}>
+        <h2 className="mb-3 mt-10 text-center font-display text-xl font-bold text-gruns-dark sm:mt-12 sm:text-2xl">
+          {t("closing.questionsTitle")}
+        </h2>
+        <a
+          className="mx-auto table rounded-xl bg-gruns-primary px-5 py-3.5 text-center text-base font-semibold text-white no-underline transition hover:bg-gruns-primary-light sm:px-6"
+          href="#offers"
+        >
           {t("closing.questionsCta")}
-        </StyledCta>
-      </StyledInner>
-    </StyledBlock>
+        </a>
+      </div>
+    </section>
   );
 };

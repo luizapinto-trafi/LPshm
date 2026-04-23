@@ -1,295 +1,126 @@
 import Image from "next/image";
-import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { GrunsOlipopCdn, GrunsOlipopGallery } from "./grunsOlipopCdn";
-
-const StyledSection = styled.section`
-  background: var(--gruns-cream);
-  padding: var(--space-1200) var(--space-1000);
-  scroll-margin-top: 72px;
-  @media (max-width: 800px) {
-    padding: var(--space-800) var(--space-400);
-  }
-`;
-
-const StyledInner = styled.div`
-  max-width: 960px;
-  margin: 0 auto;
-`;
-
-const StyledTrust = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--space-200);
-  font-size: 14px;
-  margin-bottom: var(--space-600);
-  color: var(--gruns-dark);
-  font-family: var(--font-body);
-`;
-
-const StyledStars = styled.span`
-  color: var(--gruns-gold);
-  letter-spacing: 2px;
-`;
-
-const StyledH2 = styled.h2`
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 700;
-  color: var(--gruns-dark);
-  margin: 0 0 var(--space-300) 0;
-`;
-
-const StyledLead = styled.p`
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--gruns-gray);
-  margin: 0 0 var(--space-600) 0;
-  max-width: 640px;
-`;
-
-const StyledBullets = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-800) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-300);
-`;
-
-const StyledLi = styled.li`
-  display: flex;
-  align-items: center;
-  gap: var(--space-200);
-  font-size: 15px;
-  &::before {
-    content: "✓";
-    color: var(--gruns-primary);
-    font-weight: 800;
-  }
-`;
-
-const StyledFlavorRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-400);
-  margin-bottom: var(--space-800);
-`;
-
-const StyledFlavor = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-200);
-  padding: var(--space-400);
-  border-radius: var(--radius-xl);
-  border: 2px solid var(--gruns-primary);
-  background: var(--white);
-  cursor: default;
-  text-align: left;
-  font: inherit;
-  max-width: 260px;
-`;
-
-const StyledFlavorAlt = styled(StyledFlavor)`
-  border-color: var(--ink-200);
-  opacity: 0.85;
-`;
-
-const StyledThumb = styled.div`
-  position: relative;
-  flex-shrink: 0;
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-`;
-
-const StyledFlavorLabel = styled.span`
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--gruns-dark);
-`;
-
-const StyledHint = styled.span`
-  font-size: 12px;
-  color: var(--gruns-gray);
-`;
-
-const StyledCards = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-500);
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledCard = styled.div<{ $featured?: boolean }>`
-  border-radius: var(--radius-xl);
-  padding: var(--space-500);
-  border: 2px solid
-    ${({ $featured }) => ($featured ? "var(--gruns-primary)" : "var(--ink-200)")};
-  background: ${({ $featured }) => ($featured ? "var(--white)" : "var(--ink-050)")};
-  position: relative;
-`;
-
-const StyledRibbon = styled.span`
-  position: absolute;
-  top: var(--space-400);
-  right: var(--space-400);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--gruns-primary);
-`;
-
-const StyledPriceRow = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-300);
-  margin: var(--space-400) 0;
-  flex-wrap: wrap;
-`;
-
-const StyledPriceNow = styled.span`
-  font-size: 2rem;
-  font-weight: 800;
-  font-family: var(--font-display);
-  color: var(--gruns-primary);
-`;
-
-const StyledPriceWas = styled.span`
-  font-size: 1rem;
-  text-decoration: line-through;
-  color: var(--ink-500);
-`;
-
-const StyledPerDay = styled.div`
-  font-size: 13px;
-  color: var(--gruns-gray);
-`;
-
-const StyledCardList = styled.ul`
-  margin: var(--space-400) 0 0 0;
-  padding-left: 1.1rem;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--gruns-dark);
-`;
-
-const StyledCta = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: var(--space-500);
-  width: 100%;
-  min-height: 52px;
-  background: var(--coral-500);
-  color: var(--white);
-  font-family: var(--font-display);
-  font-weight: 600;
-  border-radius: var(--radius-lg);
-  text-decoration: none;
-  &:hover {
-    background: var(--coral-450);
-  }
-`;
-
-const StyledSeal = styled.div`
-  margin-top: var(--space-800);
-  display: flex;
-  justify-content: center;
-  opacity: 0.9;
-`;
 
 export const GrunsOlipopOffers = () => {
   const { t } = useTranslation("grunsOlipop");
   const bullets = t("offers.bullets", { returnObjects: true }) as string[];
   const subBullets = t("offers.subscribeBullets", { returnObjects: true }) as string[];
   const otpBullets = t("offers.otpBullets", { returnObjects: true }) as string[];
-  const heroThumb = GrunsOlipopGallery[0];
+  const heroThumb = GrunsOlipopGallery[0]!;
+
   return (
-    <StyledSection id="offers">
-      <StyledInner>
-        <StyledTrust>
-          <StyledStars aria-hidden>★★★★★</StyledStars>
-          {t("offers.trustLine")}
-        </StyledTrust>
-        <StyledH2>{t("offers.productTitle")}</StyledH2>
-        <StyledLead>{t("offers.productLead")}</StyledLead>
-        <StyledBullets>
+    <section
+      id="offers"
+      className="scroll-m-16 bg-gruns-cream px-4 py-10 sm:px-6 md:scroll-m-20 md:px-6 md:py-16"
+    >
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-4 flex items-center gap-2 text-sm text-gruns-dark">
+          <span className="text-gruns-gold" aria-hidden>
+            ★★★★★
+          </span>
+          <span>{t("offers.trustLine")}</span>
+        </div>
+        <h2 className="mb-2 font-display text-2xl font-bold text-gruns-dark sm:text-3xl">
+          {t("offers.productTitle")}
+        </h2>
+        <p className="mb-6 text-base text-gruns-gray sm:mb-8">{t("offers.productLead")}</p>
+        <ul className="mb-8 space-y-2.5 pl-0 sm:mb-10">
           {bullets.map((b) => (
-            <StyledLi key={b}>{b}</StyledLi>
+            <li
+              className="flex list-none items-start gap-2 text-[15px] text-ink-900"
+              key={b}
+            >
+              <span className="shrink-0 text-gruns-primary" aria-hidden>
+                ✓
+              </span>
+              {b}
+            </li>
           ))}
-        </StyledBullets>
-
-        <p
-          style={{
-            fontWeight: 700,
-            marginBottom: "var(--space-300)",
-            fontFamily: "var(--font-display)",
-          }}
-        >
-          {t("offers.flavorLabel")}
-        </p>
-        <StyledFlavorRow>
-          <StyledFlavor type="button">
-            <StyledThumb>
-              <Image src={heroThumb} alt="" fill sizes="72px" style={{ objectFit: "cover" }} />
-            </StyledThumb>
-            <StyledFlavorLabel>{t("offers.flavorNew")}</StyledFlavorLabel>
-            <StyledHint>{t("offers.flavorHint")}</StyledHint>
-          </StyledFlavor>
-          <StyledFlavorAlt type="button">
-            <StyledThumb>
-              <Image src={GrunsOlipopGallery[2]} alt="" fill sizes="72px" style={{ objectFit: "cover" }} />
-            </StyledThumb>
-            <StyledFlavorLabel>{t("offers.flavorOriginal")}</StyledFlavorLabel>
-          </StyledFlavorAlt>
-        </StyledFlavorRow>
-
-        <StyledCards>
-          <StyledCard $featured>
-            <StyledRibbon>Popular</StyledRibbon>
-            <strong>{t("offers.subscribeTitle")}</strong>
-            <div style={{ fontSize: 14, marginTop: 8, color: "var(--gruns-gray)" }}>
-              {t("offers.subscribeSub")}
+        </ul>
+        <p className="mb-3 font-display font-bold text-ink-900">{t("offers.flavorLabel")}</p>
+        <div className="mb-8 flex flex-col flex-wrap gap-4 sm:mb-10 sm:flex-row">
+          <button
+            className="flex max-w-xs flex-1 items-start gap-2 rounded-2xl border-2 border-gruns-primary bg-white p-4 text-left"
+            type="button"
+            disabled
+          >
+            <div className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-md">
+              <Image
+                src={heroThumb}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="72px"
+              />
             </div>
-            <StyledPriceRow>
-              <StyledPriceNow>{t("offers.subscribePriceNow")}</StyledPriceNow>
-              <StyledPriceWas>{t("offers.subscribePriceWas")}</StyledPriceWas>
-            </StyledPriceRow>
-            <StyledPerDay>{t("offers.subscribePerDay")}</StyledPerDay>
-            <StyledCardList>
+            <div>
+              <p className="text-sm font-bold text-gruns-dark">{t("offers.flavorNew")}</p>
+              <p className="mt-0.5 text-xs text-gruns-gray">{t("offers.flavorHint")}</p>
+            </div>
+          </button>
+          <button
+            className="flex max-w-xs flex-1 items-start gap-2 rounded-2xl border-2 border-ink-200 bg-white p-4 text-left opacity-80"
+            type="button"
+            disabled
+          >
+            <div className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-md">
+              <Image
+                src={GrunsOlipopGallery[2]!}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="72px"
+              />
+            </div>
+            <p className="pt-0.5 text-sm font-bold text-gruns-dark">{t("offers.flavorOriginal")}</p>
+          </button>
+        </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+          <div className="relative rounded-2xl border-2 border-gruns-primary bg-white p-5 sm:p-6">
+            <p className="m-0 font-bold leading-snug text-ink-900 sm:text-sm">{t("offers.subscribeTitle")}</p>
+            <p className="mt-1.5 text-sm text-gruns-gray">{t("offers.subscribeSub")}</p>
+            <div className="mt-3 flex flex-wrap items-baseline gap-2">
+              <span className="font-display text-2xl font-extrabold text-gruns-primary sm:text-3xl">
+                {t("offers.subscribePriceNow")}
+              </span>
+              <span className="text-sm line-through text-ink-500">{t("offers.subscribePriceWas")}</span>
+            </div>
+            <p className="text-sm text-gruns-gray">{t("offers.subscribePerDay")}</p>
+            <ul className="ml-0 mt-3 list-outside pl-4 text-sm text-gruns-dark sm:text-[13px] sm:leading-relaxed">
               {subBullets.map((x) => (
                 <li key={x}>{x}</li>
               ))}
-            </StyledCardList>
-            <StyledCta href="https://shapermint.com">{t("offers.cta")}</StyledCta>
-          </StyledCard>
-          <StyledCard>
-            <strong>{t("offers.otpTitle")}</strong>
-            <div style={{ fontSize: 14, marginTop: 8, color: "var(--gruns-gray)" }}>
-              {t("offers.otpSub")}
-            </div>
-            <StyledPriceRow>
-              <StyledPriceNow>{t("offers.otpPrice")}</StyledPriceNow>
-            </StyledPriceRow>
-            <StyledPerDay>{t("offers.otpPerDay")}</StyledPerDay>
-            <StyledCardList>
+            </ul>
+            <a
+              className="mt-4 flex w-full min-h-12 items-center justify-center rounded-xl bg-coral-500 font-display text-sm font-semibold text-white no-underline transition hover:bg-coral-400"
+              href="https://shapermint.com"
+            >
+              {t("offers.cta")}
+            </a>
+          </div>
+          <div className="rounded-2xl border-2 border-ink-200 bg-ink-50 p-5 sm:p-6">
+            <p className="font-bold text-ink-900">{t("offers.otpTitle")}</p>
+            <p className="mt-1.5 text-sm text-gruns-gray">{t("offers.otpSub")}</p>
+            <p className="mt-3 font-display text-2xl font-extrabold text-gruns-primary">{t("offers.otpPrice")}</p>
+            <p className="text-sm text-gruns-gray">{t("offers.otpPerDay")}</p>
+            <ul className="ml-0 mt-3 list-outside pl-4 text-sm text-gruns-dark sm:text-[13px] sm:leading-relaxed">
               {otpBullets.map((x) => (
                 <li key={x}>{x}</li>
               ))}
-            </StyledCardList>
-            <StyledCta href="https://shapermint.com">{t("offers.cta")}</StyledCta>
-          </StyledCard>
-        </StyledCards>
-
-        <StyledSeal>
+            </ul>
+            <a
+              className="mt-4 flex w-full min-h-12 items-center justify-center rounded-xl bg-coral-500 font-display text-sm font-semibold text-white no-underline transition hover:bg-coral-400"
+              href="https://shapermint.com"
+            >
+              {t("offers.cta")}
+            </a>
+          </div>
+        </div>
+        <div className="mt-8 flex justify-center sm:mt-10">
           <Image src={GrunsOlipopCdn.seal} alt="" width={120} height={120} />
-        </StyledSeal>
-      </StyledInner>
-    </StyledSection>
+        </div>
+      </div>
+    </section>
   );
 };

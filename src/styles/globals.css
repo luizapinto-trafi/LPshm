@@ -46,3 +46,7 @@ a {
 html {
   color-scheme: only light;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
