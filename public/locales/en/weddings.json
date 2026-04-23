@@ -1,0 +1,111 @@
+{
+  "metaTitle": "Wedding Shapewear | Shapermint",
+  "metaDescription": "Thoughtfully crafted, comfortable shapewear that won’t roll down on the dance floor.",
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "logoHome": "Shapermint — home",
+    "openMenu": "Open menu",
+    "search": "Search",
+    "account": "Account",
+    "favorites": "Favorites",
+    "cart": "View cart",
+    "main": "Wedding shapewear"
+  },
+  "header": {
+    "blog": "Blog",
+    "promo": "FREE SHIPPING ON ORDERS OVER $100",
+    "countryLine": "You are shopping in US.",
+    "countryCta": "Select country",
+    "searchPlaceholder": "Search",
+    "nav": [
+      { "label": "Bestsellers", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Bras", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Shapewear", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Tops", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Bodysuits", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Underwear", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Sleep & Lounge", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Clothing", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Bundle & Save", "href": "https://shapermint.com", "kind": "menu" },
+      { "label": "Sale", "href": "https://shapermint.com", "kind": "sale" }
+    ]
+  },
+  "hero": {
+    "title": "Wedding Shapewear",
+    "lineDesktop": "Only the best for your big day.",
+    "lineMobile1": "Thoughtfully crafted, comfortable",
+    "lineMobile2": "shapewear that won’t roll down",
+    "lineMobile3": "on the dance floor.",
+    "bodyDesktop": " Thoughtfully crafted, comfortable shapewear that won’t roll down on the dance floor.",
+    "cta": "Shop Wedding"
+  },
+  "products": {
+    "items": [
+      { "name": "Sculpting Bodysuit", "price": "$84" },
+      { "name": "High-Waist Brief", "price": "$64" },
+      { "name": "Mid-Thigh Short", "price": "$74" },
+      { "name": "Plunge Bra", "price": "$54" }
+    ],
+    "imageAlt": "Product"
+  },
+  "features": {
+    "m1": "Precisely designed",
+    "m2": "for an occasion",
+    "m3": "as important as this",
+    "d1": "Precisely designed for",
+    "d2": "an occasion as important as this",
+    "items": [
+      {
+        "title": "Won’t Roll Down",
+        "body": "Flexible boning in the side seams keeps the garment in place so you can move freely."
+      },
+      {
+        "title": "Versatile Styling",
+        "body": "No matter which dress style you choose, we have a shapewear silhouette to match."
+      },
+      {
+        "title": "Smarter Shaping",
+        "body": "Get the sculpt you want without sacrificing comfort thanks to targeted compression panels that shape, not squeeze."
+      }
+    ],
+    "iconAlt": "Feature icon",
+    "featureImageAlt": "Feature",
+    "cta": "Shop Now"
+  },
+  "compare": {
+    "leftTitle1": "The new standard",
+    "leftTitle2": "in shaping.",
+    "leftRows": ["Support", "Built-in Molded Bra", "All-day comfort", "Bathroom friendly"],
+    "brandLabel": "Shapermint",
+    "brandProductAlt": "Shapermint product",
+    "brandQuote": "“I put it on and it felt so good and so smoothing, I didn’t want to take it off.”",
+    "brandByline": "Mary J.",
+    "brandPillar": "Strong Support",
+    "competitorLabel": "Competitor",
+    "competitorProductAlt": "Competitor product",
+    "competitorQuote": "“This bodysuit had no hold or breast support at all.”",
+    "competitorByline": "Kate G.",
+    "competitorPillar": "Low Support",
+    "mobileRowSupport": "Built-in Molded Bra",
+    "mobileRowComfort": "All-day comfort",
+    "mobileRowBath": "Bathroom friendly"
+  },
+  "review": {
+    "titleM1": "It’s a crowd",
+    "titleM2": "favorite for",
+    "titleM3": "a good reason",
+    "titleD1": "It’s a crowd favorite for",
+    "titleD2": "a good reason",
+    "backgroundAlt": "Customer reviews",
+    "quote": "“I felt supported all day and the photos looked flawless. I’ll buy another for my next event.”",
+    "author": "Alex T.",
+    "subline": "Verified buyer"
+  },
+  "footer": {
+    "brand": "Shapermint",
+    "privacy": "Privacy",
+    "terms": "Terms of use",
+    "contact": "Contact",
+    "copyright": "© Shapermint. All rights reserved."
+  }
+}

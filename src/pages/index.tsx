@@ -8,6 +8,7 @@ import { GrunsPagePath } from "@/landings/gruns-first-order/grunsCdn";
 import { StraplessPagePath } from "@/landings/strapless-landing/straplessCdn";
 import { GrunsOlipopPagePath } from "@/landings/gruns-first-order-olipop/grunsOlipopCdn";
 import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/gummiesDuplicateCdn";
+import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -116,6 +117,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledGrunsCta href={GummiesDuplicatePagePath}>{t("home.gummiesDuplicateCta")}</StyledGrunsCta>
           <StyledHint>{t("home.gummiesDuplicateHint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={WeddingsPagePath}>{t("home.weddingsCta")}</StyledCta>
+          <StyledHint>{t("home.weddingsHint")}</StyledHint>
         </StyledLandingCard>
       </StyledLandings>
     </StyledMain>

@@ -12,7 +12,9 @@
     "grunsOlipopCta": "Open — OLIPOP® collab (Shapermint assets)",
     "grunsOlipopHint": "Path: /pages/gruns-first-order-olipop — layout inspired by gruns first-order-olipop",
     "gummiesDuplicateCta": "Open — Partner gummies (duplicated HTML, Shapermint DS)",
-    "gummiesDuplicateHint": "Path: /pages/gummies-duplicate-landing — hero, features, buybox from duplicated-landing (2).html"
+    "gummiesDuplicateHint": "Path: /pages/gummies-duplicate-landing — hero, features, buybox from duplicated-landing (2).html",
+    "weddingsCta": "Open — Wedding shapewear (duplicated HTML, Shapermint DS)",
+    "weddingsHint": "Path: /pages/weddings — hero, products, comparison, review (duplicated-landing 3).html"
   },
   "catalog": {
     "title": "Component Catalog"
