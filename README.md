@@ -1,24 +1,36 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-## Git: SSH con GitHub
+## Git y GitHub
 
-El remoto `origin` apunta a **SSH**: `git@github.com:trafilea/SHMLandingPages.git`.
+El remoto por defecto del equipo suele ser **HTTPS**:  
+`https://github.com/trafilea/SHMLandingPages.git`.
 
-**Comprobar o arreglar la conexión** (añade `github.com` a `known_hosts` si falta, luego `git fetch`):
+### HTTPS + GitHub CLI (recomendado si ya usas `gh`)
+
+Una vez tengas sesión en la CLI (`gh auth login`), enlaza Git para que use esas credenciales:
+
+```bash
+gh auth setup-git
+```
+
+Comprueba con:
 
 ```bash
 npm run check:github
 # o: ./scripts/verify-github-ssh.sh
 ```
 
-- **Host key verification failed** — el script suele corregirlo. Si persiste, revisa `~/.ssh/known_hosts`.
-- **Permission denied (publickey)** — añade tu clave a GitHub (Settings → SSH) y carga la privada, p. ej. en macOS: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` ([docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
+- **Repository not found** (HTTPS) — suele ser falta de login o sin permiso al repo; ejecuta `gh auth login` y `gh auth setup-git`, o confirma acceso a la organización `trafilea`.
 
-Cambiar el remoto a **HTTPS** (p. ej. con `gh auth login` o token):
+### SSH (alternativa)
 
 ```bash
-git remote set-url origin https://github.com/trafilea/SHMLandingPages.git
+git remote set-url origin git@github.com:trafilea/SHMLandingPages.git
+npm run check:github
 ```
+
+- **Host key verification failed** — el script añade `github.com` a `known_hosts` cuando el remoto es SSH.
+- **Permission denied (publickey)** — clave en GitHub y en el agente, p. ej. macOS: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519` ([docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
 
 ## Getting Started
 

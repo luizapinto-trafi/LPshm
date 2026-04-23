@@ -1,0 +1,103 @@
+{
+  "metaTitle": "Partner gummies — brutal layout (Shapermint design lab)",
+  "metaDescription": "Vitamin gummies collab: hero, features, buybox y footer construidos con tokens Shapermint (réplica estructural del HTML de referencia).",
+  "a11y": {
+    "skipToContent": "Skip to Content",
+    "logoHome": "Shapermint — Home",
+    "cart": "View cart",
+    "account": "Account",
+    "main": "Product story"
+  },
+  "announcement": {
+    "line1": "🍓🍦 NEW! Flavor 1 🍦🍓",
+    "line2": "Grab this dreamy, creamy flavor before it’s gone."
+  },
+  "header": {
+    "shopAdults": "Shop Adults",
+    "shopKids": "Shop Kids",
+    "brandMark": "Shapermint"
+  },
+  "hero": {
+    "reviewLine": "4.8 stars | 85K+ reviews | 1M+ members",
+    "titleBefore": "Two gut health icons.",
+    "titleAccent": "One perfect collab.",
+    "bullets": [
+      "60+ ingredients. 21 vitamins & minerals.",
+      "6g prebiotic fiber. Supports gut health.",
+      "Supports energy, immunity & recovery."
+    ],
+    "collabLine": "Partner Brand × Shapermint Flavor 1 — a limited-time collab, exclusively on our site.",
+    "badge": "100M+ gummies sold",
+    "cta": "Save 52% + Free shipping",
+    "riskIntro": "Try it ",
+    "riskHighlight": "risk-free for 30 days",
+    "heroImageAlt": "Product collaboration",
+    "stickerAlt": "Limited collab badge",
+    "trustImageAlt": "Trust badge"
+  },
+  "features": {
+    "title": "The taste of Partner Brand. The power of Shapermint.",
+    "lead": "We took comprehensive nutrition and paired it with the sweet Flavor 1 taste of a classic collab flavor.",
+    "pillars": [
+      {
+        "title": "Gut health",
+        "body": "Prebiotics feed good bacteria to boost nutrient absorption and digestion.",
+        "icon": "gut"
+      },
+      {
+        "title": "Immunity",
+        "body": "Immune support from vitamins C, D, zinc, antioxidants, and adaptogens.",
+        "icon": "immunity"
+      },
+      {
+        "title": "Energy & body",
+        "body": "Support recovery, strength, weight management, and metabolism.",
+        "icon": "energy"
+      },
+      {
+        "title": "Brain health",
+        "body": "B-vitamins, vitamin C, and vitamin D support brain health.",
+        "icon": "brain"
+      }
+    ],
+    "centerImageAlt": "Product hero in context"
+  },
+  "lifestyle": {
+    "title": "Your gut’s new ",
+    "titleAccent": "power couple",
+    "body": "Hard launch: meet the most symbiotic relationship ever. Flavor 1, limited edition, and unlike your last situationship, actually good for you.",
+    "imageAlt": "Lifestyle with product"
+  },
+  "floatingCta": "Try Shapermint →",
+  "offers": {
+    "eyebrow": "New Flavor 1 flavor!",
+    "headline": "Limited time! Save up to 52% on your first order!",
+    "trustLine": "4.8/5.0 (85,000+), 1M+ customers",
+    "productTitle": "Shapermint superfood gummies",
+    "productLead": "60+ potent ingredients in great-tasting gummies.",
+    "bullets": [
+      "Supports digestion and gut health",
+      "Promotes mental clarity + energy",
+      "Supports immunity + stress relief"
+    ],
+    "flavorLabel": "Select flavor:",
+    "flavorSelectedName": "Flavor 1",
+    "tastesLike": "Tastes like",
+    "flavorHint": "Bright, ripe strawberry with a creamy vanilla twist.",
+    "flavor1": "Flavor 1",
+    "flavor2": "Flavor 2",
+    "lto": "LTO",
+    "nutritionCta": "View nutrition label",
+    "addToCart": "Add to cart — save 52%",
+    "secureNote": "Secure checkout powered by Shapermint",
+    "galleryMainAlt": "Product gallery main",
+    "thumbAlt": "Thumbnail {{n}}"
+  },
+  "footer": {
+    "brand": "Shapermint",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
+    "contact": "Contact us",
+    "copyright": "© Shapermint design lab — demo"
+  }
+}
