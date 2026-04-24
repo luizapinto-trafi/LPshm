@@ -2,10 +2,12 @@ import styled from "styled-components";
 
 const StyledStars = styled.span<{ $sizePx: number }>`
   display: inline-flex;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
   color: var(--gold-600);
   line-height: 0;
   svg {
+    flex-shrink: 0;
     width: ${({ $sizePx }) => $sizePx}px;
     height: ${({ $sizePx }) => $sizePx}px;
   }

@@ -20,8 +20,8 @@ const StyledInner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-600);
-  padding: 18px clamp(16px, 4vw, 60px);
+  gap: var(--space-300);
+  padding: 18px 26px;
   @media (max-width: 1023px) {
     min-height: 48px;
     padding: 12px 15px;
