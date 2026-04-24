@@ -28,9 +28,7 @@
   "hero": {
     "title": "Two bandeaus. One cart. One free gift.",
     "lead": "Stock up on the Truekind® strapless you trust — this page unlocks a second bra plus a surprise gift at checkout when your order qualifies. Same wireless lift, zero wires, zero slipping.",
-    "cta": "CLAIM B1G1 + GIFT",
-    "badgeLine1": "Bundle-only",
-    "badgeLine2": "value on this URL."
+    "cta": "CLAIM B1G1 + GIFT"
   },
   "features": {
     "title": "Why shoppers grab the bundle instead of a single bra",
@@ -147,23 +145,22 @@
     "accCareBody": "Cold hand wash, reshape, line dry — skip bleach, irons, and dry cleaners to protect the grip strips."
   },
   "b1g1Pdp": {
-    "offerBannerAria": "Promotional region: buy one get one with gift",
-    "offerBannerEyebrow": "Clock is ticking",
-    "offerBannerHeadline": "Buy one, get one free + gift",
-    "offerBannerSub": "Add two Truekind® strapless bandeaus to your qualifying order and we include a surprise gift while inventory lasts.",
-    "offerSectionTitle": "Truekind® convertible strapless bandeau",
-    "offerSectionSubtitle": "Wireless structure, silicone stay-put band, and optional straps for every neckline.",
-    "priceWidgetAria": "Bundle price summary",
-    "priceWidgetCompareLabel": "Two bras at list",
-    "priceWidgetCompareValue": "$100.00",
-    "priceWidgetOfferLabel": "Promo bundle",
-    "priceWidgetOfferBadge": "B1G1 + gift",
-    "priceWidgetOfferValue": "$59.99",
-    "priceWidgetSavings": "You keep $40",
-    "priceWidgetGiftNote": "Gift auto-applies in cart when your bundle qualifies — see cart banner for specifics.",
-    "microcopyAboveCta": "Select shades only · Inventory capped · Gift may vary",
-    "cta": "Activate B1G1 + gift",
-    "galleryAria": "Gallery: strapless bandeau"
+    "pageHeadline": "Stop Wasting Money on Shapewear That Hurts.",
+    "pageSubheadline": "Join 1M+ women who finally found shapewear that lets them breathe, move, and feel confident all day.",
+    "cardBadge": "Mother's Day Sale",
+    "cardAria": "Limited-time offer details and product",
+    "feature0": "BREATHABLE",
+    "feature1": "STAYS PUT",
+    "feature2": "QUICK-RELEASE",
+    "offerLine": "GET THE LIFT YOU DESERVE: BUY 2, SAVE 45%",
+    "supportingCopy": "This is the deal you've been waiting for—but it won't last. Thousands of women are stocking up right now and sizes are selling out fast. Don't miss your chance to finally feel confident and comfortable in a bra that actually works.",
+    "cta": "Buy 1 Get 1 Free + Free Gift",
+    "countdownPrefix": "DEAL ENDING IN:",
+    "trustPillBefore": "Sell-Out Risk:",
+    "trustPillHigh": "High",
+    "trustPillFree": "FREE",
+    "trustPillShipping": "shipping",
+    "guaranteeFooter": "Try it today with a 30-Day Money Back Guarantee!"
   },
   "reviews": {
     "title": "Bundle buyers weigh in",
@@ -233,9 +230,11 @@
     "instyle": "InStyle",
     "instyleLogoAlt": "InStyle wordmark",
     "elle": "ELLE",
+    "elleLogoAlt": "ELLE wordmark",
     "cosmo": "Cosmopolitan",
     "cosmoLogoAlt": "Cosmopolitan wordmark",
-    "glossy": "Glossy"
+    "glossy": "Glossy",
+    "glossyLogoAlt": "Glossy wordmark"
   },
   "brand": {
     "logoAlt": "Shapermint wordmark",

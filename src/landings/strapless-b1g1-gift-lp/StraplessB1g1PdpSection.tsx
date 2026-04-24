@@ -1,249 +1,284 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
+import { useEffect, useState } from "react";
 import { StraplessB1g1Cdn } from "./straplessB1g1Cdn";
 import { StraplessPrimaryButton } from "./StraplessPrimaryButton";
 
 const StyledSection = styled.section`
-  background: #fff;
-  padding-bottom: clamp(48px, 7vw, 88px);
+  background: var(--coral-075);
+  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 32px) clamp(56px, 8vw, 96px);
 `;
 
-const StyledOfferBanner = styled.div`
-  width: 100%;
-  background: linear-gradient(105deg, var(--ink-900) 0%, #2d2d2d 42%, #1a1a1a 100%);
-  color: #fff;
-  padding: var(--space-600) clamp(16px, 4vw, 48px);
-  text-align: center;
-  border-bottom: 3px solid var(--coral-500);
-`;
-
-const StyledOfferBannerEyebrow = styled.p`
-  margin: 0 0 var(--space-200);
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-`;
-
-const StyledOfferBannerHeadline = styled.p`
-  margin: 0 0 var(--space-250);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(22px, 3.2vw, 32px);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-`;
-
-const StyledOfferBannerSub = styled.p`
+const StyledCardShell = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 920px;
   margin: 0 auto;
-  max-width: 42rem;
-  font-family: var(--font-body);
-  font-size: clamp(14px, 1.5vw, 16px);
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.88);
-`;
-
-const StyledInner = styled.div`
-  display: grid;
-  grid-template-columns: 1fr minmax(280px, 400px);
-  gap: clamp(20px, 3vw, 40px);
-  align-items: start;
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 40px) 0;
-  @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledGallery = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledGalleryCell = styled.div`
   position: relative;
-  width: 100%;
-  aspect-ratio: 540 / 740;
-  background: var(--ink-100);
+  padding-top: 22px;
+`;
+
+const StyledFloatingBadge = styled.div`
+  position: relative;
+  align-self: center;
+  z-index: 2;
+  margin-bottom: -28px;
+  background: var(--brand);
+  color: var(--fg-inverse);
+  padding: 10px clamp(20px, 4vw, 32px);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+`;
+
+const StyledCard = styled.div`
+  background: var(--bg-raised);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  padding: clamp(28px, 4vw, 44px) clamp(20px, 3vw, 40px) clamp(24px, 3vw, 36px);
+`;
+
+const StyledCardGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: center;
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StyledImageWrap = styled.div`
+  position: relative;
+  background: var(--bg-subtle);
+  border-radius: 16px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  min-height: 200px;
+  max-height: 420px;
   img {
     object-fit: cover;
   }
 `;
 
-const StyledOfferColumn = styled.aside`
+const StyledRight = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--space-500);
-  position: sticky;
-  top: 90px;
-  @media (max-width: 1023px) {
-    position: static;
+  gap: 16px;
+  min-width: 0;
+`;
+
+const StyledFeatureList = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const StyledFeatureItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(12px, 1.5vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--fg-1);
+`;
+
+const StyledCheckWrap = styled.span`
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--accent-mint);
+`;
+
+const CheckIcon = () => (
+  <StyledCheckWrap aria-hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M7 12l3 3 7-7"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </StyledCheckWrap>
+);
+
+const StyledOfferLine = styled.p`
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--fg-1);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+`;
+
+const StyledSupporting = styled.p`
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-2);
+`;
+
+const StyledPromoCta = styled(StraplessPrimaryButton)`
+  background: var(--brand-soft);
+  color: var(--cool-900);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 10px;
+  min-height: 52px;
+  width: 100%;
+  max-width: none;
+  &:hover {
+    background: var(--coral-250);
+    color: var(--cool-900);
+  }
+  &:focus-visible {
+    outline-color: var(--border-focus);
+    outline-offset: 3px;
   }
 `;
 
-const StyledOfferSectionTitle = styled.h2`
+const StyledCountdown = styled.p`
   margin: 0;
-  font-family: var(--font-body);
-  font-size: clamp(18px, 2vw, 22px);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: var(--ink-900);
-`;
-
-const StyledOfferSectionSubtitle = styled.p`
-  margin: calc(-1 * var(--space-300)) 0 0;
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.45;
-  color: var(--ink-700);
-`;
-
-const StyledPriceWidget = styled.div`
-  border: 1px solid var(--ink-200);
-  border-radius: 12px;
-  padding: var(--space-500);
-  background: var(--ink-050);
   display: flex;
-  flex-direction: column;
-  gap: var(--space-400);
-`;
-
-const StyledPriceRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--space-300);
-`;
-
-const StyledPriceLabel = styled.span`
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--ink-600);
-`;
-
-const StyledPriceStrike = styled.span`
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink-500);
-  text-decoration: line-through;
-`;
-
-const StyledOfferRow = styled.div`
-  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-300);
-`;
-
-const StyledOfferBadge = styled.span`
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  background: var(--coral-500);
-  color: #fff;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px var(--space-150);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: clamp(13px, 1.8vw, 15px);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
-const StyledOfferPrice = styled.span`
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 4vw, 36px);
-  letter-spacing: -0.03em;
-  color: var(--ink-900);
-`;
-
-const StyledSavings = styled.p`
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--mint-700);
-`;
-
-const StyledGiftNote = styled.p`
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--ink-800);
-  padding-top: var(--space-200);
-  border-top: 1px dashed var(--ink-200);
-`;
-
-const StyledMicrocopy = styled.p`
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--ink-600);
+  letter-spacing: 0.04em;
+  color: var(--coral-700);
+  font-variant-numeric: tabular-nums;
   text-align: center;
 `;
 
+const StyledTrustPill = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background-color: var(--coral-050);
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--fg-2);
+`;
+
+const StyledTrustStrong = styled.span`
+  font-weight: 800;
+  color: var(--fg-1);
+`;
+
+const StyledGuaranteeFoot = styled.p`
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--fg-3);
+`;
+
+const INITIAL_COUNTDOWN_SEC = 1 * 3600 + 29 * 60 + 30;
+
+function formatCountdown(totalSec: number) {
+  const s = Math.max(0, totalSec);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const r = s % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
+}
+
 export const StraplessB1g1PdpSection = () => {
-  const { t } = useTranslation("straplessB1g1GiftLp");
-  const titleId = "strapless-b1g1-pdp-title";
+  const { t } = useTranslation("straplessB1g1GiftLp", { keyPrefix: "b1g1Pdp" });
+  const { t: tRoot } = useTranslation("straplessB1g1GiftLp");
+  const [remainSec, setRemainSec] = useState(INITIAL_COUNTDOWN_SEC);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setRemainSec((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const features = [t("feature0"), t("feature1"), t("feature2")];
 
   return (
-    <StyledSection id="buy" aria-labelledby={titleId}>
-      <StyledOfferBanner role="region" aria-label={t("b1g1Pdp.offerBannerAria")}>
-        <StyledOfferBannerEyebrow>{t("b1g1Pdp.offerBannerEyebrow")}</StyledOfferBannerEyebrow>
-        <StyledOfferBannerHeadline>{t("b1g1Pdp.offerBannerHeadline")}</StyledOfferBannerHeadline>
-        <StyledOfferBannerSub>{t("b1g1Pdp.offerBannerSub")}</StyledOfferBannerSub>
-      </StyledOfferBanner>
+    <StyledSection id="buy" aria-label={`${t("pageHeadline")}. ${t("pageSubheadline")}`}>
+      <StyledCardShell>
+        <StyledFloatingBadge>{t("cardBadge")}</StyledFloatingBadge>
+        <StyledCard role="region" aria-label={t("cardAria")}>
+          <StyledCardGrid>
+            <StyledImageWrap>
+              <Image
+                src={StraplessB1g1Cdn.gallery1}
+                alt={tRoot("pdp.gallery1Alt")}
+                fill
+                sizes="(max-width: 767px) 100vw, 38vw"
+                priority
+              />
+            </StyledImageWrap>
 
-      <StyledInner>
-        <StyledGallery aria-label={t("b1g1Pdp.galleryAria")}>
-          <StyledGalleryCell>
-            <Image src={StraplessB1g1Cdn.gallery1} alt={t("pdp.gallery1Alt")} fill sizes="(max-width: 1023px) 100vw, 50vw" />
-          </StyledGalleryCell>
-          <StyledGalleryCell>
-            <Image src={StraplessB1g1Cdn.gallery2} alt={t("pdp.gallery2Alt")} fill sizes="(max-width: 1023px) 100vw, 50vw" />
-          </StyledGalleryCell>
-        </StyledGallery>
+            <StyledRight>
+              <StyledOfferLine>{t("offerLine")}</StyledOfferLine>
 
-        <StyledOfferColumn>
-          <header>
-            <StyledOfferSectionTitle id={titleId}>{t("b1g1Pdp.offerSectionTitle")}</StyledOfferSectionTitle>
-            <StyledOfferSectionSubtitle>{t("b1g1Pdp.offerSectionSubtitle")}</StyledOfferSectionSubtitle>
-          </header>
+              <StyledSupporting>{t("supportingCopy")}</StyledSupporting>
 
-          <StyledPriceWidget aria-label={t("b1g1Pdp.priceWidgetAria")}>
-            <StyledPriceRow>
-              <StyledPriceLabel>{t("b1g1Pdp.priceWidgetCompareLabel")}</StyledPriceLabel>
-              <StyledPriceStrike>{t("b1g1Pdp.priceWidgetCompareValue")}</StyledPriceStrike>
-            </StyledPriceRow>
-            <StyledPriceRow>
-              <StyledPriceLabel>{t("b1g1Pdp.priceWidgetOfferLabel")}</StyledPriceLabel>
-            </StyledPriceRow>
-            <StyledOfferRow>
-              <StyledOfferBadge>{t("b1g1Pdp.priceWidgetOfferBadge")}</StyledOfferBadge>
-              <StyledOfferPrice>{t("b1g1Pdp.priceWidgetOfferValue")}</StyledOfferPrice>
-            </StyledOfferRow>
-            <StyledSavings>{t("b1g1Pdp.priceWidgetSavings")}</StyledSavings>
-            <StyledGiftNote>{t("b1g1Pdp.priceWidgetGiftNote")}</StyledGiftNote>
-          </StyledPriceWidget>
+              <StyledPromoCta href="https://shapermint.com">{t("cta")}</StyledPromoCta>
 
-          <StyledMicrocopy>{t("b1g1Pdp.microcopyAboveCta")}</StyledMicrocopy>
+              <StyledFeatureList>
+                {features.map((text) => (
+                  <StyledFeatureItem key={text}>
+                    <CheckIcon />
+                    {text}
+                  </StyledFeatureItem>
+                ))}
+              </StyledFeatureList>
 
-          <StraplessPrimaryButton href="https://shapermint.com" $wide>
-            {t("b1g1Pdp.cta")}
-          </StraplessPrimaryButton>
-        </StyledOfferColumn>
-      </StyledInner>
+              <StyledCountdown>
+                <span>{t("countdownPrefix")}</span>
+                <span>{formatCountdown(remainSec)}</span>
+              </StyledCountdown>
+
+              <StyledTrustPill>
+                <span>{t("trustPillBefore")}</span> <StyledTrustStrong>{t("trustPillHigh")}</StyledTrustStrong>
+                <span aria-hidden> | </span>
+                <StyledTrustStrong>{t("trustPillFree")}</StyledTrustStrong>
+                <span> {t("trustPillShipping")}</span>
+              </StyledTrustPill>
+
+              <StyledGuaranteeFoot>{t("guaranteeFooter")}</StyledGuaranteeFoot>
+            </StyledRight>
+          </StyledCardGrid>
+        </StyledCard>
+      </StyledCardShell>
     </StyledSection>
   );
 };

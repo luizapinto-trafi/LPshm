@@ -113,7 +113,7 @@ export const StraplessBestSellerSection = () => {
       <StyledMedia>
         <StyledInner>
           <StyledReviewCard>
-            <StraplessFiveStars label={t("bestseller.starsAria")} sizePx={16} />
+            <StraplessFiveStars label={t("bestseller.starsAria")} sizePx={24} />
             <StyledReviewText>{t("bestseller.quote")}</StyledReviewText>
             <StyledMeta>
               <span>{t("bestseller.author")}</span>
