@@ -49,7 +49,7 @@ const StyledCardGrid = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
   gap: clamp(20px, 3vw, 36px);
-  align-items: center;
+  align-items: stretch;
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
   }
@@ -57,14 +57,25 @@ const StyledCardGrid = styled.div`
 
 const StyledImageWrap = styled.div`
   position: relative;
+  width: 100%;
+  min-height: 200px;
   background: var(--bg-subtle);
   border-radius: 16px;
-  aspect-ratio: 4 / 5;
   overflow: hidden;
-  min-height: 200px;
-  max-height: 420px;
-  img {
+  @media (min-width: 768px) {
+    min-height: 0;
+    height: 100%;
+    align-self: stretch;
+  }
+  @media (max-width: 767px) {
+    aspect-ratio: 4 / 5;
+    max-height: 420px;
+  }
+  & img,
+  & picture img,
+  & span img {
     object-fit: cover;
+    object-position: center;
   }
 `;
 
@@ -238,11 +249,12 @@ export const StraplessB1g1PdpSection = () => {
           <StyledCardGrid>
             <StyledImageWrap>
               <Image
-                src={StraplessB1g1Cdn.gallery1}
+                src={StraplessB1g1Cdn.colorBlack}
                 alt={tRoot("pdp.gallery1Alt")}
                 fill
                 sizes="(max-width: 767px) 100vw, 38vw"
                 priority
+                style={{ objectFit: "cover", objectPosition: "center" }}
               />
             </StyledImageWrap>
 
