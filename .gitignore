@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Exports Figma locales (referencia de diseño; los assets servidos viven en public/)
+shapermint-design-system/assets/landing-assets/

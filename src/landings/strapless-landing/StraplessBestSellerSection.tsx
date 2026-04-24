@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { StraplessCdn } from "./straplessCdn";
 import { StraplessFiveStars } from "./StraplessFiveStars";
+import { straplessSectionH2Typography } from "./straplessSectionH2Typography";
 
 const StyledSection = styled.section`
   position: relative;
@@ -10,15 +11,10 @@ const StyledSection = styled.section`
 `;
 
 const StyledTitle = styled.h2`
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(30px, 4.5vw, 52px);
-  line-height: 1.1;
-  color: #000;
+  ${straplessSectionH2Typography}
   text-align: center;
-  margin: 0 auto 48px;
+  margin: 0 auto var(--space-1000);
   max-width: 18ch;
-  text-wrap: balance;
 `;
 
 const StyledMedia = styled.div`
@@ -69,8 +65,13 @@ const StyledMeta = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: var(--font-body);
   font-size: 14px;
   color: var(--ink-900);
+
+  > span {
+    font-weight: 700;
+  }
 `;
 
 const StyledVerified = styled.span`
@@ -79,7 +80,9 @@ const StyledVerified = styled.span`
   gap: 6px;
   color: var(--mint-700);
   font-size: 12px;
-  font-weight: 600;
+  ${StyledMeta} > & {
+    font-weight: 600;
+  }
   svg {
     width: 16px;
     height: 16px;

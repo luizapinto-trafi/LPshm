@@ -6,6 +6,7 @@ import type { GetStaticProps } from "next";
 import { TruekindBraPagePath } from "@/landings/truekind-bra-offer/truekindBraCdn";
 import { GrunsPagePath } from "@/landings/gruns-first-order/grunsCdn";
 import { StraplessPagePath } from "@/landings/strapless-landing/straplessCdn";
+import { StraplessB1g1GiftLpPagePath } from "@/landings/strapless-b1g1-gift-lp/straplessB1g1Cdn";
 import { GrunsOlipopPagePath } from "@/landings/gruns-first-order-olipop/grunsOlipopCdn";
 import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/gummiesDuplicateCdn";
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
@@ -86,6 +87,50 @@ const StyledHint = styled.p`
   margin: var(--space-400) 0 0 0;
 `;
 
+const StyledB1g1Block = styled.div`
+  margin-top: var(--space-500);
+  padding-top: var(--space-400);
+  border-top: 1px solid var(--ink-200);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-200);
+`;
+
+const StyledB1g1Title = styled.h3`
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--ink-900);
+`;
+
+const StyledB1g1GiftLpLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--coral-500);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  &:hover {
+    color: var(--coral-450);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--ink-900);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+`;
+
+const StyledB1g1Hint = styled(StyledHint)`
+  margin-top: var(--space-100);
+`;
+
 export const HomePage = () => {
   const { t } = useTranslation("common");
   return (
@@ -107,6 +152,18 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={StraplessPagePath}>{t("home.straplessCta")}</StyledCta>
           <StyledHint>{t("home.straplessHint")}</StyledHint>
+          <StyledB1g1Block>
+            <StyledB1g1Title>{t("home.straplessB1g1GiftLpTitle", { defaultValue: "B1G1 + Gift LP" })}</StyledB1g1Title>
+            <StyledB1g1GiftLpLink href={StraplessB1g1GiftLpPagePath}>
+              {t("home.straplessB1g1GiftLpCta", { defaultValue: "Open — B1G1 + Gift LP" })}
+            </StyledB1g1GiftLpLink>
+            <StyledB1g1Hint>
+              {t("home.straplessB1g1GiftLpHint", {
+                defaultValue:
+                  "Path: /pages/strapless-b1g1-gift-lp — duplicate of strapless landing (same layout & assets).",
+              })}
+            </StyledB1g1Hint>
+          </StyledB1g1Block>
         </StyledLandingCard>
 
         <StyledLandingCard>

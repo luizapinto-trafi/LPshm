@@ -58,7 +58,7 @@ const StyledInner = styled.div`
 `;
 
 const StyledCopy = styled.div`
-  max-width: 780px;
+  max-width: 800px;
 `;
 
 const StyledH1 = styled.h1`
@@ -69,7 +69,7 @@ const StyledH1 = styled.h1`
   letter-spacing: -0.01em;
   color: #000;
   margin: 0 0 var(--space-600);
-  max-width: 16ch;
+  max-width: 100%;
   @media (max-width: 600px) {
     font-size: 34px;
   }

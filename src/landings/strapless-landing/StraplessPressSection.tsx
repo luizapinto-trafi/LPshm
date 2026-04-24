@@ -1,5 +1,7 @@
+import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
+import { StraplessCdn } from "./straplessCdn";
 
 const StyledSection = styled.section`
   background: var(--coral-050);
@@ -32,13 +34,32 @@ const StyledLogos = styled.div`
   opacity: 0.55;
 `;
 
-const StyledInstyle = styled.span`
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  font-size: 30px;
-  color: var(--ink-900);
+const StyledPressLogoInstyle = styled.div`
+  position: relative;
+  height: 28px;
+  width: 110px;
+  img {
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (min-width: 768px) {
+    height: 32px;
+    width: 126px;
+  }
+`;
+
+const StyledPressLogoCosmo = styled.div`
+  position: relative;
+  height: 28px;
+  width: 160px;
+  img {
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (min-width: 768px) {
+    height: 34px;
+    width: 200px;
+  }
 `;
 
 const StyledElle = styled.span`
@@ -46,14 +67,6 @@ const StyledElle = styled.span`
   font-weight: 700;
   letter-spacing: 0.24em;
   font-size: 34px;
-  color: var(--ink-900);
-`;
-
-const StyledCosmo = styled.span`
-  font-family: Georgia, serif;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  font-size: 22px;
   color: var(--ink-900);
 `;
 
@@ -73,9 +86,13 @@ export const StraplessPressSection = () => {
       <StyledWrap>
         <StyledTitle>{t("press.title")}</StyledTitle>
         <StyledLogos>
-          <StyledInstyle>{t("press.instyle")}</StyledInstyle>
+          <StyledPressLogoInstyle>
+            <Image src={StraplessCdn.pressInstyle} alt={t("press.instyleLogoAlt")} fill sizes="130px" unoptimized />
+          </StyledPressLogoInstyle>
           <StyledElle>{t("press.elle")}</StyledElle>
-          <StyledCosmo>{t("press.cosmo")}</StyledCosmo>
+          <StyledPressLogoCosmo>
+            <Image src={StraplessCdn.pressCosmo} alt={t("press.cosmoLogoAlt")} fill sizes="200px" unoptimized />
+          </StyledPressLogoCosmo>
           <StyledGlossy>{t("press.glossy")}</StyledGlossy>
         </StyledLogos>
       </StyledWrap>
