@@ -3,118 +3,147 @@ import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { StraplessCdn } from "./straplessCdn";
 import { StraplessPrimaryButton } from "./StraplessPrimaryButton";
+import { straplessSectionH2Typography } from "./straplessSectionH2Typography";
 
 const StyledSection = styled.section`
-  padding: clamp(50px, 7vw, 90px) 0;
+  position: relative;
   background: #fff;
+  overflow: hidden;
+  padding-top: var(--space-1200);
+  padding-bottom: var(--space-1200);
 `;
 
 const StyledWrap = styled.div`
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 60px);
+  padding-inline: clamp(var(--space-200), 4vw, var(--space-800));
 `;
 
 const StyledTitle = styled.h2`
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(30px, 4.5vw, 52px);
-  line-height: 1.1;
-  color: #000;
+  ${straplessSectionH2Typography}
   text-align: center;
-  margin: 0 auto 48px;
-  max-width: none;
-  text-wrap: balance;
+  margin: 0 0 var(--space-1000);
 `;
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 2.5vw, 24px);
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    margin: 0 auto;
+  grid-template-columns: 1fr;
+  gap: var(--space-800);
+  @media (min-width: 901px) {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--space-300);
+    row-gap: var(--space-200);
+    align-items: start;
   }
 `;
 
 const StyledCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-400);
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  @media (min-width: 901px) {
+    max-width: none;
+    margin-inline: 0;
+  }
+`;
+
+const StyledMediaBlock = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 320 / 480;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ink-100);
 `;
 
 const StyledImg = styled.div`
-  aspect-ratio: 1 / 1.15;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #eee;
-  position: relative;
+  position: absolute;
+  inset: 0;
   img {
     object-fit: cover;
   }
 `;
 
 const StyledTestimonial = styled.div`
-  background: #fff;
-  padding: 20px 24px;
-  border: 1px solid var(--ink-200);
-  border-radius: 0 0 4px 4px;
-  margin-top: -12px;
-  position: relative;
+  position: absolute;
+  left: var(--space-300);
+  right: var(--space-300);
+  bottom: var(--space-300);
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-`;
-
-const StyledName = styled.h3`
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 16px;
-  color: #000;
-  margin: 0;
+  background: #fff;
+  padding: var(--space-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 `;
 
 const StyledQuote = styled.p`
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.5;
-  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--ink-800);
+  margin: 0 0 var(--space-200);
+`;
+
+const StyledName = styled.p`
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--ink-900);
   margin: 0;
 `;
 
+const StyledButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-500);
+`;
+
+const StyledShopButton = styled(StraplessPrimaryButton)`
+  width: 100%;
+  max-width: none;
+  font-size: 14px;
+  min-height: 44px;
+  padding-inline: var(--space-600);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+`;
+
+const COLOR_KEYS = ["white", "black", "nude"] as const;
+
+function colorSrc(k: (typeof COLOR_KEYS)[number]) {
+  if (k === "black") return StraplessCdn.colorBlack;
+  if (k === "white") return StraplessCdn.colorWhite;
+  return StraplessCdn.colorNude;
+}
+
 export const StraplessColorsSection = () => {
   const { t } = useTranslation("strapless");
-  const keys = ["black", "white", "nude"] as const;
   return (
     <StyledSection aria-labelledby="strapless-colors-title">
       <StyledWrap>
         <StyledTitle id="strapless-colors-title">{t("colors.title")}</StyledTitle>
         <StyledGrid>
-          {keys.map((k) => (
+          {COLOR_KEYS.map((k) => (
             <StyledCard key={k}>
-              <StyledImg>
-                <Image
-                  src={
-                    k === "black"
-                      ? StraplessCdn.colorBlack
-                      : k === "white"
-                        ? StraplessCdn.colorWhite
-                        : StraplessCdn.colorNude
-                  }
-                  alt={t(`colors.${k}.imageAlt`)}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 33vw"
-                />
-              </StyledImg>
-              <StyledTestimonial>
-                <StyledName>{t(`colors.${k}.name`)}</StyledName>
-                <StyledQuote>{t(`colors.${k}.quote`)}</StyledQuote>
-                <StraplessPrimaryButton href="#buy" $wide>
-                  {t(`colors.${k}.cta`)}
-                </StraplessPrimaryButton>
-              </StyledTestimonial>
+              <StyledMediaBlock>
+                <StyledImg>
+                  <Image
+                    src={colorSrc(k)}
+                    alt={t(`colors.${k}.imageAlt`)}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 33vw"
+                  />
+                </StyledImg>
+                <StyledTestimonial>
+                  <StyledQuote>{t(`colors.${k}.quote`)}</StyledQuote>
+                  <StyledName>{t(`colors.${k}.name`)}</StyledName>
+                </StyledTestimonial>
+              </StyledMediaBlock>
+              <StyledButtonWrap>
+                <StyledShopButton href="#buy">{t(`colors.${k}.cta`)}</StyledShopButton>
+              </StyledButtonWrap>
             </StyledCard>
           ))}
         </StyledGrid>

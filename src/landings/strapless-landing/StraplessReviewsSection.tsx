@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
+import { straplessSectionH2Typography } from "./straplessSectionH2Typography";
 
 const StyledSection = styled.section`
   background: #fff;
@@ -13,15 +14,10 @@ const StyledWrap = styled.div`
 `;
 
 const StyledTitle = styled.h2`
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(30px, 4.5vw, 52px);
-  line-height: 1.1;
-  color: #000;
+  ${straplessSectionH2Typography}
   text-align: center;
-  margin: 0 auto 48px;
+  margin: 0 auto var(--space-1000);
   max-width: 18ch;
-  text-wrap: balance;
 `;
 
 const StyledList = styled.div`

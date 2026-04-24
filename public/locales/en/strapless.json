@@ -5,12 +5,17 @@
     "skipToMain": "Skip to main content"
   },
   "announce": {
-    "text": "Free Shipping Over $80 | Free Exchanges | Use LOVE10 for 10% OFF"
+    "regionLabel": "Top promotions",
+    "text": "FREE SHIPPING OVER $70 & FREE EXCHANGES"
   },
   "header": {
     "logoAria": "Shapermint home",
     "menuToggle": "Open or close menu",
     "mobileNavAria": "Mobile navigation",
+    "search": "Search",
+    "account": "Account",
+    "cart": "View cart",
+    "accountNotificationCount": "20",
     "nav0": "Shapewear ▾",
     "nav1": "Bras ▾",
     "nav2": "Underwear",
@@ -21,45 +26,47 @@
     "nav7": "Community ▾"
   },
   "hero": {
-    "title": "The Only Wireless Strapless Bra That Actually Stays Put",
-    "lead": "All-day support, zero slipping. Our stay-put silicone grip and soft side boning keep you lifted and shaped — no wires, no straps, no readjusting.",
-    "cta": "Grab Yours — Limited Stock",
+    "title": "Wireless Contour Bra",
+    "lead": "Wire-free contour cups lift and support your bust for a smooth, shaped silhouette — without the dig, pinch, or pain of underwire.",
+    "cta": "SHOP WIRELESS CONTOUR BRA",
     "badgeLine1": "Perfect support",
     "badgeLine2": "without underwire."
   },
   "features": {
-    "title": "Designed to change your mind about strapless bras",
-    "card1Title": "Breathable Comfort",
-    "card1Body": "Breathable fabric makes it feel like a second skin. No tugging or adjusting needed.",
-    "card2Tag": "SEAMLESS EDGES",
-    "card2Title": "Smooths & Disappears Under Clothes",
-    "card2Body": "The seamless, boneless edges lie completely flat so there are no lines, no bumps, and no ridges under strapless tops, dresses, or off-shoulder looks.",
-    "card2ImageAlt": "Smooth edges under clothing",
-    "card3Tag": "SOFT SIDE BONING",
-    "card3Title": "Wireless Lift & Structure",
-    "card3Body": "Soft side boning shapes and supports your bust for a natural, lifted silhouette — the kind of structure you'd expect from underwire, without a single wire touching your skin.",
-    "card3ImageAlt": "Wireless lift and structure"
+    "title": "Engineered to change your mind about wireless bras",
+    "card1ImageAlt": "Wire-free lift technology, contour cups",
+    "card1Title": "WIRE-FREE LIFT TECHNOLOGY",
+    "card1Body": "Light foam contour cups lift and shape your bust for a natural, supported look — without a single wire poking or digging.",
+    "card2Tag": "",
+    "card2Title": "SMOOTHS BACK & SIDES",
+    "card2Body": "The extra-wide band smooths your sides and back so there are no bulges or rolls under fitted tops — all-day, no readjusting.",
+    "card2ImageAlt": "Smooths back and sides under clothing",
+    "card3Tag": "",
+    "card3Title": "UNMATCHED LIFT",
+    "card3Body": "Light foam contour cups lift your bust into a natural, youthful shape — the kind of lift you'd expect from underwire, without a single wire touching your skin.",
+    "card3ImageAlt": "Natural lift without underwire"
   },
   "compare": {
-    "title": "Stay-put design marks the difference",
-    "cta": "Grab Yours — Limited Stock",
-    "benefit0": "All-day hold, zero slipping",
-    "benefit1": "Shapes without flattening",
-    "benefit2": "Smooth and invisible under clothes",
-    "colUsBrand": "SHAPERMINT",
-    "colUsImageAlt": "Shapermint strapless bra in nude",
-    "colUsQuote": "\"I've thrown away every strapless bra I've ever owned because they all ended up around my waist by noon. This one has a silicone grip that actually works — I wore it to a wedding, danced all night, and never touched it once.\"",
-    "colUsName": "— Lindsey K.",
-    "rowLabel": "Stays Put & Supports",
-    "colOtherBrand": "Competitor",
-    "col1ImageAlt": "Competitor strapless bra",
-    "col1Quote": "\"My old strapless bra looked fine for the first hour, then spent the rest of the night sliding down. I was constantly tugging it up in the bathroom — so embarrassing.\"",
-    "col1Name": "— Kaitlyn B.",
-    "rowBad1": "Slips by noon",
-    "col2ImageAlt": "Competitor bra tape",
-    "col2Quote": "\"I gave up on strapless bras and started using tape for off-shoulder tops. It held things in place but gave me zero shape, zero lift — and ripping it off was the worst part of my night.\"",
-    "col2Name": "— Sarah R.",
-    "rowBad2": "No shape, no lift"
+    "hScrollLabel": "Horizontal comparison. Swipe or scroll to see all columns.",
+    "title": "Wire-free\ndesign marks\nthe difference",
+    "cta": "SHOP NOW",
+    "benefit0": "Real lift and support",
+    "benefit1": "All-day comfort, zero pain",
+    "benefit2": "Shapes without flattening",
+    "benefit3": "Smooth and invisible under clothes",
+    "colUsImageAlt": "Shapermint wireless bra",
+    "colUsQuote": "“I used to dread putting on a bra every morning — underwires hurt, sports bras flattened me. This one lifts and shapes without a single pinch. I wore it 12 hours straight and forgot it was there.”",
+    "colUsName": "SARAH M.",
+    "colUsSub": "THE NEW STANDARD",
+    "compBrand": "Other Camis",
+    "col1ImageAlt": "Competitor bra, underwire style",
+    "col1Quote": "“Sure, my underwire gives me lift — but by 2pm I'm counting the minutes until I can rip it off. The digging, the poking, the red marks… I'm done.”",
+    "col1Name": "KAITLYN B.",
+    "col1Sub": "SUPPORT, BUT AT A COST",
+    "col2ImageAlt": "Sports bra style, flat look",
+    "col2Quote": "“I switched to sports bras for comfort but I looked completely flat under everything. No shape, no lift — just a compressed uniboob.”",
+    "col2Name": "RACHEL M.",
+    "col2Sub": "COMFORTABLE, BUT NO SHAPE"
   },
   "bestseller": {
     "title": "Best Seller",
@@ -71,23 +78,23 @@
   },
   "colors": {
     "title": "Pick your color",
-    "black": {
-      "imageAlt": "Black strapless bra",
-      "name": "Amanda K.",
-      "quote": "I needed a strapless option for a white linen dress and this one is completely invisible underneath. The silicone grip held it in place through an outdoor wedding in 90-degree heat — no slipping, no adjusting.",
-      "cta": "Shop Black"
-    },
     "white": {
       "imageAlt": "White strapless bra",
-      "name": "Jessica L.",
-      "quote": "I clipped the removable straps on for a tricky V-neck, then went fully strapless under a summer dress the next day — one bra, two completely different looks.",
+      "name": "Amanda K.",
+      "quote": "I needed a strapless option for a white linen dress and this one is completely invisible underneath. The silicone grip held it in place through an outdoor wedding in 90-degree heat — no slipping, no adjusting.",
       "cta": "Shop White"
     },
-    "nude": {
-      "imageAlt": "Nude strapless bra",
+    "black": {
+      "imageAlt": "Black strapless bra",
       "name": "Linda T.",
-      "quote": "I wear a lot of off-shoulder tops for date nights and this bra completely disappears. The soft side boning gives me actual shape — not the flattened look I get from every other bandeau.",
-      "cta": "Shop Nude"
+      "quote": "I wear it under black tops all the time — it disappears and stays comfortable through my whole 10-hour shift.",
+      "cta": "Shop Black"
+    },
+    "nude": {
+      "imageAlt": "Chai strapless bra",
+      "name": "Rachel S.",
+      "quote": "I love the racerback option with the removable straps, and the wide band smooths my back without digging in.",
+      "cta": "Shop Chai"
     }
   },
   "pdp": {
@@ -138,6 +145,25 @@
     "accFabricLine3": "– Gusset lining: 100% Cotton",
     "accCareTitle": "Care Instructions",
     "accCareBody": "Hand wash cold to preserve the bonded tech. Do not bleach. Line dry. Do not iron. Do not dry clean."
+  },
+  "b1g1Pdp": {
+    "offerBannerAria": "Special offer: buy one get one plus free gift",
+    "offerBannerEyebrow": "Limited time",
+    "offerBannerHeadline": "Buy 1, Get 1 Free + Free Gift",
+    "offerBannerSub": "Double your Truekind® strapless support — your second bra and a free gift are included with this offer while supplies last.",
+    "offerSectionTitle": "Truekind® Convertible Strapless Bandeau",
+    "offerSectionSubtitle": "Wire-free lift, stay-put grip, and removable straps for strapless or classic wear.",
+    "priceWidgetAria": "Pricing: B1G1 plus gift",
+    "priceWidgetCompareLabel": "Regular (2 bras)",
+    "priceWidgetCompareValue": "$100.00",
+    "priceWidgetOfferLabel": "Today's bundle",
+    "priceWidgetOfferBadge": "B1G1 + Gift",
+    "priceWidgetOfferValue": "$59.99",
+    "priceWidgetSavings": "You save $40",
+    "priceWidgetGiftNote": "Includes a FREE mystery gift at checkout with qualifying orders. See cart for details.",
+    "microcopyAboveCta": "Select colors only · While supplies last · Gift added in cart when eligible",
+    "cta": "Shop B1G1 + Gift",
+    "galleryAria": "Product images"
   },
   "reviews": {
     "title": "What our customers are saying",
@@ -205,8 +231,10 @@
     "aria": "As seen in the press",
     "title": "IN THE PRESS",
     "instyle": "InStyle",
+    "instyleLogoAlt": "InStyle logo",
     "elle": "ELLE",
     "cosmo": "COSMOPOLITAN",
+    "cosmoLogoAlt": "Cosmopolitan logo",
     "glossy": "GLOSSY"
   },
   "brand": {
@@ -300,8 +328,5 @@
       "privacy": "Do Not Sell My Information",
       "press": "Press & Inquiries"
     }
-  },
-  "sticky": {
-    "cta": "Grab Yours — $59.99"
   }
 }

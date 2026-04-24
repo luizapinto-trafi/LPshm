@@ -1,0 +1,337 @@
+{
+  "metaTitle": "Buy 1, Get 1 + Free Gift — Truekind® Strapless Bandeau | Shapermint",
+  "metaDescription": "Limited-time bundle: two Truekind® Convertible Strapless Bandeau Bras plus a checkout gift on eligible orders. Wireless lift, silicone grip, 60-day exchanges.",
+  "a11y": {
+    "skipToMain": "Skip to main offer content"
+  },
+  "announce": {
+    "regionLabel": "Limited-time bundle",
+    "text": "TWO BRAS + FREE GIFT · FREE SHIPPING $70+ · FREE EXCHANGES"
+  },
+  "header": {
+    "logoAria": "Shapermint — B1G1 gift offer landing",
+    "menuToggle": "Show or hide navigation",
+    "mobileNavAria": "Site menu",
+    "search": "Search the site",
+    "account": "My account",
+    "cart": "Shopping bag",
+    "accountNotificationCount": "3",
+    "nav0": "Sculpting ▾",
+    "nav1": "Everyday bras ▾",
+    "nav2": "Briefs & shorts",
+    "nav3": "Active bottoms",
+    "nav4": "Basics & tanks",
+    "nav5": "Customer favorites",
+    "nav6": "Deals",
+    "nav7": "Stories ▾"
+  },
+  "hero": {
+    "title": "Two bandeaus. One cart. One free gift.",
+    "lead": "Stock up on the Truekind® strapless you trust — this page unlocks a second bra plus a surprise gift at checkout when your order qualifies. Same wireless lift, zero wires, zero slipping.",
+    "cta": "CLAIM B1G1 + GIFT",
+    "badgeLine1": "Bundle-only",
+    "badgeLine2": "value on this URL."
+  },
+  "features": {
+    "title": "Why shoppers grab the bundle instead of a single bra",
+    "card1ImageAlt": "Contour cups, wireless support",
+    "card1Title": "LIFT WITHOUT WIRE",
+    "card1Body": "Structured foam cups shape and hold without metal digging in — ideal for long events when you still want a polished neckline.",
+    "card2Tag": "",
+    "card2Title": "SIDE & BACK SMOOTHING",
+    "card2Body": "A wide, soft band helps even out lines under slim knits and dresses so you are not tugging fabric smooth every hour.",
+    "card2ImageAlt": "Smooth profile under a fitted top",
+    "card3Tag": "",
+    "card3Title": "STRAPLESS OR STRAPPED",
+    "card3Body": "Clip the included straps on in seconds for halter, classic, or cross-back looks — one bra, multiple outfits in your getaway bag.",
+    "card3ImageAlt": "Convertible straps configuration"
+  },
+  "compare": {
+    "hScrollLabel": "Swipe horizontally to compare Shapermint with two common alternatives.",
+    "title": "Bundle-ready\nsupport beats\none-and-done pain",
+    "cta": "UNLOCK OFFER",
+    "benefit0": "Lift you can feel in photos",
+    "benefit1": "Comfort that survives a full day",
+    "benefit2": "Shape that is not pancake-flat",
+    "benefit3": "Clean lines under clingy fabrics",
+    "colUsImageAlt": "Truekind strapless bandeau on model",
+    "colUsQuote": "“I grabbed the bundle for a trip — one nude, one black. Both stayed put through airport security, dinner, and dancing. No bathroom hoisting ritual.”",
+    "colUsName": "PRIYA N.",
+    "colUsSub": "TRAVEL TESTED",
+    "compBrand": "Typical balconette",
+    "col1ImageAlt": "Underwire balconette bra",
+    "col1Quote": "“Lift is fine for two hours, then I feel the wire under my arm again. I stopped packing it for anything longer than brunch.”",
+    "col1Name": "HELENA V.",
+    "col1Sub": "LIFT WITH TRADE-OFFS",
+    "col2ImageAlt": "Compression bandeau",
+    "col2Quote": "“Comfortable, yes — but I disappear in dresses. I needed something that still shows I have a bustline.”",
+    "col2Name": "JORDAN F.",
+    "col2Sub": "FLAT LOOK, FAST"
+  },
+  "bestseller": {
+    "title": "Reader favorite",
+    "starsAria": "Rated 5 of 5 stars",
+    "quote": "I split the bundle with my sister for a wedding weekend — we each wore a different color and traded the gift item at checkout. Zero slip during the reception line dance.",
+    "author": "Nina C.",
+    "verified": "Verified shopper",
+    "cta": "Shop the strapless bundle →"
+  },
+  "colors": {
+    "title": "Choose your shades",
+    "white": {
+      "imageAlt": "White Truekind bandeau",
+      "name": "Claire W.",
+      "quote": "Under ivory lace it vanished — no flash glare, no outline. The grip felt secure even when the AC was blasting.",
+      "cta": "Add white"
+    },
+    "black": {
+      "imageAlt": "Black Truekind bandeau",
+      "name": "Tasha R.",
+      "quote": "My go-to under sheer black mesh. Still looks new after a dozen hand washes.",
+      "cta": "Add black"
+    },
+    "nude": {
+      "imageAlt": "Chai Truekind bandeau",
+      "name": "Elena M.",
+      "quote": "Chai disappears on me better than old “nude” shades ever did. Racerback clips saved a halter dress situation.",
+      "cta": "Add chai"
+    }
+  },
+  "pdp": {
+    "breadcrumb": "HOME / OFFERS",
+    "title": "Truekind® Convertible Strapless Bandeau — bundle page",
+    "starsAria": "4.8 stars average",
+    "reviewsLink": "(9,854 verified ratings)",
+    "blurb": "Shapewear-level smoothing with bra-level comfort — built for repeat wears.",
+    "packsLabel": "Pick your pack savings",
+    "packPopular": "Fan favorite",
+    "pack1Aria": "Choose single unit",
+    "pack2Aria": "Choose duo pack",
+    "pack3Aria": "Choose triple pack",
+    "pack1Units": "Single",
+    "pack1Save": "Save $15",
+    "pack1Strike": "$50.00",
+    "pack1Final": "$34.99",
+    "pack2Units": "Duo",
+    "pack2Save": "Save $40",
+    "pack2Strike": "$100.00",
+    "pack2Final": "$59.99",
+    "pack3Units": "Trio",
+    "pack3Save": "Save $70",
+    "pack3Strike": "$150.00",
+    "pack3Final": "$79.99",
+    "colorsDualLabel": "Shade: Black + Chai",
+    "colorBlackLabel": "Shade: Black",
+    "colorChaiLabel": "Shade: Chai",
+    "swatchBlackAria": "Pick black",
+    "swatchChaiAria": "Pick chai",
+    "sizeHeading": "Size: {{size}}",
+    "sizeGuide": "Fit guide →",
+    "measureHint": "Waist 24.5–26.5 in · Hips 32–34.5 in (example)",
+    "cta": "Add to bag — limited allocation",
+    "gallery1Alt": "Bandeau front angle",
+    "gallery2Alt": "Bandeau side angle",
+    "returnTitle": "60-night exchange window",
+    "returnBody": "Swap sizes, shades, or silhouettes within 60 days — we keep the process quick so you can wear what works.",
+    "longTitle": "Why this bundle page exists",
+    "longP1": "Strapless bras fail quietly: slipping cups, red lines, constant hikes in the restroom.",
+    "longP2": "This Truekind® bandeau uses silicone grip plus flexible side boning so lift does not depend on painful wires.",
+    "longP3": "Breathable stretch fabric hugs without squeezing, removable straps switch the look in seconds, and this URL stacks an extra bra plus a gift when the promo is active.",
+    "accSizeTitle": "Fit notes",
+    "accSizeBody": "Runs true to size; use the interactive fit quiz if you are between band measurements.",
+    "accFabricTitle": "Materials",
+    "accFabricLine1": "– Shell: 59% nylon, 41% spandex",
+    "accFabricLine2": "– Mesh panels: 75% nylon, 25% spandex",
+    "accFabricLine3": "– Lining: 100% cotton",
+    "accCareTitle": "Care",
+    "accCareBody": "Cold hand wash, reshape, line dry — skip bleach, irons, and dry cleaners to protect the grip strips."
+  },
+  "b1g1Pdp": {
+    "offerBannerAria": "Promotional region: buy one get one with gift",
+    "offerBannerEyebrow": "Clock is ticking",
+    "offerBannerHeadline": "Buy one, get one free + gift",
+    "offerBannerSub": "Add two Truekind® strapless bandeaus to your qualifying order and we include a surprise gift while inventory lasts.",
+    "offerSectionTitle": "Truekind® convertible strapless bandeau",
+    "offerSectionSubtitle": "Wireless structure, silicone stay-put band, and optional straps for every neckline.",
+    "priceWidgetAria": "Bundle price summary",
+    "priceWidgetCompareLabel": "Two bras at list",
+    "priceWidgetCompareValue": "$100.00",
+    "priceWidgetOfferLabel": "Promo bundle",
+    "priceWidgetOfferBadge": "B1G1 + gift",
+    "priceWidgetOfferValue": "$59.99",
+    "priceWidgetSavings": "You keep $40",
+    "priceWidgetGiftNote": "Gift auto-applies in cart when your bundle qualifies — see cart banner for specifics.",
+    "microcopyAboveCta": "Select shades only · Inventory capped · Gift may vary",
+    "cta": "Activate B1G1 + gift",
+    "galleryAria": "Gallery: strapless bandeau"
+  },
+  "reviews": {
+    "title": "Bundle buyers weigh in",
+    "r0": {
+      "name": "ALICIA P.",
+      "role": "Verified buyer",
+      "starsAria": "Five gold stars",
+      "title": "Gift was a win.",
+      "body": "\"Ordered for a conference trip — second bra went straight in my carry-on and the gift was a nice surprise at checkout.\""
+    },
+    "r1": {
+      "name": "MEGAN S.",
+      "role": "Verified buyer",
+      "starsAria": "Five gold stars",
+      "title": "No elevator fixes.",
+      "body": "\"Usually I am yanking strapless back up between meetings. This one stayed through an 11-hour day.\""
+    },
+    "r2": {
+      "name": "IVY L.",
+      "role": "Verified buyer",
+      "starsAria": "Five gold stars",
+      "title": "Photographer approved.",
+      "body": "\"Shot engagement photos outdoors — no harsh lines under the silk slip dress.\""
+    },
+    "r3": {
+      "name": "RENEE K.",
+      "role": "Verified buyer",
+      "starsAria": "Five gold stars",
+      "title": "Split with my MOH.",
+      "body": "\"Matron of honor and I each grabbed a color from the bundle deal — still cheaper than department store alternatives.\""
+    },
+    "r4": {
+      "name": "OPAL H.",
+      "role": "Verified buyer",
+      "starsAria": "Five gold stars",
+      "title": "Support without pancake.",
+      "body": "\"Finally a wireless strapless that does not mash me flat — the side boning actually helps.\""
+    }
+  },
+  "faq": {
+    "title": "Bundle FAQ",
+    "cta": "Jump to offer",
+    "q0": {
+      "q": "Does the gift show up automatically?",
+      "a": "When your cart meets the promo rules, the gift line item appears before you pay — double-check the banner above checkout."
+    },
+    "q1": {
+      "q": "Which sizes are included in the offer?",
+      "a": "XS through 3X stay in rotation; if a size sells out we will flag it on the PDP buttons."
+    },
+    "q2": {
+      "q": "Can I mix colors in the bundle?",
+      "a": "Yes — pick any in-stock shades that qualify for the bundle SKU so you are not stuck with two identical colors."
+    },
+    "q3": {
+      "q": "Will this work for fuller busts?",
+      "a": "The wide band spreads weight and the boning adds structure without wires; many DD+ shoppers use the fit quiz first."
+    },
+    "q4": {
+      "q": "How do I keep the grip like new?",
+      "a": "Cold hand wash, reshape while damp, and air dry — heat from dryers can dull the silicone over time."
+    }
+  },
+  "press": {
+    "aria": "Editor mentions",
+    "title": "PRESS HIGHLIGHTS",
+    "instyle": "InStyle",
+    "instyleLogoAlt": "InStyle wordmark",
+    "elle": "ELLE",
+    "cosmo": "Cosmopolitan",
+    "cosmoLogoAlt": "Cosmopolitan wordmark",
+    "glossy": "Glossy"
+  },
+  "brand": {
+    "logoAlt": "Shapermint wordmark",
+    "heading": "Confidence that moves with you",
+    "body": "From daily wireless bras to targeted shapewear, we design essentials that flex with real routines — not the other way around.",
+    "cols": {
+      "shop": {
+        "title": "Explore bras",
+        "links": [
+          "Full-cup wireless",
+          "Occasion strapless",
+          "Seamless t-shirt bras",
+          "Bandeau layers",
+          "Lifted wireless"
+        ]
+      },
+      "blog": {
+        "title": "Guides we love",
+        "links": [
+          "Strapless that stays",
+          "Bra size in five minutes",
+          "Summer sweat fixes",
+          "Shapewear vs. smoothing"
+        ]
+      },
+      "topics": {
+        "title": "Hot topics",
+        "links": [
+          "Fit calculator",
+          "Promo codes",
+          "Customer stories",
+          "Wedding-week packing",
+          "Holiday shipping",
+          "Virtual fit studio"
+        ]
+      },
+      "help": {
+        "title": "Support",
+        "links": [
+          "Delivery & returns",
+          "Fit help",
+          "Order tracking",
+          "Talk to us"
+        ]
+      }
+    }
+  },
+  "footer": {
+    "logoAlt": "Shapermint",
+    "col1": {
+      "title": "Company",
+      "links": [
+        "Our story",
+        "Creator partners",
+        "Editorial hub",
+        "Share & save",
+        "Store locator"
+      ]
+    },
+    "col2": {
+      "title": "Care team",
+      "links": [
+        "Help hub",
+        "Parcel tracking",
+        "Returns portal",
+        "Subscription tweaks",
+        "Delivery windows",
+        "Talk to us",
+        "Privacy hub"
+      ]
+    },
+    "news": {
+      "title": "Text me drops",
+      "body": "Join for launch reminders — first to know when bundles restock.",
+      "placeholder": "you@email.com",
+      "submit": "Subscribe"
+    },
+    "social": {
+      "instagram": "IG",
+      "facebook": "FB",
+      "youtube": "YT",
+      "twitter": "X",
+      "pinterest": "Pin"
+    },
+    "app": {
+      "title": "Download the app",
+      "storeKicker": "Get it on",
+      "storeName": "App Store",
+      "playKicker": "Also on",
+      "playName": "Google Play"
+    },
+    "bottom": {
+      "copy": "© 2026 Shapermint. All rights reserved.",
+      "terms": "Legal terms",
+      "privacy": "Privacy choices",
+      "press": "Media desk"
+    }
+  }
+}

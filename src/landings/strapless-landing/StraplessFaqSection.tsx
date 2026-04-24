@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { StraplessPrimaryButton } from "./StraplessPrimaryButton";
+import { straplessSectionH2Typography } from "./straplessSectionH2Typography";
 
 const StyledSection = styled.section`
   background: var(--toffee-300);
@@ -14,11 +15,9 @@ const StyledWrap = styled.div`
 `;
 
 const StyledTitle = styled.h2`
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(28px, 3.5vw, 40px);
-  color: #000;
-  margin: 0 0 32px;
+  ${straplessSectionH2Typography}
+  text-align: center;
+  margin: 0 0 var(--space-1000);
 `;
 
 const StyledList = styled.div`

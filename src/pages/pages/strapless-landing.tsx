@@ -16,7 +16,6 @@ import { StraplessFaqSection } from "@/landings/strapless-landing/StraplessFaqSe
 import { StraplessPressSection } from "@/landings/strapless-landing/StraplessPressSection";
 import { StraplessBrandCardSection } from "@/landings/strapless-landing/StraplessBrandCardSection";
 import { StraplessSiteFooter } from "@/landings/strapless-landing/StraplessSiteFooter";
-import { StraplessStickyCta } from "@/landings/strapless-landing/StraplessStickyCta";
 import { StraplessPagePath } from "@/landings/strapless-landing/straplessCdn";
 
 const StyledSkip = styled.a`
@@ -36,23 +35,27 @@ const StyledSkip = styled.a`
   }
 `;
 
-const StyledRoot = styled.div`
-  @media (max-width: 1023px) {
-    padding-bottom: 80px;
-  }
+/** Promo + header: una sola capa sticky en la parte superior al hacer scroll. */
+const StyledStickyTop = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--white);
 `;
 
 const StraplessLandingPage: NextPage = () => {
   const { t } = useTranslation("strapless");
   return (
-    <StyledRoot>
+    <>
       <Head>
         <title>{t("metaTitle")}</title>
         <meta name="description" content={t("metaDescription")} />
         <link rel="canonical" href={`https://shapermint.com${StraplessPagePath}`} />
       </Head>
-      <StraplessAnnouncementBar />
-      <StraplessSiteHeader />
+      <StyledStickyTop>
+        <StraplessAnnouncementBar />
+        <StraplessSiteHeader />
+      </StyledStickyTop>
       <StyledSkip href="#main-content">{t("a11y.skipToMain")}</StyledSkip>
       <main id="main-content" tabIndex={-1} style={{ outline: "none" }}>
         <StraplessHeroSection />
@@ -67,8 +70,7 @@ const StraplessLandingPage: NextPage = () => {
         <StraplessBrandCardSection />
       </main>
       <StraplessSiteFooter />
-      <StraplessStickyCta />
-    </StyledRoot>
+    </>
   );
 };
 

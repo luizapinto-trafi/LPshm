@@ -69,11 +69,12 @@ const StyledCrumb = styled.p`
 `;
 
 const StyledTitle = styled.h2`
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.25;
-  color: #000;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
   margin: 6px 0 8px;
 `;
 
