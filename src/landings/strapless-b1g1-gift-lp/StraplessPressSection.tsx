@@ -62,21 +62,32 @@ const StyledPressLogoCosmo = styled.div`
   }
 `;
 
-const StyledElle = styled.span`
-  font-family: Didot, Georgia, serif;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  font-size: 34px;
-  color: var(--ink-900);
+const StyledPressLogoElle = styled.div`
+  position: relative;
+  height: 32px;
+  width: 118px;
+  img {
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (min-width: 768px) {
+    height: 40px;
+    width: 148px;
+  }
 `;
 
-const StyledGlossy = styled.span`
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  font-size: 26px;
-  color: var(--ink-900);
+const StyledPressLogoGlossy = styled.div`
+  position: relative;
+  height: 24px;
+  width: 120px;
+  img {
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (min-width: 768px) {
+    height: 32px;
+    width: 200px;
+  }
 `;
 
 export const StraplessPressSection = () => {
@@ -89,11 +100,15 @@ export const StraplessPressSection = () => {
           <StyledPressLogoInstyle>
             <Image src={StraplessB1g1Cdn.pressInstyle} alt={t("press.instyleLogoAlt")} fill sizes="130px" unoptimized />
           </StyledPressLogoInstyle>
-          <StyledElle>{t("press.elle")}</StyledElle>
+          <StyledPressLogoElle>
+            <Image src={StraplessB1g1Cdn.pressElle} alt={t("press.elleLogoAlt")} fill sizes="(max-width: 767px) 120px, 160px" unoptimized />
+          </StyledPressLogoElle>
           <StyledPressLogoCosmo>
             <Image src={StraplessB1g1Cdn.pressCosmo} alt={t("press.cosmoLogoAlt")} fill sizes="200px" unoptimized />
           </StyledPressLogoCosmo>
-          <StyledGlossy>{t("press.glossy")}</StyledGlossy>
+          <StyledPressLogoGlossy>
+            <Image src={StraplessB1g1Cdn.pressGlossy} alt={t("press.glossyLogoAlt")} fill sizes="(max-width: 767px) 120px, 220px" unoptimized />
+          </StyledPressLogoGlossy>
         </StyledLogos>
       </StyledWrap>
     </StyledSection>

@@ -35,8 +35,14 @@ export const StraplessB1g1Cdn = {
   gallery2: `${BASE}/gallery-2.png`,
   swatchBlack: `${BASE}/swatch-black.png`,
   swatchChai: `${BASE}/swatch-chai.png`,
-  pressInstyle: `${BASE}/press-instyle.png`,
-  pressCosmo: `${BASE}/press-cosmo.png`,
+  /** ELLE wordmark (DS `Frame.png`). */
+  pressElle: `${BASE}/frame.png`,
+  /** InStyle wordmark (DS `instyle-logo-vector 2 1.png`). */
+  pressInstyle: `${BASE}/instyle-logo-vector-2-1.png`,
+  /** Wordmark Cosmo (DS `cosmopolitan-vector-logo 1.png`). */
+  pressCosmo: `${BASE}/cosmopolitan-vector-logo-1.png`,
+  /** Glossy wordmark (DS `image 1.png`). */
+  pressGlossy: `${BASE}/image-1.png`,
 } as const;
 
 export const StraplessB1g1GiftLpPagePath = "/pages/strapless-b1g1-gift-lp";
