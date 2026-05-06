@@ -12,6 +12,14 @@
   font-weight: 900;
 }
 
+.embedWider :global(h1.heading-50) {
+  font-size: 38px;
+}
+
+.embedWider :global(.div-block-1124 h1.text span.offertag strong) {
+  font-weight: 900;
+}
+
 .embedWider :global(.section-base-25-3.padding-bot._20-padding),
 .embedWider :global(.section-continues.padding-bot) {
   max-width: 900px !important;
