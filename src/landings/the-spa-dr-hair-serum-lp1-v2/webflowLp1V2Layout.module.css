@@ -1,0 +1,18 @@
+/**
+ * Local layout overrides for the The Spa Dr. hair-serum LP1 v2 (PDP-style).
+ * The Webflow shared bundle (`the-spa-dr.webflow.shared.23bc7a576.min.css`) is
+ * loaded via `pages/_document.tsx`. Add only scoped corrections here so they
+ * don't leak to other landings.
+ */
+
+/**
+ * Disable the global `a:hover { text-decoration: underline }` rule from the
+ * Shapermint design system globals — the published Webflow page never adds an
+ * underline on hover, and the rule was leaking into Webflow buybox tabs,
+ * variant pickers and other anchor-wrapped controls (e.g. `.tabs-menu-19
+ * .w-tab-link`). The Webflow bundle has zero `:hover { text-decoration }`
+ * rules of its own, so we can safely zero them out across the entire embed.
+ */
+.embedV2 :global(a:hover) {
+  text-decoration: none;
+}
