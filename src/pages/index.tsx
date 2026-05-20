@@ -10,6 +10,7 @@ import { StraplessB1g1GiftLpPagePath } from "@/landings/strapless-b1g1-gift-lp/s
 import { GrunsOlipopPagePath } from "@/landings/gruns-first-order-olipop/grunsOlipopCdn";
 import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/gummiesDuplicateCdn";
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
+import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -179,6 +180,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={WeddingsPagePath}>{t("home.weddingsCta")}</StyledCta>
           <StyledHint>{t("home.weddingsHint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={SpaDrListciclePagePath}>{t("home.spaDrListcicleCta")}</StyledCta>
+          <StyledHint>{t("home.spaDrListcicleHint")}</StyledHint>
         </StyledLandingCard>
       </StyledLandings>
     </StyledMain>

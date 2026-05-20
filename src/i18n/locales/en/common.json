@@ -17,7 +17,9 @@
     "gummiesDuplicateCta": "Open — Partner gummies (duplicated HTML, Shapermint DS)",
     "gummiesDuplicateHint": "Path: /pages/gummies-duplicate-landing — hero, features, buybox from duplicated-landing (2).html",
     "weddingsCta": "Open — Wedding shapewear (duplicated HTML, Shapermint DS)",
-    "weddingsHint": "Path: /pages/weddings — hero, products, comparison, review (duplicated-landing 3).html"
+    "weddingsHint": "Path: /pages/weddings — hero, products, comparison, review (duplicated-landing 3).html",
+    "spaDrListcicleCta": "Open — The Spa Dr Listcicle (Webflow hair serum LP1)",
+    "spaDrListcicleHint": "Path: /pages/the-spa-dr-listcicle — 1:1 body + shared Webflow CSS from try.thespadr.com"
   },
   "catalog": {
     "title": "Component Catalog"

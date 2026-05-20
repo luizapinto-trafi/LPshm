@@ -1,0 +1,40 @@
+/**
+ * Largura máxima 900px: hero + listicle centralizados. Top bar, faixa verde, CTA e footer
+ * seguem o Webflow a largura total.
+ */
+
+.embedWider :global(h1.h1-advertorial-4) {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.embedWider :global(strong.bold-text-261) {
+  font-weight: 900;
+}
+
+.embedWider :global(h1.heading-50) {
+  font-size: 38px;
+}
+
+.embedWider :global(.div-block-1124 h1.text span.offertag strong) {
+  font-weight: 900;
+}
+
+.embedWider :global(.section-base-25-3.padding-bot._20-padding),
+.embedWider :global(.section-continues.padding-bot) {
+  max-width: 900px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
+@media (min-width: 480px) {
+  .embedWider :global(.section-base-25-3.padding-bot._20-padding),
+  .embedWider :global(.section-continues.padding-bot) {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
