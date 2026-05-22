@@ -480,19 +480,6 @@ const QuizPage: NextPage = () => {
             >
               Continue
             </button>
-            {step >= 2 && (
-              <button onClick={() => setStep(s => s - 1)} style={{
-                height: 48, padding: "12px 24px",
-                background: "none", border: "none",
-                fontFamily: FONT, fontSize: 16, fontWeight: 700,
-                lineHeight: "24px", letterSpacing: "-0.08px",
-                color: INK_700,
-                cursor: "pointer", textDecoration: "underline",
-                textUnderlineOffset: "2px",
-              }}>
-                Back
-              </button>
-            )}
           </div>
         )}
       </main>
