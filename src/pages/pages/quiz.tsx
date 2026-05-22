@@ -92,6 +92,211 @@ function QuizStepperBar({ current }: { current: number }) {
   );
 }
 
+// ─── Welcome / intro screen ──────────────────────────────────────────────────
+const WELCOME_BULLETS = [
+  "Wireless, all-day comfort",
+  "Lifted, shaped silhouette",
+  "No more strap slipping",
+  "Smooth under any outfit",
+  "Fits sizes 32A – 44DDD",
+  "60-day hassle-free returns",
+];
+
+const AS_SEEN_ON = [
+  {
+    logo: "/quiz/asseen/today.svg",
+    alt: "TODAY",
+    logoWidth: 181,
+    quote: "These Shapermint shaper shorts sculpt my silhouette in seconds! I can't get over how smooth and streamlined my body looks.",
+  },
+  {
+    logo: "/quiz/asseen/cosmopolitan.svg",
+    alt: "Cosmopolitan",
+    logoWidth: 140,
+    quote: "They're so comfortable that I can stay on the go without feeling restricted, and I look amazing. It's a win-win!",
+  },
+  {
+    logo: "/quiz/asseen/people.svg",
+    alt: "People",
+    logoWidth: 91,
+    quote: "I never thought shapewear could feel and look this good. I'm all in for the shape enhancement and softness these provide.",
+  },
+];
+
+function AsSeenOnSection() {
+  return (
+    <section className="quiz-asseen">
+      <div className="quiz-asseen-divider" />
+      <p style={{
+        fontFamily: FONT, fontSize: 16, fontWeight: 700,
+        color: INK_900, textAlign: "center",
+        textTransform: "uppercase", letterSpacing: "0.5px",
+        margin: 0,
+      }}>
+        As seen on
+      </p>
+      <div className="quiz-asseen-grid">
+        {AS_SEEN_ON.map(item => (
+          <div key={item.alt} style={{
+            display: "flex", flexDirection: "column",
+            alignItems: "center", gap: 16,
+          }}>
+            <div style={{
+              height: 38,
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.logo}
+                alt={item.alt}
+                style={{ height: 38, width: "auto", maxWidth: item.logoWidth, objectFit: "contain" }}
+              />
+            </div>
+            <p style={{
+              fontFamily: FONT, fontSize: 14, fontWeight: 500,
+              color: INK_900, textAlign: "center", lineHeight: "28px",
+              margin: 0,
+            }}>
+              “{item.quote}”
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <style jsx>{`
+        .quiz-asseen {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+          padding: 48px 16px 24px;
+        }
+        .quiz-asseen-divider {
+          height: 1px;
+          width: 100%;
+          background: ${INK_200};
+        }
+        .quiz-asseen-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        @media (min-width: 768px) {
+          .quiz-asseen {
+            padding: 48px 36px 60px;
+            gap: 48px;
+          }
+          .quiz-asseen-grid {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <circle cx="10" cy="10" r="9" fill="none" stroke={TEAL} strokeWidth="1.5" />
+      <path d="M6 10.5l2.5 2.5L14 7.5" fill="none" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function QuizWelcome({ onStart }: { onStart: () => void }) {
+  return (
+    <>
+    <div className="quiz-welcome">
+      {/* Content side */}
+      <div className="quiz-welcome-content">
+        <h1 style={{
+          fontFamily: FONT, fontSize: 32, fontWeight: 700,
+          color: INK_900, margin: "0 0 24px", lineHeight: 1.15,
+          letterSpacing: "-0.5px",
+        }}>
+          Find your perfect bra fit in 60 seconds
+        </h1>
+        <p style={{
+          fontFamily: FONT, fontSize: 16, color: INK_500,
+          margin: "0 0 32px", lineHeight: 1.5, maxWidth: 480,
+        }}>
+          Answer 3 quick questions and discover the wireless bra over 1 million women are calling life-changing.
+        </p>
+
+        <ul style={{
+          listStyle: "none", padding: 0, margin: "0 0 32px",
+          display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 24px",
+          maxWidth: 520,
+        }}>
+          {WELCOME_BULLETS.map(b => (
+            <li key={b} style={{
+              display: "flex", alignItems: "center", gap: 10,
+              fontFamily: FONT, fontSize: 12, color: INK_900, lineHeight: 1.3,
+            }}>
+              <CheckIcon />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+
+        <button onClick={onStart} style={{
+          width: "100%", maxWidth: 360, height: 48, padding: "12px 24px",
+          borderRadius: 8, border: "none",
+          background: PEACH, color: INK_700,
+          fontFamily: FONT, fontSize: 18, fontWeight: 600,
+          lineHeight: "28px", textTransform: "uppercase",
+          cursor: "pointer", transition: "background 0.2s",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+        }}
+          onMouseEnter={e => { e.currentTarget.style.background = PEACH_HOVER; }}
+          onMouseLeave={e => { e.currentTarget.style.background = PEACH; }}
+        >
+          Start the quiz <span aria-hidden>→</span>
+        </button>
+      </div>
+
+      {/* Image side */}
+      <div className="quiz-welcome-image">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/quiz/quiz-welcome-hero.png" alt="Two women wearing Shapermint wireless bras" />
+      </div>
+
+      <style jsx>{`
+        .quiz-welcome {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
+          align-items: start;
+        }
+        .quiz-welcome-image {
+          background: #f7f7f7;
+          border-radius: 16px;
+          overflow: hidden;
+          aspect-ratio: 900 / 534;
+          width: 100%;
+        }
+        .quiz-welcome-image img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+        @media (min-width: 768px) {
+          .quiz-welcome {
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 48px;
+            align-items: center;
+          }
+        }
+      `}</style>
+    </div>
+    <AsSeenOnSection />
+    </>
+  );
+}
+
 // ─── Question 1 ──────────────────────────────────────────────────────────────
 const Q1_OPTIONS = [
   "Underwire digging in",
@@ -399,6 +604,7 @@ function Question3({ selected, onSelect }: { selected: string; onSelect: (v: str
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 const QuizPage: NextPage = () => {
+  const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({ q1: "", q2: "", q3: "" });
 
@@ -430,21 +636,22 @@ const QuizPage: NextPage = () => {
         <Image src={shapermintLogo} alt="Shapermint" height={28} priority />
       </header>
 
-      {/* Stepper */}
-      <QuizStepperBar current={step} />
+      {/* Stepper — hidden on the welcome screen */}
+      {started && <QuizStepperBar current={step} />}
 
       {/* Content */}
       <main style={{
-        maxWidth: step === 3 ? 820 : 480,
+        maxWidth: !started ? 960 : step === 3 ? 820 : 480,
         margin: "0 auto",
         padding: "32px 20px 100px",
         fontFamily: FONT,
         transition: "max-width 0.2s",
       }}>
-        {step === 0 && <Question1 selected={answers.q1} onSelect={handleSelect} />}
-        {step === 1 && <Question2 selected={answers.q2} onSelect={handleSelect} />}
-        {step === 2 && <Question3 selected={answers.q3} onSelect={handleSelect} />}
-        {step === 3 && (
+        {!started && <QuizWelcome onStart={() => setStarted(true)} />}
+        {started && step === 0 && <Question1 selected={answers.q1} onSelect={handleSelect} />}
+        {started && step === 1 && <Question2 selected={answers.q2} onSelect={handleSelect} />}
+        {started && step === 2 && <Question3 selected={answers.q3} onSelect={handleSelect} />}
+        {started && step === 3 && (
           <div style={{ paddingTop: 24 }}>
             <div style={{ textAlign: "center" }}>
               <h2 style={{ fontFamily: FONT, fontSize: 26, fontWeight: 700, color: INK_900, marginBottom: 12 }}>
@@ -459,7 +666,7 @@ const QuizPage: NextPage = () => {
         )}
 
         {/* CTA */}
-        {step < TOTAL_STEPS - 1 && (
+        {started && step < TOTAL_STEPS - 1 && (
           <div style={{ marginTop: 32, display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
             <button
               onClick={handleContinue}
