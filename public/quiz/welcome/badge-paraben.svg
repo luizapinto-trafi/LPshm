@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<circle id="Oval" cx="12" cy="12.4053" r="7" stroke="var(--stroke-0, #457A41)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path" d="M9.05263 6.05654V4C9.05263 3.44772 9.50035 3 10.0526 3H13.9474C14.4997 3 14.9474 3.44772 14.9474 4V6.05444" stroke="var(--stroke-0, #457A41)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_2" d="M5 20L19 6" stroke="var(--stroke-0, #457A41)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_3" d="M5 6L19 20" stroke="var(--stroke-0, #457A41)" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Path_4">
+</g>
+</g>
+</svg>

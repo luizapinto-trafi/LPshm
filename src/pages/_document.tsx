@@ -58,13 +58,12 @@ const SPA_DR_LP1_V2_WEBFLOW_CSS: PageStylesheet = {
   crossOrigin: "anonymous",
 };
 
-// Hair-quiz landing uses a dedicated editorial pairing (Cormorant Garamond
-// for headings + Manrope for body) that is not part of the Webflow bundle.
+// Hair-quiz landing uses Poppins across every screen, matching the Spa Dr.
+// master Figma file (welcome, quiz steps, interstitial, lead and result).
 const TSD_HAIR_QUIZ_GOOGLE_FONTS: PageStylesheet = {
   href:
     "https://fonts.googleapis.com/css2" +
-    "?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500" +
-    "&family=Manrope:wght@300;400;500;600;700" +
+    "?family=Poppins:wght@400;500;600;700" +
     "&display=swap",
 };
 
