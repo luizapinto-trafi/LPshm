@@ -58,6 +58,16 @@ const SPA_DR_LP1_V2_WEBFLOW_CSS: PageStylesheet = {
   crossOrigin: "anonymous",
 };
 
+// Hair-quiz landing uses a dedicated editorial pairing (Cormorant Garamond
+// for headings + Manrope for body) that is not part of the Webflow bundle.
+const TSD_HAIR_QUIZ_GOOGLE_FONTS: PageStylesheet = {
+  href:
+    "https://fonts.googleapis.com/css2" +
+    "?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500" +
+    "&family=Manrope:wght@300;400;500;600;700" +
+    "&display=swap",
+};
+
 const SPA_DR_LISTCICLE_STYLESHEETS: ReadonlyArray<PageStylesheet> = [
   SPA_DR_GOOGLE_FONTS,
   SPA_DR_LISTCICLE_WEBFLOW_CSS,
@@ -71,6 +81,7 @@ const SPA_DR_LP1_V2_STYLESHEETS: ReadonlyArray<PageStylesheet> = [
 const PAGE_STYLESHEETS: Record<string, ReadonlyArray<PageStylesheet>> = {
   "/hairserum/bty-7459-lp1-lead-offershort-list-tox": SPA_DR_LISTCICLE_STYLESHEETS,
   "/pages/hairserum/lp1-lead-offershort-list-tox-v2": SPA_DR_LP1_V2_STYLESHEETS,
+  "/pages/hairserum/tsd-hair-quiz": [TSD_HAIR_QUIZ_GOOGLE_FONTS],
 };
 
 export default class MyDocument extends Document {
