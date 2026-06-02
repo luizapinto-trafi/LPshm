@@ -186,6 +186,11 @@ export const HomePage = () => {
           <StyledCta href={SpaDrListciclePagePath}>{t("home.spaDrListcicleCta")}</StyledCta>
           <StyledHint>{t("home.spaDrListcicleHint")}</StyledHint>
         </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href="/pages/hairserum/tsd-hair-quiz">{t("home.spaDrHairQuizCta")}</StyledCta>
+          <StyledHint>{t("home.spaDrHairQuizHint")}</StyledHint>
+        </StyledLandingCard>
       </StyledLandings>
     </StyledMain>
   );
