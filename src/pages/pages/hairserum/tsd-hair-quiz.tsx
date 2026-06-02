@@ -32,6 +32,7 @@ const PAGE_PATH = "/pages/hairserum/tsd-hair-quiz";
 const ASSETS = {
   logo: `${CDN}/658c86ec661f9aca80cf7811_thespadr_logo.svg.svg`,
   bottle: "https://cdn.shopify.com/s/files/1/0912/0596/files/1_bottle_1.png",
+  resultHero: "/quiz/result/serum-hands.png",
   asSeen: [
     { src: `${CDN}/686e9986bd7fb3698d4e4216_Logo%20-%20vogue.svg`, alt: "Vogue" },
     { src: `${CDN}/686e9986bd7fb3698d4e421b_Logo%20-%20womens%20health.svg`, alt: "Women's Health" },
@@ -951,7 +952,7 @@ function ResultView({ variant }: { variant: Variant }) {
       </h2>
       <p style={{ fontSize: 13.5, color: TEXT_MID, lineHeight: 1.7, margin: "0 0 24px" }}>{data.summary}</p>
 
-      <div style={{ border: `1px solid ${SAGE_BORDER}`, borderRadius: 18, overflow: "hidden", marginBottom: 16, boxShadow: "0 16px 40px -24px rgba(31,29,24,0.28)" }}>
+      <div style={{ border: `1px solid ${SAGE_BORDER}`, borderRadius: 18, overflow: "hidden", marginBottom: 16, boxShadow: "0 16px 40px -24px rgba(31,29,24,0.28)", width: "min(650px, calc(100vw - 24px))", marginLeft: "50%", transform: "translateX(-50%)" }}>
         <div
           style={{
             background: SAGE_BG,
@@ -980,24 +981,13 @@ function ResultView({ variant }: { variant: Variant }) {
           </span>
         </div>
 
-        <div
-          style={{
-            background: "radial-gradient(circle at 50% 40%, #FBF9F4 0%, #F1ECE2 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 28,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={ASSETS.bottle}
-            alt="The Spa Dr. Peptide-Powered Hair Serum"
-            style={{ maxWidth: 180, width: "100%", height: "auto", filter: "drop-shadow(0 16px 26px rgba(31,29,24,0.18))" }}
-          />
-        </div>
+        <div className="tsd-result-product">
+          <div className="tsd-result-media" style={{ background: SAGE_BG }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ASSETS.resultHero} alt="The Spa Dr. Peptide-Powered Hair Serum" />
+          </div>
 
-        <div style={{ padding: "20px 18px 22px", background: SURFACE }}>
+          <div className="tsd-result-info" style={{ padding: "20px 18px 22px", background: SURFACE }}>
           <div style={{ fontFamily: HEAD_FONT, fontSize: 23, fontWeight: 600, color: TEXT, lineHeight: 1.18, letterSpacing: HEAD_TRACK, marginBottom: 5 }}>
             The Spa Dr.® Peptide-Powered Hair Serum
           </div>
@@ -1029,6 +1019,7 @@ function ResultView({ variant }: { variant: Variant }) {
               </div>
             ))}
           </div>
+          </div>
         </div>
       </div>
 
@@ -1046,24 +1037,41 @@ function ResultView({ variant }: { variant: Variant }) {
         <div style={{ fontSize: 12, color: TEXT_MID }}>Your exclusive quiz discount — applied at checkout</div>
       </div>
 
-      <div className="tsd-result-badges">
-        {ASSETS.badges.map((b) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={b.alt} src={b.src} alt={b.alt} style={{ height: 52, width: "auto", objectFit: "contain" }} />
-        ))}
-      </div>
       <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={ASSETS.creditCards} alt="Secure payments" style={{ height: 22, width: "auto", opacity: 0.8 }} />
       </div>
 
       <style jsx>{`
-        .tsd-result-badges {
+        .tsd-result-product {
           display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center;
-          gap: 14px;
+          align-items: stretch;
+        }
+        .tsd-result-media {
+          flex: 0 0 46%;
+          line-height: 0;
+          overflow: hidden;
+        }
+        .tsd-result-media img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .tsd-result-info {
+          flex: 1;
+          min-width: 0;
+        }
+        @media (max-width: 560px) {
+          .tsd-result-product {
+            flex-direction: column;
+          }
+          .tsd-result-media {
+            flex: none;
+          }
+          .tsd-result-media img {
+            height: auto;
+          }
         }
       `}</style>
     </div>
