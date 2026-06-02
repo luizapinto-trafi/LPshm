@@ -23,6 +23,9 @@ const BODY_FONT = "'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif";
 
 // ─── Brand assets (The Spa Dr. CDN, reused from existing landings) ────────────
 const CDN = "https://cdn.prod.website-files.com/6581a4ebeea456b4072fe120";
+const TSD_FAVICON = `${CDN}/65e9c5d0891fce2e5fa27009_Favicon_TSD.png`;
+const PUBLISHED_ORIGIN = "https://try.thespadr.com";
+const PAGE_PATH = "/pages/hairserum/tsd-hair-quiz";
 const ASSETS = {
   logo: `${CDN}/658c86ec661f9aca80cf7811_thespadr_logo.svg.svg`,
   bottle: "https://cdn.shopify.com/s/files/1/0912/0596/files/1_bottle_1.png",
@@ -968,9 +971,24 @@ const TsdHairQuizPage: NextPage = () => {
   return (
     <>
       <Head>
+        <link href="https://cdn.prod.website-files.com" rel="preconnect" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossOrigin="anonymous" />
+        <link rel="icon" type="image/png" href={TSD_FAVICON} />
         <title>The Spa Dr. — Hair Quiz</title>
+        <meta
+          name="description"
+          content="Take The Spa Dr. 60-second hair quiz and discover the peptide-powered serum for visibly thicker, fuller-looking hair."
+        />
         <meta name="robots" content="noindex" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="The Spa Dr. — Hair Quiz" />
+        <meta
+          property="og:description"
+          content="Take The Spa Dr. 60-second hair quiz and discover the peptide-powered serum for visibly thicker, fuller-looking hair."
+        />
+        <link rel="canonical" href={`${PUBLISHED_ORIGIN}${PAGE_PATH}`} />
       </Head>
 
       <div className="tsd-page">
