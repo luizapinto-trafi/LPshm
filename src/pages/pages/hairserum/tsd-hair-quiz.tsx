@@ -128,9 +128,9 @@ const SCREENS: Screen[] = [
     cta: "Next →",
     options: [
       { value: "none", label: "I barely notice any", icon: "😌" },
-      { value: "light", label: "Some — light daily shedding", icon: "🪮" },
+      { value: "light", label: "Some, light daily shedding", icon: "🪮" },
       { value: "noticeable", label: "Noticeable hair in the brush and shower", icon: "😟" },
-      { value: "heavy", label: "A lot — it concerns me every day", icon: "😰" },
+      { value: "heavy", label: "A lot, it concerns me every day", icon: "😰" },
     ],
   },
   {
@@ -140,7 +140,7 @@ const SCREENS: Screen[] = [
     layout: "cards",
     multi: true,
     title: "Has anything changed in the last 6 months?",
-    subtitle: "Select all that apply — this helps us find the real cause.",
+    subtitle: "Select all that apply, this helps us find the real cause.",
     cta: "Next →",
     options: [
       { value: "weightloss", label: "I've lost weight quickly", desc: "Through diet, a program, or a big lifestyle change", icon: "⚖️" },
@@ -233,7 +233,7 @@ const INTERSTITIAL: Record<Variant, { headline: string; pre: string; strong: str
   },
   // Version C — shown when "stress", "products", or "none" is selected
   default: {
-    headline: "Your Follicle Is Being Starved — Here's Why.",
+    headline: "Your Follicle Is Being Starved, Here's Why.",
     pre: "Buildup from daily products, chronic stress, and hormonal shifts all do the same thing: ",
     strong: "they cut off the nutrients your follicle needs to hold each strand in place.",
     post: " Most hair products never reach the follicle. They coat the strand and rinse off. The root gets nothing.",
@@ -271,7 +271,7 @@ const RESULT: Record<Variant, { headline: string; summary: string; tagline: stri
       "Your follicle is losing its grip. The anchoring structure that holds each strand in place is being weakened — from buildup, hormonal shifts, or nutrient starvation. Most products never address this. This one does.",
     tagline: "Your follicle fix.",
     reasons: [
-      "Water-based formula absorbs directly into the scalp — reaches the follicle where most serums never get",
+      "Water-based formula absorbs directly into the scalp, reaches the follicle where most serums never get",
       "Peptides reinforce the anchoring structure that holds each strand in place",
       "Clinically tested: 97% reported visibly fuller hair, 94% noticed less shedding in 90 days",
       "Doctor-formulated, non-toxic, safe for daily long-term use",
@@ -459,10 +459,10 @@ function Welcome() {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           gap: 14,
-          flexWrap: "wrap",
           border: `1px solid ${D_BORDER}`,
           borderRadius: 16,
           padding: "18px 16px",
@@ -472,10 +472,20 @@ function Welcome() {
         <span style={{ fontFamily: POPPINS, fontSize: 12, lineHeight: "16px", letterSpacing: "0.04em", textTransform: "uppercase", color: D_TEXT_TERTIARY }}>
           As seen on:
         </span>
-        {WD.press.map((p) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={p.alt} src={p.src} alt={p.alt} style={{ height: 22, width: p.w, objectFit: "contain", opacity: 0.6 }} />
-        ))}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14,
+            flexWrap: "wrap",
+          }}
+        >
+          {WD.press.map((p) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={p.alt} src={p.src} alt={p.alt} style={{ height: 22, width: p.w, objectFit: "contain", opacity: 0.6 }} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -731,11 +741,24 @@ function QuestionScreenView({
 // Scalp cross-section: a hair strand rising from a follicle bulb in the skin layer.
 function FollicleIcon() {
   return (
-    <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden focusable="false">
-      <path d="M5 31c6-4 12-6 19-6s13 2 19 6v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-9Z" fill="#D7E7D2" />
-      <path d="M24 27c-3.2 0-5.6 3-5.6 7s2.4 9 5.6 9 5.6-5 5.6-9-2.4-7-5.6-7Z" fill="#9AB898" />
-      <path d="M24 40c1.1 0 2-2.8 2-5.4 0-2.1-.9-3.6-2-3.6s-2 1.5-2 3.6c0 2.6.9 5.4 2 5.4Z" fill="#376234" />
-      <path d="M24 31c.4-7 .2-14 2-21" stroke="#457A41" strokeWidth="2.6" strokeLinecap="round" />
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden focusable="false">
+      {/* Hair shaft emerging from top */}
+      <path d="M22 2 C21 6 20.5 10 21 14 C21.4 17 22 19 22 22" stroke="#457A41" strokeWidth="2" strokeLinecap="round" />
+      {/* Cuticle layers */}
+      <path d="M20 14 C19 16 19.5 18 21 19" stroke="#7AAB77" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M24 13 C25.2 15 24.8 17.5 23 19" stroke="#7AAB77" strokeWidth="1.2" strokeLinecap="round" />
+      {/* Follicle bulb - outer sheath */}
+      <ellipse cx="22" cy="30" rx="7" ry="9" fill="#D7E7D2" />
+      {/* Inner root sheath */}
+      <ellipse cx="22" cy="30.5" rx="4.5" ry="6.5" fill="#B4D0B0" />
+      {/* Hair matrix */}
+      <ellipse cx="22" cy="35" rx="3" ry="2.5" fill="#9AB898" />
+      {/* Dermal papilla */}
+      <ellipse cx="22" cy="37.5" rx="2.2" ry="1.5" fill="#376234" />
+      {/* Sebaceous gland suggestion */}
+      <ellipse cx="28" cy="24" rx="2.5" ry="1.8" fill="#C4D6C6" />
+      {/* Shaft inside bulb */}
+      <path d="M22 22 L22 33" stroke="#457A41" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -871,22 +894,7 @@ function LeadView({ email, onChange, invalid }: { email: string; onChange: (v: s
           gap: 14,
         }}
       >
-        <span
-          aria-hidden
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: "50%",
-            background: SAGE,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 20,
-            flexShrink: 0,
-          }}
-        >
-          🌿
-        </span>
+
         <span style={{ fontSize: 13, color: TEXT_MID, lineHeight: 1.5 }}>
           <strong style={{ display: "block", fontSize: 14, color: TEXT, fontWeight: 700, marginBottom: 2 }}>Your match is ready</strong>
           Based on your answers, we&apos;ve identified your hair&apos;s root cause and the formula designed for it.
@@ -977,7 +985,7 @@ function ResultView({ variant }: { variant: Variant }) {
               flexShrink: 0,
             }}
           >
-            50% OFF
+            55% OFF
           </span>
         </div>
 
@@ -1033,8 +1041,8 @@ function ResultView({ variant }: { variant: Variant }) {
           marginBottom: 16,
         }}
       >
-        <div style={{ fontFamily: HEAD_FONT, fontSize: 34, fontWeight: 600, color: SAGE, lineHeight: 1, letterSpacing: HEAD_TRACK, marginBottom: 4 }}>50% OFF</div>
-        <div style={{ fontSize: 12, color: TEXT_MID }}>Your exclusive quiz discount — applied at checkout</div>
+        <div style={{ fontFamily: HEAD_FONT, fontSize: 34, fontWeight: 600, color: SAGE, lineHeight: 1, letterSpacing: HEAD_TRACK, marginBottom: 4 }}>55% OFF</div>
+        <div style={{ fontSize: 12, color: TEXT_MID }}>Your exclusive quiz discount is already applied to the offer</div>
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
@@ -1122,7 +1130,6 @@ const WD_BULLETS = [
   "Strengthen strands",
   "Reduce shedding and daily hair loss",
   "Boost fuller-looking hair",
-  "Doctor-formulated & clinically proven",
 ];
 
 function DCheck() {
@@ -1215,7 +1222,7 @@ function WelcomeDesktop({ onStart }: { onStart: () => void }) {
         <div className="wd-inner wd-proof-row">
           <div className="wd-rating">
             <DStars />
-            <p className="wd-rating-text">Trusted by over 100,000 women to support visibly healthier, younger-looking skin.</p>
+            <p className="wd-rating-text">Trusted by over 300,000 women to support a healthier, fuller-looking hair.</p>
           </div>
           <div className="wd-badges">
             {WD.badges.map((b) => (
@@ -1256,7 +1263,7 @@ function WelcomeDesktop({ onStart }: { onStart: () => void }) {
             </nav>
           </div>
           <div className="wd-divider" />
-          <p className="wd-copy">© 2025, The Spa Dr.</p>
+          <p className="wd-copy">© 2026, The Spa Dr.</p>
         </div>
       </footer>
 
@@ -1374,12 +1381,9 @@ function WelcomeDesktop({ onStart }: { onStart: () => void }) {
           color: ${D_TEXT};
         }
         .wd-bullets {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: repeat(3, auto);
-          grid-auto-flow: column;
-          column-gap: 12px;
-          row-gap: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
         }
         .wd-bullet {
           display: flex;
@@ -1579,10 +1583,6 @@ function WelcomeDesktop({ onStart }: { onStart: () => void }) {
           .wd-h1 {
             font-size: clamp(26px, 5.2vw, 38px);
           }
-          .wd-bullets {
-            grid-template-columns: 1fr;
-            grid-auto-flow: row;
-          }
         }
       `}</style>
     </div>
@@ -1622,12 +1622,6 @@ const TsdHairQuizPage: NextPage = () => {
       const next = withoutNone.includes(value) ? withoutNone.filter((v) => v !== value) : [...withoutNone, value];
       return { ...prev, [id]: next };
     });
-    // Single-select questions advance automatically once an option is picked —
-    // the short delay lets the selected state register visually first. Questions
-    // flagged noAutoAdvance keep a NEXT button so the user can pause.
-    if (!multi && !noAutoAdvance) {
-      window.setTimeout(() => goNext(), 300);
-    }
   };
 
   const submitEmail = () => {
@@ -1720,7 +1714,7 @@ const TsdHairQuizPage: NextPage = () => {
               <CtaSub>Under 2 minutes · Free · No obligation</CtaSub>
             </div>
           )}
-          {screen.kind === "question" && (screen.multi || screen.noAutoAdvance) && (
+          {screen.kind === "question" && (
             <div className="tsd-bottom">
               <CtaButton onClick={goNext} disabled={!canContinue}>
                 {screen.cta}
@@ -1729,7 +1723,7 @@ const TsdHairQuizPage: NextPage = () => {
           )}
           {screen.kind === "interstitial" && (
             <div className="tsd-bottom">
-              <CtaButton onClick={goNext}>GOT IT — SHOW ME THE FIX →</CtaButton>
+              <CtaButton onClick={goNext}>KEEP INVESTIGATING →</CtaButton>
             </div>
           )}
           {screen.kind === "lead" && (
@@ -1740,7 +1734,7 @@ const TsdHairQuizPage: NextPage = () => {
           )}
           {screen.kind === "result" && (
             <div className="tsd-bottom">
-              <CtaButton href={offerUrl}>GET 50% OFF MY MATCH →</CtaButton>
+              <CtaButton href={offerUrl}>GET 55% OFF MY MATCH →</CtaButton>
               <CtaSub>30-Day Money-Back Guarantee · Free Shipping · Free Gifts</CtaSub>
             </div>
           )}
