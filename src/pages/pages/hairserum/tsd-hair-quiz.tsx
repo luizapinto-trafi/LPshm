@@ -1106,8 +1106,8 @@ const WD = {
     main: "/quiz/welcome/hero-main.jpg",
     flip: "/quiz/welcome/hero-flip.jpg",
     flip2: "/quiz/welcome/hero-flip2.png",
-    bottle: "/quiz/welcome/hero-bottle.jpg",
-    woman: "/quiz/welcome/hero-woman.jpg",
+    bottle: "/quiz/welcome/hero-bottle.png",
+    woman: "/quiz/welcome/hero-woman.png",
   },
   press: [
     { src: "/quiz/welcome/press-ok.svg", alt: "OK!", w: 48 },
@@ -1172,9 +1172,9 @@ function WelcomeDesktop({ onStart }: { onStart: () => void }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="wd-tile wd-tile-bottle" src={WD.hero.bottle} alt="The Spa Dr. Hair Serum" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="wd-tile wd-tile-woman" src={WD.hero.woman} alt="Customer holding the serum" />
+              <img className="wd-tile wd-tile-woman" src={WD.hero.flip2} alt="Voluminous hair in motion" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="wd-tile wd-tile-face" src={WD.hero.flip2} alt="Voluminous hair in motion" />
+              <img className="wd-tile wd-tile-face" src={WD.hero.woman} alt="Customer holding the serum" />
             </div>
 
             <div className="wd-content">
