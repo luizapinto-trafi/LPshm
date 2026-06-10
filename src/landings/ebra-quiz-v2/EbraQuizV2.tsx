@@ -269,25 +269,25 @@ const SHM_BTN_DISABLED_BG = "#E5E5E5";
 const SHM_BTN_DISABLED_FG = "#A6A6A6";
 const SHM_BTN_FONT = '"Avenir Next", "Montserrat", system-ui, sans-serif';
 
-function PillCTA({ children, onClick, accent, ink, compact, full, ghost }) {
-  const bg = ghost ? "transparent" : SHM_BTN_PRIMARY;
-  const fg = "#1B1B1B";
+function PillCTA({ children, onClick, accent, ink, compact, full, ghost, disabled }) {
+  const bg = disabled ? SHM_BTN_DISABLED_BG : ghost ? "transparent" : SHM_BTN_PRIMARY;
+  const fg = disabled ? SHM_BTN_DISABLED_FG : "#1B1B1B";
   return (
-    <button onClick={onClick} style={{
+    <button onClick={disabled ? undefined : onClick} disabled={disabled} style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
       padding: compact ? "12px 20px" : "12px 24px",
-      borderRadius: 8, border: ghost ? `1px solid ${SHM_BTN_PRIMARY}` : "none",
+      borderRadius: 8, border: disabled ? "none" : ghost ? `1px solid ${SHM_BTN_PRIMARY}` : "none",
       background: bg, color: fg,
       fontFamily: SHM_BTN_FONT,
       fontSize: compact ? 16 : 18, fontWeight: 600,
       lineHeight: compact ? "24px" : "28px",
       letterSpacing: 0, textTransform: "uppercase",
-      cursor: "pointer", width: full ? "100%" : "auto",
+      cursor: disabled ? "not-allowed" : "pointer", width: full ? "100%" : "auto",
       transition: "transform .12s, background .15s",
     }}
-      onMouseEnter={(e) => { if (!ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (!ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
-      onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
+      onMouseEnter={(e) => { if (!disabled && !ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (!disabled && !ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
+      onMouseDown={(e) => { if (!disabled) e.currentTarget.style.transform = "translateY(1px)"; }}
       onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
     >
       {children}
@@ -422,16 +422,14 @@ function ScreenShape({ compact, ink, accent, paper, answer, onSelect, onBack, on
         ))}
       </div>
 
-      {answer && (
-        <div style={{ marginTop: compact ? 22 : 28, textAlign: "center", display: "flex", justifyContent: "center" }}>
-          <PillCTA onClick={onAdvance} compact={compact} ink={ink} full={compact}>
-            Continue
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-              <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
-            </svg>
-          </PillCTA>
-        </div>
-      )}
+      <div style={{ marginTop: compact ? 22 : 28, textAlign: "center", display: "flex", justifyContent: "center" }}>
+        <PillCTA onClick={onAdvance} compact={compact} ink={ink} full={compact} disabled={!answer}>
+          Continue
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
+          </svg>
+        </PillCTA>
+      </div>
 
       {helpOpen && (
         <ShapeHelpModal compact={compact} ink={ink} accent={accent} onClose={() => setHelpOpen(false)} />
@@ -594,9 +592,9 @@ function QuestionPills({ step, total = 4, compact, ink, accent, paper, title, ti
         </div>
       )}
 
-      {canAdvance && multi && (
+      {multi && (
         <div style={{ marginTop: compact ? 28 : 36, textAlign: "left" }}>
-          <PillCTA onClick={onAdvance} compact={compact} ink={ink}>
+          <PillCTA onClick={onAdvance} compact={compact} ink={ink} disabled={!canAdvance}>
             Continue
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
               <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
@@ -737,8 +735,8 @@ function ScreenSize({ compact, ink, accent, paper, answer, onSelect, onAdvance, 
         <span style={{ color: "rgba(31,26,23,0.5)" }}>→</span>
       </button>
 
-      <div style={{ marginTop: compact ? 24 : 32, opacity: canContinue ? 1 : 0.4, pointerEvents: canContinue ? "auto" : "none" }}>
-        <PillCTA onClick={() => canContinue && onAdvance()} compact={compact} ink={ink} full={compact}>
+      <div style={{ marginTop: compact ? 24 : 32 }}>
+        <PillCTA onClick={onAdvance} compact={compact} ink={ink} full={compact} disabled={!canContinue}>
           {notSure ? "Continue without a size" : size ? `Continue with Size ${size}` : "Continue"}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
             <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
@@ -1616,9 +1614,9 @@ function ClockSvg({ color }) {
 function QuizApp({ compact, tokens }) {
   const [screen, setScreen] = React.useState(0);
   const [answers, setAnswers] = React.useState({
-    shape: "round",
-    problems: ["Gaping cups", "Digging straps"],
-    wants: ["Lift", "Comfort"],
+    shape: null,
+    problems: [],
+    wants: [],
     size: null,
   });
   const [userEmail, setUserEmail] = React.useState("");
@@ -1654,7 +1652,7 @@ const QUIZ_CSS = `
 @keyframes qzfadeIn { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
 .qz-slide { animation: qzfadeIn .25s ease-out; }
 @keyframes qzpulse { 0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.7; } 70% { box-shadow: 0 0 0 12px transparent; opacity: 0; } 100% { box-shadow: 0 0 0 0 transparent; opacity: 0; } }
-@media (hover: hover) { .qz-shape-cell:hover .qz-tooltip { opacity: 1 !important; } }
+@media (hover: hover) { .qz-shape-cell:hover .qz-tooltip { opacity: 1 !important; } .qz-shape-cell:hover { z-index: 10; } }
 `;
 
 /**
