@@ -715,25 +715,6 @@ function ScreenSize({ compact, ink, accent, paper, answer, onSelect, onAdvance, 
         </div>
       </div>
 
-      <button onClick={() => setHelpOpen(true)} style={{
-        marginTop: compact ? 16 : 22, background: "transparent",
-        border: "1px dashed rgba(31,26,23,0.25)", color: "rgba(31,26,23,0.85)",
-        cursor: "pointer", textAlign: "left", padding: compact ? "13px 16px" : "14px 18px",
-        borderRadius: 16, fontFamily: "inherit", fontSize: compact ? 13 : 14, fontWeight: 600,
-        display: "flex", alignItems: "center", gap: 10, width: "100%", boxSizing: "border-box",
-        transition: "border-color .15s, background .15s",
-      }}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(31,26,23,0.55)"; e.currentTarget.style.background = "rgba(31,26,23,0.03)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(31,26,23,0.25)"; e.currentTarget.style.background = "transparent"; }}
-      >
-        <span style={{
-          width: 22, height: 22, borderRadius: 9999, background: accent, color: "#FAF4EC",
-          display: "grid", placeItems: "center", fontFamily: "var(--qz-headline-font)",
-          fontStyle: "italic", fontSize: 13, fontWeight: 400, flex: "0 0 auto",
-        }}>?</span>
-        <span style={{ flex: 1 }}>I'm not sure — help me measure</span>
-        <span style={{ color: "rgba(31,26,23,0.5)" }}>→</span>
-      </button>
 
       <div style={{ marginTop: compact ? 24 : 32 }}>
         <PillCTA onClick={onAdvance} compact={compact} ink={ink} full={compact} disabled={!canContinue}>
@@ -1109,42 +1090,61 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
 
       <GiftUnlockBanner accent={accent} pinkAccent={pinkAccent} surface={surface} ink={ink} compact={compact} />
 
-      <div style={{ marginTop: compact ? 14 : 18, display: "flex", justifyContent: "center" }}>
-        <button onClick={onClaim} style={{
-          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-          padding: compact ? "12px 20px" : "12px 24px", borderRadius: 8, border: "none",
-          background: SHM_BTN_PRIMARY, color: "#1B1B1B", fontFamily: SHM_BTN_FONT,
-          fontWeight: 600, fontSize: compact ? 16 : 18, lineHeight: compact ? "24px" : "28px",
-          letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap",
-          cursor: "pointer", transition: "background .15s, transform .12s",
-        }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER)}
-          onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
-          onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
-          onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
-        >
-          Shop now
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
-          </svg>
-        </button>
+      {/* Two-column PDP layout: images left, info right (stacks on mobile) */}
+      <div style={{
+        marginTop: compact ? 24 : 32,
+        display: compact ? "flex" : "grid",
+        flexDirection: "column",
+        gridTemplateColumns: compact ? undefined : "1fr 1fr",
+        gap: compact ? 20 : 32,
+        alignItems: "stretch",
+      }}>
+        {/* Left: product images */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: compact ? 8 : 12 }}>
+          <ProductImage src={color.bra} alt={`${color.name} — product`} label="Product" fit="contain" />
+          <ProductImage src={color.fit} alt={`${color.name} — on body`} label="On body" fit="cover" />
+        </div>
+
+        {/* Right: title, color picker, CTA */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", gap: compact ? 28 : 0 }}>
+          <ProductHeader compact={compact} />
+          <ColorSelector colors={PRODUCT_COLORS} value={selectedColor} onChange={setSelectedColor} ink={ink} accent={accent} compact={compact} />
+          <button onClick={onClaim} style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+            padding: compact ? "12px 20px" : "12px 28px", borderRadius: 8, border: "none",
+            background: SHM_BTN_PRIMARY, color: "#1B1B1B", fontFamily: SHM_BTN_FONT,
+            fontWeight: 600, fontSize: compact ? 16 : 18, lineHeight: compact ? "24px" : "28px",
+            letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap",
+            cursor: "pointer", transition: "background .15s, transform .12s",
+            width: compact ? "100%" : "auto",
+          }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER)}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
+            onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
+            onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
+          >
+            Shop now
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <div style={{ marginTop: compact ? 24 : 32, display: "grid", gridTemplateColumns: "1fr 1fr", gap: compact ? 8 : 14 }}>
-        <ProductImage src={color.bra} alt={`${color.name} — product`} label="Product" fit="contain" />
-        <ProductImage src={color.fit} alt={`${color.name} — on body`} label="On body" fit="cover" />
-      </div>
-
-      <ColorSelector colors={PRODUCT_COLORS} value={selectedColor} onChange={setSelectedColor} ink={ink} accent={accent} compact={compact} />
-
-      <div style={{ marginTop: compact ? 24 : 32, padding: compact ? "20px 22px" : "28px 32px", background: "#FAF4EC", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16 }}>
+      <div style={{ marginTop: compact ? 24 : 32 }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: 12 }}>
           Why this is your match
         </div>
         <p style={{ margin: 0, fontFamily: "var(--qz-headline-font)", fontSize: compact ? 19 : 22, lineHeight: 1.4, color: ink, textWrap: "pretty" }}>{why}</p>
       </div>
 
-      <div style={{ marginTop: compact ? 24 : 32, display: "grid", gridTemplateColumns: compact ? "1fr" : "repeat(2, 1fr)", gap: compact ? 10 : 14 }}>
+      <div style={{ marginTop: compact ? 24 : 32 }}>
+        <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: compact ? 16 : 20 }}>
+          Why you'll love it!
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: compact ? "1fr" : "repeat(2, 1fr)", gap: compact ? 10 : 14 }}>
         <BenefitCard accent={accent} ink={ink} glyph="underwire" title="Supportive as an underwire — without the wire" body="Engineered support that lifts and holds, with none of the dig." />
         <BenefitCard accent={accent} ink={ink} glyph="cups" title="Modern foam cups for a perfect fit" body="Lightweight cups shape to you — never the other way around." />
         <BenefitCard accent={accent} ink={ink} glyph="allday" title="Lifted, shaped & contoured all day" body="Holds its lift from morning to night, no readjusting." />
@@ -1154,22 +1154,17 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
         <BenefitCard accent={accent} ink={ink} glyph="convertible" title="Convertible straps" body="Wear them straight or crossed — versatile under every neckline." />
       </div>
 
-      <div style={{ marginTop: compact ? 24 : 36, display: "grid", gridTemplateColumns: compact ? "1fr" : "1fr 1fr", gap: compact ? 14 : 20 }}>
-        <ReviewQuote ink={ink} accent={accent} quote="I honestly didn't expect a wireless bra to lift this much. It gives me a nice shape under t-shirts without feeling tight." name="Linda M." age={52} shape="Teardrop" />
-        <ReviewQuote ink={ink} accent={accent} quote="Finally, no cup gaps or straps digging in. I can wear it all day without constantly adjusting it." name="Dawn K." age={48} shape="Asymmetric" />
-      </div>
-
-      <div style={{ marginTop: compact ? 28 : 40, textAlign: "center" }}>
-        <PillCTA onClick={onClaim} compact={compact} ink={ink}>
-          Claim my match + reveal gift
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-            <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
-          </svg>
-        </PillCTA>
-        <div style={{ marginTop: 14 }}>
-          <RestartLink onClick={onRestart} ink={ink} />
+      <div style={{ marginTop: compact ? 24 : 36 }}>
+        <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: compact ? 14 : 18 }}>
+          Reviews
         </div>
       </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: compact ? "1fr" : "1fr 1fr", gap: compact ? 14 : 20 }}>
+        <ReviewQuote ink={ink} accent={accent} title="Lifts more than I expected" quote="I honestly didn't expect a wireless bra to lift this much. It gives me a nice shape under t-shirts without feeling tight." name="Linda M." age={52} shape="Teardrop" />
+        <ReviewQuote ink={ink} accent={accent} title="No more gaps or digging" quote="Finally, no cup gaps or straps digging in. I can wear it all day without constantly adjusting it." name="Dawn K." age={48} shape="Asymmetric" />
+      </div>
+
     </div>
   );
 }
@@ -1263,36 +1258,97 @@ function ProductImage({ src, alt, label, fit = "cover" }) {
   );
 }
 
-function ColorSelector({ colors, value, onChange, ink, accent, compact }) {
+// PDP star rating (Figma UX-2491 Reviews Revamp · sunlight stars + reviews link)
+function PdpStar({ kind }) {
+  const gold = "#F2D96F";
+  const path = "M12 2 L14.9 8.6 L22 9.2 L16.5 13.97 L18.18 21 L12 17.27 L5.82 21 L7.5 13.97 L2 9.2 L9.1 8.6 Z";
+  if (kind === "full") {
+    return <svg width="20" height="20" viewBox="0 0 24 24"><path d={path} fill={gold} /></svg>;
+  }
+  if (kind === "half") {
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="pdpHalf">
+            <stop offset="50%" stopColor={gold} />
+            <stop offset="50%" stopColor={gold} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={path} fill="url(#pdpHalf)" stroke={gold} strokeWidth="1.4" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+  return <svg width="20" height="20" viewBox="0 0 24 24"><path d={path} fill="none" stroke={gold} strokeWidth="1.4" strokeLinejoin="round" /></svg>;
+}
+
+function PdpRating({ value = 3.5, reviews = "10926" }) {
+  const kinds = Array.from({ length: 5 }).map((_, i) =>
+    value >= i + 1 ? "full" : value >= i + 0.5 ? "half" : "empty"
+  );
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <span style={{ display: "inline-flex", gap: 3 }} aria-label={`${value} out of 5 stars`}>
+        {kinds.map((k, i) => <PdpStar key={i} kind={k} />)}
+      </span>
+      <span style={{ fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 16, lineHeight: "24px", color: "#292929", textDecoration: "underline", cursor: "pointer" }}>
+        {reviews} reviews
+      </span>
+    </div>
+  );
+}
+
+function ProductHeader({ compact }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <p style={{
+        margin: 0, fontFamily: SHM_BTN_FONT, fontWeight: 500,
+        fontSize: compact ? 24 : 30, lineHeight: compact ? "32px" : "38px", color: "#3A3A3A",
+      }}>
+        Truekind® Daily Comfort Wireless Shaper Bra
+      </p>
+      <PdpRating value={3.5} reviews="10926" />
+    </div>
+  );
+}
+
+function ColorSelector({ colors, value, onChange, ink, accent, compact, action }) {
   const current = colors.find((c) => c.id === value) || colors[0];
   return (
-    <div style={{ marginTop: compact ? 14 : 18, padding: compact ? "14px 16px" : "16px 20px", background: "#FAF4EC", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16 }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 12, fontFamily: "var(--qz-body-font)", fontSize: compact ? 13 : 14 }}>
-        <span style={{ textTransform: "uppercase", letterSpacing: "0.14em", fontSize: 11, fontWeight: 700, color: "rgba(31,26,23,0.55)" }}>Color:</span>
-        <strong style={{ color: ink, fontWeight: 700 }}>{current.name}</strong>
-      </div>
-      <div style={{ display: "flex", gap: compact ? 10 : 12, flexWrap: "wrap" }}>
-        {colors.map((c) => {
+    <div style={{
+      display: "flex", flexDirection: compact ? "column" : "row",
+      alignItems: compact ? "stretch" : "center", gap: compact ? 14 : 20,
+    }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        {/* Label: "Color: " regular + name demi bold — Figma 415:24322 */}
+        <div style={{ marginBottom: 8, fontFamily: SHM_BTN_FONT, fontSize: 14, lineHeight: "22px", color: "#292929" }}>
+          <span style={{ fontWeight: 400 }}>Color: </span>
+          <span style={{ fontWeight: 600 }}>{current.name}</span>
+        </div>
+        {/* Swatches: 32px container, 24px inner circle, 8px gap — Figma 415:24323 */}
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {colors.map((c) => {
           const isSelected = c.id === value;
           return (
             <button key={c.id} onClick={() => onChange(c.id)} aria-label={c.name} title={c.name} style={{
-              position: "relative", width: compact ? 38 : 42, height: compact ? 38 : 42, borderRadius: "50%",
-              border: "none", padding: 0, cursor: "pointer", background: "transparent",
-              display: "grid", placeItems: "center", transition: "transform .12s",
-            }}
-              onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.transform = "scale(1.06)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; }}
-            >
-              <span style={{ position: "absolute", inset: 0, borderRadius: "50%", border: isSelected ? `1.5px solid ${ink}` : "1.5px solid transparent", transition: "border-color .15s" }} />
+              position: "relative", width: 32, height: 32, borderRadius: "50%",
+              border: isSelected ? `2px solid #292929` : "2px solid transparent",
+              padding: 0, cursor: "pointer", background: "transparent",
+              display: "grid", placeItems: "center",
+              transition: "border-color .15s", boxSizing: "border-box",
+            }}>
               <span style={{
-                width: compact ? 28 : 32, height: compact ? 28 : 32, borderRadius: "50%",
-                background: c.hex, border: c.id === "white" ? "1px solid rgba(31,26,23,0.18)" : "none",
+                width: 24, height: 24, borderRadius: "50%",
+                background: c.hex,
+                border: c.id === "white" ? "1px solid rgba(31,26,23,0.18)" : "none",
                 boxShadow: "inset 0 -2px 6px rgba(0,0,0,0.08)",
+                display: "block",
               }} />
             </button>
           );
-        })}
+          })}
+        </div>
       </div>
+      {action}
     </div>
   );
 }
@@ -1366,7 +1422,7 @@ function humanList(arr) {
 
 function BenefitCard({ ink, accent, title, body, glyph }) {
   return (
-    <div style={{ padding: "20px 18px", background: "#FAF4EC", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16 }}>
+    <div style={{ padding: "20px 18px", background: "#FBF7F4", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16 }}>
       <div style={{ width: 56, height: 56, borderRadius: 16, background: "rgba(247,160,139,0.16)", color: accent, display: "grid", placeItems: "center", marginBottom: 14 }}>
         <BenefitGlyph kind={glyph} accent={accent} />
       </div>
@@ -1444,14 +1500,22 @@ function BenefitGlyph({ kind, accent }) {
   return wrap(bra);
 }
 
-function ReviewQuote({ ink, accent, quote, name, age, shape }) {
+function ReviewQuote({ ink, accent, title, quote, name, age, shape }) {
   return (
-    <div style={{ padding: "20px 22px", background: "#FAF4EC", borderLeft: `2px solid ${accent}`, borderRadius: "4px 16px 16px 4px" }}>
-      <div style={{ fontSize: 15, letterSpacing: "2px", marginBottom: 10, lineHeight: 1 }} aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
-      <p style={{ margin: 0, fontFamily: "var(--qz-headline-font)", fontStyle: "italic", fontSize: 16, lineHeight: 1.45, color: ink, textWrap: "pretty" }}>"{quote}"</p>
-      <div style={{ marginTop: 12, fontSize: 12, color: "rgba(31,26,23,0.6)", letterSpacing: "0.02em" }}>
-        <strong style={{ color: ink, fontWeight: 700 }}>{name}</strong> · age {age} · {shape}
+    <div style={{
+      height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 9,
+      padding: 20, background: "#FAFAFA", border: "1px solid rgba(41,41,41,0.06)", borderRadius: 8,
+    }}>
+      <div style={{ fontFamily: SHM_BTN_FONT, fontWeight: 700, fontSize: 14, lineHeight: "22px", color: "#292929" }}>{title}</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ display: "inline-flex", gap: 1 }} aria-label="5 out of 5 stars">
+          {Array.from({ length: 5 }).map((_, i) => <Star key={i} color="#F5A623" />)}
+        </span>
+        <span style={{ fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929" }}>
+          {name} · {age} · {shape}
+        </span>
       </div>
+      <p style={{ margin: 0, fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929", textWrap: "pretty" }}>{quote}</p>
     </div>
   );
 }
@@ -1611,7 +1675,7 @@ function ClockSvg({ color }) {
 }
 
 // ─── Quiz controller ───────────────────────────────────────────────────────────
-function QuizApp({ compact, tokens }) {
+function QuizApp({ compact, tokens, onBgChange }) {
   const [screen, setScreen] = React.useState(0);
   const [answers, setAnswers] = React.useState({
     shape: null,
@@ -1636,8 +1700,12 @@ function QuizApp({ compact, tokens }) {
     8: <ScreenGift compact={compact} {...tokens} answers={answers} email={userEmail} onEdit={() => go(1)} onRestart={() => go(0)} />,
   };
 
+  // Reveal ("Your match") screen uses a white background; the rest use paper.
+  const screenBg = screen === 7 ? "#FFFFFF" : tokens.paper;
+  React.useEffect(() => { onBgChange?.(screenBg); }, [screenBg, onBgChange]);
+
   return (
-    <QuizFrame compact={compact} {...tokens}>
+    <QuizFrame compact={compact} {...tokens} paper={screenBg}>
       <div key={screen} className="qz-slide" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         {screenMap[screen]}
       </div>
@@ -1674,6 +1742,7 @@ export const EbraQuizV2 = () => {
   const [compact, setCompact] = React.useState(
     () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
   );
+  const [rootBg, setRootBg] = React.useState(tokens.paper);
 
   React.useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -1686,7 +1755,7 @@ export const EbraQuizV2 = () => {
     <div
       className="ebra-quiz-root"
       style={{
-        minHeight: "100vh", background: tokens.paper,
+        minHeight: "100vh", background: rootBg, transition: "background .2s",
         display: "flex", flexDirection: "column", alignItems: "center",
       }}
     >
@@ -1697,7 +1766,7 @@ export const EbraQuizV2 = () => {
           flex: 1, display: "flex", flexDirection: "column",
         }}
       >
-        <QuizApp compact={compact} tokens={tokens} />
+        <QuizApp compact={compact} tokens={tokens} onBgChange={setRootBg} />
       </div>
     </div>
   );
