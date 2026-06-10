@@ -12,6 +12,7 @@ import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/g
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
 import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
 import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
+import { ShapermintUpsellPagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -196,6 +197,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={EbraQuizV2PagePath}>{t("home.ebraQuizV2Cta")}</StyledCta>
           <StyledHint>{t("home.ebraQuizV2Hint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={ShapermintUpsellPagePath}>Open — Shapermint Cami Upsell (clone)</StyledCta>
+          <StyledHint>Path: /pages/shapermint-upsell — faithful static clone of the checkout upsell page</StyledHint>
         </StyledLandingCard>
 
         <StyledLandingCard>
