@@ -11,6 +11,7 @@ import { GrunsOlipopPagePath } from "@/landings/gruns-first-order-olipop/grunsOl
 import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/gummiesDuplicateCdn";
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
 import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
+import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -190,6 +191,16 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href="/pages/hairserum/tsd-hair-quiz">{t("home.spaDrHairQuizCta")}</StyledCta>
           <StyledHint>{t("home.spaDrHairQuizHint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={EbraQuizV2PagePath}>{t("home.ebraQuizV2Cta")}</StyledCta>
+          <StyledHint>{t("home.ebraQuizV2Hint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href="/pages/blank">Open — Blank page</StyledCta>
+          <StyledHint>Path: /pages/blank — empty canvas for new landing work</StyledHint>
         </StyledLandingCard>
       </StyledLandings>
     </StyledMain>

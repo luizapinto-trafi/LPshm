@@ -21,7 +21,9 @@
     "spaDrListcicleCta": "Open — The Spa Dr Listcicle (Webflow hair serum LP1)",
     "spaDrListcicleHint": "Path: /pages/the-spa-dr-listcicle — 1:1 body + shared Webflow CSS from try.thespadr.com",
     "spaDrHairQuizCta": "Open — The Spa Dr Hair Quiz",
-    "spaDrHairQuizHint": "Path: /pages/hairserum/tsd-hair-quiz — 7-step hair quiz, desktop welcome mirrors the Spa Dr Figma master file"
+    "spaDrHairQuizHint": "Path: /pages/hairserum/tsd-hair-quiz — 7-step hair quiz, desktop welcome mirrors the Spa Dr Figma master file",
+    "ebraQuizV2Cta": "Open — EBRA Fit Quiz V2 (email gate)",
+    "ebraQuizV2Hint": "Path: /pages/ebra-quiz-v2 — bundled HTML export; React migration pending"
   },
   "catalog": {
     "title": "Component Catalog"
