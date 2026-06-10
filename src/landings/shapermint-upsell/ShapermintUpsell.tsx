@@ -470,14 +470,15 @@ export default ShapermintUpsell;
 // Original Shapermint design-system CSS captured from the page (scripts removed),
 // scoped under `.shm-upsell` so it renders faithfully without leaking globally.
 const SHM_UPSELL_CSS = `
-.shm-upsell { --colors-pallete-primary-color: #f7a08b; --colors-pallete-primary-soft-color: #fcd9d1; --colors-shades-white-color: #fff; --colors-shades-700-color: #292929; --colors-shades-250-color: #a6a6a6; --colors-shades-200-color: #bbbbbb; --colors-shades-550-color: #3a3a3a; --colors-shades-50-color: #efefef; --colors-shades-100-color: #e5e5e5; --colors-semantic-urgent-color: #c64844; --colors-semantic-positive-color: #2f806a; --colors-semantic-attention-color: #f2d96f; --radius-regular: 8px; --component-banner-fontColor: #fff; background: #fff; color: #292929; min-height: 100vh; }
+.shm-upsell { --colors-pallete-primary-color: #f7a08b; --colors-pallete-primary-soft-color: #fcd9d1; --colors-shades-white-color: #fff; --colors-shades-700-color: #292929; --colors-shades-250-color: #a6a6a6; --colors-shades-200-color: #bbbbbb; --colors-shades-550-color: #3a3a3a; --colors-shades-50-color: #efefef; --colors-shades-100-color: #e5e5e5; --colors-semantic-urgent-color: #c64844; --colors-semantic-positive-color: #2f806a; --colors-semantic-attention-color: #f2d96f; --radius-regular: 8px; --component-banner-fontColor: #fff; background: #f0f0f0; color: #292929; min-height: 100vh; }
 @font-face { font-family: AvenirNextLTPro; src: url("https://cdn.shapermint.com/assets/fonts/shapermint/AvenirNextLTPro-Regular.woff2") format("opentype"); font-weight: normal; }
 @font-face { font-family: AvenirNextLTPro; src: url("https://cdn.shapermint.com/assets/fonts/shapermint/AvenirNextLTPro-Demi.otf") format("opentype"); font-weight: 600; }
 @font-face { font-family: AvenirNextLTPro; src: url("https://cdn.shapermint.com/assets/fonts/shapermint/AvenirNextLTPro-Bold.otf") format("opentype"); font-weight: 700; }
 @font-face { font-family: AvenirNextLTPro; src: url("https://cdn.shapermint.com/assets/fonts/shapermint/AvenirNextLTPro-Heavy.otf") format("opentype"); font-weight: 800 900; }
 .shm-upsell, .shm-upsell input, .shm-upsell button { font-family: AvenirNextLTPro, system-ui, sans-serif; }
 .shm-upsell * { box-sizing: border-box; }
-.shm-upsell .Offer_offerWrapper, .shm-upsell .Offer_wrapper { width: 100%; }
+.shm-upsell .Offer_offerWrapper { width: 100%; }
+.shm-upsell .Offer_wrapper { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; }
 .shm-upsell .css-1rpe5gu { display: flex; align-items: center; justify-content: center; padding: 18px 24px; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 1px; position: relative; z-index: 1; }
 .shm-upsell .css-6corth { padding: 0px; text-align: center; margin: 0px auto; display: flex; flex-direction: column; align-items: center; }
 .shm-upsell .css-1qicnhk { border-bottom: 1px solid rgb(229, 229, 229); width: 100%; padding: 6px 15px 16px; }
