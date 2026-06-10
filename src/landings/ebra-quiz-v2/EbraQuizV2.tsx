@@ -745,7 +745,7 @@ function SizeSelect({ label, value, placeholder, options, onChange, accent, ink,
           appearance: "none", WebkitAppearance: "none", width: "100%", boxSizing: "border-box",
           height: compact ? 52 : 60,
           padding: compact ? "0 32px 0 14px" : "0 36px 0 18px",
-          borderRadius: 16, border: "1px solid rgba(31,26,23,0.2)", background: "#FAF4EC",
+          borderRadius: 16, border: "1px solid rgba(31,26,23,0.2)", background: "#FFFFFF",
           fontFamily: "var(--qz-headline-font)", fontSize: compact ? 18 : 22, fontWeight: 400,
           color: empty ? "rgba(31,26,23,0.4)" : ink, cursor: "pointer", outline: "none",
         }}
@@ -1683,9 +1683,8 @@ function QuizApp({ compact, tokens, onBgChange }) {
     wants: [],
     size: null,
   });
-  const [userEmail, setUserEmail] = React.useState("");
 
-  const go = (n) => setScreen(Math.max(0, Math.min(8, n)));
+  const go = (n) => setScreen(Math.max(0, Math.min(7, n)));
   const setAns = (key, value) => setAnswers((a) => ({ ...a, [key]: value }));
 
   const screenMap = {
@@ -1694,10 +1693,8 @@ function QuizApp({ compact, tokens, onBgChange }) {
     2: <QuestionPills compact={compact} {...tokens} step={2} title="What's your biggest" titleEm="issue with your current bra?" sub="Pick as many as you want." options={PROBLEMS} answer={answers.problems} multi onSelect={(v) => setAns("problems", v)} onAdvance={() => go(3)} onBack={() => go(1)} />,
     3: <QuestionPills compact={compact} {...tokens} step={3} title="What do you want" titleEm="most from your bra?" sub="Pick as many as you want." options={WANTS} answer={answers.wants} multi onSelect={(v) => setAns("wants", v)} onAdvance={() => go(4)} onBack={() => go(2)} />,
     4: <ScreenSize compact={compact} {...tokens} answer={answers.size} onSelect={(v) => setAns("size", v)} onAdvance={() => go(5)} onBack={() => go(3)} />,
-    5: <ScreenLoader compact={compact} {...tokens} answers={answers} onDone={() => go(6)} />,
-    6: <ScreenEmailGate compact={compact} {...tokens} onUnlock={(email) => { setUserEmail(email); go(7); }} onBack={() => go(5)} />,
-    7: <ScreenReveal compact={compact} {...tokens} answers={answers} onClaim={() => go(8)} onRestart={() => go(0)} />,
-    8: <ScreenGift compact={compact} {...tokens} answers={answers} email={userEmail} onEdit={() => go(1)} onRestart={() => go(0)} />,
+    5: <ScreenLoader compact={compact} {...tokens} answers={answers} onDone={() => go(7)} />,
+    7: <ScreenReveal compact={compact} {...tokens} answers={answers} onClaim={() => {}} onRestart={() => go(0)} />,
   };
 
   // Reveal ("Your match") screen uses a white background; the rest use paper.
