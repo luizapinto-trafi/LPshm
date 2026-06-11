@@ -12,7 +12,8 @@ import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/g
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
 import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
 import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
-import { ShapermintUpsellPagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
+import { ShapermintUpsellPagePath, ShapermintUpsellV2PagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
+import { NewLandingPagePath } from "@/landings/new-landing/newLandingPath";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -202,6 +203,16 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={ShapermintUpsellPagePath}>Open — Shapermint Cami Upsell (clone)</StyledCta>
           <StyledHint>Path: /pages/shapermint-upsell — faithful static clone of the checkout upsell page</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={ShapermintUpsellV2PagePath}>Open — Shapermint Cami Upsell (V2 · savings-first copy)</StyledCta>
+          <StyledHint>Path: /pages/shapermint-upsell-v2 — same layout, rewritten headline (2 for 1 + 20% OFF)</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={NewLandingPagePath}>Open — New Landing (blank canvas)</StyledCta>
+          <StyledHint>Path: /pages/new-landing — empty starting point for a brand-new landing</StyledHint>
         </StyledLandingCard>
 
         <StyledLandingCard>
