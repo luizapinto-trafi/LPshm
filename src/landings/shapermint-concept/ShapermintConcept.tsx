@@ -69,6 +69,10 @@ const TopBar = styled.header`
   z-index: 8;
   font-family: "AvenirNextLTPro", system-ui, sans-serif;
   color: #292929;
+
+  @media (max-width: 640px) {
+    padding: 16px 20px;
+  }
 `;
 
 const Logo = styled.img`
@@ -90,6 +94,14 @@ const Nav = styled.nav`
     color: #292929;
     text-decoration: none;
   }
+
+  @media (max-width: 640px) {
+    gap: 16px;
+
+    a {
+      font-size: 12px;
+    }
+  }
 `;
 
 const ProductCard = styled.div<{ $align: "left" | "right" }>`
@@ -104,6 +116,11 @@ const ProductCard = styled.div<{ $align: "left" | "right" }>`
   visibility: hidden;
   transform: translateY(8px);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+
+  /* no hover on touch — tapping the marker opens the product modal instead */
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const ProductThumb = styled.div`
@@ -231,6 +248,11 @@ const ScrollHint = styled.span`
   font-style: italic;
   font-size: 16px;
   color: #292929;
+
+  @media (max-width: 640px) {
+    right: 16px;
+    font-size: 14px;
+  }
 `;
 
 const Headline = styled.div`
@@ -275,6 +297,21 @@ const Headline = styled.div`
       color: rgba(41, 41, 41, 0.3);
     }
   }
+
+  @media (max-width: 640px) {
+    left: 20px;
+    bottom: 24px;
+    right: 20px;
+
+    h1,
+    p {
+      font-size: clamp(26px, 8.4vw, 40px);
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+  }
 `;
 
 const RevealSection = styled.section`
@@ -316,6 +353,10 @@ const FloatImg = styled.img`
   &:hover {
     filter: drop-shadow(0 34px 56px rgba(41, 41, 41, 0.4));
   }
+
+  @media (max-width: 640px) {
+    height: min(22vh, 180px);
+  }
 `;
 
 const RevealHeadline = styled.h2`
@@ -334,6 +375,10 @@ const RevealHeadline = styled.h2`
   text-transform: uppercase;
   color: #292929;
   white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: 20px;
+  }
 `;
 
 const FloatInfo = styled.div`
@@ -407,9 +452,15 @@ const SizeBtn = styled.button<{ $active: boolean }>`
   &:hover {
     border-color: #292929;
   }
+
+  @media (max-width: 640px) {
+    min-width: 44px;
+    padding: 10px 8px;
+  }
 `;
 
-// checkout bar: bundle summary + totals on the left, CTA on the right
+// checkout bar: bundle summary + totals on the left, CTA on the right;
+// on mobile it pins to the bottom edge and stacks the CTA full-width
 const CheckoutBar = styled.div`
   position: absolute;
   left: 50%;
@@ -427,6 +478,26 @@ const CheckoutBar = styled.div`
   white-space: nowrap;
   font-family: "AvenirNextLTPro", system-ui, sans-serif;
   color: #292929;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+`;
+
+// thumbs + totals row (keeps desktop layout intact, becomes the top row on mobile)
+const BarLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 36px;
+
+  @media (max-width: 640px) {
+    justify-content: space-between;
+    gap: 12px;
+  }
 `;
 
 const BarSummary = styled.div`
@@ -454,6 +525,11 @@ const ThumbWrap = styled.div`
     width: 82%;
     height: 82%;
     object-fit: contain;
+  }
+
+  @media (max-width: 640px) {
+    width: 46px;
+    height: 46px;
   }
 `;
 
@@ -497,6 +573,19 @@ const BarTotal = styled.span`
     font-weight: 600;
     color: #1d8348;
   }
+
+  @media (max-width: 640px) {
+    font-size: 17px;
+    gap: 7px;
+
+    s {
+      font-size: 13px;
+    }
+
+    em {
+      font-size: 11px;
+    }
+  }
 `;
 
 // SHM Design System — Button / Primary / Fill / Large (Figma 1256:5212)
@@ -522,6 +611,14 @@ const CheckoutBtn = styled.button<{ $ready: boolean }>`
 
   &:hover {
     background: ${(p) => (p.$ready ? "#f58a70" : "rgba(41, 41, 41, 0.14)")};
+  }
+
+  @media (max-width: 640px) {
+    min-width: 0;
+    width: 100%;
+    font-size: 15px;
+    line-height: 24px;
+    padding: 12px 16px;
   }
 `;
 
@@ -555,6 +652,11 @@ const ModalPanel = styled.aside<{ $side: "left" | "right"; $open: boolean }>`
     ${(p) => (p.$open ? "0" : p.$side === "left" ? "-105%" : "105%")}
   );
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media (max-width: 640px) {
+    padding: 20px 22px 28px;
+    gap: 14px;
+  }
 `;
 
 const ModalClose = styled.button`
@@ -689,6 +791,7 @@ export const ShapermintConcept = () => {
     const update = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const isMobile = vw <= 640;
       // progress: 0 = hero fully visible, 1 = reveal section fully in view
       const p = Math.min(1, Math.max(0, window.scrollY / vh));
       // easeInOutCubic for the motion path
@@ -698,73 +801,126 @@ export const ShapermintConcept = () => {
       // gentle fade: follows the eased curve, so it starts at 0 and
       // builds gradually instead of popping in
       const opacity = Math.min(1, e * 2);
+      // info blocks (name, rating, sizes) fade in at the end of the scroll
+      const ip = Math.min(1, Math.max(0, (p - 0.8) / 0.2));
+      // products are only clickable once they've settled in place
+      const clickable = p > 0.95;
 
+      const halfW = (braRef.current?.offsetWidth ?? 0) / 2;
+      const imgH = braRef.current?.offsetHeight ?? 0;
+      const halfH = imgH / 2;
+      const headH = headlineRef.current?.offsetHeight ?? 0;
+      const infoH1 = braInfoRef.current?.offsetHeight ?? 0;
+      const infoH2 = pantyInfoRef.current?.offsetHeight ?? 0;
+      const barH = checkoutRef.current?.offsetHeight ?? 0;
+
+      const setImg = (
+        el: HTMLImageElement | null,
+        x: number,
+        y: number,
+        s: number
+      ) => {
+        if (!el) return;
+        el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${s})`;
+        el.style.opacity = String(opacity);
+        el.style.pointerEvents = clickable ? "auto" : "none";
+      };
+      const placeInfo = (el: HTMLDivElement | null, x: number, y: number) => {
+        if (!el) return;
+        el.style.transform = `translate(calc(-50% + ${x}px), ${y}px)`;
+        el.style.opacity = String(ip);
+        el.style.pointerEvents = ip > 0.6 ? "auto" : "none";
+      };
+      const placeHead = (y: number) => {
+        if (!headlineRef.current) return;
+        headlineRef.current.style.transform = `translate(-50%, ${y}px)`;
+        headlineRef.current.style.opacity = String(ip);
+      };
+
+      if (isMobile) {
+        // stacked layout: headline / products side by side / bra info /
+        // panty info, with the checkout bar pinned to the bottom edge
+        const endX = Math.min(0.24 * vw, halfW + 12);
+        const stackH = headH + 24 + imgH + 20 + infoH1 + 18 + infoH2;
+        const stackTop = -(barH + 24) / 2 - stackH / 2;
+        const yImg = stackTop + headH + 24 + halfH;
+
+        placeHead(stackTop - (1 - ip) * 16);
+        setImg(
+          braRef.current,
+          lerp(-0.25 * vw, -endX),
+          lerp(-0.05 * vh, yImg),
+          lerp(0.4, 1)
+        );
+        setImg(
+          pantyRef.current,
+          lerp(0.25 * vw, endX),
+          lerp(0.08 * vh, yImg),
+          lerp(0.4, 1)
+        );
+
+        const yInfo1 = stackTop + headH + 24 + imgH + 20 + (1 - ip) * 16;
+        placeInfo(braInfoRef.current, 0, yInfo1);
+        placeInfo(pantyInfoRef.current, 0, yInfo1 + infoH1 + 18);
+
+        if (checkoutRef.current) {
+          const st = checkoutRef.current.style;
+          st.left = "12px";
+          st.right = "12px";
+          st.top = "auto";
+          st.bottom = "12px";
+          st.transform = `translateY(${(1 - ip) * 24}px)`;
+          st.opacity = String(ip);
+          st.pointerEvents = ip > 0.6 ? "auto" : "none";
+        }
+        return;
+      }
+
+      // desktop: products side by side, info under each, bar below
       // final resting offset: half the product width + breathing room,
       // so the two pieces sit side by side without overlapping
-      const halfW = (braRef.current?.offsetWidth ?? 0) / 2;
       const endX = Math.max(0.18 * vw, halfW + 32);
 
       // vertical offset so the whole composition (headline → checkout bar)
       // is centered in the viewport, not just the product images
-      const halfH = (braRef.current?.offsetHeight ?? 0) / 2;
-      const headH = headlineRef.current?.offsetHeight ?? 0;
-      const infoH = Math.max(
-        braInfoRef.current?.offsetHeight ?? 0,
-        pantyInfoRef.current?.offsetHeight ?? 0
-      );
-      const barH = checkoutRef.current?.offsetHeight ?? 0;
+      const infoH = Math.max(infoH1, infoH2);
       const topEdge = -(halfH + 48 + headH);
       const bottomEdge = halfH + 28 + infoH + 36 + barH;
       const centerOff = -(topEdge + bottomEdge) / 2;
 
-      // products are only clickable once they've settled in place
-      const clickable = p > 0.95;
+      // from the 01/02 hover-card spots to center-left / center-right
+      setImg(
+        braRef.current,
+        lerp(-0.22 * vw, -endX),
+        lerp(-0.05 * vh, centerOff),
+        lerp(0.4, 1)
+      );
+      setImg(
+        pantyRef.current,
+        lerp(0.19 * vw, endX),
+        lerp(0.08 * vh, centerOff),
+        lerp(0.4, 1)
+      );
 
-      if (braRef.current) {
-        // from the 01 hover-card spot (left of model) to center-left
-        const x = lerp(-0.22 * vw, -endX);
-        const y = lerp(-0.05 * vh, centerOff);
-        const s = lerp(0.4, 1);
-        braRef.current.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${s})`;
-        braRef.current.style.opacity = String(opacity);
-        braRef.current.style.pointerEvents = clickable ? "auto" : "none";
-      }
-      if (pantyRef.current) {
-        // from the 02 hover-card spot (right of model) to center-right
-        const x = lerp(0.19 * vw, endX);
-        const y = lerp(0.08 * vh, centerOff);
-        const s = lerp(0.4, 1);
-        pantyRef.current.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${s})`;
-        pantyRef.current.style.opacity = String(opacity);
-        pantyRef.current.style.pointerEvents = clickable ? "auto" : "none";
-      }
-
-      // info blocks (name, rating, sizes) fade in at the end of the scroll
-      const ip = Math.min(1, Math.max(0, (p - 0.8) / 0.2));
       const infoY = centerOff + halfH + 28 + (1 - ip) * 20;
-      const placeInfo = (el: HTMLDivElement | null, x: number) => {
-        if (!el) return;
-        el.style.transform = `translate(calc(-50% + ${x}px), ${infoY}px)`;
-        el.style.opacity = String(ip);
-        el.style.pointerEvents = ip > 0.6 ? "auto" : "none";
-      };
-      placeInfo(braInfoRef.current, -endX);
-      placeInfo(pantyInfoRef.current, endX);
+      placeInfo(braInfoRef.current, -endX, infoY);
+      placeInfo(pantyInfoRef.current, endX, infoY);
 
       // checkout bar centered below both info blocks
       if (checkoutRef.current) {
+        const st = checkoutRef.current.style;
+        st.left = "50%";
+        st.right = "auto";
+        st.top = "50%";
+        st.bottom = "auto";
         const ctaY = centerOff + halfH + 28 + infoH + 36 + (1 - ip) * 20;
-        checkoutRef.current.style.transform = `translate(-50%, ${ctaY}px)`;
-        checkoutRef.current.style.opacity = String(ip);
-        checkoutRef.current.style.pointerEvents = ip > 0.6 ? "auto" : "none";
+        st.transform = `translate(-50%, ${ctaY}px)`;
+        st.opacity = String(ip);
+        st.pointerEvents = ip > 0.6 ? "auto" : "none";
       }
 
       // headline above the products, same fade as the info blocks
-      if (headlineRef.current) {
-        const headY = centerOff - halfH - headH - 48 - (1 - ip) * 20;
-        headlineRef.current.style.transform = `translate(-50%, ${headY}px)`;
-        headlineRef.current.style.opacity = String(ip);
-      }
+      placeHead(centerOff - halfH - headH - 48 - (1 - ip) * 20);
     };
 
     const onScroll = () => {
@@ -814,7 +970,7 @@ export const ShapermintConcept = () => {
         </Nav>
       </TopBar>
 
-      <Marker $top="38%" $left="31%">
+      <Marker $top="38%" $left="31%" onClick={() => setModal("bra")}>
         01
         <ProductCard $align="left">
           <ProductThumb>
@@ -831,7 +987,7 @@ export const ShapermintConcept = () => {
           </ProductInfo>
         </ProductCard>
       </Marker>
-      <Marker $top="51%" $right="33%">
+      <Marker $top="51%" $right="33%" onClick={() => setModal("panty")}>
         02
         <ProductCard $align="right">
           <ProductThumb>
@@ -922,25 +1078,27 @@ export const ShapermintConcept = () => {
         </FloatInfo>
 
         <CheckoutBar ref={checkoutRef}>
-          <BarThumbs>
-            <ThumbWrap>
-              <img src={PRODUCT_BRA} alt="Wireless Shaper Bra" />
-              <SizeBadge $set={braSize !== null}>{braSize ?? "?"}</SizeBadge>
-            </ThumbWrap>
-            <ThumbWrap>
-              <img src={PRODUCT_PANTY} alt="Mid Waist Shaper Panty" />
-              <SizeBadge $set={pantySize !== null}>
-                {pantySize ?? "?"}
-              </SizeBadge>
-            </ThumbWrap>
-          </BarThumbs>
-          <BarSummary>
-            <BarTotal>
-              $34.99
-              <s>$41.98</s>
-              <em>You save $6.99</em>
-            </BarTotal>
-          </BarSummary>
+          <BarLeft>
+            <BarThumbs>
+              <ThumbWrap>
+                <img src={PRODUCT_BRA} alt="Wireless Shaper Bra" />
+                <SizeBadge $set={braSize !== null}>{braSize ?? "?"}</SizeBadge>
+              </ThumbWrap>
+              <ThumbWrap>
+                <img src={PRODUCT_PANTY} alt="Mid Waist Shaper Panty" />
+                <SizeBadge $set={pantySize !== null}>
+                  {pantySize ?? "?"}
+                </SizeBadge>
+              </ThumbWrap>
+            </BarThumbs>
+            <BarSummary>
+              <BarTotal>
+                $34.99
+                <s>$41.98</s>
+                <em>You save $6.99</em>
+              </BarTotal>
+            </BarSummary>
+          </BarLeft>
           <CheckoutBtn
             $ready={pendingActions === 0}
             disabled={pendingActions > 0}
