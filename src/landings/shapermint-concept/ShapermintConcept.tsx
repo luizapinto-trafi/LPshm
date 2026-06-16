@@ -1010,7 +1010,7 @@ export const ShapermintConcept = () => {
 
       <Headline>
         <p>
-          Bra + Panty set for $34.99 <s>$41.98</s>
+          Bra + Panty set — just $34.99 <s>$41.98</s>. Save 17% today.
         </p>
         <h1>
           <a href="#set" onClick={scrollToReveal}>
