@@ -47,13 +47,13 @@ type MbraAdvImageSlotProps = {
   height?: number;
   alt: string;
   /** Descripción del briefing, mostrada en el placeholder mientras no hay imagen. */
-  caption: string;
+  caption?: string;
   /** Proporción ancho/alto del placeholder (por defecto cuadrado). */
   ratio?: number;
   priority?: boolean;
 };
 
-export const MbraAdvImageSlot = ({ src, width, height, alt, caption, ratio = 1, priority }: MbraAdvImageSlotProps) => (
+export const MbraAdvImageSlot = ({ src, width, height, alt, caption = "", ratio = 1, priority }: MbraAdvImageSlotProps) => (
   <StyledFigure>
     {src && width && height ? (
       <StyledImage src={src} alt={alt} width={width} height={height} priority={priority} sizes="(max-width: 700px) 100vw, 700px" />
