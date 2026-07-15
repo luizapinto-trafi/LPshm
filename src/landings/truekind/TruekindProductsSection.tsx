@@ -4,6 +4,7 @@
  */
 import React from "react";
 import { TruekindStarIcon } from "./TruekindStars";
+import { TruekindPdpPagePath } from "./truekindPath";
 
 const IMG = "/truekind/products";
 
@@ -17,6 +18,8 @@ type Product = {
   badges: string[];
   /** Swatch hex colors — placeholder palette, replace with real catalog colors. */
   swatches: string[];
+  /** PDP link — only products with a built detail page have one. */
+  href?: string;
 };
 
 // Truekind tonal range (placeholder values — swap for real per-product colors).
@@ -60,6 +63,7 @@ const products: Product[] = [
     price: "$37.99",
     rating: 4.5,
     badges: ["Selling Fast"],
+    href: TruekindPdpPagePath,
     swatches: [TONES.chai, TONES.black, TONES.white, TONES.tan, TONES.caramel, TONES.cocoa],
   },
   {
@@ -100,6 +104,7 @@ export const TruekindProductsSection = () => {
         <div className="tk-grid">
           {products.map((p) => (
             <article key={p.name} className="tk-card">
+              {p.href && <a href={p.href} className="tk-link" aria-label={p.name} />}
               <div className="tk-imgwrap">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.image} alt={p.name} className="tk-img" loading="lazy" />
@@ -159,6 +164,20 @@ export const TruekindProductsSection = () => {
         .tk-card {
           display: flex;
           flex-direction: column;
+          position: relative;
+        }
+        /* Whole-card overlay link; swatches/rating sit above it via z-index. */
+        .tk-link {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+        }
+        .tk-card:has(.tk-link) {
+          cursor: pointer;
+        }
+        .tk-card .tk-meta {
+          position: relative;
+          z-index: 3;
         }
         .tk-imgwrap {
           position: relative;

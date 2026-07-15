@@ -8,6 +8,7 @@ import { TruekindProductsSection } from "./TruekindProductsSection";
 import { TruekindFeaturesSection } from "./TruekindFeaturesSection";
 import { TruekindBundlesSection } from "./TruekindBundlesSection";
 import { TruekindStars } from "./TruekindStars";
+import { TruekindFonts } from "./TruekindFonts";
 
 const HeroSection = () => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -223,31 +224,7 @@ export const Truekind = () => {
         fontFamily: "'Circular XX', system-ui, sans-serif",
       }}
     >
-      <style jsx global>{`
-        @font-face {
-          font-family: "Circular XX";
-          src: url("/truekind/fonts/CircularXX-Regular.woff2") format("woff2");
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-        /* Bold (700) also serves the 600 "semibold" the design asks for. */
-        @font-face {
-          font-family: "Circular XX";
-          src: url("/truekind/fonts/CircularXX-Bold.woff2") format("woff2");
-          font-weight: 600 700;
-          font-style: normal;
-          font-display: swap;
-        }
-        /* Black (900) serves the 800 headings. */
-        @font-face {
-          font-family: "Circular XX";
-          src: url("/truekind/fonts/CircularXX-Black.woff2") format("woff2");
-          font-weight: 800 900;
-          font-style: normal;
-          font-display: swap;
-        }
-      `}</style>
+      <TruekindFonts />
       <TruekindHeader />
       <HeroSection />
       <TruekindProductsSection />
