@@ -7,7 +7,7 @@
 import React from "react";
 import { TruekindStarIcon } from "./TruekindStars";
 import { TruekindFonts } from "./TruekindFonts";
-import { TruekindPagePath } from "./truekindPath";
+import { TruekindHeader } from "./TruekindHeader";
 
 const IMG = "/truekind/pdp";
 
@@ -39,12 +39,36 @@ export const TruekindPdp = () => {
   const [color, setColor] = React.useState(0);
   const [size, setSize] = React.useState<number | null>(null);
   const [shot, setShot] = React.useState(0);
+  const [expanded, setExpanded] = React.useState(false);
 
   const active = colors[color];
 
   return (
-    <main className="pdp">
+    <main className={`pdp${expanded ? " pdp--expanded" : ""}`}>
       <TruekindFonts />
+
+      {/* Expand / collapse the image to full width, sliding the card off-screen */}
+      <button
+        type="button"
+        className="pdp-expand"
+        aria-label={expanded ? "Exit full-screen image" : "Expand image"}
+        aria-pressed={expanded}
+        onClick={() => setExpanded((v) => !v)}
+      >
+        {expanded ? (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polyline points="15 3 21 3 21 9" />
+            <polyline points="9 21 3 21 3 15" />
+            <line x1="21" y1="3" x2="14" y2="10" />
+            <line x1="3" y1="21" x2="10" y2="14" />
+          </svg>
+        )}
+      </button>
 
       {/* Product cutout over the page's own backdrop */}
       <div className="pdp-stage" aria-hidden>
@@ -74,16 +98,8 @@ export const TruekindPdp = () => {
         ))}
       </div>
 
-      {/* Slim top bar */}
-      <header className="pdp-topbar">
-        <a href={TruekindPagePath} className="pdp-back" aria-label="Back to the sale">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-            <path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Back to the sale
-        </a>
-        <span className="pdp-crumb">Supportive Comfort Wireless Shaping Bra</span>
-      </header>
+      {/* Full Truekind site header */}
+      <TruekindHeader />
 
       {/* Details card */}
       <aside className="pdp-card">
@@ -184,20 +200,58 @@ export const TruekindPdp = () => {
           font-family: var(--font-body, "Circular XX", system-ui, sans-serif);
           --font-body: "Circular XX", system-ui, sans-serif;
           --font-display: "Circular XX", system-ui, sans-serif;
+          /* Height of the Truekind site header (marquee + nav); offsets everything below. */
+          --pdp-header: 100px;
         }
         .pdp-stage {
           position: fixed;
           z-index: 0;
-          top: 52px;
+          top: var(--pdp-header);
           bottom: 0;
           left: 0;
           right: min(480px, 38vw);
           display: flex;
           align-items: flex-end;
           justify-content: center;
+          transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pdp-expand {
+          position: fixed;
+          z-index: 5;
+          top: calc(var(--pdp-header) + 14px);
+          right: calc(min(480px, 38vw) + 16px);
+          width: 44px;
+          height: 44px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink-900, #292929);
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 9999px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          backdrop-filter: blur(6px);
+          transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pdp-expand:hover {
+          background: #fff;
+        }
+        .pdp-expand:focus-visible {
+          outline: 2px solid var(--ink-900, #292929);
+          outline-offset: 2px;
+        }
+        .pdp--expanded .pdp-stage {
+          right: 0;
+        }
+        .pdp--expanded .pdp-card {
+          transform: translateX(calc(100% + 48px));
+        }
+        .pdp--expanded .pdp-expand {
+          right: 16px;
         }
         .pdp-cutout {
-          max-height: calc(100vh - 76px);
+          max-height: calc(100vh - var(--pdp-header) - 24px);
           max-width: 92%;
           object-fit: contain;
           filter: drop-shadow(0 24px 48px rgba(67, 48, 31, 0.18));
@@ -244,46 +298,10 @@ export const TruekindPdp = () => {
           outline: 2px solid var(--ink-900, #292929);
           outline-offset: 2px;
         }
-        .pdp-topbar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 3;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 14px clamp(16px, 2.5vw, 28px);
-          background: rgba(255, 255, 255, 0.88);
-          backdrop-filter: blur(8px);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        .pdp-back {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-weight: 600;
-          font-size: 13px;
-          color: var(--ink-900, #292929);
-          text-decoration: none;
-          white-space: nowrap;
-        }
-        .pdp-back:hover {
-          text-decoration: underline;
-        }
-        .pdp-crumb {
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.01em;
-          color: var(--ink-600, #5a5a5a);
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
         .pdp-card {
           position: fixed;
           z-index: 2;
-          top: 76px;
+          top: calc(var(--pdp-header) + 14px);
           right: clamp(16px, 2.5vw, 32px);
           bottom: 24px;
           width: min(420px, calc(100vw - 32px));
@@ -293,6 +311,7 @@ export const TruekindPdp = () => {
           border-radius: 16px;
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
           overflow: hidden;
+          transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .pdp-card-scroll {
           flex: 1;
@@ -487,11 +506,33 @@ export const TruekindPdp = () => {
         @media (max-width: 860px) {
           .pdp {
             display: block;
+            /* Slimmer header on mobile buys more room for the first fold. */
+            --pdp-header: 84px;
+          }
+          /* Compact the shared Truekind header — scoped to the PDP only. */
+          .pdp :global(.tk-marquee-item) {
+            padding-top: 6px;
+            padding-bottom: 6px;
+          }
+          .pdp :global(.tk-nav) {
+            padding-top: 9px;
+            padding-bottom: 9px;
+          }
+          /* The expand affordance is desktop-only; the drawer owns mobile. */
+          .pdp-expand {
+            display: none;
+          }
+          /* Tighten the price → color gap so Color/Size sit higher. */
+          .pdp-prices {
+            margin-bottom: 12px;
+          }
+          .pdp--expanded .pdp-card {
+            transform: none;
           }
           /* Image occupies a shorter band at the top so the drawer sits higher. */
           .pdp-stage {
             position: fixed;
-            top: 52px;
+            top: var(--pdp-header);
             left: 0;
             right: 0;
             bottom: auto;
@@ -510,17 +551,17 @@ export const TruekindPdp = () => {
           .pdp-thumbs {
             position: fixed;
             top: auto;
-            bottom: calc(58vh - 44px);
+            bottom: calc(100vh - var(--pdp-header) - 42vh + 8px);
             left: 50%;
             transform: translateX(-50%);
-            gap: 8px;
+            gap: 6px;
             z-index: 4;
           }
           .pdp-thumb {
-            width: 38px;
-            height: 46px;
-            padding: 4px;
-            border-radius: 8px;
+            width: 30px;
+            height: 38px;
+            padding: 3px;
+            border-radius: 7px;
           }
           /* Fixed, full-width bottom drawer. */
           .pdp-card {
@@ -530,7 +571,7 @@ export const TruekindPdp = () => {
             right: 0;
             bottom: 0;
             width: auto;
-            height: calc(58vh - 52px);
+            height: calc(100vh - var(--pdp-header) - 42vh);
             margin: 0;
             border-radius: 20px 20px 0 0;
             box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
