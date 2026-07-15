@@ -5,7 +5,7 @@
  * NOTE: sizes, review count and copy are placeholders — swap for catalog data.
  */
 import React from "react";
-import { TruekindStarIcon } from "./TruekindStars";
+import { TruekindStarIcon, TruekindStars } from "./TruekindStars";
 import { TruekindFonts } from "./TruekindFonts";
 import { TruekindHeader } from "./TruekindHeader";
 
@@ -34,6 +34,86 @@ const shots = [
 ];
 
 const sizes = ["S", "M", "L", "XL", "2XL", "3XL"];
+
+// Reviews — placeholder copy; `fit` is 0 (runs small) → 1 (runs large).
+type Review = {
+  name: string;
+  age: string;
+  size: string;
+  height: string;
+  dress?: string;
+  stars: number;
+  title: string;
+  body: string;
+  fit: number;
+  helpful: number;
+  when: string;
+};
+const REVIEWS: Review[] = [
+  {
+    name: "Hayley S.",
+    age: "25 - 34",
+    size: "XXS",
+    dress: "0",
+    height: "5' 2\"",
+    stars: 5,
+    title: "So smoothing & comfy!",
+    body: "The perfect undergarment for my wedding day to feel locked in and secure.",
+    fit: 0.15,
+    helpful: 0,
+    when: "3 weeks ago",
+  },
+  {
+    name: "Hannah W.",
+    age: "25 - 34",
+    size: "M",
+    height: "5' 5\"",
+    stars: 5,
+    title: "Actually works!",
+    body: "I'm 9 months postpartum and this item made me look like I had no belly flab. Amazing!",
+    fit: 0.5,
+    helpful: 1,
+    when: "4 weeks ago",
+  },
+  {
+    name: "Priya K.",
+    age: "35 - 44",
+    size: "L",
+    height: "5' 7\"",
+    stars: 5,
+    title: "My new everyday bra",
+    body: "No wires, no digging, all-day support. I bought three more in every shade.",
+    fit: 0.5,
+    helpful: 4,
+    when: "1 month ago",
+  },
+  {
+    name: "Denise R.",
+    age: "45 - 54",
+    size: "XL",
+    height: "5' 4\"",
+    stars: 4,
+    title: "Great support, sizing tip",
+    body: "Wonderfully comfortable and supportive. Runs a touch small — size up if you're between sizes.",
+    fit: 0.1,
+    helpful: 2,
+    when: "1 month ago",
+  },
+  {
+    name: "Marisol T.",
+    age: "25 - 34",
+    size: "S",
+    height: "5' 6\"",
+    stars: 5,
+    title: "Soft & seamless",
+    body: "Invisible under everything and the front closure makes it so easy to put on.",
+    fit: 0.55,
+    helpful: 3,
+    when: "2 months ago",
+  },
+];
+const REVIEW_AVG = 4.5;
+const REVIEW_COUNT = "80,000+";
 
 // Size chart — bands across the top, cups down the side.
 const SIZE_BANDS = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48];
@@ -64,6 +144,7 @@ export const TruekindPdp = () => {
   const [shot, setShot] = React.useState(0);
   const [expanded, setExpanded] = React.useState(false);
   const [sizeGuide, setSizeGuide] = React.useState(false);
+  const [reviewsOpen, setReviewsOpen] = React.useState(false);
   const [sgBand, setSgBand] = React.useState<number | null>(null);
   const [sgCup, setSgCup] = React.useState<string | null>(null);
 
@@ -84,17 +165,32 @@ export const TruekindPdp = () => {
   };
 
   React.useEffect(() => {
-    if (!sizeGuide) return;
+    if (!sizeGuide && !reviewsOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSizeGuide(false);
+      if (e.key !== "Escape") return;
+      setSizeGuide(false);
+      setReviewsOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [sizeGuide]);
+  }, [sizeGuide, reviewsOpen]);
 
   return (
-    <main className={`pdp${expanded ? " pdp--expanded" : ""}`}>
+    <main
+      className={`pdp${expanded ? " pdp--expanded" : ""}${reviewsOpen ? " pdp--reviews" : ""}`}
+    >
       <TruekindFonts />
+
+      {/* Reviews bubble — opens the left review panel */}
+      <button
+        type="button"
+        className="pdp-reviews-btn"
+        aria-label={`Read reviews, rated ${REVIEW_AVG} out of 5`}
+        onClick={() => setReviewsOpen(true)}
+      >
+        <TruekindStarIcon size={15} />
+        <span>{REVIEW_AVG}</span>
+      </button>
 
       {/* Expand / collapse the image to full width, sliding the card off-screen */}
       <button
@@ -163,6 +259,72 @@ export const TruekindPdp = () => {
       {/* Full Truekind site header */}
       <TruekindHeader />
 
+      {/* Left reviews panel — pushes the product content toward the center */}
+      <aside
+        className="pdp-reviews-panel"
+        aria-label="Product reviews"
+        aria-hidden={!reviewsOpen}
+      >
+        <div className="pdp-rv-head">
+          <div>
+            <div className="pdp-rv-avg">
+              <span className="pdp-rv-avg-num">{REVIEW_AVG}</span>
+              <TruekindStars rating={Math.round(REVIEW_AVG)} size={16} />
+            </div>
+            <p className="pdp-rv-count">Based on {REVIEW_COUNT} reviews</p>
+          </div>
+          <button
+            type="button"
+            className="pdp-rv-close"
+            aria-label="Close reviews"
+            onClick={() => setReviewsOpen(false)}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="pdp-rv-list">
+          {REVIEWS.map((r, i) => (
+            <article className="pdp-rv-item" key={i}>
+              <div className="pdp-rv-top">
+                <span className="pdp-rv-name">{r.name}</span>
+                <span className="pdp-rv-verified" title="Verified Buyer">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.2l-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7z" />
+                  </svg>
+                  Verified Buyer
+                </span>
+                <span className="pdp-rv-when">{r.when}</span>
+              </div>
+
+              <TruekindStars rating={r.stars} size={14} />
+              <h3 className="pdp-rv-title">{r.title}</h3>
+              <p className="pdp-rv-body">{r.body}</p>
+
+              <dl className="pdp-rv-meta">
+                <div><dt>Size</dt><dd>{r.size}</dd></div>
+                <div><dt>Age</dt><dd>{r.age}</dd></div>
+                <div><dt>Height</dt><dd>{r.height}</dd></div>
+              </dl>
+
+              <div className="pdp-rv-fit">
+                <div className="pdp-rv-fit-track">
+                  <span className="pdp-rv-fit-dot" style={{ left: `${r.fit * 100}%` }} />
+                </div>
+                <div className="pdp-rv-fit-labels">
+                  <span>Runs small</span>
+                  <span>True to size</span>
+                  <span>Runs large</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </aside>
+
       {/* Details card */}
       <aside className="pdp-card">
         <div className="pdp-card-scroll">
@@ -170,11 +332,16 @@ export const TruekindPdp = () => {
 
           <h1 className="pdp-title">Supportive Comfort Wireless Shaping Bra</h1>
 
-          <div className="pdp-rating" aria-label="Rated 4.5 out of 5">
+          <button
+            type="button"
+            className="pdp-rating"
+            aria-label="Rated 4.5 out of 5 — read reviews"
+            onClick={() => setReviewsOpen(true)}
+          >
             <TruekindStarIcon size={15} />
             <strong>4.5</strong>
             <span className="pdp-reviews">80,000+ five-star reviews</span>
-          </div>
+          </button>
 
           <div className="pdp-prices">
             <span className="pdp-price">$37.99</span>
@@ -407,6 +574,8 @@ export const TruekindPdp = () => {
           --font-display: "Circular XX", system-ui, sans-serif;
           /* Height of the Truekind site header (marquee + nav); offsets everything below. */
           --pdp-header: 92px;
+          /* Width the left reviews panel claims when open. */
+          --pdp-reviews-w: min(400px, 34vw);
         }
         /* Shorter announcement marquee on the PDP (scoped — landing keeps its own). */
         .pdp :global(.tk-marquee-item) {
@@ -423,7 +592,12 @@ export const TruekindPdp = () => {
           display: flex;
           align-items: flex-end;
           justify-content: center;
-          transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            left 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Reviews open → the image slides toward the center. */
+        .pdp--reviews .pdp-stage {
+          left: var(--pdp-reviews-w);
         }
         .pdp-expand {
           position: fixed;
@@ -489,6 +663,45 @@ export const TruekindPdp = () => {
         /* Hide the bubbles when the image takes over the screen. */
         .pdp--expanded .pdp-sizeguide-btn {
           display: none;
+        }
+        /* Reviews bubble — star + rating pill on the left edge. */
+        .pdp-reviews-btn {
+          position: fixed;
+          z-index: 5;
+          top: calc(var(--pdp-header) + 14px);
+          left: clamp(16px, 2.5vw, 32px);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          height: 44px;
+          padding: 0 16px;
+          color: var(--ink-900, #292929);
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 9999px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          backdrop-filter: blur(6px);
+          font-weight: 700;
+          font-size: 14px;
+        }
+        .pdp-reviews-btn:hover {
+          background: #fff;
+        }
+        .pdp-reviews-btn:focus-visible {
+          outline: 2px solid var(--ink-900, #292929);
+          outline-offset: 2px;
+        }
+        .pdp--expanded .pdp-reviews-btn,
+        .pdp--reviews .pdp-reviews-btn {
+          opacity: 0;
+          pointer-events: none;
+        }
+        .pdp-thumbs {
+          transition: left 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pdp--reviews .pdp-thumbs {
+          left: calc(var(--pdp-reviews-w) + clamp(16px, 2.5vw, 32px));
         }
         .pdp-cutout {
           max-height: calc(100vh - var(--pdp-header) - 24px);
@@ -591,6 +804,19 @@ export const TruekindPdp = () => {
           gap: 6px;
           font-size: 13px;
           margin-bottom: 14px;
+          background: none;
+          border: none;
+          padding: 0;
+          font-family: inherit;
+          color: inherit;
+          cursor: pointer;
+        }
+        .pdp-rating .pdp-reviews {
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+        .pdp-rating:hover .pdp-reviews {
+          color: var(--ink-900, #292929);
         }
         .pdp-reviews {
           color: var(--ink-600, #5a5a5a);
@@ -749,6 +975,154 @@ export const TruekindPdp = () => {
           text-align: center;
           font-size: 11.5px;
           color: var(--ink-600, #5a5a5a);
+        }
+
+        /* ---- Left reviews panel ---- */
+        .pdp-reviews-panel {
+          position: fixed;
+          z-index: 6;
+          top: var(--pdp-header);
+          left: 0;
+          bottom: 0;
+          width: var(--pdp-reviews-w);
+          display: flex;
+          flex-direction: column;
+          background: #fff;
+          border-right: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 12px 0 40px rgba(43, 34, 26, 0.1);
+          transform: translateX(-100%);
+          transition: transform 0.42s cubic-bezier(0.3, 0.7, 0.25, 1);
+        }
+        .pdp--reviews .pdp-reviews-panel {
+          transform: translateX(0);
+        }
+        .pdp-rv-head {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 20px 20px 16px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .pdp-rv-avg {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .pdp-rv-avg-num {
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 800;
+          font-size: 30px;
+          line-height: 1;
+        }
+        .pdp-rv-count {
+          margin: 6px 0 0;
+          font-size: 12.5px;
+          color: var(--ink-600, #5a5a5a);
+        }
+        .pdp-rv-close {
+          flex-shrink: 0;
+          width: 36px;
+          height: 36px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink-900, #292929);
+          background: #f4f0ea;
+          border: none;
+          border-radius: 9999px;
+          cursor: pointer;
+        }
+        .pdp-rv-close:hover {
+          background: #e9e3d9;
+        }
+        .pdp-rv-list {
+          flex: 1;
+          overflow-y: auto;
+          padding: 4px 20px 24px;
+          scrollbar-width: thin;
+        }
+        .pdp-rv-item {
+          padding: 20px 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        }
+        .pdp-rv-top {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+        .pdp-rv-name {
+          font-weight: 700;
+          font-size: 14px;
+        }
+        .pdp-rv-verified {
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          font-size: 11px;
+          color: #4c8a5a;
+          font-weight: 600;
+        }
+        .pdp-rv-when {
+          margin-left: auto;
+          font-size: 12px;
+          color: var(--ink-500, #808080);
+        }
+        .pdp-rv-title {
+          margin: 8px 0 4px;
+          font-weight: 700;
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+        .pdp-rv-body {
+          margin: 0 0 12px;
+          font-size: 13.5px;
+          line-height: 1.5;
+          color: var(--ink-700, #454545);
+        }
+        .pdp-rv-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px 18px;
+          margin: 0 0 14px;
+        }
+        .pdp-rv-meta div {
+          display: flex;
+          gap: 5px;
+        }
+        .pdp-rv-meta dt {
+          font-size: 12px;
+          color: var(--ink-500, #808080);
+        }
+        .pdp-rv-meta dd {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 700;
+        }
+        .pdp-rv-fit-track {
+          position: relative;
+          height: 4px;
+          border-radius: 9999px;
+          background: #e6e0d6;
+          margin-bottom: 6px;
+        }
+        .pdp-rv-fit-dot {
+          position: absolute;
+          top: 50%;
+          width: 12px;
+          height: 12px;
+          border-radius: 9999px;
+          background: var(--ink-900, #292929);
+          transform: translate(-50%, -50%);
+        }
+        .pdp-rv-fit-labels {
+          display: flex;
+          justify-content: space-between;
+          font-size: 10.5px;
+          color: var(--ink-500, #808080);
         }
 
         /* ---- Size guide drawer (slides up from the bottom) ---- */
@@ -1079,8 +1453,19 @@ export const TruekindPdp = () => {
           }
           /* The floating bubbles are desktop-only; the drawer owns mobile. */
           .pdp-expand,
-          .pdp-sizeguide-btn {
+          .pdp-sizeguide-btn,
+          .pdp-reviews-btn {
             display: none;
+          }
+          /* Reviews cover the screen on mobile instead of pushing content. */
+          .pdp-reviews-panel {
+            width: 100%;
+          }
+          .pdp--reviews .pdp-stage {
+            left: 0;
+          }
+          .pdp--reviews .pdp-thumbs {
+            left: 50%;
           }
           /* Tighten the price → color gap so Color/Size sit higher. */
           .pdp-prices {
