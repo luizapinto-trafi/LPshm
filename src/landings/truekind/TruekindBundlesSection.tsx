@@ -234,7 +234,7 @@ const BundleCard = ({ bundle: b }: { bundle: Bundle }) => {
         .tkb-name {
           margin: 10px 0 0;
           font-family: var(--font-body, "Avenir Next", sans-serif);
-          font-weight: 700;
+          font-weight: 400;
           font-size: 15px;
           line-height: 1.3;
         }

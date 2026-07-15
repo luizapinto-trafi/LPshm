@@ -59,7 +59,7 @@ const products: Product[] = [
     compareAt: "$55.00",
     price: "$37.99",
     rating: 4.5,
-    badges: ["Best Seller", "Selling Fast"],
+    badges: ["Selling Fast"],
     swatches: [TONES.chai, TONES.black, TONES.white, TONES.tan, TONES.caramel, TONES.cocoa],
   },
   {
@@ -233,7 +233,7 @@ export const TruekindProductsSection = () => {
         .tk-name {
           margin: 10px 0 0;
           font-family: var(--font-body, "Avenir Next", sans-serif);
-          font-weight: 700;
+          font-weight: 400;
           font-size: 15px;
           line-height: 1.3;
         }
