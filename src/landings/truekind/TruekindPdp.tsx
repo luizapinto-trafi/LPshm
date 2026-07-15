@@ -35,13 +35,62 @@ const shots = [
 
 const sizes = ["S", "M", "L", "XL", "2XL", "3XL"];
 
+// Size chart — bands across the top, cups down the side.
+const SIZE_BANDS = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48];
+const SIZE_ROWS: { cup: string; cells: (string | null)[] }[] = [
+  { cup: "A", cells: [null, "S", "S", "M", "L", null, null, null, null, null] },
+  { cup: "B", cells: ["S", "S", "S", "M", "L", "L", "XL", "2XL", "2XL", "3XL"] },
+  { cup: "C", cells: ["S", "S", "M", "M", "L", "XL", "2XL", "2XL", "3XL", "3XL"] },
+  { cup: "D", cells: ["S", "M", "M", "L", "XL", "XL", "2XL", "3XL", "3XL", "4XL"] },
+  { cup: "DD/E", cells: ["M", "M", "L", "L", "XL", "2XL", "2XL", "3XL", "4XL", "4XL"] },
+  { cup: "DDD/F", cells: ["M", "L", "L", "XL", "XL", "2XL", "3XL", "3XL", "4XL", "4XL"] },
+  { cup: "G", cells: [null, null, null, null, null, null, null, null, null, null] },
+  { cup: "H/I", cells: [null, null, null, null, null, null, null, null, null, null] },
+];
+// Soft, low-saturation heat palette tuned to the Truekind cream/ink system.
+const SIZE_COLORS: Record<string, string> = {
+  S: "#ecb8ab",
+  M: "#f4e2c4",
+  L: "#efd5cd",
+  XL: "#c3d8e8",
+  "2XL": "#cfe0cb",
+  "3XL": "#ddc9e8",
+  "4XL": "#ecd7bd",
+};
+
 export const TruekindPdp = () => {
   const [color, setColor] = React.useState(0);
   const [size, setSize] = React.useState<number | null>(null);
   const [shot, setShot] = React.useState(0);
   const [expanded, setExpanded] = React.useState(false);
+  const [sizeGuide, setSizeGuide] = React.useState(false);
+  const [sgBand, setSgBand] = React.useState<number | null>(null);
+  const [sgCup, setSgCup] = React.useState<string | null>(null);
 
   const active = colors[color];
+  const selectedSize = size != null ? sizes[size] : null;
+
+  // Chart lookup for the step-by-step finder.
+  const recommended =
+    sgBand != null && sgCup != null
+      ? SIZE_ROWS.find((r) => r.cup === sgCup)?.cells[SIZE_BANDS.indexOf(sgBand)] ?? null
+      : null;
+
+  const selectRecommended = () => {
+    if (recommended && sizes.includes(recommended)) {
+      setSize(sizes.indexOf(recommended));
+      setSizeGuide(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (!sizeGuide) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSizeGuide(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sizeGuide]);
 
   return (
     <main className={`pdp${expanded ? " pdp--expanded" : ""}`}>
@@ -68,6 +117,19 @@ export const TruekindPdp = () => {
             <line x1="3" y1="21" x2="10" y2="14" />
           </svg>
         )}
+      </button>
+
+      {/* Size-guide bubble — opens the size chart */}
+      <button
+        type="button"
+        className="pdp-sizeguide-btn"
+        aria-label="Size guide"
+        onClick={() => setSizeGuide(true)}
+      >
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <rect x="2.5" y="7.5" width="19" height="9" rx="1.6" />
+          <path d="M6.5 7.5v4M10.5 7.5v3M14.5 7.5v4M18.5 7.5v3" />
+        </svg>
       </button>
 
       {/* Product cutout over the page's own backdrop */}
@@ -143,9 +205,9 @@ export const TruekindPdp = () => {
           <div className="pdp-field">
             <div className="pdp-label">
               Size
-              <a href="#size-guide" className="pdp-guide">
+              <button type="button" className="pdp-guide" onClick={() => setSizeGuide(true)}>
                 View size guide
-              </a>
+              </button>
             </div>
             <div className="pdp-sizes" role="radiogroup" aria-label="Size">
               {sizes.map((s, i) => (
@@ -188,6 +250,149 @@ export const TruekindPdp = () => {
         </div>
       </aside>
 
+      {/* Size-guide overlay */}
+      {sizeGuide && (
+        <div className="pdp-sg" role="dialog" aria-modal="true" aria-label="Size guide">
+          <div className="pdp-sg-backdrop" onClick={() => setSizeGuide(false)} />
+          <div className="pdp-sg-panel">
+            <button
+              type="button"
+              className="pdp-sg-close"
+              aria-label="Close size guide"
+              onClick={() => setSizeGuide(false)}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            <h2 className="pdp-sg-title">Unsure of your size?</h2>
+            <p className="pdp-sg-sub">Use our size chart to ensure a perfect fit</p>
+
+            <div className="pdp-sg-cols">
+              <div className="pdp-sg-left">
+                <div className="pdp-sg-tablewrap">
+                  <table className="pdp-sg-table">
+                    <thead>
+                      <tr>
+                        <th className="pdp-sg-band" colSpan={SIZE_BANDS.length + 1}>Band →</th>
+                      </tr>
+                      <tr>
+                        <th className="pdp-sg-cup" scope="col">Cup ↓</th>
+                        {SIZE_BANDS.map((b) => (
+                          <th key={b} scope="col">{b}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {SIZE_ROWS.map((row) => (
+                        <tr key={row.cup}>
+                          <th className="pdp-sg-rowhead" scope="row">{row.cup}</th>
+                          {row.cells.map((c, i) => {
+                            const isFinderHit = row.cup === sgCup && SIZE_BANDS[i] === sgBand;
+                            const isSizeHit = c && c === selectedSize;
+                            const hit = isFinderHit || isSizeHit;
+                            // With an active selection only the matching cells
+                            // keep their color; everything else fades back.
+                            const hasSelection =
+                              Boolean(selectedSize) || (sgBand != null && sgCup != null);
+                            const dim = hasSelection && !hit;
+                            return (
+                              <td
+                                key={i}
+                                className={`pdp-sg-cell${hit ? " pdp-sg-hit" : ""}${dim ? " pdp-sg-cell--dim" : ""}`}
+                                style={c ? { background: SIZE_COLORS[c] } : undefined}
+                              >
+                                {c}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <p className="pdp-sg-note">
+                  Your selection: {selectedSize ? <strong>{selectedSize}</strong> : "pick a size to highlight it"}
+                </p>
+              </div>
+
+              {/* Step-by-step finder */}
+              <div className="pdp-sg-finder">
+                <h3 className="pdp-sg-finder-title">Find my size</h3>
+
+                <p className="pdp-sg-q">1. What is your closest Band Size?</p>
+                <div className="pdp-sg-opts" role="radiogroup" aria-label="Band size">
+                  {SIZE_BANDS.map((b) => (
+                    <button
+                      key={b}
+                      type="button"
+                      role="radio"
+                      aria-checked={sgBand === b}
+                      className={`pdp-sg-opt${sgBand === b ? " pdp-sg-opt--active" : ""}`}
+                      onClick={() => setSgBand(b)}
+                    >
+                      {b}
+                    </button>
+                  ))}
+                </div>
+
+                <p className="pdp-sg-q">2. What is your closest Cup Size?</p>
+                <div className="pdp-sg-opts" role="radiogroup" aria-label="Cup size">
+                  {SIZE_ROWS.map((r) => (
+                    <button
+                      key={r.cup}
+                      type="button"
+                      role="radio"
+                      aria-checked={sgCup === r.cup}
+                      className={`pdp-sg-opt${sgCup === r.cup ? " pdp-sg-opt--active" : ""}`}
+                      onClick={() => setSgCup(r.cup)}
+                    >
+                      {r.cup}
+                    </button>
+                  ))}
+                </div>
+
+                {sgBand != null && sgCup != null && (
+                  <div className="pdp-sg-result">
+                    <p className="pdp-sg-result-label">Recommended size</p>
+                    {recommended ? (
+                      <p className="pdp-sg-result-size">
+                        {sgBand}
+                        {sgCup} = <strong>{recommended}</strong>
+                      </p>
+                    ) : (
+                      <p className="pdp-sg-result-miss">
+                        This combination isn&apos;t available for this style yet.
+                      </p>
+                    )}
+                    <div className="pdp-sg-result-actions">
+                      <button
+                        type="button"
+                        className="pdp-sg-restart"
+                        onClick={() => {
+                          setSgBand(null);
+                          setSgCup(null);
+                        }}
+                      >
+                        Start over
+                      </button>
+                      {recommended && (
+                        <button type="button" className="pdp-sg-select" onClick={selectRecommended}>
+                          Select this size
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         .pdp {
           position: relative;
@@ -201,7 +406,12 @@ export const TruekindPdp = () => {
           --font-body: "Circular XX", system-ui, sans-serif;
           --font-display: "Circular XX", system-ui, sans-serif;
           /* Height of the Truekind site header (marquee + nav); offsets everything below. */
-          --pdp-header: 100px;
+          --pdp-header: 92px;
+        }
+        /* Shorter announcement marquee on the PDP (scoped — landing keeps its own). */
+        .pdp :global(.tk-marquee-item) {
+          padding-top: 5px;
+          padding-bottom: 5px;
         }
         .pdp-stage {
           position: fixed;
@@ -249,6 +459,36 @@ export const TruekindPdp = () => {
         }
         .pdp--expanded .pdp-expand {
           right: 16px;
+        }
+        /* Size-guide bubble — stacked under the expand button. */
+        .pdp-sizeguide-btn {
+          position: fixed;
+          z-index: 5;
+          top: calc(var(--pdp-header) + 14px + 52px);
+          right: calc(min(480px, 38vw) + 16px);
+          width: 44px;
+          height: 44px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink-900, #292929);
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 9999px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          backdrop-filter: blur(6px);
+        }
+        .pdp-sizeguide-btn:hover {
+          background: #fff;
+        }
+        .pdp-sizeguide-btn:focus-visible {
+          outline: 2px solid var(--ink-900, #292929);
+          outline-offset: 2px;
+        }
+        /* Hide the bubbles when the image takes over the screen. */
+        .pdp--expanded .pdp-sizeguide-btn {
+          display: none;
         }
         .pdp-cutout {
           max-height: calc(100vh - var(--pdp-header) - 24px);
@@ -396,10 +636,18 @@ export const TruekindPdp = () => {
           color: var(--ink-600, #5a5a5a);
         }
         .pdp-guide {
+          font-family: inherit;
           font-weight: 400;
           font-size: 12px;
           color: var(--ink-600, #5a5a5a);
           text-decoration: underline;
+          background: none;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+        }
+        .pdp-guide:hover {
+          color: var(--ink-900, #292929);
         }
         .pdp-swatches {
           display: flex;
@@ -503,23 +751,335 @@ export const TruekindPdp = () => {
           color: var(--ink-600, #5a5a5a);
         }
 
+        /* ---- Size guide drawer (slides up from the bottom) ---- */
+        .pdp-sg {
+          position: fixed;
+          inset: 0;
+          z-index: 1200;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+        }
+        .pdp-sg-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(43, 34, 26, 0.44);
+          backdrop-filter: blur(2px);
+          animation: pdp-sg-fade 0.2s ease;
+        }
+        .pdp-sg-panel {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-height: 86vh;
+          overflow-y: auto;
+          background: #fff;
+          border-top: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 26px 26px 0 0;
+          padding: clamp(24px, 3vw, 40px) clamp(20px, 4vw, 48px) clamp(28px, 4vw, 44px);
+          box-shadow: 0 -20px 60px rgba(43, 34, 26, 0.26);
+          animation: pdp-sg-up 0.34s cubic-bezier(0.2, 0.75, 0.25, 1);
+          scrollbar-width: none;
+        }
+        .pdp-sg-panel::-webkit-scrollbar {
+          display: none;
+        }
+        /* Constrain the content on wide screens while the drawer spans full width. */
+        .pdp-sg-title,
+        .pdp-sg-sub,
+        .pdp-sg-cols {
+          max-width: 1080px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .pdp-sg-cols {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 320px;
+          gap: clamp(24px, 3vw, 40px);
+          align-items: start;
+        }
+        @media (max-width: 900px) {
+          .pdp-sg-cols {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 18px;
+          }
+          /* On small screens the finder is the primary tool — show it first. */
+          .pdp-sg-finder {
+            order: -1;
+          }
+          .pdp-sg-panel {
+            max-height: 92vh;
+            padding: 20px 16px 24px;
+            border-radius: 20px 20px 0 0;
+          }
+          .pdp-sg-close {
+            position: sticky;
+            float: right;
+            top: 0;
+          }
+          .pdp-sg-title {
+            font-size: 1.25rem;
+            padding-right: 44px;
+          }
+          .pdp-sg-sub {
+            font-size: 13.5px;
+            margin-bottom: 14px;
+          }
+          .pdp-sg-table {
+            min-width: 520px;
+            font-size: 12.5px;
+          }
+          .pdp-sg-table th,
+          .pdp-sg-table td {
+            height: 38px;
+            min-width: 42px;
+          }
+          .pdp-sg-band,
+          .pdp-sg-cup {
+            padding-left: 12px;
+          }
+          .pdp-sg-rowhead {
+            padding: 0 10px;
+          }
+          .pdp-sg-finder {
+            padding: 16px;
+          }
+          .pdp-sg-result-size {
+            font-size: 19px;
+          }
+          .pdp-sg-result-size strong {
+            font-size: 26px;
+          }
+        }
+        .pdp-sg-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 38px;
+          height: 38px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink-900, #292929);
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 9999px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+          cursor: pointer;
+        }
+        .pdp-sg-close:hover {
+          background: #f2ece2;
+        }
+        .pdp-sg-title {
+          margin: 0 auto 4px;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 700;
+          font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+          letter-spacing: -0.015em;
+        }
+        .pdp-sg-sub {
+          margin: 0 auto 20px;
+          font-size: 15px;
+          color: var(--ink-600, #5a5a5a);
+        }
+        .pdp-sg-tablewrap {
+          overflow-x: auto;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 16px;
+          background: #fff;
+        }
+        .pdp-sg-table {
+          border-collapse: collapse;
+          width: 100%;
+          min-width: 620px;
+          font-size: 14px;
+        }
+        .pdp-sg-table th,
+        .pdp-sg-table td {
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          text-align: center;
+          height: 46px;
+          min-width: 50px;
+          font-weight: 600;
+          color: var(--ink-900, #292929);
+        }
+        .pdp-sg-band {
+          text-align: left;
+          padding-left: 18px;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-size: 15px;
+          background: #f6f6f5;
+          border-bottom: none;
+        }
+        .pdp-sg-cup,
+        .pdp-sg-rowhead {
+          background: #f6f6f5;
+          font-weight: 700;
+        }
+        .pdp-sg-table thead th {
+          position: sticky;
+          top: 0;
+        }
+        .pdp-sg-cup {
+          text-align: left;
+          padding-left: 18px;
+        }
+        .pdp-sg-rowhead {
+          padding: 0 14px;
+          white-space: nowrap;
+        }
+        .pdp-sg-cell {
+          color: var(--ink-900, #292929);
+          transition: opacity 0.25s ease;
+        }
+        /* Quiet-luxury focus: non-matching cells recede when something is selected. */
+        .pdp-sg-cell--dim {
+          opacity: 0.18;
+        }
+        .pdp-sg-hit {
+          outline: 2.5px solid var(--ink-1000, #1c1b1a);
+          outline-offset: -2.5px;
+          font-weight: 800;
+        }
+        .pdp-sg-note {
+          margin: 16px auto 0;
+          font-size: 13px;
+          color: var(--ink-600, #5a5a5a);
+        }
+
+        /* ---- Step-by-step finder ---- */
+        .pdp-sg-finder {
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 16px;
+          padding: 20px;
+        }
+        .pdp-sg-finder-title {
+          margin: 0 0 14px;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 700;
+          font-size: 17px;
+          letter-spacing: -0.01em;
+        }
+        .pdp-sg-q {
+          margin: 0 0 8px;
+          font-weight: 700;
+          font-size: 13px;
+        }
+        .pdp-sg-opts {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-bottom: 16px;
+        }
+        .pdp-sg-opt {
+          min-width: 44px;
+          min-height: 36px;
+          padding: 0 10px;
+          background: #fff;
+          border: 1px solid var(--ink-300, #cfcfcf);
+          border-radius: 8px;
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--ink-900, #292929);
+          cursor: pointer;
+        }
+        .pdp-sg-opt:hover {
+          border-color: var(--ink-900, #292929);
+        }
+        .pdp-sg-opt--active {
+          background: var(--ink-1000, #000);
+          border-color: var(--ink-1000, #000);
+          color: #fff;
+        }
+        .pdp-sg-result {
+          border-top: 1px solid rgba(0, 0, 0, 0.09);
+          padding-top: 14px;
+        }
+        .pdp-sg-result-label {
+          margin: 0 0 6px;
+          font-weight: 700;
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--ink-600, #5a5a5a);
+        }
+        .pdp-sg-result-size {
+          margin: 0 0 14px;
+          font-size: 22px;
+          letter-spacing: -0.01em;
+        }
+        .pdp-sg-result-size strong {
+          font-weight: 800;
+          font-size: 30px;
+        }
+        .pdp-sg-result-miss {
+          margin: 0 0 14px;
+          font-size: 13.5px;
+          line-height: 1.45;
+          color: var(--ink-700, #454545);
+        }
+        .pdp-sg-result-actions {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .pdp-sg-restart {
+          background: none;
+          border: none;
+          padding: 0;
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--ink-700, #454545);
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        .pdp-sg-restart:hover {
+          color: var(--ink-1000, #000);
+        }
+        .pdp-sg-select {
+          flex: 1;
+          min-height: 44px;
+          background: var(--ink-1000, #000);
+          color: #fff;
+          border: none;
+          border-radius: 9999px;
+          font-family: inherit;
+          font-weight: 700;
+          font-size: 14px;
+          cursor: pointer;
+        }
+        .pdp-sg-select:hover {
+          background: #222;
+        }
+        @keyframes pdp-sg-fade {
+          from {
+            opacity: 0;
+          }
+        }
+        @keyframes pdp-sg-up {
+          from {
+            transform: translateY(100%);
+          }
+        }
+
         @media (max-width: 860px) {
           .pdp {
             display: block;
             /* Slimmer header on mobile buys more room for the first fold. */
             --pdp-header: 84px;
           }
-          /* Compact the shared Truekind header — scoped to the PDP only. */
-          .pdp :global(.tk-marquee-item) {
-            padding-top: 6px;
-            padding-bottom: 6px;
-          }
+          /* Compact the shared nav on mobile — scoped to the PDP only. */
           .pdp :global(.tk-nav) {
             padding-top: 9px;
             padding-bottom: 9px;
           }
-          /* The expand affordance is desktop-only; the drawer owns mobile. */
-          .pdp-expand {
+          /* The floating bubbles are desktop-only; the drawer owns mobile. */
+          .pdp-expand,
+          .pdp-sizeguide-btn {
             display: none;
           }
           /* Tighten the price → color gap so Color/Size sit higher. */
