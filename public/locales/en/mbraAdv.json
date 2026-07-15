@@ -1,0 +1,147 @@
+{
+  "brand": "Style Insiders.",
+  "headerSubtitle": "Bras Designed for Life After 50",
+  "metaTitle": "After 50, This Is The ONLY Bra I Recommend.",
+  "metaDescription": "As a bra designer with over 30 years of experience, most of my clients today are women over 50. When I kept hearing about the EBRA Wireless Bra, I put it to the test—and I'm so glad I did.",
+  "promoBar": {
+    "aria": "Promotional offer",
+    "headline": "Buy 2, Save 45%",
+    "viewDeal": "View Deal"
+  },
+  "header": {
+    "socialAlt": "Share on social media"
+  },
+  "cta": {
+    "buy": "Buy 2, Save 45%"
+  },
+  "article": {
+    "title": "After 50, This Is The ONLY Bra I Recommend.",
+    "badgeExpert": "Expert",
+    "badgeRealPhoto": "Real Photo",
+    "byline": "By Jane Sutton",
+    "bylineDate": "May 1, 2026",
+    "authorAlt": "Jane Sutton, bra designer",
+
+    "intro1": "As a bra designer with over 30 years of experience, most of my clients today are women in their 50s, 60s, 70s and 80s. They keep telling me the same thing: “The bras I used to love don't feel right anymore.” So when I kept hearing about the EBRA Wireless Bra from women over 50, I decided to put it to the test… and I'm so glad I did.",
+
+    "imgLifestyle1": "Lifestyle photo · woman 65–70 wearing Shapermint at home · warm, candid, smiling · NOT staged",
+
+    "intro2": "First time on, I knew. **This is the one.**",
+    "intro3": "No wire digging. No band rolling up. No relief at 6pm because I forgot it was on.",
+    "intro4": "It fits the body I have now — not the one I had at 30. And it's become the **#1 wirefree bra for women over 50**, with over 1 million sold.",
+
+    "imgProduct": "Product photo · Shapermint in nude + black + cocoa, neatly folded inside an open gift box · top-down · warm peach background",
+
+    "s1Heading": "Your Body Changed. Your Bra Should Too.",
+    "s1p1": "At 30, underwires were comfortable. At 60? They're the first thing you take off.",
+    "s1p2": "That's not your fault. After menopause, tissue softens. Skin thins. Shapes shift. So your breast shape starts changing — and most bras are still made for the body you had 30 years ago.",
+
+    "shapes": {
+      "relaxedName": "Relaxed",
+      "relaxedDesc": "Soft tissue. Needs lift from below — not pressure from above.",
+      "relaxedImg": "Respectful line illustration · relaxed breast shape after 50 · soft skin tones",
+      "sidesetName": "Side-set",
+      "sidesetDesc": "Settles outward. Gentle gathering, zero squeeze.",
+      "sidesetImg": "Respectful line illustration · side-set breast shape after 50 · soft skin tones",
+      "asymName": "Asymmetrical",
+      "asymDesc": "Common after 60. Stretch fabric adapts to each side.",
+      "asymImg": "Respectful line illustration · asymmetrical breast shape after 50 · soft skin tones",
+      "teardropName": "Teardrop",
+      "teardropDesc": "Weight sits low. Wide soft band stays put.",
+      "teardropImg": "Respectful line illustration · teardrop breast shape after 50 · soft skin tones"
+    },
+
+    "s1p3": "Shapermint adapts to all shapes. **One bra**, your body — today and five years from now.",
+    "s1p4": "Real comfort. Real lift. The kind you stop noticing because it just works.",
+
+    "s2Heading": "The #1 Fear Every Woman Over 50 Has When Buying a Bra Online (And How Shapermint Solved It)",
+    "s2p1": "I get it. Buying a bra online after 50 is scary. “What if it doesn't fit? What if I have to send it back?” I've heard this fear from countless women in their 60s and 70s.",
+    "s2p2": "That's why Shapermint is different: 95% fit satisfaction. Tested on women aged 50 to 85. Ultra-stretch fabric adapts to YOUR body — not the other way around. Find your size in 10 seconds:",
+
+    "sizeSelector": {
+      "title": "What's your perfect Shapermint size?",
+      "subtitle": "Use your current bra size — we'll do the math.",
+      "bandLabel": "Band size",
+      "cupLabel": "Cup",
+      "placeholder": "Select…",
+      "resultPrefix": "Your Shapermint size:",
+      "resultEmpty": "Pick your band and cup to see your fit.",
+      "note": "Plus: every bra ships with a free back extender — fits 32A to 44DDD."
+    },
+
+    "shipsWithTitle": "Every bra ships with:",
+    "shipsWith": {
+      "item1": "A free back extender — fits 32A to 44DDD",
+      "item2": "Pulls on over your head. No back hooks.",
+      "item3": "No wires. No digging. No marks at 6pm.",
+      "item4": "60-day Perfect Fit Guarantee."
+    },
+    "s2p3": "Don't love it? **Send it back.** No questions.",
+    "s2p4": "That's how sure they are.",
+
+    "imgLifestyle2": "Lifestyle photo · woman 70+ getting dressed at start of day, smiling · soft morning light · candid",
+
+    "s3Heading": "98,000 Five-Star Reviews. Average Age: 67.",
+    "s3p1": "I don't care about marketing claims. I care about what women like me say.",
+    "s3p2": "Over 1 million women over 50 wear it. **Not influencers. Real women.**",
+
+    "reviewsTitle": "Real reviews from real women",
+    "reviews": {
+      "q1": "Soft, comfortable, and easy to wear all day.",
+      "n1": "Linda, 63 · Austin, TX",
+      "q2": "I love that it gives support without feeling tight.",
+      "n2": "Carol, 71 · Tampa, FL",
+      "q3": "It feels smooth under my clothes and stays in place.",
+      "n3": "Margaret, 78 · Phoenix, AZ"
+    },
+    "s3p3": "Better fit. More confidence. All-day comfort. Every shape, every size.",
+
+    "s4Heading": "It Feels Like Wearing Nothing ⭐⭐⭐⭐⭐",
+    "s4p1": "That's the line I hear most.",
+    "s4p2": "Pulls on like a camisole. Stays put all day. You forget you're wearing it.",
+
+    "imgLifestyle3": "Lifestyle photo · woman 65 standing in bright kitchen with coffee · relaxed posture · warm and natural",
+
+    "changesTitle": "What changes:",
+    "changes": {
+      "item1": "Posture improves",
+      "item2": "Real lift — gentle, not crushing",
+      "item3": "No bra-adjusting in public",
+      "item4": "Zero red marks at the end of the day"
+    },
+
+    "imgComparison": "Comparison · two women's shoulders end of day · LEFT: deep red strap marks from underwire · RIGHT: clear skin, no marks, Shapermint · same lighting",
+
+    "s5Heading": "Try It. Risk-Free. 60 Days.",
+    "s5p1": "Still on the fence? Don't be.",
+    "s5p2": "Wear it for 60 days. Wash it. Live in it. If it's not the most comfortable bra you've ever owned, send it back.",
+    "s5p3": "Right now: **BUY 2, SAVE 45%.**",
+    "s5p4": "Stock has sold out twice this week. Don't wait.",
+
+    "warning": "⏰ The promo has sold out 2 times in the last 7 days and has a high risk of selling out again"
+  },
+  "footer": {
+    "company": "Company",
+    "information": "Information",
+    "brand": "Shapermint",
+    "copyright": "© 2026 EBRA · Bras designed for life after 50",
+    "links": {
+      "about": "About",
+      "subscribe": "Subscribe",
+      "contact": "Contact",
+      "jobs": "Jobs",
+      "press": "Press",
+      "advertise": "Advertise With Us",
+      "community": "Community Guidelines",
+      "privacy": "Privacy Policy",
+      "cookie": "Cookie Policy",
+      "terms": "Terms of Use",
+      "editorial": "Editorial Guidelines",
+      "accessibility": "Accessibility Statement"
+    }
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "main": "Article"
+  }
+}
