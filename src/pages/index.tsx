@@ -14,6 +14,7 @@ import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrLis
 import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
 import { ShapermintUpsellPagePath, ShapermintUpsellV2PagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
 import { NewLandingPagePath } from "@/landings/new-landing/newLandingPath";
+import { TruekindPagePath } from "@/landings/truekind/truekindPath";
 
 const StyledMain = styled.main`
   min-height: 100vh;
@@ -213,6 +214,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={NewLandingPagePath}>Open — New Landing (blank canvas)</StyledCta>
           <StyledHint>Path: /pages/new-landing — empty starting point for a brand-new landing</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={TruekindPagePath}>Open — Truekind (blank canvas)</StyledCta>
+          <StyledHint>Path: /pages/truekind — empty starting point for the Truekind landing</StyledHint>
         </StyledLandingCard>
 
         <StyledLandingCard>
