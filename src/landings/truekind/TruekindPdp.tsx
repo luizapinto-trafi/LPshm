@@ -139,6 +139,68 @@ const WHY: { title: string; body: string }[] = [
   },
 ];
 
+// Related products — pulled from the Truekind landing catalog.
+const RELATED: {
+  name: string;
+  image: string;
+  price: string;
+  compareAt: string;
+  href: string;
+}[] = [
+  {
+    name: "Daily Comfort Wireless Shaper Bra",
+    image: "/truekind/products/daily-comfort-wireless-shaper-bra.webp",
+    price: "$29.99",
+    compareAt: "$44.00",
+    href: "/pages/truekind",
+  },
+  {
+    name: "Seamless Stretch Mid-Waist Brief",
+    image: "/truekind/products/seamless-stretch-mid-waist-brief.webp",
+    price: "$15.99",
+    compareAt: "$26.00",
+    href: "/pages/truekind",
+  },
+  {
+    name: "Convertible Strapless Bandeau Bra",
+    image: "/truekind/products/convertible-strapless-bandeau-bra.webp",
+    price: "$34.99",
+    compareAt: "$50.00",
+    href: "/pages/truekind",
+  },
+  {
+    name: "Shaper Bra Duo Bundle",
+    image: "/truekind/bundles/shaper-bra-chai.png",
+    price: "$70.40",
+    compareAt: "$88.00",
+    href: "/pages/truekind",
+  },
+];
+
+// FAQ — question/answer pairs shown in an accordion.
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: "How do I choose my size?",
+    a: "Use the size guide — enter your usual band and cup and we'll recommend a size. Between sizes? Size up for a relaxed fit or down for firmer support.",
+  },
+  {
+    q: "Is it really wireless?",
+    a: "Yes. Molded cups with a hidden shaping panel give lift and support with no underwire, so there's nothing to dig in — all day.",
+  },
+  {
+    q: "How does the front closure work?",
+    a: "A discreet hook-and-eye closure sits at the center front, making the bra easy to put on and take off without reaching behind your back.",
+  },
+  {
+    q: "What is it made of and how do I wash it?",
+    a: "A breathable nylon/spandex seamless knit. Machine wash cold on a gentle cycle and lay flat to dry to keep its shape.",
+  },
+  {
+    q: "What are shipping and returns like?",
+    a: "Free shipping on orders over $80 and a 100-day fit guarantee with free exchanges, so you can find your perfect fit risk-free.",
+  },
+];
+
 // Size chart — bands across the top, cups down the side.
 const SIZE_BANDS = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48];
 const SIZE_ROWS: { cup: string; cells: (string | null)[] }[] = [
@@ -507,6 +569,59 @@ export const TruekindPdp = () => {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* You may also like */}
+      <section className="pdp-related" aria-label="You may also like">
+        <div className="pdp-related-inner">
+          <h2 className="pdp-related-title">You may also like</h2>
+          <div className="pdp-related-grid">
+            {RELATED.map((p) => (
+              <a className="pdp-related-card" href={p.href} key={p.name}>
+                <div className="pdp-related-imgwrap">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.image} alt={p.name} loading="lazy" />
+                </div>
+                <p className="pdp-related-name">{p.name}</p>
+                <div className="pdp-related-prices">
+                  <span className="pdp-related-price">{p.price}</span>
+                  <span className="pdp-related-compare">{p.compareAt}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="pdp-faq" aria-label="Frequently asked questions">
+        <div className="pdp-faq-inner">
+          <div className="pdp-faq-left">
+            <p className="pdp-faq-eyebrow">FAQ</p>
+            <h2 className="pdp-faq-title">Questions?</h2>
+            <p className="pdp-faq-intro">
+              We&rsquo;ve gathered the most frequently asked questions from our customers to help you in
+              the best possible way.
+            </p>
+          </div>
+
+          <div className="pdp-faq-list">
+            {FAQ.map((item) => (
+              <details className="pdp-faq-item" key={item.q}>
+                <summary>
+                  {item.q}
+                  <span className="pdp-faq-icon" aria-hidden />
+                </summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+
+            <p className="pdp-faq-more">
+              <span className="pdp-faq-more-label">Need more info</span> If you&rsquo;re still looking for
+              answers, our detailed FAQ might be helpful.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -1195,6 +1310,194 @@ export const TruekindPdp = () => {
           .pdp-why-inner {
             grid-template-columns: 1fr;
             gap: 24px;
+          }
+        }
+
+        /* ---- You may also like ---- */
+        .pdp-related {
+          position: relative;
+          z-index: 1;
+          background: #fff;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+          padding: clamp(48px, 7vw, 88px) clamp(20px, 6vw, 80px);
+        }
+        .pdp-related-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+        }
+        .pdp-related-title {
+          margin: 0 0 clamp(24px, 3vw, 40px);
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 700;
+          font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+          letter-spacing: -0.02em;
+        }
+        .pdp-related-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: clamp(14px, 2vw, 28px);
+        }
+        .pdp-related-card {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+        }
+        .pdp-related-imgwrap {
+          aspect-ratio: 3 / 4;
+          background: #f4f0ea;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-bottom: 12px;
+        }
+        .pdp-related-imgwrap img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+        .pdp-related-card:hover .pdp-related-imgwrap img {
+          transform: scale(1.04);
+        }
+        .pdp-related-name {
+          margin: 0 0 6px;
+          font-size: 14.5px;
+          font-weight: 500;
+          line-height: 1.35;
+        }
+        .pdp-related-prices {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+        }
+        .pdp-related-price {
+          font-weight: 700;
+          font-size: 15px;
+        }
+        .pdp-related-compare {
+          font-size: 13px;
+          color: var(--ink-500, #808080);
+          text-decoration: line-through;
+        }
+        @media (max-width: 760px) {
+          .pdp-related-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 12px;
+          }
+        }
+
+        /* ---- FAQ ---- */
+        .pdp-faq {
+          position: relative;
+          z-index: 1;
+          background: #fff;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+          padding: clamp(48px, 8vw, 104px) clamp(20px, 6vw, 80px);
+        }
+        .pdp-faq-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+          gap: clamp(32px, 6vw, 100px);
+          align-items: start;
+        }
+        .pdp-faq-eyebrow {
+          margin: 0 0 12px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-500, #808080);
+        }
+        .pdp-faq-title {
+          margin: 0 0 16px;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 800;
+          font-size: clamp(2rem, 4vw, 3.25rem);
+          line-height: 1.02;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+        }
+        .pdp-faq-intro {
+          margin: 0;
+          font-size: 15px;
+          line-height: 1.55;
+          color: var(--ink-700, #454545);
+          max-width: 34ch;
+        }
+        .pdp-faq-item {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        .pdp-faq-item summary {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          padding: 22px 0;
+          list-style: none;
+          cursor: pointer;
+          font-size: clamp(1rem, 1.5vw, 1.1875rem);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+        }
+        .pdp-faq-item summary::-webkit-details-marker {
+          display: none;
+        }
+        .pdp-faq-icon {
+          position: relative;
+          flex-shrink: 0;
+          width: 16px;
+          height: 16px;
+        }
+        .pdp-faq-icon::before,
+        .pdp-faq-icon::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          background: var(--ink-800, #3a3a3a);
+          transform: translate(-50%, -50%);
+          transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .pdp-faq-icon::before {
+          width: 16px;
+          height: 1.8px;
+        }
+        .pdp-faq-icon::after {
+          width: 1.8px;
+          height: 16px;
+        }
+        .pdp-faq-item[open] .pdp-faq-icon::after {
+          opacity: 0;
+          transform: translate(-50%, -50%) rotate(90deg);
+        }
+        .pdp-faq-item p {
+          margin: 0;
+          padding: 0 40px 24px 0;
+          font-size: 14.5px;
+          line-height: 1.6;
+          color: var(--ink-700, #454545);
+          max-width: 62ch;
+        }
+        .pdp-faq-more {
+          margin: 26px 0 0;
+          font-size: 13.5px;
+          line-height: 1.55;
+          color: var(--ink-600, #5a5a5a);
+        }
+        .pdp-faq-more-label {
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: var(--ink-900, #292929);
+          margin-right: 8px;
+        }
+        @media (max-width: 760px) {
+          .pdp-faq-inner {
+            grid-template-columns: 1fr;
+            gap: 28px;
           }
         }
 
