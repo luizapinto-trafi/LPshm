@@ -115,6 +115,30 @@ const REVIEWS: Review[] = [
 const REVIEW_AVG = 4.5;
 const REVIEW_COUNT = "80,000+";
 
+// "Why you'll love it" — product benefit bullets.
+const WHY: { title: string; body: string }[] = [
+  {
+    title: "All-day wirefree support",
+    body: "Molded cups with a hidden shaping panel hold you in — no wires, no digging.",
+  },
+  {
+    title: "Front closure convenience",
+    body: "A discreet hook-and-eye front makes it effortless to put on and take off.",
+  },
+  {
+    title: "Smoothing double-layer band",
+    body: "A wide ribbed underband stays put and lies flat under everything you wear.",
+  },
+  {
+    title: "Breathable seamless knit",
+    body: "Lightweight, tag-free fabric with mesh venting keeps you cool and unrestricted.",
+  },
+  {
+    title: "Convertible straps",
+    body: "Adjust or cross the straps to work with any neckline in your closet.",
+  },
+];
+
 // Size chart — bands across the top, cups down the side.
 const SIZE_BANDS = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48];
 const SIZE_ROWS: { cup: string; cells: (string | null)[] }[] = [
@@ -180,6 +204,11 @@ export const TruekindPdp = () => {
       className={`pdp${expanded ? " pdp--expanded" : ""}${reviewsOpen ? " pdp--reviews" : ""}`}
     >
       <TruekindFonts />
+
+      {/* Hero — a single 100vh screen; the "why" section flows below it.
+          Header, reviews panel and size-guide are fixed overlays and stay
+          viewport-anchored even though they live inside this wrapper. */}
+      <div className="pdp-hero">
 
       {/* Reviews bubble — opens the left review panel */}
       <button
@@ -417,6 +446,70 @@ export const TruekindPdp = () => {
         </div>
       </aside>
 
+      </div>{/* /pdp-hero */}
+
+      {/* Trust bar */}
+      <section className="pdp-trust" aria-label="Why shop with us">
+        <ul className="pdp-trust-inner">
+          <li className="pdp-trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" />
+            </svg>
+            100% seamless knit
+          </li>
+          <li className="pdp-trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M12 3l7 3v5c0 4.4-3 7.4-7 8.5-4-1.1-7-4.1-7-8.5V6l7-3z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            100-day fit guarantee
+          </li>
+          <li className="pdp-trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 7h11v8H3z" />
+              <path d="M14 10h4l3 3v2h-7z" />
+              <circle cx="7" cy="18" r="1.6" />
+              <circle cx="17.5" cy="18" r="1.6" />
+            </svg>
+            Free shipping &amp; returns
+          </li>
+          <li className="pdp-trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.9L12 3z" />
+            </svg>
+            4.5 ★ · 80,000+ reviews
+          </li>
+        </ul>
+      </section>
+
+      {/* Why you'll love it — content section below the hero */}
+      <section className="pdp-why" aria-label="Why you'll love it">
+        <div className="pdp-why-inner">
+          <div className="pdp-why-left">
+            <p className="pdp-why-eyebrow">The details</p>
+            <h2 className="pdp-why-title">Why you&rsquo;ll love it</h2>
+          </div>
+          <ul className="pdp-why-list">
+            {WHY.map((item) => (
+              <li className="pdp-why-item" key={item.title}>
+                <span className="pdp-why-check" aria-hidden>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                <div>
+                  <h3 className="pdp-why-item-title">{item.title}</h3>
+                  <p className="pdp-why-item-body">{item.body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* Size-guide overlay */}
       {sizeGuide && (
         <div className="pdp-sg" role="dialog" aria-modal="true" aria-label="Size guide">
@@ -563,11 +656,7 @@ export const TruekindPdp = () => {
       <style jsx>{`
         .pdp {
           position: relative;
-          min-height: 100vh;
-          /* Backdrop painted by the page itself — imagery ships as cutouts. */
-          background:
-            radial-gradient(120% 90% at 28% 42%, rgba(255, 252, 246, 0.9) 0%, rgba(255, 252, 246, 0) 55%),
-            linear-gradient(180deg, #f6f0e7 0%, #eee5d8 55%, #e3d7c6 100%);
+          background: #f4efe7;
           color: var(--ink-900, #292929);
           font-family: var(--font-body, "Circular XX", system-ui, sans-serif);
           --font-body: "Circular XX", system-ui, sans-serif;
@@ -577,13 +666,23 @@ export const TruekindPdp = () => {
           /* Width the left reviews panel claims when open. */
           --pdp-reviews-w: min(400px, 34vw);
         }
+        /* The hero is one full screen; absolute children scroll away with it. */
+        .pdp-hero {
+          position: relative;
+          height: 100vh;
+          overflow: hidden;
+          /* Backdrop painted by the page itself — imagery ships as cutouts. */
+          background:
+            radial-gradient(120% 90% at 28% 42%, rgba(255, 252, 246, 0.9) 0%, rgba(255, 252, 246, 0) 55%),
+            linear-gradient(180deg, #f6f0e7 0%, #eee5d8 55%, #e3d7c6 100%);
+        }
         /* Shorter announcement marquee on the PDP (scoped — landing keeps its own). */
         .pdp :global(.tk-marquee-item) {
           padding-top: 5px;
           padding-bottom: 5px;
         }
         .pdp-stage {
-          position: fixed;
+          position: absolute;
           z-index: 0;
           top: var(--pdp-header);
           bottom: 0;
@@ -600,7 +699,7 @@ export const TruekindPdp = () => {
           left: var(--pdp-reviews-w);
         }
         .pdp-expand {
-          position: fixed;
+          position: absolute;
           z-index: 5;
           top: calc(var(--pdp-header) + 14px);
           right: calc(min(480px, 38vw) + 16px);
@@ -636,7 +735,7 @@ export const TruekindPdp = () => {
         }
         /* Size-guide bubble — stacked under the expand button. */
         .pdp-sizeguide-btn {
-          position: fixed;
+          position: absolute;
           z-index: 5;
           top: calc(var(--pdp-header) + 14px + 52px);
           right: calc(min(480px, 38vw) + 16px);
@@ -666,7 +765,7 @@ export const TruekindPdp = () => {
         }
         /* Reviews bubble — star + rating pill on the left edge. */
         .pdp-reviews-btn {
-          position: fixed;
+          position: absolute;
           z-index: 5;
           top: calc(var(--pdp-header) + 14px);
           left: clamp(16px, 2.5vw, 32px);
@@ -718,7 +817,7 @@ export const TruekindPdp = () => {
           filter: drop-shadow(0 20px 40px rgba(67, 48, 31, 0.16));
         }
         .pdp-thumbs {
-          position: fixed;
+          position: absolute;
           z-index: 2;
           left: clamp(16px, 2.5vw, 32px);
           bottom: 24px;
@@ -752,7 +851,7 @@ export const TruekindPdp = () => {
           outline-offset: 2px;
         }
         .pdp-card {
-          position: fixed;
+          position: absolute;
           z-index: 2;
           top: calc(var(--pdp-header) + 14px);
           right: clamp(16px, 2.5vw, 32px);
@@ -975,6 +1074,128 @@ export const TruekindPdp = () => {
           text-align: center;
           font-size: 11.5px;
           color: var(--ink-600, #5a5a5a);
+        }
+
+        /* ---- Trust bar (between hero and why) ---- */
+        .pdp-trust {
+          position: relative;
+          z-index: 1;
+          background: #f1ede6;
+          border-top: 1px solid rgba(0, 0, 0, 0.06);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .pdp-trust-inner {
+          list-style: none;
+          margin: 0 auto;
+          max-width: 1160px;
+          padding: 16px clamp(20px, 6vw, 80px);
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 14px clamp(24px, 5vw, 64px);
+        }
+        .pdp-trust-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--ink-900, #292929);
+          white-space: nowrap;
+        }
+        .pdp-trust-item svg {
+          flex-shrink: 0;
+          color: var(--ink-800, #3a3a3a);
+        }
+        @media (max-width: 760px) {
+          .pdp-trust-inner {
+            justify-content: flex-start;
+            gap: 14px 28px;
+          }
+          .pdp-trust-item {
+            font-size: 13px;
+          }
+        }
+
+        /* ---- Why you'll love it (below the hero) ---- */
+        .pdp-why {
+          position: relative;
+          z-index: 1;
+          background: #fbf8f3;
+          border-top: 1px solid rgba(0, 0, 0, 0.06);
+          padding: clamp(48px, 8vw, 104px) clamp(20px, 6vw, 80px);
+        }
+        .pdp-why-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+          gap: clamp(32px, 6vw, 100px);
+          align-items: start;
+        }
+        .pdp-why-eyebrow {
+          margin: 0 0 12px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink-500, #808080);
+        }
+        .pdp-why-title {
+          margin: 0;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 800;
+          font-size: clamp(2rem, 4vw, 3.25rem);
+          line-height: 1.02;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+        }
+        .pdp-why-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .pdp-why-item {
+          display: flex;
+          gap: 16px;
+          padding: 22px 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .pdp-why-item:first-child {
+          padding-top: 0;
+          border-top: none;
+        }
+        .pdp-why-check {
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 9999px;
+          background: var(--ink-1000, #1c1b1a);
+          color: #fff;
+        }
+        .pdp-why-item-title {
+          margin: 3px 0 5px;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 700;
+          font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+          letter-spacing: -0.01em;
+        }
+        .pdp-why-item-body {
+          margin: 0;
+          font-size: 14.5px;
+          line-height: 1.55;
+          color: var(--ink-700, #454545);
+          max-width: 46ch;
+        }
+        @media (max-width: 760px) {
+          .pdp-why-inner {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
         }
 
         /* ---- Left reviews panel ---- */
@@ -1476,7 +1697,7 @@ export const TruekindPdp = () => {
           }
           /* Image occupies a shorter band at the top so the drawer sits higher. */
           .pdp-stage {
-            position: fixed;
+            position: absolute;
             top: var(--pdp-header);
             left: 0;
             right: 0;
@@ -1494,7 +1715,7 @@ export const TruekindPdp = () => {
           }
           /* Smaller thumbnails, centered just above the drawer. */
           .pdp-thumbs {
-            position: fixed;
+            position: absolute;
             top: auto;
             bottom: calc(100vh - var(--pdp-header) - 42vh + 8px);
             left: 50%;
@@ -1510,7 +1731,7 @@ export const TruekindPdp = () => {
           }
           /* Fixed, full-width bottom drawer. */
           .pdp-card {
-            position: fixed;
+            position: absolute;
             top: auto;
             left: 0;
             right: 0;
