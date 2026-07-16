@@ -768,12 +768,12 @@ function SizeResult({ size, accent, ink, compact }) {
 
 function SizeChart({ band, cup, ink, compact }) {
   return (
-    <div style={{ position: "relative", marginTop: compact ? 14 : 18, borderRadius: 18, border: "1px solid rgba(31,26,23,0.1)" }}>
+    <div style={{ marginTop: compact ? 14 : 18, borderRadius: 18, border: "1px solid rgba(31,26,23,0.1)" }}>
       <div
         className="qz-size-chart-scroll"
         style={{
           overflowX: compact ? "auto" : "visible", overflowY: "hidden", borderRadius: 18,
-          WebkitOverflowScrolling: "touch", overscrollBehaviorX: "contain",
+          WebkitOverflowScrolling: "touch", overscrollBehaviorX: "contain", touchAction: "pan-x",
         }}
       >
         <div style={{
@@ -834,14 +834,6 @@ function SizeChart({ band, cup, ink, compact }) {
           </table>
         </div>
       </div>
-
-      {compact && (
-        <div aria-hidden style={{
-          position: "absolute", top: 0, right: 0, bottom: 0, width: 24, borderRadius: "0 18px 18px 0",
-          background: "linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9))",
-          pointerEvents: "none",
-        }} />
-      )}
     </div>
   );
 }
