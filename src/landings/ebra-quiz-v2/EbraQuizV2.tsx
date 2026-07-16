@@ -16,7 +16,7 @@
  */
 import React from "react";
 import { TruekindStarIcon, TruekindStars } from "@/landings/truekind/TruekindStars";
-import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ_BTN_WEIGHT, TK_SELECTED } from "./truekindQuizTokens";
+import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ_BTN_WEIGHT, TK_SELECTED, TK_SIZE_CHART_COLORS, TK_SIZE_CHART_HEAD_BG } from "./truekindQuizTokens";
 
 const IMG = (p: string) => `/ebra-quiz-v2/${p}`;
 
@@ -695,8 +695,9 @@ function ScreenSize({ compact, ink, accent, paper, answer, onSelect, onAdvance, 
             )}
           </div>
         </div>
-      </div>
 
+        <SizeChart band={band} cup={cup} ink={ink} compact={compact} />
+      </div>
 
       <div style={{ marginTop: compact ? 24 : 32 }}>
         <PillCTA onClick={onAdvance} compact={compact} ink={ink} full={compact} disabled={!canContinue}>
@@ -764,6 +765,100 @@ function SizeResult({ size, accent, ink, compact }) {
     </div>
   );
 }
+
+function SizeChart({ band, cup, ink, compact }) {
+  return (
+    <div style={{ position: "relative", marginTop: compact ? 14 : 18, borderRadius: 18, border: "1px solid rgba(31,26,23,0.1)" }}>
+      <div
+        className="qz-size-chart-scroll"
+        style={{
+          overflowX: compact ? "auto" : "visible", overflowY: "hidden", borderRadius: 18,
+          WebkitOverflowScrolling: "touch", overscrollBehaviorX: "contain",
+        }}
+      >
+        <div style={{
+          padding: compact ? "16px 14px" : "22px 24px", background: "#FFFFFF",
+          width: compact ? "fit-content" : "auto", minWidth: "100%", boxSizing: "border-box",
+        }}>
+          <h3 style={{
+            fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 16 : 18,
+            margin: "0 0 4px", color: ink, whiteSpace: compact ? "nowrap" : "normal",
+          }}>Unsure of your size?</h3>
+          <p style={{ margin: "0 0 14px", fontSize: compact ? 12.5 : 13.5, color: "rgba(31,26,23,0.6)", lineHeight: 1.4, whiteSpace: compact ? "nowrap" : "normal" }}>
+            Use our size chart to ensure the perfect fit for every body type, petite to plus-size.
+          </p>
+
+          {compact && (
+            <p style={{ margin: "0 0 8px", fontSize: 11, color: "rgba(31,26,23,0.45)", display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
+              Scroll to see the whole chart <span aria-hidden>→</span>
+            </p>
+          )}
+
+          <table style={{ borderCollapse: "collapse", width: "100%", minWidth: compact ? 480 : 0, borderRadius: 12, overflow: "hidden" }}>
+            <thead>
+              <tr>
+                <th style={{ ...sizeChartHeadCellStyle(true), position: "sticky", left: 0, zIndex: 2, boxShadow: "1px 0 0 rgba(31,26,23,0.08)" }}>
+                  Band <span style={{ opacity: 0.5 }}>→</span>
+                </th>
+                {BANDS.map((b) => (
+                  <th key={b} style={{
+                    ...sizeChartHeadCellStyle(false),
+                    background: b === band ? TK_COLORS.terraSoft : sizeChartHeadCellStyle(false).background,
+                  }}>{b}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {CUPS.map((c) => (
+                <tr key={c}>
+                  <th style={{
+                    ...sizeChartRowHeadStyle, position: "sticky", left: 0, zIndex: 1, boxShadow: "1px 0 0 rgba(31,26,23,0.08)",
+                    background: c === cup ? TK_COLORS.terraSoft : sizeChartRowHeadStyle.background,
+                  }}>{c} {c === CUPS[0] && <span style={{ opacity: 0.5 }}>↓</span>}</th>
+                  {BANDS.map((b) => {
+                    const cellSize = (SIZE_MATRIX[c] || {})[b];
+                    const isActive = c === cup && b === band;
+                    return (
+                      <td key={b} style={{
+                        padding: compact ? "9px 6px" : "11px 8px", textAlign: "center",
+                        fontFamily: "var(--qz-body-font)", fontSize: compact ? 12 : 13, fontWeight: TK_QUIZ_BTN_WEIGHT,
+                        color: ink, borderTop: "1px solid rgba(31,26,23,0.06)",
+                        background: cellSize ? TK_SIZE_CHART_COLORS[cellSize] : "#FFFFFF",
+                        boxShadow: isActive ? `inset 0 0 0 2px ${TK_COLORS.inkStrong}` : "none",
+                      }}>{cellSize || ""}</td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {compact && (
+        <div aria-hidden style={{
+          position: "absolute", top: 0, right: 0, bottom: 0, width: 24, borderRadius: "0 18px 18px 0",
+          background: "linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9))",
+          pointerEvents: "none",
+        }} />
+      )}
+    </div>
+  );
+}
+
+function sizeChartHeadCellStyle(isCorner) {
+  return {
+    padding: isCorner ? "10px 12px" : "10px 6px", textAlign: isCorner ? "left" : "center",
+    fontFamily: "var(--qz-body-font)", fontSize: 12, fontWeight: 700, letterSpacing: "0.01em",
+    color: "rgba(31,26,23,0.7)", background: TK_SIZE_CHART_HEAD_BG, whiteSpace: "nowrap",
+  };
+}
+
+const sizeChartRowHeadStyle = {
+  padding: "9px 12px", textAlign: "left", fontFamily: "var(--qz-body-font)", fontSize: 12.5,
+  fontWeight: 700, color: "rgba(31,26,23,0.7)", background: TK_SIZE_CHART_HEAD_BG,
+  borderTop: "1px solid rgba(31,26,23,0.06)", whiteSpace: "nowrap",
+} as const;
 
 function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
   const [underBust, setUnderBust] = React.useState("");

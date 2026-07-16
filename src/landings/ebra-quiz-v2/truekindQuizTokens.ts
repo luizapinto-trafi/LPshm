@@ -73,3 +73,17 @@ export const TK_PRODUCT_TONES = {
 } as const;
 
 export const TK_LOGO = "/truekind/logo.svg";
+
+/** Size-chart cell fills — exact hex from the live truekind.com PDP size chart. */
+export const TK_SIZE_CHART_COLORS: Record<string, string> = {
+  S: "#F7A08B",
+  M: "#FFE1B8",
+  L: "#F5BAB0",
+  XL: "#8BBEEA",
+  "2XL": "#B1D7C3",
+  "3XL": "#E7A4F7",
+  "4XL": "#E7C9B2",
+};
+
+/** Row/column header wash — matches the live chart's cream header cells. */
+export const TK_SIZE_CHART_HEAD_BG = "#FFF6EF";
