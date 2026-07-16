@@ -15,28 +15,28 @@
  * faithful to the export; assets live under `/public/ebra-quiz-v2/assets`.
  */
 import React from "react";
+import { TruekindStarIcon, TruekindStars } from "@/landings/truekind/TruekindStars";
+import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ_BTN_WEIGHT, TK_SELECTED } from "./truekindQuizTokens";
 
 const IMG = (p: string) => `/ebra-quiz-v2/${p}`;
 
-// ─── Tokens (Shapermint Brand Book 2024 defaults from the export) ────────────
+// ─── Tokens (Truekind DS) ────────────────────────────────────────────────────
 const DEFAULTS = {
-  paper: "#FBF7F4",
-  ink: "#3A3A3A",
-  accent: "#D4605B",
-  pinkAccent: "#FBF7F4",
-  surface: "#FCD9D1",
-  headlineFont: "Montserrat",
-  bodyFont: "Mulish",
+  paper: TK_COLORS.paper,
+  ink: TK_COLORS.ink,
+  accent: TK_COLORS.accent,
+  pinkAccent: TK_COLORS.sandSoft,
+  surface: TK_COLORS.surface,
+  headlineFont: "Circular XX",
+  bodyFont: "Circular XX",
   logoSize: 110,
 };
 
-function headlineFontStack(name) {
-  if (name === "Cardo") return '"Cardo", Georgia, serif';
-  return '"Avenir Next", "Montserrat", system-ui, sans-serif';
+function headlineFontStack() {
+  return TK_FONT;
 }
-function bodyFontStack(name) {
-  if (name === "Mulish") return '"Mulish", system-ui, sans-serif';
-  return '"Avenir Next", "Montserrat", "Mulish", system-ui, sans-serif';
+function bodyFontStack() {
+  return TK_FONT;
 }
 
 // ─── Silhouettes ─────────────────────────────────────────────────────────────
@@ -214,10 +214,12 @@ function QuizFrame({ children, compact, accent, paper, ink, pinkAccent, surface,
         "--qz-accent": accent,
         "--qz-ink": ink,
         "--qz-paper": paper,
-        "--qz-pink": pinkAccent || "#F7A08B",
-        "--qz-surface": surface || "#FCD9D1",
-        "--qz-headline-font": headlineFont || '"Avenir Next", "Montserrat", system-ui, sans-serif',
-        "--qz-body-font": bodyFont || '"Avenir Next", "Montserrat", "Mulish", system-ui, sans-serif',
+        "--qz-pink": pinkAccent || TK_COLORS.sandSoft,
+        "--qz-surface": surface || TK_COLORS.surface,
+        "--qz-headline-font": headlineFont || TK_FONT,
+        "--qz-body-font": bodyFont || TK_FONT,
+        ["--font-body" as string]: TK_FONT,
+        ["--font-display" as string]: TK_FONT,
       }}
     >
       {children}
@@ -256,37 +258,27 @@ function ProgressBar({ step, total = 4, accent, ink, compact, onBack }) {
   );
 }
 
-// SHM Design System button — Secondary / Fill / Large
-// (Figma: SHM Design system · node 1256:5213). Filled #1B1B1B, 8px radius,
-// 12×24 padding, uppercase Avenir Next Demi Bold 18/28, white text.
-const SHM_BTN_SECONDARY = "#1B1B1B";
-const SHM_BTN_SECONDARY_HOVER = "#000000";
-// SHM Primary / Fill / Large (Figma node 1256:5212): coral fill, dark text.
-const SHM_BTN_PRIMARY = "#F7A08B";
-const SHM_BTN_PRIMARY_HOVER = "#F18E73";
-// SHM disabled state (Figma node 1256:5225): surface/disabledark + text/default/disable.
-const SHM_BTN_DISABLED_BG = "#E5E5E5";
-const SHM_BTN_DISABLED_FG = "#A6A6A6";
-const SHM_BTN_FONT = '"Avenir Next", "Montserrat", system-ui, sans-serif';
+// Truekind DS button — black pill CTA (matches TruekindPdp .pdp-cta)
+const TK_BTN_FONT = TK_FONT;
 
 function PillCTA({ children, onClick, accent, ink, compact, full, ghost, disabled }) {
-  const bg = disabled ? SHM_BTN_DISABLED_BG : ghost ? "transparent" : SHM_BTN_PRIMARY;
-  const fg = disabled ? SHM_BTN_DISABLED_FG : "#1B1B1B";
+  const bg = disabled ? TK_BTN.disabledBg : ghost ? "transparent" : TK_BTN.primary;
+  const fg = disabled ? TK_BTN.disabledFg : ghost ? TK_COLORS.inkStrong : TK_BTN.primaryFg;
   return (
     <button onClick={disabled ? undefined : onClick} disabled={disabled} style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-      padding: compact ? "12px 20px" : "12px 24px",
-      borderRadius: 8, border: disabled ? "none" : ghost ? `1px solid ${SHM_BTN_PRIMARY}` : "none",
+      padding: compact ? "12px 20px" : "12px 28px",
+      borderRadius: 9999, border: disabled ? "none" : ghost ? `1px solid ${TK_COLORS.inkStrong}` : "none",
       background: bg, color: fg,
-      fontFamily: SHM_BTN_FONT,
-      fontSize: compact ? 16 : 18, fontWeight: 600,
-      lineHeight: compact ? "24px" : "28px",
-      letterSpacing: 0, textTransform: "uppercase",
+      fontFamily: TK_BTN_FONT,
+      fontSize: compact ? 15 : 16, fontWeight: 700,
+      lineHeight: compact ? "22px" : "24px",
+      letterSpacing: 0, textTransform: "none",
       cursor: disabled ? "not-allowed" : "pointer", width: full ? "100%" : "auto",
       transition: "transform .12s, background .15s",
     }}
-      onMouseEnter={(e) => { if (!disabled && !ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (!disabled && !ghost) e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
+      onMouseEnter={(e) => { if (!disabled && !ghost) e.currentTarget.style.background = TK_BTN.primaryHover; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (!disabled && !ghost) e.currentTarget.style.background = TK_BTN.primary; }}
       onMouseDown={(e) => { if (!disabled) e.currentTarget.style.transform = "translateY(1px)"; }}
       onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
     >
@@ -308,15 +300,7 @@ function BraIcon({ size = 36, color }) {
 }
 
 function Dot() {
-  return <span style={{ width: 3, height: 3, borderRadius: 9999, background: "rgba(31,26,23,0.3)" }} />;
-}
-
-function Star({ color }) {
-  return (
-    <svg width="11" height="11" viewBox="0 0 11 11" fill={color}>
-      <path d="M5.5 0.5 L6.7 3.9 L10.3 4.0 L7.4 6.1 L8.5 9.5 L5.5 7.4 L2.5 9.5 L3.6 6.1 L0.7 4.0 L4.3 3.9 Z" />
-    </svg>
-  );
+  return <span style={{ width: 3, height: 3, borderRadius: 9999, background: TK_COLORS.border }} />;
 }
 
 // ─── Screen 1 · Landing ──────────────────────────────────────────────────────
@@ -331,13 +315,13 @@ function ScreenLanding({ compact, ink, accent, paper, onStart, logoSize }) {
     }}>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={IMG("assets/shapermint-logo-dark.png")} alt="Shapermint"
+        <img src={TK_LOGO} alt="Truekind"
           style={{ width: lSize, height: "auto", display: "block" }} />
       </div>
 
       <div style={{ width: "100%" }}>
         <h1 style={{
-          fontFamily: "var(--qz-headline-font)", fontWeight: 700,
+          fontFamily: "var(--qz-headline-font)", fontWeight: 800,
           fontSize: compact ? 38 : 58, lineHeight: 1.05,
           letterSpacing: "-0.018em", margin: 0, color: ink, textWrap: "balance",
         }}>
@@ -346,11 +330,11 @@ function ScreenLanding({ compact, ink, accent, paper, onStart, logoSize }) {
         </h1>
         <p style={{
           margin: compact ? "22px 0 32px" : "28px 0 40px",
-          fontSize: compact ? 16 : 18, color: "rgba(31,26,23,0.65)",
+          fontSize: compact ? 16 : 18, color: TK_COLORS.muted,
           maxWidth: "38ch", lineHeight: 1.5, marginLeft: "auto", marginRight: "auto",
         }}>
           Take the 15-second fit quiz.<br />
-          <strong style={{ color: "#D4605B", fontWeight: 700 }}>Unlock your secret gift.</strong>
+          <strong style={{ color: TK_COLORS.accent, fontWeight: 700 }}>Unlock your secret gift.</strong>
         </p>
         <PillCTA onClick={onStart} compact={compact} ink={ink}>
           Start the quiz
@@ -364,10 +348,10 @@ function ScreenLanding({ compact, ink, accent, paper, onStart, logoSize }) {
         <div style={{
           display: "flex", alignItems: "center", gap: compact ? 12 : 18,
           flexWrap: "wrap", justifyContent: "center",
-          fontSize: compact ? 13 : 14, color: "rgba(31,26,23,0.7)", fontWeight: 500,
+          fontSize: compact ? 13 : 14, color: TK_COLORS.muted, fontWeight: 500,
         }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <Star color={accent} /> 4.8
+            <TruekindStarIcon size={14} color={TK_COLORS.star} /> 4.8
           </span>
           <Dot />
           <span>Trusted by 100k+ women</span>
@@ -446,7 +430,7 @@ function ShapeHelpModal({ compact, ink, accent, onClose }) {
       animation: "qzfadeIn .2s ease-out", padding: compact ? 0 : 24,
     }}>
       <div onClick={(e) => e.stopPropagation()} style={{
-        background: "#FAF4EC", borderRadius: compact ? "16px 16px 0 0" : 16,
+        background: TK_COLORS.sandSoft, borderRadius: compact ? "16px 16px 0 0" : 16,
         padding: compact ? "20px 22px 28px" : "32px 36px",
         maxWidth: compact ? "100%" : 520, width: "100%",
         maxHeight: compact ? "85%" : "90%", overflowY: "auto",
@@ -487,14 +471,15 @@ function ShapeHelpModal({ compact, ink, accent, onClose }) {
 }
 
 function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
-  const cream = "#FAF4EC";
+  const chipBg = TK_CHIP.bg;
   return (
     <button onClick={onClick} className="qz-shape-cell" style={{
       position: "relative",
-      background: selected ? accent : cream,
-      border: selected ? `1px solid ${accent}` : `1px solid rgba(31,26,23,0.12)`,
+      background: selected ? TK_SELECTED.bg : chipBg,
+      border: selected ? `2px solid ${TK_SELECTED.border}` : `1px solid ${TK_CHIP.border}`,
       borderRadius: 16, padding: compact ? "18px 10px 14px" : "22px 14px 16px",
-      cursor: "pointer", color: selected ? cream : accent,
+      cursor: "pointer", color: selected ? TK_SELECTED.glyph : accent,
+      fontFamily: "var(--qz-body-font)", fontWeight: TK_QUIZ_BTN_WEIGHT,
       transition: "background .18s, transform .12s, border-color .18s",
       textAlign: "center", fontFamily: "inherit",
     }}
@@ -504,32 +489,32 @@ function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
       {selected && (
         <div style={{
           position: "absolute", top: 8, right: 8, width: 20, height: 20, borderRadius: 9999,
-          background: cream, color: accent, display: "grid", placeItems: "center",
+          background: TK_SELECTED.checkBg, color: TK_SELECTED.checkFg, display: "grid", placeItems: "center",
         }}>
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 5 L4 7 L8 3" />
           </svg>
         </div>
       )}
-      <div style={{ height: compact ? 64 : 80, display: "grid", placeItems: "center", color: selected ? cream : accent }}>
+      <div style={{ height: compact ? 64 : 80, display: "grid", placeItems: "center", color: selected ? TK_SELECTED.glyph : accent }}>
         {SHAPES[shape.id]}
       </div>
       <div style={{
-        marginTop: compact ? 8 : 10, fontSize: compact ? 13 : 14, fontWeight: 600,
-        letterSpacing: "0.005em", color: selected ? cream : ink,
+        marginTop: compact ? 8 : 10, fontSize: compact ? 13 : 14,
+        letterSpacing: "0.005em", color: selected ? TK_SELECTED.fg : ink,
       }}>{shape.name}</div>
 
       {open && (
         <div style={{
           marginTop: 8, fontSize: 11.5, lineHeight: 1.4,
-          color: selected ? "rgba(250,244,236,0.85)" : "rgba(31,26,23,0.6)", fontWeight: 400,
+          color: selected ? TK_COLORS.muted : TK_COLORS.muted, fontWeight: 400,
         }}>{shape.desc}</div>
       )}
 
       {!compact && (
         <div className="qz-tooltip" style={{
           position: "absolute", top: "100%", left: "50%", transform: "translate(-50%, 6px)",
-          background: ink, color: "#FAF4EC", padding: "8px 12px", borderRadius: 8,
+          background: ink, color: TK_COLORS.sand, padding: "8px 12px", borderRadius: 8,
           fontSize: 11.5, lineHeight: 1.35, width: 180,
           opacity: 0, pointerEvents: "none", transition: "opacity .15s", zIndex: 5, fontWeight: 400,
         }}>{shape.desc}</div>
@@ -606,17 +591,15 @@ function QuestionPills({ step, total = 4, compact, ink, accent, paper, title, ti
   );
 }
 
-const PILL_SELECTED_BG = "#F7A08B";
-
 function PillButton({ children, selected, ink, accent, compact, onClick }) {
-  const cream = "#FAF4EC";
   return (
     <button onClick={onClick} style={{
       display: "inline-flex", alignItems: "center", gap: 8,
       padding: compact ? "13px 18px" : "15px 22px", borderRadius: 9999,
-      background: selected ? PILL_SELECTED_BG : cream, color: selected ? "#1B1B1B" : ink,
-      border: selected ? `1px solid ${PILL_SELECTED_BG}` : `1px solid rgba(31,26,23,0.18)`,
-      fontFamily: "var(--qz-body-font)", fontSize: compact ? 14 : 15, fontWeight: 600,
+      background: selected ? TK_SELECTED.bg : TK_CHIP.bg,
+      color: selected ? TK_SELECTED.fg : TK_CHIP.fg,
+      border: selected ? `2px solid ${TK_SELECTED.border}` : `1px solid ${TK_CHIP.border}`,
+      fontFamily: "var(--qz-body-font)", fontSize: compact ? 14 : 15, fontWeight: TK_QUIZ_BTN_WEIGHT,
       letterSpacing: "0.005em", cursor: "pointer",
       transition: "background .15s, color .15s, border-color .15s, transform .12s",
     }}
@@ -630,9 +613,8 @@ function PillButton({ children, selected, ink, accent, compact, onClick }) {
 }
 
 function Check({ inverted, accent }) {
-  const cream = "#FAF4EC";
   return (
-    <span style={{ display: "inline-grid", placeItems: "center", width: 16, height: 16, borderRadius: 9999, background: cream, color: accent }}>
+    <span style={{ display: "inline-grid", placeItems: "center", width: 16, height: 16, borderRadius: 9999, background: TK_CHIP.bg, color: accent }}>
       <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M2 5 L4 7 L8 3" />
       </svg>
@@ -694,7 +676,7 @@ function ScreenSize({ compact, ink, accent, paper, answer, onSelect, onAdvance, 
 
         <div style={{
           marginTop: compact ? 18 : 22, padding: compact ? "14px 16px" : "16px 20px",
-          background: "#FAF4EC", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16,
+          background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16,
           display: "flex", gap: 12, alignItems: "flex-start", fontSize: compact ? 13 : 14, lineHeight: 1.5,
         }}>
           <span style={{ color: accent, flex: "0 0 auto", marginTop: 2 }}>
@@ -770,9 +752,10 @@ function SizeResult({ size, accent, ink, compact }) {
       <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginLeft: 2 }}>You are</span>
       <div style={{
         padding: compact ? "0 14px" : "0 18px", borderRadius: 16,
-        background: size ? accent : "#FAF4EC", color: size ? "#FAF4EC" : "rgba(31,26,23,0.4)",
-        border: size ? `1px solid ${accent}` : "1px dashed rgba(31,26,23,0.2)",
-        fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 18 : 22,
+        background: size ? TK_SELECTED.bg : TK_CHIP.bg,
+        color: size ? TK_SELECTED.fg : "rgba(31,26,23,0.4)",
+        border: size ? `2px solid ${TK_SELECTED.border}` : `1px dashed ${TK_CHIP.border}`,
+        fontFamily: "var(--qz-body-font)", fontWeight: TK_QUIZ_BTN_WEIGHT, fontSize: compact ? 18 : 22,
         textAlign: "center", height: compact ? 52 : 60,
         display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box",
       }}>
@@ -794,7 +777,7 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
       animation: "qzfadeIn .2s ease-out", padding: compact ? 0 : 24,
     }}>
       <div onClick={(e) => e.stopPropagation()} style={{
-        background: "#FAF4EC", borderRadius: compact ? "16px 16px 0 0" : 16,
+        background: TK_COLORS.sandSoft, borderRadius: compact ? "16px 16px 0 0" : 16,
         padding: compact ? "24px 22px 28px" : "32px 36px", maxWidth: compact ? "100%" : 540,
         width: "100%", maxHeight: "90%", overflowY: "auto", boxShadow: "0 -20px 60px rgba(0,0,0,0.25)",
       }}>
@@ -834,7 +817,7 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
         <div style={{
           marginTop: 18, padding: "16px 18px",
           background: calc.band && calc.cup ? accent : "transparent",
-          color: calc.band && calc.cup ? "#FAF4EC" : "rgba(31,26,23,0.45)",
+          color: calc.band && calc.cup ? TK_COLORS.sand : "rgba(31,26,23,0.45)",
           border: calc.band && calc.cup ? "none" : "1px dashed rgba(31,26,23,0.2)",
           borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14,
         }}>
@@ -857,17 +840,17 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
         <div style={{ marginTop: 22, display: "flex", gap: 10, flexDirection: compact ? "column" : "row" }}>
           <button onClick={() => calc.band && calc.cup && onApply(calc.band, calc.cup)} disabled={!calc.band || !calc.cup} style={{
             flex: 1, padding: "14px 22px", borderRadius: 9999, border: "none",
-            background: calc.band && calc.cup ? SHM_BTN_PRIMARY : SHM_BTN_DISABLED_BG,
-            color: calc.band && calc.cup ? "#1B1B1B" : SHM_BTN_DISABLED_FG,
+            background: calc.band && calc.cup ? TK_BTN.primary : TK_BTN.disabledBg,
+            color: calc.band && calc.cup ? TK_BTN.primaryFg : TK_BTN.disabledFg,
             cursor: calc.band && calc.cup ? "pointer" : "not-allowed",
-            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em",
+            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_QUIZ_BTN_WEIGHT, letterSpacing: "0.04em",
           }}>
             Use these measurements
           </button>
           <button onClick={onSkip} style={{
             padding: "14px 22px", borderRadius: 9999, border: "1px solid rgba(31,26,23,0.25)",
             background: "transparent", color: ink, cursor: "pointer",
-            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em",
+            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_QUIZ_BTN_WEIGHT, letterSpacing: "0.04em",
           }}>
             Skip — I'm still not sure
           </button>
@@ -1032,16 +1015,16 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
         <button type="submit" disabled={!valid || submitting} style={{
           display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
           width: "100%", padding: compact ? "12px 20px" : "12px 24px", borderRadius: 8, border: "none",
-          background: valid ? SHM_BTN_PRIMARY : SHM_BTN_DISABLED_BG,
-          color: valid ? "#1B1B1B" : SHM_BTN_DISABLED_FG,
-          fontFamily: SHM_BTN_FONT, fontSize: compact ? 16 : 18, fontWeight: 600,
+          background: valid ? TK_BTN.primary : TK_BTN.disabledBg,
+          color: valid ? TK_BTN.primaryFg : TK_BTN.disabledFg,
+          fontFamily: TK_BTN_FONT, fontSize: compact ? 16 : 18, fontWeight: 600,
           lineHeight: compact ? "24px" : "28px",
           letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap",
           cursor: valid && !submitting ? "pointer" : "not-allowed",
           transition: "background .15s, transform .12s",
         }}
-          onMouseEnter={(e) => { if (valid && !submitting) e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER; }}
-          onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (valid) e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
+          onMouseEnter={(e) => { if (valid && !submitting) e.currentTarget.style.background = TK_BTN.primaryHover; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (valid) e.currentTarget.style.background = TK_BTN.primary; }}
           onMouseDown={(e) => { if (valid && !submitting) e.currentTarget.style.transform = "translateY(1px)"; }}
           onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
         >
@@ -1049,7 +1032,7 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
         </button>
 
         <div style={{ marginTop: 4, fontSize: 11.5, color: "rgba(31,26,23,0.55)", lineHeight: 1.45, textWrap: "pretty" }}>
-          By entering your email, you agree to receive marketing emails from Shapermint. Unsubscribe anytime.
+          By entering your email, you agree to receive marketing emails from Truekind. Unsubscribe anytime.
         </div>
       </form>
     </div>
@@ -1058,11 +1041,11 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
 
 // ─── Screen 7 · Reveal ──────────────────────────────────────────────────────────
 const PRODUCT_COLORS = [
-  { id: "black", name: "Black", hex: "#1a1a1a", fit: IMG("assets/fit-chocolate.jpg"), bra: IMG("assets/bra-black.jpg") },
-  { id: "chai", name: "Chai", hex: "#E6D6BD", fit: IMG("assets/fit-black.jpg"), bra: IMG("assets/bra-sand.jpg") },
-  { id: "white", name: "White", hex: "#FFFFFF", fit: IMG("assets/fit-white.jpg"), bra: IMG("assets/bra-white.jpg") },
-  { id: "chocolate", name: "Chocolate", hex: "#5A2E20", fit: IMG("assets/fit-sand.jpg"), bra: IMG("assets/bra-pink.jpg") },
-  { id: "pink", name: "Rose Tan", hex: "#E89E9B", fit: IMG("assets/fit-pink.jpg"), bra: IMG("assets/bra-chocolate.jpg") },
+  { id: "black", name: "Black", hex: TK_PRODUCT_TONES.black, fit: IMG("assets/fit-chocolate.jpg"), bra: IMG("assets/bra-black.jpg") },
+  { id: "chai", name: "Chai", hex: TK_PRODUCT_TONES.chai, fit: IMG("assets/fit-black.jpg"), bra: IMG("assets/bra-sand.jpg") },
+  { id: "white", name: "White", hex: TK_PRODUCT_TONES.white, fit: IMG("assets/fit-white.jpg"), bra: IMG("assets/bra-white.jpg") },
+  { id: "tan", name: "Tan", hex: TK_PRODUCT_TONES.tan, fit: IMG("assets/fit-sand.jpg"), bra: IMG("assets/bra-pink.jpg") },
+  { id: "cocoa", name: "Cocoa", hex: TK_PRODUCT_TONES.cocoa, fit: IMG("assets/fit-pink.jpg"), bra: IMG("assets/bra-chocolate.jpg") },
 ];
 
 function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answers, onClaim, onRestart }) {
@@ -1111,15 +1094,15 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
           <ColorSelector colors={PRODUCT_COLORS} value={selectedColor} onChange={setSelectedColor} ink={ink} accent={accent} compact={compact} />
           <button onClick={onClaim} style={{
             display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-            padding: compact ? "12px 20px" : "12px 28px", borderRadius: 8, border: "none",
-            background: SHM_BTN_PRIMARY, color: "#1B1B1B", fontFamily: SHM_BTN_FONT,
-            fontWeight: 600, fontSize: compact ? 16 : 18, lineHeight: compact ? "24px" : "28px",
-            letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap",
+            padding: compact ? "12px 20px" : "12px 28px", borderRadius: 9999, border: "none",
+            background: TK_BTN.primary, color: TK_BTN.primaryFg, fontFamily: TK_BTN_FONT,
+            fontWeight: 700, fontSize: compact ? 15 : 16, lineHeight: compact ? "22px" : "24px",
+            letterSpacing: 0, textTransform: "none", whiteSpace: "nowrap",
             cursor: "pointer", transition: "background .15s, transform .12s",
             width: compact ? "100%" : "auto",
           }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = SHM_BTN_PRIMARY_HOVER)}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = SHM_BTN_PRIMARY; }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = TK_BTN.primaryHover)}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = TK_BTN.primary; }}
             onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
             onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
           >
@@ -1258,39 +1241,12 @@ function ProductImage({ src, alt, label, fit = "cover" }) {
   );
 }
 
-// PDP star rating (Figma UX-2491 Reviews Revamp · sunlight stars + reviews link)
-function PdpStar({ kind }) {
-  const gold = "#F2D96F";
-  const path = "M12 2 L14.9 8.6 L22 9.2 L16.5 13.97 L18.18 21 L12 17.27 L5.82 21 L7.5 13.97 L2 9.2 L9.1 8.6 Z";
-  if (kind === "full") {
-    return <svg width="20" height="20" viewBox="0 0 24 24"><path d={path} fill={gold} /></svg>;
-  }
-  if (kind === "half") {
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24">
-        <defs>
-          <linearGradient id="pdpHalf">
-            <stop offset="50%" stopColor={gold} />
-            <stop offset="50%" stopColor={gold} stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={path} fill="url(#pdpHalf)" stroke={gold} strokeWidth="1.4" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  return <svg width="20" height="20" viewBox="0 0 24 24"><path d={path} fill="none" stroke={gold} strokeWidth="1.4" strokeLinejoin="round" /></svg>;
-}
-
+// Truekind DS star rating (reuses TruekindStars component)
 function PdpRating({ value = 3.5, reviews = "10926" }) {
-  const kinds = Array.from({ length: 5 }).map((_, i) =>
-    value >= i + 1 ? "full" : value >= i + 0.5 ? "half" : "empty"
-  );
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ display: "inline-flex", gap: 3 }} aria-label={`${value} out of 5 stars`}>
-        {kinds.map((k, i) => <PdpStar key={i} kind={k} />)}
-      </span>
-      <span style={{ fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 16, lineHeight: "24px", color: "#292929", textDecoration: "underline", cursor: "pointer" }}>
+      <TruekindStars rating={value} size={20} color={TK_COLORS.star} />
+      <span style={{ fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 16, lineHeight: "24px", color: TK_COLORS.ink, textDecoration: "underline", cursor: "pointer" }}>
         {reviews} reviews
       </span>
     </div>
@@ -1301,8 +1257,8 @@ function ProductHeader({ compact }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <p style={{
-        margin: 0, fontFamily: SHM_BTN_FONT, fontWeight: 500,
-        fontSize: compact ? 24 : 30, lineHeight: compact ? "32px" : "38px", color: "#3A3A3A",
+        margin: 0, fontFamily: TK_BTN_FONT, fontWeight: 500,
+        fontSize: compact ? 24 : 30, lineHeight: compact ? "32px" : "38px", color: TK_COLORS.ink,
       }}>
         Truekind® Daily Comfort Wireless Shaper Bra
       </p>
@@ -1320,7 +1276,7 @@ function ColorSelector({ colors, value, onChange, ink, accent, compact, action }
     }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         {/* Label: "Color: " regular + name demi bold — Figma 415:24322 */}
-        <div style={{ marginBottom: 8, fontFamily: SHM_BTN_FONT, fontSize: 14, lineHeight: "22px", color: "#292929" }}>
+        <div style={{ marginBottom: 8, fontFamily: TK_BTN_FONT, fontSize: 14, lineHeight: "22px", color: "#292929" }}>
           <span style={{ fontWeight: 400 }}>Color: </span>
           <span style={{ fontWeight: 600 }}>{current.name}</span>
         </div>
@@ -1331,7 +1287,7 @@ function ColorSelector({ colors, value, onChange, ink, accent, compact, action }
           return (
             <button key={c.id} onClick={() => onChange(c.id)} aria-label={c.name} title={c.name} style={{
               position: "relative", width: 32, height: 32, borderRadius: "50%",
-              border: isSelected ? `2px solid #292929` : "2px solid transparent",
+              border: isSelected ? `2px solid ${TK_COLORS.terra}` : "2px solid transparent",
               padding: 0, cursor: "pointer", background: "transparent",
               display: "grid", placeItems: "center",
               transition: "border-color .15s", boxSizing: "border-box",
@@ -1358,7 +1314,7 @@ function RestartLink({ onClick, ink }) {
     <button onClick={onClick} style={{
       display: "inline-flex", alignItems: "center", gap: 8, background: "transparent",
       border: "1px solid rgba(31,26,23,0.25)", color: ink, cursor: "pointer",
-      fontFamily: "var(--qz-body-font)", fontSize: 13, fontWeight: 600,
+      fontFamily: "var(--qz-body-font)", fontSize: 13, fontWeight: TK_QUIZ_BTN_WEIGHT,
       padding: "10px 18px", borderRadius: 9999, letterSpacing: "0.02em",
       transition: "background .15s, border-color .15s",
     }}
@@ -1422,8 +1378,8 @@ function humanList(arr) {
 
 function BenefitCard({ ink, accent, title, body, glyph }) {
   return (
-    <div style={{ padding: "20px 18px", background: "#FBF7F4", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16 }}>
-      <div style={{ width: 56, height: 56, borderRadius: 16, background: "rgba(247,160,139,0.16)", color: accent, display: "grid", placeItems: "center", marginBottom: 14 }}>
+    <div style={{ padding: "20px 18px", background: TK_COLORS.paper, border: `1px solid ${TK_COLORS.border}`, borderRadius: 16 }}>
+      <div style={{ width: 56, height: 56, borderRadius: 16, background: TK_COLORS.terraSoft, color: TK_COLORS.terra, display: "grid", placeItems: "center", marginBottom: 14 }}>
         <BenefitGlyph kind={glyph} accent={accent} />
       </div>
       <div style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: 17, color: ink, marginBottom: 6, lineHeight: 1.25, letterSpacing: "-0.005em" }}>{title}</div>
@@ -1434,7 +1390,7 @@ function BenefitCard({ ink, accent, title, body, glyph }) {
 
 function BenefitGlyph({ kind, accent }) {
   const stroke = "currentColor";
-  const fill = "#F7A08B";
+  const fill = TK_COLORS.surface;
   const lineProps = { fill: "none", stroke, strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" };
   const wrap = (children) => <svg width="40" height="40" viewBox="0 0 40 40">{children}</svg>;
   const bra = (
@@ -1506,16 +1462,16 @@ function ReviewQuote({ ink, accent, title, quote, name, age, shape }) {
       height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 9,
       padding: 20, background: "#FAFAFA", border: "1px solid rgba(41,41,41,0.06)", borderRadius: 8,
     }}>
-      <div style={{ fontFamily: SHM_BTN_FONT, fontWeight: 700, fontSize: 14, lineHeight: "22px", color: "#292929" }}>{title}</div>
+      <div style={{ fontFamily: TK_BTN_FONT, fontWeight: 700, fontSize: 14, lineHeight: "22px", color: "#292929" }}>{title}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{ display: "inline-flex", gap: 1 }} aria-label="5 out of 5 stars">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} color="#F5A623" />)}
         </span>
-        <span style={{ fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929" }}>
+        <span style={{ fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929" }}>
           {name} · {age} · {shape}
         </span>
       </div>
-      <p style={{ margin: 0, fontFamily: SHM_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929", textWrap: "pretty" }}>{quote}</p>
+      <p style={{ margin: 0, fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929", textWrap: "pretty" }}>{quote}</p>
     </div>
   );
 }
@@ -1541,7 +1497,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
     <div style={{ padding: "0 0 96px" }}>
       <div style={{
         marginTop: compact ? 6 : 12, padding: compact ? "32px 24px" : "48px 36px",
-        background: "var(--qz-pink, #F7A08B)", color: ink, borderRadius: 16, textAlign: "center",
+        background: TK_COLORS.sandSoft, color: ink, borderRadius: 16, textAlign: "center",
         position: "relative", overflow: "hidden", animation: "qzunwrap .6s ease-out",
       }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.7, marginBottom: 14 }}>
@@ -1565,7 +1521,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: 18, display: "flex", gap: 10, flexDirection: compact ? "column" : "row" }}>
           <input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{
             flex: 1, padding: "17px 20px", borderRadius: 9999, border: "1px solid rgba(31,26,23,0.2)",
-            background: "#FAF4EC", fontFamily: "inherit", fontSize: 15, color: ink, outline: "none",
+            background: TK_COLORS.sandSoft, fontFamily: "inherit", fontSize: 15, color: ink, outline: "none",
           }} />
           <PillCTA compact={compact} ink={ink} full={compact} onClick={() => {}}>
             Send it
@@ -1582,7 +1538,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         <h3 style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 22 : 28, color: ink, margin: "0 0 14px" }}>
           Questions, answered.
         </h3>
-        <div style={{ background: "#FAF4EC", border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16, overflow: "hidden" }}>
           {FAQ.map((item, i) => (
             <FaqItem key={i} item={item} open={openFaq === i} onClick={() => setOpenFaq(openFaq === i ? -1 : i)} accent={accent} ink={ink} last={i === FAQ.length - 1} />
           ))}
@@ -1605,7 +1561,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
       </div>
 
       <div style={{
-        position: "absolute", left: 0, right: 0, bottom: 0, background: "#FAF4EC",
+        position: "absolute", left: 0, right: 0, bottom: 0, background: TK_COLORS.sandSoft,
         borderTop: "1px solid rgba(31,26,23,0.12)", padding: compact ? "10px 14px" : "12px 22px",
         display: "flex", alignItems: "center", gap: 12, boxShadow: "0 -8px 20px rgba(0,0,0,0.04)",
       }}>
@@ -1642,7 +1598,7 @@ function FaqItem({ item, open, onClick, accent, ink, last }) {
         width: "100%", textAlign: "left", padding: "16px 18px", background: "transparent", border: "none",
         display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", color: ink, fontFamily: "inherit",
       }}>
-        <span style={{ fontSize: 14, fontWeight: 600 }}>{item.q}</span>
+        <span style={{ fontSize: 14, fontWeight: TK_QUIZ_BTN_WEIGHT }}>{item.q}</span>
         <span style={{ color: accent, fontSize: 20, fontWeight: 300, lineHeight: 1, transform: open ? "rotate(45deg)" : "none", transition: "transform .2s" }}>+</span>
       </button>
       {open && (
@@ -1731,8 +1687,8 @@ export const EbraQuizV2 = () => {
     ink: DEFAULTS.ink,
     pinkAccent: DEFAULTS.pinkAccent,
     surface: DEFAULTS.surface,
-    headlineFont: headlineFontStack(DEFAULTS.headlineFont),
-    bodyFont: bodyFontStack(DEFAULTS.bodyFont),
+    headlineFont: headlineFontStack(),
+    bodyFont: bodyFontStack(),
     logoSize: DEFAULTS.logoSize,
   };
 
@@ -1754,6 +1710,9 @@ export const EbraQuizV2 = () => {
       style={{
         minHeight: "100vh", background: rootBg, transition: "background .2s",
         display: "flex", flexDirection: "column", alignItems: "center",
+        fontFamily: TK_FONT,
+        ["--font-body" as string]: TK_FONT,
+        ["--font-display" as string]: TK_FONT,
       }}
     >
       <style dangerouslySetInnerHTML={{ __html: QUIZ_CSS }} />
