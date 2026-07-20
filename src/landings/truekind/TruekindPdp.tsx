@@ -35,6 +35,8 @@ const shots = [
 
 const sizes = ["S", "M", "L", "XL", "2XL", "3XL"];
 
+const UNIT_PRICE = 37.99;
+
 // Reviews — placeholder copy; `fit` is 0 (runs small) → 1 (runs large).
 type Review = {
   name: string;
@@ -139,6 +141,40 @@ const WHY: { title: string; body: string }[] = [
   },
 ];
 
+// UGC video slots — placeholders until the real clips land.
+// Drop a `src` (and optional `poster`) on an item to turn it into a real video.
+type UgcItem = { color: string; hex: string; size: string; src?: string; poster?: string };
+const UGC: UgcItem[] = [
+  { color: "Chai", hex: "#d8c4a8", size: "M" },
+  { color: "Black", hex: "#1c1b1a", size: "XS" },
+  { color: "Chai", hex: "#d8c4a8", size: "XL" },
+  { color: "Black", hex: "#1c1b1a", size: "L" },
+  { color: "White", hex: "#f1ede6", size: "S" },
+  { color: "Cocoa", hex: "#6f4e38", size: "2XL" },
+];
+
+// Gallery beside the comparison table — auto-advances every 5s.
+const VS_SHOTS: { src: string; alt: string }[] = [
+  { src: "/truekind/vs/vs-1-front-closure.webp", alt: "Closing the front hook-and-eye closure" },
+  { src: "/truekind/vs/vs-2-knit-detail.webp", alt: "Close-up of the seamless knit shaping panel" },
+  { src: "/truekind/vs/vs-3-strap-adjust.webp", alt: "Adjusting the strap at the back" },
+  { src: "/truekind/vs/vs-4-wearing.webp", alt: "Wearing the bra and fastening the front closure" },
+  { src: "/truekind/vs/vs-5-flatlay.webp", alt: "Flat lay showing the front closure detail" },
+];
+const VS_INTERVAL = 5000;
+
+// Truekind vs. a regular bra — comparison rows.
+const COMPARE: string[] = [
+  "Wirefree all-day support",
+  "Posture-supporting back panel",
+  "No digging straps or back bulge",
+  "Front closure — easy on, easy off",
+  "Smoothing double-layer band",
+  "Breathable seamless knit",
+  "Stays put — no riding up",
+  "100-day fit guarantee",
+];
+
 // Related products — pulled from the Truekind landing catalog.
 const RELATED: {
   name: string;
@@ -233,6 +269,25 @@ export const TruekindPdp = () => {
   const [reviewsOpen, setReviewsOpen] = React.useState(false);
   const [sgBand, setSgBand] = React.useState<number | null>(null);
   const [sgCup, setSgCup] = React.useState<string | null>(null);
+  const [qty, setQty] = React.useState(1);
+  const ugcRef = React.useRef<HTMLDivElement>(null);
+  const [vsShot, setVsShot] = React.useState(0);
+
+  // Auto-advance the comparison gallery; pauses when the tab is hidden.
+  React.useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      if (document.hidden) return;
+      setVsShot((i) => (i + 1) % VS_SHOTS.length);
+    }, VS_INTERVAL);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const scrollUgc = (dir: number) => {
+    const el = ugcRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
+  };
 
   const active = colors[color];
   const selectedSize = size != null ? sizes[size] : null;
@@ -501,9 +556,33 @@ export const TruekindPdp = () => {
         </div>
 
         <div className="pdp-cta-wrap">
-          <button type="button" className="pdp-cta">
-            Add to Cart — $37.99
-          </button>
+          <div className="pdp-buyrow">
+            <div className="pdp-qty">
+              <button
+                type="button"
+                className="pdp-qty-btn"
+                aria-label="Decrease quantity"
+                disabled={qty <= 1}
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+              >
+                &minus;
+              </button>
+              <span className="pdp-qty-value" aria-live="polite">
+                {qty}
+              </span>
+              <button
+                type="button"
+                className="pdp-qty-btn"
+                aria-label="Increase quantity"
+                onClick={() => setQty((q) => Math.min(10, q + 1))}
+              >
+                +
+              </button>
+            </div>
+            <button type="button" className="pdp-cta">
+              Add to Cart — ${(UNIT_PRICE * qty).toFixed(2)}
+            </button>
+          </div>
           <p className="pdp-reassure">Free shipping over $80 · 100-day fit guarantee · Free exchanges</p>
         </div>
       </aside>
@@ -569,6 +648,137 @@ export const TruekindPdp = () => {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* UGC videos — placeholders until the real clips are supplied */}
+      <section className="pdp-ugc" aria-label="Real reviews from real people">
+        <div className="pdp-ugc-inner">
+          <h2 className="pdp-ugc-title">Real reviews, real people</h2>
+
+          <div className="pdp-ugc-viewport">
+            <div className="pdp-ugc-track" ref={ugcRef}>
+              {UGC.map((v, i) => (
+                <article className="pdp-ugc-card" key={i}>
+                  {v.src ? (
+                    <video
+                      className="pdp-ugc-media"
+                      src={v.src}
+                      poster={v.poster}
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <div className="pdp-ugc-placeholder" role="img" aria-label="Video coming soon">
+                      <span className="pdp-ugc-play" aria-hidden>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5.5v13l11-6.5-11-6.5z" />
+                        </svg>
+                      </span>
+                    </div>
+                  )}
+                  <span className="pdp-ugc-badge">
+                    <span className="pdp-ugc-dot" style={{ background: v.hex }} aria-hidden />
+                    {v.color} / {v.size}
+                  </span>
+                </article>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="pdp-ugc-nav pdp-ugc-nav--prev"
+              aria-label="Previous videos"
+              onClick={() => scrollUgc(-1)}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="pdp-ugc-nav pdp-ugc-nav--next"
+              aria-label="Next videos"
+              onClick={() => scrollUgc(1)}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Truekind vs. a regular bra */}
+      <section className="pdp-vs" aria-label="How Truekind compares">
+        <div className="pdp-vs-media">
+          <div className="pdp-vs-gallery" aria-roledescription="carousel" aria-label="Product detail photos">
+            {VS_SHOTS.map((s, i) => (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                key={s.src}
+                src={s.src}
+                alt={s.alt}
+                className={`pdp-vs-slide${i === vsShot ? " pdp-vs-slide--on" : ""}`}
+                aria-hidden={i !== vsShot}
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            ))}
+            <div className="pdp-vs-dots">
+              {VS_SHOTS.map((s, i) => (
+                <button
+                  key={s.src}
+                  type="button"
+                  className={`pdp-vs-dot${i === vsShot ? " pdp-vs-dot--on" : ""}`}
+                  aria-label={`Show photo ${i + 1} of ${VS_SHOTS.length}`}
+                  aria-current={i === vsShot}
+                  onClick={() => setVsShot(i)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="pdp-vs-body">
+          <h2 className="pdp-vs-title">
+            <span className="pdp-vs-title-1">More comfort.</span>
+            <span className="pdp-vs-title-2">Feel the difference.</span>
+          </h2>
+
+          <table className="pdp-vs-table">
+            <thead>
+              <tr>
+                <th scope="col">Benefits</th>
+                <th scope="col" className="pdp-vs-brand">Truekind</th>
+                <th scope="col">Regular bra</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARE.map((row) => (
+                <tr key={row}>
+                  <th scope="row">{row}</th>
+                  <td>
+                    <span className="pdp-vs-yes">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      <span className="pdp-sr">Yes</span>
+                    </span>
+                  </td>
+                  <td>
+                    <span className="pdp-vs-no">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                      <span className="pdp-sr">No</span>
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -1169,9 +1379,61 @@ export const TruekindPdp = () => {
           border-top: 1px solid rgba(0, 0, 0, 0.08);
           background: #fff;
         }
-        .pdp-cta {
-          width: 100%;
+        /* Quantity selector sits to the left of the CTA. */
+        .pdp-buyrow {
+          display: flex;
+          align-items: stretch;
+          gap: 10px;
+        }
+        .pdp-qty {
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 2px;
+          padding: 0 6px;
           min-height: 52px;
+          border: 1px solid var(--ink-300, #cfcfcf);
+          border-radius: 9999px;
+          background: #fff;
+        }
+        .pdp-qty-btn {
+          width: 30px;
+          height: 30px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          border-radius: 9999px;
+          font-family: inherit;
+          font-size: 17px;
+          line-height: 1;
+          color: var(--ink-900, #292929);
+          cursor: pointer;
+        }
+        .pdp-qty-btn:hover:not(:disabled) {
+          background: #f2ece2;
+        }
+        .pdp-qty-btn:disabled {
+          opacity: 0.35;
+          cursor: default;
+        }
+        .pdp-qty-btn:focus-visible {
+          outline: 2px solid var(--ink-900, #292929);
+          outline-offset: 1px;
+        }
+        .pdp-qty-value {
+          min-width: 20px;
+          text-align: center;
+          font-weight: 700;
+          font-size: 14px;
+          font-variant-numeric: tabular-nums;
+        }
+        .pdp-cta {
+          flex: 1;
+          min-width: 0;
+          min-height: 52px;
+          padding: 0 16px;
           background: var(--ink-1000, #000);
           color: #fff;
           border: none;
@@ -1179,6 +1441,7 @@ export const TruekindPdp = () => {
           font-family: inherit;
           font-weight: 700;
           font-size: 15px;
+          white-space: nowrap;
           cursor: pointer;
         }
         .pdp-cta:hover {
@@ -1239,18 +1502,17 @@ export const TruekindPdp = () => {
           z-index: 1;
           background: #fbf8f3;
           border-top: 1px solid rgba(0, 0, 0, 0.06);
-          padding: clamp(48px, 8vw, 104px) clamp(20px, 6vw, 80px);
+          padding: clamp(40px, 5vw, 64px) clamp(20px, 6vw, 80px);
         }
         .pdp-why-inner {
           max-width: 1160px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-          gap: clamp(32px, 6vw, 100px);
-          align-items: start;
+        }
+        .pdp-why-left {
+          margin-bottom: clamp(22px, 3vw, 34px);
         }
         .pdp-why-eyebrow {
-          margin: 0 0 12px;
+          margin: 0 0 8px;
           font-size: 12px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -1261,55 +1523,354 @@ export const TruekindPdp = () => {
           margin: 0;
           font-family: var(--font-display, "Circular XX", sans-serif);
           font-weight: 800;
-          font-size: clamp(2rem, 4vw, 3.25rem);
-          line-height: 1.02;
+          font-size: clamp(1.75rem, 3vw, 2.5rem);
+          line-height: 1.04;
           letter-spacing: -0.02em;
           text-transform: uppercase;
         }
+        /* Items sit in a row of outlined boxes below the title. */
         .pdp-why-list {
           margin: 0;
           padding: 0;
           list-style: none;
+          display: grid;
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 14px;
         }
         .pdp-why-item {
           display: flex;
-          gap: 16px;
-          padding: 22px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .pdp-why-item:first-child {
-          padding-top: 0;
-          border-top: none;
+          flex-direction: column;
+          gap: 10px;
+          padding: 20px 18px;
+          border: 1px solid rgba(0, 0, 0, 0.16);
+          border-radius: 12px;
         }
         .pdp-why-check {
           flex-shrink: 0;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 30px;
-          height: 30px;
+          width: 26px;
+          height: 26px;
           border-radius: 9999px;
           background: var(--ink-1000, #1c1b1a);
           color: #fff;
         }
         .pdp-why-item-title {
-          margin: 3px 0 5px;
+          margin: 0;
           font-family: var(--font-display, "Circular XX", sans-serif);
           font-weight: 700;
-          font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+          font-size: 15px;
+          line-height: 1.25;
           letter-spacing: -0.01em;
         }
         .pdp-why-item-body {
           margin: 0;
-          font-size: 14.5px;
-          line-height: 1.55;
+          font-size: 13px;
+          line-height: 1.5;
           color: var(--ink-700, #454545);
-          max-width: 46ch;
         }
-        @media (max-width: 760px) {
-          .pdp-why-inner {
+        @media (max-width: 1080px) {
+          .pdp-why-list {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+        }
+        @media (max-width: 700px) {
+          .pdp-why-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+        }
+
+        /* ---- UGC video carousel ---- */
+        .pdp-ugc {
+          position: relative;
+          z-index: 1;
+          background: #fff;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+          padding: clamp(40px, 5vw, 68px) 0;
+        }
+        .pdp-ugc-inner {
+          max-width: 1160px;
+          margin: 0 auto;
+        }
+        .pdp-ugc-title {
+          margin: 0 0 clamp(20px, 3vw, 32px);
+          padding: 0 clamp(20px, 6vw, 80px);
+          text-align: center;
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 700;
+          font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+          letter-spacing: -0.02em;
+        }
+        .pdp-ugc-viewport {
+          position: relative;
+        }
+        .pdp-ugc-track {
+          display: flex;
+          gap: 14px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          padding: 0 clamp(20px, 6vw, 80px);
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .pdp-ugc-track::-webkit-scrollbar {
+          display: none;
+        }
+        .pdp-ugc-card {
+          position: relative;
+          flex: 0 0 auto;
+          width: clamp(190px, 22vw, 250px);
+          aspect-ratio: 3 / 4;
+          border-radius: 14px;
+          overflow: hidden;
+          scroll-snap-align: start;
+          background: #f1ece4;
+        }
+        .pdp-ugc-media {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        /* Empty slot awaiting a real clip. */
+        .pdp-ugc-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(160deg, #f6f1e9 0%, #e9e1d5 100%);
+        }
+        .pdp-ugc-play {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 54px;
+          height: 54px;
+          padding-left: 3px;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.92);
+          color: var(--ink-900, #292929);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .pdp-ugc-badge {
+          position: absolute;
+          left: 10px;
+          bottom: 10px;
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 6px 12px;
+          border-radius: 9999px;
+          background: #fff;
+          font-size: 12px;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .pdp-ugc-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 9999px;
+          box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+        }
+        .pdp-ugc-nav {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 2;
+          width: 40px;
+          height: 40px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.94);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 9999px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+          color: var(--ink-900, #292929);
+          cursor: pointer;
+        }
+        .pdp-ugc-nav:hover {
+          background: #fff;
+        }
+        .pdp-ugc-nav--prev {
+          left: clamp(6px, 2vw, 28px);
+        }
+        .pdp-ugc-nav--next {
+          right: clamp(6px, 2vw, 28px);
+        }
+        @media (max-width: 700px) {
+          .pdp-ugc-nav {
+            display: none;
+          }
+          .pdp-ugc-track {
+            padding: 0 16px;
+          }
+        }
+
+        /* ---- Truekind vs. regular bra ---- */
+        .pdp-sr {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+        .pdp-vs {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+          align-items: stretch;
+          background: #fbf8f3;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .pdp-vs-media {
+          min-height: 100%;
+        }
+        .pdp-vs-gallery {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          min-height: 380px;
+          overflow: hidden;
+          background: #ece4d6;
+        }
+        .pdp-vs-slide {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          transition: opacity 0.8s ease;
+        }
+        .pdp-vs-slide--on {
+          opacity: 1;
+        }
+        .pdp-vs-dots {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 16px;
+          z-index: 1;
+          display: flex;
+          justify-content: center;
+          gap: 7px;
+        }
+        .pdp-vs-dot {
+          width: 7px;
+          height: 7px;
+          padding: 0;
+          border: none;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.55);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+          cursor: pointer;
+          transition: background 0.25s ease, width 0.25s ease;
+        }
+        .pdp-vs-dot--on {
+          width: 20px;
+          background: #fff;
+        }
+        .pdp-vs-dot:focus-visible {
+          outline: 2px solid #fff;
+          outline-offset: 2px;
+        }
+        .pdp-vs-body {
+          padding: clamp(40px, 5vw, 72px) clamp(20px, 5vw, 64px);
+        }
+        .pdp-vs-title {
+          margin: 0 0 clamp(22px, 3vw, 34px);
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 800;
+          font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+          line-height: 1.06;
+          letter-spacing: -0.025em;
+        }
+        .pdp-vs-title-1,
+        .pdp-vs-title-2 {
+          display: block;
+        }
+        .pdp-vs-title-1 {
+          color: var(--ink-400, #a8a29a);
+        }
+        .pdp-vs-title-2 {
+          color: var(--ink-1000, #1c1b1a);
+        }
+        .pdp-vs-table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        .pdp-vs-table thead th {
+          padding: 0 0 12px;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--ink-600, #5a5a5a);
+          text-align: center;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        .pdp-vs-table thead th:first-child {
+          text-align: left;
+        }
+        .pdp-vs-brand {
+          font-family: var(--font-display, "Circular XX", sans-serif);
+          font-weight: 800 !important;
+          color: var(--ink-1000, #1c1b1a) !important;
+        }
+        .pdp-vs-table tbody th {
+          padding: 14px 16px 14px 0;
+          text-align: left;
+          font-size: 14.5px;
+          font-weight: 500;
+          line-height: 1.35;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .pdp-vs-table tbody td {
+          width: 108px;
+          padding: 8px 0;
+          text-align: center;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .pdp-vs-yes {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 72px;
+          height: 40px;
+          border-radius: 8px;
+          background: #ece4d6;
+          color: var(--ink-1000, #1c1b1a);
+        }
+        .pdp-vs-no {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 72px;
+          height: 40px;
+          color: var(--ink-400, #a8a29a);
+        }
+        @media (max-width: 860px) {
+          .pdp-vs {
             grid-template-columns: 1fr;
-            gap: 24px;
+          }
+          .pdp-vs-gallery {
+            min-height: 0;
+            aspect-ratio: 4 / 3;
+          }
+          .pdp-vs-table tbody td {
+            width: 76px;
+          }
+          .pdp-vs-yes,
+          .pdp-vs-no {
+            width: 56px;
+            height: 36px;
           }
         }
 
@@ -1391,7 +1952,7 @@ export const TruekindPdp = () => {
         .pdp-faq {
           position: relative;
           z-index: 1;
-          background: #fff;
+          background: #fbf8f3;
           border-top: 1px solid rgba(0, 0, 0, 0.08);
           padding: clamp(48px, 8vw, 104px) clamp(20px, 6vw, 80px);
         }
