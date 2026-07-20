@@ -1487,12 +1487,25 @@ export const TruekindPdp = () => {
           color: var(--ink-800, #3a3a3a);
         }
         @media (max-width: 760px) {
+          /* 2x2 grid keeps all four signals visible without a tall stack. */
           .pdp-trust-inner {
-            justify-content: flex-start;
-            gap: 14px 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 12px;
+            padding: 16px;
           }
           .pdp-trust-item {
-            font-size: 13px;
+            align-items: flex-start;
+            gap: 7px;
+            font-size: 11.5px;
+            line-height: 1.3;
+            letter-spacing: -0.005em;
+            white-space: normal;
+          }
+          .pdp-trust-item svg {
+            width: 17px;
+            height: 17px;
+            margin-top: 1px;
           }
         }
 
