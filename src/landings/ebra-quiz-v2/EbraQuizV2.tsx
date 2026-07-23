@@ -11,24 +11,26 @@
  * visual element selector work and giving us full control over spacing.
  *
  * Screens: Landing → Q1 Shape → Q2 Issues → Q3 Wants → Q4 Size → Loader →
- * Email gate → Reveal → Gift. Logic, copy and inline styling are kept
- * faithful to the export; assets live under `/public/ebra-quiz-v2/assets`.
+ * Email gate → Reveal → Gift. Logic and copy stay faithful to the export;
+ * chrome uses the Shapermint design system (Avenir, peach CTAs, SHM logo).
+ * Assets live under `/public/ebra-quiz-v2/assets`.
  */
 import React from "react";
 import { TruekindStarIcon, TruekindStars } from "@/landings/truekind/TruekindStars";
-import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ_BTN_WEIGHT, TK_SELECTED, TK_SIZE_CHART_COLORS, TK_SIZE_CHART_HEAD_BG } from "./truekindQuizTokens";
+import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ_BTN_WEIGHT, TK_RADIUS, TK_SELECTED, TK_SIZE_CHART_COLORS, TK_SIZE_CHART_HEAD_BG } from "./truekindQuizTokens";
 
 const IMG = (p: string) => `/ebra-quiz-v2/${p}`;
 
-// ─── Tokens (Truekind DS) ────────────────────────────────────────────────────
+// ─── Tokens (Shapermint DS) ──────────────────────────────────────────────────
 const DEFAULTS = {
   paper: TK_COLORS.paper,
   ink: TK_COLORS.ink,
-  accent: TK_COLORS.accent,
+  /** Text/UI accent — coral-500 so headlines & body pass contrast on cream */
+  accent: TK_COLORS.accentText,
   pinkAccent: TK_COLORS.sandSoft,
   surface: TK_COLORS.surface,
-  headlineFont: "Circular XX",
-  bodyFont: "Circular XX",
+  headlineFont: "Avenir Next LT Pro",
+  bodyFont: "Avenir Next",
   logoSize: 110,
 };
 
@@ -231,7 +233,7 @@ function ProgressBar({ step, total = 4, accent, ink, compact, onBack }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: compact ? 28 : 36 }}>
       <button onClick={onBack} aria-label="Back" style={{
-        width: 28, height: 28, borderRadius: 9999, border: "none", background: "transparent",
+        width: 28, height: 28, borderRadius: TK_RADIUS, border: "none", background: "transparent",
         color: ink, cursor: "pointer", display: "grid", placeItems: "center", padding: 0, opacity: 0.7,
       }}>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -258,7 +260,7 @@ function ProgressBar({ step, total = 4, accent, ink, compact, onBack }) {
   );
 }
 
-// Truekind DS button — black pill CTA (matches TruekindPdp .pdp-cta)
+// Shapermint DS button — peach fill, Demi (600), 8px radius
 const TK_BTN_FONT = TK_FONT;
 
 function PillCTA({ children, onClick, accent, ink, compact, full, ghost, disabled }) {
@@ -267,13 +269,13 @@ function PillCTA({ children, onClick, accent, ink, compact, full, ghost, disable
   return (
     <button onClick={disabled ? undefined : onClick} disabled={disabled} style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-      padding: compact ? "12px 20px" : "12px 28px",
-      borderRadius: 9999, border: disabled ? "none" : ghost ? `1px solid ${TK_COLORS.inkStrong}` : "none",
+      padding: compact ? "14px 24px" : "16px 32px",
+      borderRadius: TK_RADIUS, border: disabled ? "none" : ghost ? `1px solid ${TK_COLORS.inkStrong}` : "none",
       background: bg, color: fg,
       fontFamily: TK_BTN_FONT,
-      fontSize: compact ? 15 : 16, fontWeight: 700,
-      lineHeight: compact ? "22px" : "24px",
-      letterSpacing: 0, textTransform: "none",
+      fontSize: compact ? 14 : 15, fontWeight: TK_BTN.weight,
+      lineHeight: compact ? "20px" : "22px",
+      letterSpacing: "0.06em", textTransform: "uppercase",
       cursor: disabled ? "not-allowed" : "pointer", width: full ? "100%" : "auto",
       transition: "transform .12s, background .15s",
     }}
@@ -315,7 +317,7 @@ function ScreenLanding({ compact, ink, accent, paper, onStart, logoSize }) {
     }}>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={TK_LOGO} alt="Truekind"
+        <img src={TK_LOGO} alt="Shapermint"
           style={{ width: lSize, height: "auto", display: "block" }} />
       </div>
 
@@ -334,7 +336,7 @@ function ScreenLanding({ compact, ink, accent, paper, onStart, logoSize }) {
           maxWidth: "38ch", lineHeight: 1.5, marginLeft: "auto", marginRight: "auto",
         }}>
           Take the 15-second fit quiz.<br />
-          <strong style={{ color: TK_COLORS.accent, fontWeight: 700 }}>Unlock your secret gift.</strong>
+          <strong style={{ color: TK_COLORS.accentText, fontWeight: 700 }}>Unlock your secret gift.</strong>
         </p>
         <PillCTA onClick={onStart} compact={compact} ink={ink}>
           Start the quiz
@@ -430,7 +432,7 @@ function ShapeHelpModal({ compact, ink, accent, onClose }) {
       animation: "qzfadeIn .2s ease-out", padding: compact ? 0 : 24,
     }}>
       <div onClick={(e) => e.stopPropagation()} style={{
-        background: TK_COLORS.sandSoft, borderRadius: compact ? "16px 16px 0 0" : 16,
+        background: TK_COLORS.sandSoft, borderRadius: compact ? `${TK_RADIUS}px ${TK_RADIUS}px 0 0` : TK_RADIUS,
         padding: compact ? "20px 22px 28px" : "32px 36px",
         maxWidth: compact ? "100%" : 520, width: "100%",
         maxHeight: compact ? "85%" : "90%", overflowY: "auto",
@@ -445,7 +447,7 @@ function ShapeHelpModal({ compact, ink, accent, onClose }) {
           </h2>
           <button onClick={onClose} aria-label="Close" style={{
             background: "transparent", border: "none", cursor: "pointer",
-            color: ink, width: 28, height: 28, borderRadius: 9999,
+            color: ink, width: 28, height: 28, borderRadius: TK_RADIUS,
             display: "grid", placeItems: "center", padding: 0, flex: "0 0 auto",
           }}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -461,7 +463,7 @@ function ShapeHelpModal({ compact, ink, accent, onClose }) {
         </ol>
         <div style={{
           marginTop: 20, padding: "14px 16px", background: "rgba(92,31,46,0.06)",
-          borderRadius: 8, fontSize: 13, color: "rgba(31,26,23,0.7)", lineHeight: 1.5,
+          borderRadius: TK_RADIUS, fontSize: 13, color: "rgba(31,26,23,0.7)", lineHeight: 1.5,
         }}>
           Tip: many women have features of two shapes. Pick the closest — we’ll handle the rest.
         </div>
@@ -477,7 +479,7 @@ function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
       position: "relative",
       background: selected ? TK_SELECTED.bg : chipBg,
       border: selected ? `2px solid ${TK_SELECTED.border}` : `1px solid ${TK_CHIP.border}`,
-      borderRadius: 16, padding: compact ? "18px 10px 14px" : "22px 14px 16px",
+      borderRadius: TK_RADIUS, padding: compact ? "18px 10px 14px" : "22px 14px 16px",
       cursor: "pointer", color: selected ? TK_SELECTED.glyph : accent,
       fontFamily: "var(--qz-body-font)", fontWeight: TK_QUIZ_BTN_WEIGHT,
       transition: "background .18s, transform .12s, border-color .18s",
@@ -488,7 +490,7 @@ function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
     >
       {selected && (
         <div style={{
-          position: "absolute", top: 8, right: 8, width: 20, height: 20, borderRadius: 9999,
+          position: "absolute", top: 8, right: 8, width: 20, height: 20, borderRadius: TK_RADIUS,
           background: TK_SELECTED.checkBg, color: TK_SELECTED.checkFg, display: "grid", placeItems: "center",
         }}>
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -501,7 +503,7 @@ function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
       </div>
       <div style={{
         marginTop: compact ? 8 : 10, fontSize: compact ? 13 : 14,
-        letterSpacing: "0.005em", color: selected ? TK_SELECTED.fg : ink,
+        letterSpacing: "0.005em", color: selected ? TK_SELECTED.fg : TK_CHIP.fg,
       }}>{shape.name}</div>
 
       {open && (
@@ -514,7 +516,7 @@ function ShapeCell({ shape, selected, open, accent, ink, compact, onClick }) {
       {!compact && (
         <div className="qz-tooltip" style={{
           position: "absolute", top: "100%", left: "50%", transform: "translate(-50%, 6px)",
-          background: ink, color: TK_COLORS.sand, padding: "8px 12px", borderRadius: 8,
+          background: ink, color: TK_COLORS.sand, padding: "8px 12px", borderRadius: TK_RADIUS,
           fontSize: 11.5, lineHeight: 1.35, width: 180,
           opacity: 0, pointerEvents: "none", transition: "opacity .15s", zIndex: 5, fontWeight: 400,
         }}>{shape.desc}</div>
@@ -595,7 +597,7 @@ function PillButton({ children, selected, ink, accent, compact, onClick }) {
   return (
     <button onClick={onClick} style={{
       display: "inline-flex", alignItems: "center", gap: 8,
-      padding: compact ? "13px 18px" : "15px 22px", borderRadius: 9999,
+      padding: compact ? "13px 18px" : "15px 22px", borderRadius: TK_RADIUS,
       background: selected ? TK_SELECTED.bg : TK_CHIP.bg,
       color: selected ? TK_SELECTED.fg : TK_CHIP.fg,
       border: selected ? `2px solid ${TK_SELECTED.border}` : `1px solid ${TK_CHIP.border}`,
@@ -614,7 +616,7 @@ function PillButton({ children, selected, ink, accent, compact, onClick }) {
 
 function Check({ inverted, accent }) {
   return (
-    <span style={{ display: "inline-grid", placeItems: "center", width: 16, height: 16, borderRadius: 9999, background: TK_CHIP.bg, color: accent }}>
+    <span style={{ display: "inline-grid", placeItems: "center", width: 16, height: 16, borderRadius: TK_RADIUS, background: TK_CHIP.bg, color: accent }}>
       <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M2 5 L4 7 L8 3" />
       </svg>
@@ -676,7 +678,7 @@ function ScreenSize({ compact, ink, accent, paper, answer, onSelect, onAdvance, 
 
         <div style={{
           marginTop: compact ? 18 : 22, padding: compact ? "14px 16px" : "16px 20px",
-          background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16,
+          background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: TK_RADIUS,
           display: "flex", gap: 12, alignItems: "flex-start", fontSize: compact ? 13 : 14, lineHeight: 1.5,
         }}>
           <span style={{ color: accent, flex: "0 0 auto", marginTop: 2 }}>
@@ -728,7 +730,7 @@ function SizeSelect({ label, value, placeholder, options, onChange, accent, ink,
           appearance: "none", WebkitAppearance: "none", width: "100%", boxSizing: "border-box",
           height: compact ? 52 : 60,
           padding: compact ? "0 32px 0 14px" : "0 36px 0 18px",
-          borderRadius: 16, border: "1px solid rgba(31,26,23,0.2)", background: "#FFFFFF",
+          borderRadius: TK_RADIUS, border: "1px solid rgba(31,26,23,0.2)", background: "#FFFFFF",
           fontFamily: "var(--qz-headline-font)", fontSize: compact ? 18 : 22, fontWeight: 400,
           color: empty ? "rgba(31,26,23,0.4)" : ink, cursor: "pointer", outline: "none",
         }}
@@ -752,7 +754,7 @@ function SizeResult({ size, accent, ink, compact }) {
     <div style={{ display: "inline-flex", flexDirection: "column", gap: 4, flex: "1 1 0", minWidth: compact ? 0 : 110 }}>
       <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginLeft: 2 }}>You are</span>
       <div style={{
-        padding: compact ? "0 14px" : "0 18px", borderRadius: 16,
+        padding: compact ? "0 14px" : "0 18px", borderRadius: TK_RADIUS,
         background: size ? TK_SELECTED.bg : TK_CHIP.bg,
         color: size ? TK_SELECTED.fg : "rgba(31,26,23,0.4)",
         border: size ? `2px solid ${TK_SELECTED.border}` : `1px dashed ${TK_CHIP.border}`,
@@ -767,73 +769,182 @@ function SizeResult({ size, accent, ink, compact }) {
 }
 
 function SizeChart({ band, cup, ink, compact }) {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <div style={{ marginTop: compact ? 14 : 18, borderRadius: 18, border: "1px solid rgba(31,26,23,0.1)" }}>
-      <div
-        className="qz-size-chart-scroll"
+    <div style={{
+      marginTop: compact ? 14 : 18,
+      borderRadius: TK_RADIUS,
+      border: "1px solid rgba(31,26,23,0.1)",
+      background: "#FFFFFF",
+      overflow: "hidden",
+    }}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls="qz-size-chart-panel"
         style={{
-          overflowX: compact ? "auto" : "visible", overflowY: "hidden", borderRadius: 18,
-          WebkitOverflowScrolling: "touch", overscrollBehaviorX: "contain", touchAction: "pan-x",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+          padding: compact ? "14px 14px" : "16px 20px",
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+          textAlign: "left",
+          fontFamily: "inherit",
+          color: ink,
         }}
       >
-        <div style={{
-          padding: compact ? "16px 14px" : "22px 24px", background: "#FFFFFF",
-          width: compact ? "fit-content" : "auto", minWidth: "100%", boxSizing: "border-box",
+        <span style={{
+          fontFamily: "var(--qz-headline-font)",
+          fontWeight: TK_QUIZ_BTN_WEIGHT,
+          fontSize: compact ? 16 : 18,
+          lineHeight: 1.3,
         }}>
-          <h3 style={{
-            fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 16 : 18,
-            margin: "0 0 4px", color: ink, whiteSpace: compact ? "nowrap" : "normal",
-          }}>Unsure of your size?</h3>
-          <p style={{ margin: "0 0 14px", fontSize: compact ? 12.5 : 13.5, color: "rgba(31,26,23,0.6)", lineHeight: 1.4, whiteSpace: compact ? "nowrap" : "normal" }}>
-            Use our size chart to ensure the perfect fit for every body type, petite to plus-size.
-          </p>
+          Unsure of your size?
+        </span>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+          style={{
+            flex: "0 0 auto",
+            opacity: 0.55,
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform .2s ease",
+          }}
+        >
+          <path d="M2 4 L6 8 L10 4" />
+        </svg>
+      </button>
 
-          {compact && (
-            <p style={{ margin: "0 0 8px", fontSize: 11, color: "rgba(31,26,23,0.45)", display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
-              Scroll to see the whole chart <span aria-hidden>→</span>
+      {open && (
+        <div
+          id="qz-size-chart-panel"
+          className="qz-size-chart-scroll"
+          style={{
+            overflowX: compact ? "auto" : "visible",
+            overflowY: "hidden",
+            borderTop: "1px solid rgba(31,26,23,0.08)",
+            WebkitOverflowScrolling: "touch",
+            overscrollBehaviorX: "contain",
+            touchAction: "pan-x",
+          }}
+        >
+          <div style={{
+            padding: compact ? "14px 14px 16px" : "16px 20px 22px",
+            width: compact ? "fit-content" : "auto",
+            minWidth: "100%",
+            boxSizing: "border-box",
+          }}>
+            <p style={{
+              margin: "0 0 14px",
+              fontSize: compact ? 12.5 : 13.5,
+              color: "rgba(31,26,23,0.6)",
+              lineHeight: 1.4,
+              maxWidth: compact ? "none" : "52ch",
+              whiteSpace: compact ? "nowrap" : "normal",
+            }}>
+              Use our size chart to ensure the perfect fit for every body type, petite to plus-size.
             </p>
-          )}
 
-          <table style={{ borderCollapse: "collapse", width: "100%", minWidth: compact ? 480 : 0, borderRadius: 12, overflow: "hidden" }}>
-            <thead>
-              <tr>
-                <th style={{ ...sizeChartHeadCellStyle(true), position: "sticky", left: 0, zIndex: 2, boxShadow: "1px 0 0 rgba(31,26,23,0.08)" }}>
-                  Band <span style={{ opacity: 0.5 }}>→</span>
-                </th>
-                {BANDS.map((b) => (
-                  <th key={b} style={{
-                    ...sizeChartHeadCellStyle(false),
-                    background: b === band ? TK_COLORS.terraSoft : sizeChartHeadCellStyle(false).background,
-                  }}>{b}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {CUPS.map((c) => (
-                <tr key={c}>
+            {compact && (
+              <p style={{
+                margin: "0 0 8px",
+                fontSize: 11,
+                color: "rgba(31,26,23,0.45)",
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+                whiteSpace: "nowrap",
+              }}>
+                Scroll to see the whole chart <span aria-hidden>→</span>
+              </p>
+            )}
+
+            <table style={{
+              borderCollapse: "collapse",
+              width: "100%",
+              minWidth: compact ? 480 : 0,
+              borderRadius: TK_RADIUS,
+              overflow: "hidden",
+            }}>
+              <thead>
+                <tr>
                   <th style={{
-                    ...sizeChartRowHeadStyle, position: "sticky", left: 0, zIndex: 1, boxShadow: "1px 0 0 rgba(31,26,23,0.08)",
-                    background: c === cup ? TK_COLORS.terraSoft : sizeChartRowHeadStyle.background,
-                  }}>{c} {c === CUPS[0] && <span style={{ opacity: 0.5 }}>↓</span>}</th>
-                  {BANDS.map((b) => {
-                    const cellSize = (SIZE_MATRIX[c] || {})[b];
-                    const isActive = c === cup && b === band;
-                    return (
-                      <td key={b} style={{
-                        padding: compact ? "9px 6px" : "11px 8px", textAlign: "center",
-                        fontFamily: "var(--qz-body-font)", fontSize: compact ? 12 : 13, fontWeight: TK_QUIZ_BTN_WEIGHT,
-                        color: ink, borderTop: "1px solid rgba(31,26,23,0.06)",
-                        background: cellSize ? TK_SIZE_CHART_COLORS[cellSize] : "#FFFFFF",
-                        boxShadow: isActive ? `inset 0 0 0 2px ${TK_COLORS.inkStrong}` : "none",
-                      }}>{cellSize || ""}</td>
-                    );
-                  })}
+                    ...sizeChartHeadCellStyle(true),
+                    position: "sticky",
+                    left: 0,
+                    zIndex: 2,
+                    boxShadow: "1px 0 0 rgba(31,26,23,0.08)",
+                  }}>
+                    Band <span style={{ opacity: 0.5 }}>→</span>
+                  </th>
+                  {BANDS.map((b) => (
+                    <th
+                      key={b}
+                      style={{
+                        ...sizeChartHeadCellStyle(false),
+                        background: b === band ? TK_COLORS.terraSoft : sizeChartHeadCellStyle(false).background,
+                      }}
+                    >
+                      {b}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {CUPS.map((c) => (
+                  <tr key={c}>
+                    <th style={{
+                      ...sizeChartRowHeadStyle,
+                      position: "sticky",
+                      left: 0,
+                      zIndex: 1,
+                      boxShadow: "1px 0 0 rgba(31,26,23,0.08)",
+                      background: c === cup ? TK_COLORS.terraSoft : sizeChartRowHeadStyle.background,
+                    }}>
+                      {c} {c === CUPS[0] && <span style={{ opacity: 0.5 }}>↓</span>}
+                    </th>
+                    {BANDS.map((b) => {
+                      const cellSize = (SIZE_MATRIX[c] || {})[b];
+                      const isActive = c === cup && b === band;
+                      return (
+                        <td
+                          key={b}
+                          style={{
+                            padding: compact ? "9px 6px" : "11px 8px",
+                            textAlign: "center",
+                            fontFamily: "var(--qz-body-font)",
+                            fontSize: compact ? 12 : 13,
+                            fontWeight: TK_QUIZ_BTN_WEIGHT,
+                            color: ink,
+                            borderTop: "1px solid rgba(31,26,23,0.06)",
+                            background: cellSize ? TK_SIZE_CHART_COLORS[cellSize] : "#FFFFFF",
+                            boxShadow: isActive ? `inset 0 0 0 2px ${TK_COLORS.inkStrong}` : "none",
+                          }}
+                        >
+                          {cellSize || ""}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -864,7 +975,7 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
       animation: "qzfadeIn .2s ease-out", padding: compact ? 0 : 24,
     }}>
       <div onClick={(e) => e.stopPropagation()} style={{
-        background: TK_COLORS.sandSoft, borderRadius: compact ? "16px 16px 0 0" : 16,
+        background: TK_COLORS.sandSoft, borderRadius: compact ? `${TK_RADIUS}px ${TK_RADIUS}px 0 0` : TK_RADIUS,
         padding: compact ? "24px 22px 28px" : "32px 36px", maxWidth: compact ? "100%" : 540,
         width: "100%", maxHeight: "90%", overflowY: "auto", boxShadow: "0 -20px 60px rgba(0,0,0,0.25)",
       }}>
@@ -883,7 +994,7 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
           </div>
           <button onClick={onClose} aria-label="Close" style={{
             background: "transparent", border: "none", cursor: "pointer", color: ink,
-            width: 28, height: 28, borderRadius: 9999, display: "grid", placeItems: "center",
+            width: 28, height: 28, borderRadius: TK_RADIUS, display: "grid", placeItems: "center",
             padding: 0, flex: "0 0 auto", marginTop: 4,
           }}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -904,9 +1015,9 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
         <div style={{
           marginTop: 18, padding: "16px 18px",
           background: calc.band && calc.cup ? accent : "transparent",
-          color: calc.band && calc.cup ? TK_COLORS.sand : "rgba(31,26,23,0.45)",
+          color: calc.band && calc.cup ? TK_COLORS.inkStrong : "rgba(31,26,23,0.45)",
           border: calc.band && calc.cup ? "none" : "1px dashed rgba(31,26,23,0.2)",
-          borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14,
+          borderRadius: TK_RADIUS, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14,
         }}>
           <div>
             <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", opacity: 0.8, marginBottom: 4 }}>Your size</div>
@@ -919,25 +1030,25 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
           {calc.band && calc.cup && (() => {
             const s = lookupSize(calc.band, calc.cup);
             return s ? (
-              <div style={{ background: "rgba(255,255,255,0.18)", padding: "8px 16px", borderRadius: 9999, fontFamily: "var(--qz-headline-font)", fontSize: 18, whiteSpace: "nowrap" }}>Size {s}</div>
+              <div style={{ background: "rgba(255,255,255,0.18)", padding: "8px 16px", borderRadius: TK_RADIUS, fontFamily: "var(--qz-headline-font)", fontSize: 18, whiteSpace: "nowrap" }}>Size {s}</div>
             ) : null;
           })()}
         </div>
 
         <div style={{ marginTop: 22, display: "flex", gap: 10, flexDirection: compact ? "column" : "row" }}>
           <button onClick={() => calc.band && calc.cup && onApply(calc.band, calc.cup)} disabled={!calc.band || !calc.cup} style={{
-            flex: 1, padding: "14px 22px", borderRadius: 9999, border: "none",
+            flex: 1, padding: "14px 22px", borderRadius: TK_RADIUS, border: "none",
             background: calc.band && calc.cup ? TK_BTN.primary : TK_BTN.disabledBg,
             color: calc.band && calc.cup ? TK_BTN.primaryFg : TK_BTN.disabledFg,
             cursor: calc.band && calc.cup ? "pointer" : "not-allowed",
-            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_QUIZ_BTN_WEIGHT, letterSpacing: "0.04em",
+            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_BTN.weight, letterSpacing: "0.04em",
           }}>
             Use these measurements
           </button>
           <button onClick={onSkip} style={{
-            padding: "14px 22px", borderRadius: 9999, border: "1px solid rgba(31,26,23,0.25)",
+            padding: "14px 22px", borderRadius: TK_RADIUS, border: "1px solid rgba(31,26,23,0.25)",
             background: "transparent", color: ink, cursor: "pointer",
-            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_QUIZ_BTN_WEIGHT, letterSpacing: "0.04em",
+            fontFamily: "var(--qz-body-font)", fontSize: 14, fontWeight: TK_BTN.weight, letterSpacing: "0.04em",
           }}>
             Skip — I'm still not sure
           </button>
@@ -954,7 +1065,7 @@ function MeasureModal({ compact, ink, accent, onApply, onSkip, onClose }) {
 function MeasureStep({ n, title, hint, value, onChange, unit, ink, accent, diagram }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "60px 1fr 120px", alignItems: "center", gap: 14, padding: "14px 0", borderTop: "1px solid rgba(31,26,23,0.08)" }}>
-      <div style={{ color: accent, width: 50, height: 50, display: "grid", placeItems: "center", background: "rgba(92,31,46,0.06)", borderRadius: 16 }}>
+      <div style={{ color: accent, width: 50, height: 50, display: "grid", placeItems: "center", background: "rgba(92,31,46,0.06)", borderRadius: TK_RADIUS }}>
         <MeasureDiagram kind={diagram} />
       </div>
       <div>
@@ -965,7 +1076,7 @@ function MeasureStep({ n, title, hint, value, onChange, unit, ink, accent, diagr
       <div style={{ position: "relative" }}>
         <input type="number" inputMode="decimal" min="20" max="60" step="0.5" value={value} onChange={(e) => onChange(e.target.value)} placeholder="—"
           style={{
-            width: "100%", boxSizing: "border-box", padding: "13px 38px 13px 14px", borderRadius: 8,
+            width: "100%", boxSizing: "border-box", padding: "13px 38px 13px 14px", borderRadius: TK_RADIUS,
             border: "1px solid rgba(31,26,23,0.18)", background: "#fff", fontFamily: "inherit",
             fontSize: 16, color: ink, outline: "none", fontVariantNumeric: "tabular-nums",
           }}
@@ -1059,7 +1170,7 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
       margin: "0 auto", width: "100%", textAlign: "center",
     }}>
       <div style={{
-        width: compact ? 56 : 64, height: compact ? 56 : 64, borderRadius: "50%",
+        width: compact ? 56 : 64, height: compact ? 56 : 64, borderRadius: TK_RADIUS,
         background: surface || "#FCD9D1", color: accent, display: "grid", placeItems: "center",
         marginBottom: compact ? 22 : 28, animation: "qzunwrap .5s cubic-bezier(.2,.7,.3,1) both",
       }}>
@@ -1091,7 +1202,7 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
         <input type="email" inputMode="email" autoComplete="email" placeholder="Enter your email…" value={email} onChange={(e) => setEmail(e.target.value)} required
           style={{
             width: "100%", boxSizing: "border-box", padding: compact ? "16px 20px" : "18px 22px",
-            borderRadius: 16, border: "1px solid rgba(31,26,23,0.18)", background: "#fff",
+            borderRadius: TK_RADIUS, border: "1px solid rgba(31,26,23,0.18)", background: "#fff",
             fontFamily: "var(--qz-body-font)", fontSize: compact ? 15 : 16, color: ink,
             outline: "none", textAlign: "center", transition: "border-color .15s, box-shadow .15s",
           }}
@@ -1101,12 +1212,12 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
 
         <button type="submit" disabled={!valid || submitting} style={{
           display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-          width: "100%", padding: compact ? "12px 20px" : "12px 24px", borderRadius: 8, border: "none",
+          width: "100%", padding: compact ? "14px 20px" : "16px 24px", borderRadius: TK_RADIUS, border: "none",
           background: valid ? TK_BTN.primary : TK_BTN.disabledBg,
           color: valid ? TK_BTN.primaryFg : TK_BTN.disabledFg,
-          fontFamily: TK_BTN_FONT, fontSize: compact ? 16 : 18, fontWeight: 600,
-          lineHeight: compact ? "24px" : "28px",
-          letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap",
+          fontFamily: TK_BTN_FONT, fontSize: compact ? 14 : 15, fontWeight: TK_BTN.weight,
+          lineHeight: compact ? "20px" : "22px",
+          letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
           cursor: valid && !submitting ? "pointer" : "not-allowed",
           transition: "background .15s, transform .12s",
         }}
@@ -1119,7 +1230,7 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
         </button>
 
         <div style={{ marginTop: 4, fontSize: 11.5, color: "rgba(31,26,23,0.55)", lineHeight: 1.45, textWrap: "pretty" }}>
-          By entering your email, you agree to receive marketing emails from Truekind. Unsubscribe anytime.
+          By entering your email, you agree to receive marketing emails from Shapermint. Unsubscribe anytime.
         </div>
       </form>
     </div>
@@ -1158,7 +1269,7 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
         <em style={{ color: accent }}>Supportive Comfort Wireless Shaping Bra.</em>
       </h1>
 
-      <GiftUnlockBanner accent={accent} pinkAccent={pinkAccent} surface={surface} ink={ink} compact={compact} />
+      <TryBeforeYouBuyBanner accent={accent} surface={surface} ink={ink} compact={compact} />
 
       {/* Two-column PDP layout: images left, info right (stacks on mobile) */}
       <div style={{
@@ -1169,37 +1280,60 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
         gap: compact ? 20 : 32,
         alignItems: "stretch",
       }}>
-        {/* Left: product images */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: compact ? 8 : 12 }}>
           <ProductImage src={color.bra} alt={`${color.name} — product`} label="Product" fit="contain" />
           <ProductImage src={color.fit} alt={`${color.name} — on body`} label="On body" fit="cover" />
         </div>
 
-        {/* Right: title, color picker, CTA */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", gap: compact ? 28 : 0 }}>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          gap: 16,
+          height: "100%",
+        }}>
           <ProductHeader compact={compact} />
           <ColorSelector colors={PRODUCT_COLORS} value={selectedColor} onChange={setSelectedColor} ink={ink} accent={accent} compact={compact} />
-          <button onClick={onClaim} style={{
-            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-            padding: compact ? "12px 20px" : "12px 28px", borderRadius: 9999, border: "none",
-            background: TK_BTN.primary, color: TK_BTN.primaryFg, fontFamily: TK_BTN_FONT,
-            fontWeight: 700, fontSize: compact ? 15 : 16, lineHeight: compact ? "22px" : "24px",
-            letterSpacing: 0, textTransform: "none", whiteSpace: "nowrap",
-            cursor: "pointer", transition: "background .15s, transform .12s",
-            width: compact ? "100%" : "auto",
-          }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = TK_BTN.primaryHover)}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = TK_BTN.primary; }}
-            onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
-            onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
-          >
-            Shop now
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
-            </svg>
-          </button>
+          <div>
+            <p style={{
+              margin: "0 0 12px",
+              fontSize: 12, lineHeight: 1.4, color: "rgba(41, 41, 41, 0.82)",
+              textAlign: compact ? "center" : "left",
+            }}>
+              $0 to try this bra · Keep it for 30% off · Free gift included
+            </p>
+            <button onClick={onClaim} style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+              padding: compact ? "14px 24px" : "16px 32px", borderRadius: TK_RADIUS, border: "none",
+              background: TK_BTN.primary, color: TK_BTN.primaryFg, fontFamily: TK_BTN_FONT,
+              fontWeight: TK_BTN.weight, fontSize: compact ? 14 : 15, lineHeight: compact ? "20px" : "22px",
+              letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
+              cursor: "pointer", transition: "background .15s, transform .12s",
+              width: compact ? "100%" : "auto",
+            }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = TK_BTN.primaryHover)}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = TK_BTN.primary; }}
+              onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
+              onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
+            >
+              Try before you buy
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
+              </svg>
+            </button>
+            <p style={{
+              margin: "12px 0 0",
+              fontSize: 11, lineHeight: 1.55, color: TK_COLORS.muted,
+              textAlign: compact ? "center" : "left",
+              textWrap: "pretty",
+            }}>
+              By clicking &quot;Yes,&quot; you agree to our Terms and join Shapermint Club+: box (up to 4 items, max $100+tax) ships in 15, then every 90 days, until cancelled. Free returns within 7 days. Keep past 14, we charge you. Cancel in My Account.
+            </p>
+          </div>
         </div>
       </div>
+
+      <HowItWorksSection compact={compact} ink={ink} accent={accent} />
 
       <div style={{ marginTop: compact ? 24 : 32 }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: 12 }}>
@@ -1210,7 +1344,7 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
 
       <div style={{ marginTop: compact ? 24 : 32 }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: compact ? 16 : 20 }}>
-          Why you'll love it!
+          Why you&apos;ll love it!
         </div>
       </div>
 
@@ -1239,17 +1373,233 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
   );
 }
 
-function GiftUnlockBanner({ accent, pinkAccent, surface, ink, compact }) {
+const HOW_IT_WORKS_STEPS = [
+  { id: "ship", icon: "truck", text: "We ship your box with 4 products. You pay $0, nothing." },
+  { id: "try", icon: "box", text: "Once your box arrives at your home, take 7 days to try everything." },
+  { id: "keep", icon: "bell", text: "Keep what you love. Return the rest for free with the prepaid label." },
+  { id: "repeat", icon: "refresh", text: "Your box arrives every 90 days with 4 new products. Cancel anytime in your account." },
+] as const;
+
+function HowItWorksIcon({ kind, color }: { kind: string; color: string }) {
+  const props = { width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (kind === "truck") {
+    return (
+      <svg {...props}>
+        <path d="M1 8h13v9H1z" />
+        <path d="M14 11h4l3 3v3h-7v-6z" />
+        <circle cx="5.5" cy="18.5" r="1.5" fill={color} stroke="none" />
+        <circle cx="17.5" cy="18.5" r="1.5" fill={color} stroke="none" />
+        <path d="M1 12h13" />
+      </svg>
+    );
+  }
+  if (kind === "box") {
+    return (
+      <svg {...props}>
+        <path d="M3 8.5 12 3l9 5.5v9L12 23 3 17.5v-9z" />
+        <path d="M12 12v11" />
+        <path d="M3 8.5 12 12l9-3.5" />
+        <path d="M8 5.8 16 10.5" />
+      </svg>
+    );
+  }
+  if (kind === "bell") {
+    return (
+      <svg {...props}>
+        <path d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z" />
+        <path d="M10 19.5a2 2 0 0 0 4 0" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...props}>
+      <path d="M21 12a9 9 0 1 1-2.6-6.3" />
+      <path d="M21 3v6h-6" />
+    </svg>
+  );
+}
+
+function HowItWorksSection({
+  compact,
+  ink,
+  accent,
+}: {
+  compact: boolean;
+  ink: string;
+  accent: string;
+}) {
+  const mutedIcon = "rgba(41,41,41,0.38)";
+  const [showImage, setShowImage] = React.useState(
+    () => typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches
+  );
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = (e) => setShowImage(e.matches);
+    setShowImage(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return (
+    <div
+      style={{
+        marginTop: compact ? 32 : 48,
+        display: showImage ? "grid" : "flex",
+        flexDirection: showImage ? undefined : "column",
+        gridTemplateColumns: showImage ? "1fr 1fr" : undefined,
+        gap: showImage ? 40 : compact ? 24 : 32,
+        alignItems: "stretch",
+      }}
+    >
+      {showImage && (
+        <div
+          style={{
+            position: "relative",
+            borderRadius: TK_RADIUS,
+            overflow: "hidden",
+            border: "1px solid rgba(31,26,23,0.08)",
+            background: "#F5F0E8",
+            minHeight: 0,
+            height: "100%",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={IMG("assets/how-it-works-box.png")}
+            alt="Opening a Shapermint box at home"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        </div>
+      )}
+
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <h2
+          style={{
+            margin: 0,
+            fontFamily: "var(--qz-headline-font)",
+            fontWeight: 700,
+            fontSize: compact ? 26 : 34,
+            lineHeight: 1.15,
+            letterSpacing: "-0.02em",
+            color: ink,
+            textWrap: "balance",
+          }}
+        >
+          How Try Before You Buy works
+        </h2>
+        <p
+          style={{
+            margin: compact ? "12px 0 0" : "14px 0 0",
+            fontSize: compact ? 15 : 16,
+            lineHeight: 1.55,
+            color: ink,
+            textWrap: "pretty",
+          }}
+        >
+          The days of going to stores to find the right size are over. Thousands of women now enjoy trying styles at home – and you can try it for FREE.
+        </p>
+
+        <div
+          style={{
+            marginTop: compact ? 22 : 28,
+            fontFamily: "var(--qz-body-font)",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "rgba(31,26,23,0.55)",
+          }}
+        >
+          How it works:
+        </div>
+
+        <ol style={{ listStyle: "none", margin: "16px 0 0", padding: 0 }}>
+          {HOW_IT_WORKS_STEPS.map((step, index) => {
+            const isFirst = index === 0;
+            const iconColor = isFirst ? accent : mutedIcon;
+            const ring = isFirst ? accent : "rgba(41,41,41,0.18)";
+            const isLast = index === HOW_IT_WORKS_STEPS.length - 1;
+            return (
+              <li
+                key={step.id}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "40px 1fr",
+                  gap: 14,
+                  alignItems: "start",
+                  position: "relative",
+                  paddingBottom: isLast ? 0 : 18,
+                }}
+              >
+                {!isLast && (
+                  <span
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      left: 19,
+                      top: 40,
+                      bottom: 0,
+                      width: 1,
+                      background: "rgba(41,41,41,0.14)",
+                    }}
+                  />
+                )}
+                <span
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 9999,
+                    border: `1.5px solid ${ring}`,
+                    display: "grid",
+                    placeItems: "center",
+                    background: "#fff",
+                    position: "relative",
+                    zIndex: 1,
+                    flex: "0 0 auto",
+                  }}
+                >
+                  <HowItWorksIcon kind={step.icon} color={iconColor} />
+                </span>
+                <p
+                  style={{
+                    margin: "8px 0 0",
+                    fontSize: compact ? 14 : 15,
+                    lineHeight: 1.45,
+                    color: ink,
+                    fontWeight: 700,
+                    textWrap: "pretty",
+                  }}
+                >
+                  {step.text}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
+function TryBeforeYouBuyBanner({ accent, surface, ink, compact }) {
   return (
     <div style={{
       marginTop: compact ? 22 : 28, position: "relative",
-      padding: compact ? "18px 18px 18px 64px" : "22px 26px 22px 84px", borderRadius: 16,
-      background: surface || "#FCD9D1", color: ink, overflow: "hidden",
+      padding: compact ? "18px 18px 18px 64px" : "22px 26px 22px 84px", borderRadius: TK_RADIUS,
+      background: surface || TK_COLORS.surface, color: ink, overflow: "hidden",
       animation: "qzunwrap .5s cubic-bezier(.2,.7,.3,1) both",
     }}>
       <div style={{
         position: "absolute", left: compact ? 18 : 24, top: "50%", transform: "translateY(-50%)",
-        width: compact ? 36 : 48, height: compact ? 36 : 48, borderRadius: "50%",
+        width: compact ? 36 : 48, height: compact ? 36 : 48, borderRadius: TK_RADIUS,
         background: "#fff", display: "grid", placeItems: "center", color: accent,
       }}>
         <GiftSvg size={compact ? 18 : 24} />
@@ -1259,13 +1609,15 @@ function GiftUnlockBanner({ accent, pinkAccent, surface, ink, compact }) {
         background: accent, boxShadow: `0 0 0 0 ${accent}`, animation: "qzpulse 1.8s ease-out infinite",
       }} />
       <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: accent, marginBottom: 4 }}>
-        ✦ First-purchase gift unlocked
+        Try before you buy
       </div>
-      <div style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 22 : 28, lineHeight: 1.1, letterSpacing: "-0.01em", color: ink }}>
-        <span style={{ color: accent }}>40% OFF</span> with your first order
+      <div style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 18 : 24, lineHeight: 1.2, letterSpacing: "-0.01em", color: ink }}>
+        Try this bra + 2 best-sellers + a free gift{" "}
+        <span style={{ color: accent }}>at home for $0</span>
       </div>
-      <div style={{ marginTop: 4, fontSize: compact ? 12.5 : 13.5, color: "rgba(31,26,23,0.7)", fontWeight: 500 }}>
-        Applied automatically at checkout · Limited to 24h
+      <div style={{ marginTop: 8, fontSize: compact ? 13 : 14.5, color: "rgba(31,26,23,0.75)", fontWeight: 500, lineHeight: 1.45 }}>
+        This bra costs you <strong style={{ color: ink, fontWeight: 700 }}>$0 to try</strong>.
+        {" "}Keep it and get an extra <strong style={{ color: accent, fontWeight: 700 }}>30% off</strong>.
       </div>
     </div>
   );
@@ -1309,7 +1661,7 @@ function ProductImage({ src, alt, label, fit = "cover" }) {
     <div style={{
       position: "relative", aspectRatio: "3 / 4",
       background: fit === "contain" ? "#ffffff" : "#F5F0E8",
-      borderRadius: 16, overflow: "hidden", border: "1px solid rgba(31,26,23,0.08)",
+      borderRadius: TK_RADIUS, overflow: "hidden", border: "1px solid rgba(31,26,23,0.08)",
     }}>
       {stack.map((layer, i) => (
         // eslint-disable-next-line @next/next/no-img-element
@@ -1319,7 +1671,7 @@ function ProductImage({ src, alt, label, fit = "cover" }) {
         }} />
       ))}
       <div style={{
-        position: "absolute", bottom: 8, left: 8, padding: "4px 10px", borderRadius: 9999,
+        position: "absolute", bottom: 8, left: 8, padding: "4px 10px", borderRadius: TK_RADIUS,
         background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)",
         fontFamily: "var(--qz-body-font)", fontSize: 10, fontWeight: 700,
         letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(31,26,23,0.7)",
@@ -1333,7 +1685,7 @@ function PdpRating({ value = 3.5, reviews = "10926" }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <TruekindStars rating={value} size={20} color={TK_COLORS.star} />
-      <span style={{ fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 16, lineHeight: "24px", color: TK_COLORS.ink, textDecoration: "underline", cursor: "pointer" }}>
+      <span style={{ fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 16, lineHeight: "24px", color: TK_COLORS.ink }}>
         {reviews} reviews
       </span>
     </div>
@@ -1342,7 +1694,7 @@ function PdpRating({ value = 3.5, reviews = "10926" }) {
 
 function ProductHeader({ compact }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: compact ? 12 : 16 }}>
       <p style={{
         margin: 0, fontFamily: TK_BTN_FONT, fontWeight: 500,
         fontSize: compact ? 24 : 30, lineHeight: compact ? "32px" : "38px", color: TK_COLORS.ink,
@@ -1363,7 +1715,7 @@ function ColorSelector({ colors, value, onChange, ink, accent, compact, action }
     }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         {/* Label: "Color: " regular + name demi bold — Figma 415:24322 */}
-        <div style={{ marginBottom: 8, fontFamily: TK_BTN_FONT, fontSize: 14, lineHeight: "22px", color: "#292929" }}>
+        <div style={{ marginBottom: compact ? 12 : 14, fontFamily: TK_BTN_FONT, fontSize: 14, lineHeight: "22px", color: "#292929" }}>
           <span style={{ fontWeight: 400 }}>Color: </span>
           <span style={{ fontWeight: 600 }}>{current.name}</span>
         </div>
@@ -1373,14 +1725,14 @@ function ColorSelector({ colors, value, onChange, ink, accent, compact, action }
           const isSelected = c.id === value;
           return (
             <button key={c.id} onClick={() => onChange(c.id)} aria-label={c.name} title={c.name} style={{
-              position: "relative", width: 32, height: 32, borderRadius: "50%",
+              position: "relative", width: 32, height: 32, borderRadius: TK_RADIUS,
               border: isSelected ? `2px solid ${TK_COLORS.terra}` : "2px solid transparent",
               padding: 0, cursor: "pointer", background: "transparent",
               display: "grid", placeItems: "center",
               transition: "border-color .15s", boxSizing: "border-box",
             }}>
               <span style={{
-                width: 24, height: 24, borderRadius: "50%",
+                width: 24, height: 24, borderRadius: TK_RADIUS,
                 background: c.hex,
                 border: c.id === "white" ? "1px solid rgba(31,26,23,0.18)" : "none",
                 boxShadow: "inset 0 -2px 6px rgba(0,0,0,0.08)",
@@ -1402,7 +1754,7 @@ function RestartLink({ onClick, ink }) {
       display: "inline-flex", alignItems: "center", gap: 8, background: "transparent",
       border: "1px solid rgba(31,26,23,0.25)", color: ink, cursor: "pointer",
       fontFamily: "var(--qz-body-font)", fontSize: 13, fontWeight: TK_QUIZ_BTN_WEIGHT,
-      padding: "10px 18px", borderRadius: 9999, letterSpacing: "0.02em",
+      padding: "10px 18px", borderRadius: TK_RADIUS, letterSpacing: "0.02em",
       transition: "background .15s, border-color .15s",
     }}
       onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(31,26,23,0.6)"; e.currentTarget.style.background = "rgba(31,26,23,0.04)"; }}
@@ -1465,8 +1817,8 @@ function humanList(arr) {
 
 function BenefitCard({ ink, accent, title, body, glyph }) {
   return (
-    <div style={{ padding: "20px 18px", background: TK_COLORS.paper, border: `1px solid ${TK_COLORS.border}`, borderRadius: 16 }}>
-      <div style={{ width: 56, height: 56, borderRadius: 16, background: TK_COLORS.terraSoft, color: TK_COLORS.terra, display: "grid", placeItems: "center", marginBottom: 14 }}>
+    <div style={{ padding: "20px 18px", background: TK_COLORS.paper, border: `1px solid ${TK_COLORS.border}`, borderRadius: TK_RADIUS }}>
+      <div style={{ width: 56, height: 56, borderRadius: TK_RADIUS, background: TK_COLORS.terraSoft, color: TK_COLORS.terra, display: "grid", placeItems: "center", marginBottom: 14 }}>
         <BenefitGlyph kind={glyph} accent={accent} />
       </div>
       <div style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: 17, color: ink, marginBottom: 6, lineHeight: 1.25, letterSpacing: "-0.005em" }}>{title}</div>
@@ -1547,12 +1899,14 @@ function ReviewQuote({ ink, accent, title, quote, name, age, shape }) {
   return (
     <div style={{
       height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 9,
-      padding: 20, background: "#FAFAFA", border: "1px solid rgba(41,41,41,0.06)", borderRadius: 8,
+      padding: 20, background: "#FAFAFA", border: "1px solid rgba(41,41,41,0.06)", borderRadius: TK_RADIUS,
     }}>
       <div style={{ fontFamily: TK_BTN_FONT, fontWeight: 700, fontSize: 14, lineHeight: "22px", color: "#292929" }}>{title}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{ display: "inline-flex", gap: 1 }} aria-label="5 out of 5 stars">
-          {Array.from({ length: 5 }).map((_, i) => <Star key={i} color="#F5A623" />)}
+          {Array.from({ length: 5 }).map((_, i) => (
+            <TruekindStarIcon key={i} size={12} color={TK_COLORS.star} />
+          ))}
         </span>
         <span style={{ fontFamily: TK_BTN_FONT, fontWeight: 400, fontSize: 12, lineHeight: "16px", color: "#292929" }}>
           {name} · {age} · {shape}
@@ -1584,7 +1938,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
     <div style={{ padding: "0 0 96px" }}>
       <div style={{
         marginTop: compact ? 6 : 12, padding: compact ? "32px 24px" : "48px 36px",
-        background: TK_COLORS.sandSoft, color: ink, borderRadius: 16, textAlign: "center",
+        background: TK_COLORS.sandSoft, color: ink, borderRadius: TK_RADIUS, textAlign: "center",
         position: "relative", overflow: "hidden", animation: "qzunwrap .6s ease-out",
       }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", opacity: 0.7, marginBottom: 14 }}>
@@ -1607,7 +1961,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         </h2>
         <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: 18, display: "flex", gap: 10, flexDirection: compact ? "column" : "row" }}>
           <input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{
-            flex: 1, padding: "17px 20px", borderRadius: 9999, border: "1px solid rgba(31,26,23,0.2)",
+            flex: 1, padding: "17px 20px", borderRadius: TK_RADIUS, border: "1px solid rgba(31,26,23,0.2)",
             background: TK_COLORS.sandSoft, fontFamily: "inherit", fontSize: 15, color: ink, outline: "none",
           }} />
           <PillCTA compact={compact} ink={ink} full={compact} onClick={() => {}}>
@@ -1625,7 +1979,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         <h3 style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 22 : 28, color: ink, margin: "0 0 14px" }}>
           Questions, answered.
         </h3>
-        <div style={{ background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ background: TK_COLORS.sandSoft, border: "1px solid rgba(31,26,23,0.08)", borderRadius: TK_RADIUS, overflow: "hidden" }}>
           {FAQ.map((item, i) => (
             <FaqItem key={i} item={item} open={openFaq === i} onClick={() => setOpenFaq(openFaq === i ? -1 : i)} accent={accent} ink={ink} last={i === FAQ.length - 1} />
           ))}
@@ -1640,7 +1994,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         marginTop: compact ? 24 : 32, display: "grid",
         gridTemplateColumns: compact ? "1fr 1fr" : "repeat(3, 1fr)", gap: 10,
         padding: compact ? "14px 12px" : "20px 22px", border: "1px solid rgba(31,26,23,0.1)",
-        borderRadius: 16, fontSize: 12, color: "rgba(31,26,23,0.7)",
+        borderRadius: TK_RADIUS, fontSize: 12, color: "rgba(31,26,23,0.7)",
       }}>
         <TrustBadge ink={ink}>60-day perfect fit guarantee</TrustBadge>
         <TrustBadge ink={ink}>Free shipping on every order</TrustBadge>
@@ -1653,7 +2007,7 @@ function ScreenGift({ compact, ink, accent, paper, answers, onEdit, onRestart })
         display: "flex", alignItems: "center", gap: 12, boxShadow: "0 -8px 20px rgba(0,0,0,0.04)",
       }}>
         <div style={{
-          width: compact ? 46 : 56, height: compact ? 46 : 56, borderRadius: 8,
+          width: compact ? 46 : 56, height: compact ? 46 : 56, borderRadius: TK_RADIUS,
           background: "repeating-linear-gradient(45deg, rgba(92,31,46,0.07) 0 6px, rgba(92,31,46,0.12) 6px 12px)",
           border: "1px solid rgba(31,26,23,0.1)", flex: "0 0 auto",
         }} />
@@ -1698,7 +2052,7 @@ function FaqItem({ item, open, onClick, accent, ink, last }) {
 function TrustBadge({ ink, children }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12 }}>
-      <span style={{ width: 16, height: 16, borderRadius: 9999, background: "rgba(92,31,46,0.1)", display: "grid", placeItems: "center", color: "var(--qz-accent)", flex: "0 0 auto" }}>
+      <span style={{ width: 16, height: 16, borderRadius: TK_RADIUS, background: "rgba(92,31,46,0.1)", display: "grid", placeItems: "center", color: "var(--qz-accent)", flex: "0 0 auto" }}>
         <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M2 5 L4 7 L8 3" />
         </svg>

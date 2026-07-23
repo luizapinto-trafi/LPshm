@@ -2,7 +2,6 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import type { GetStaticProps, NextPage } from "next";
 import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
-import { TruekindFonts } from "@/landings/truekind/TruekindFonts";
 
 // The quiz reads `window.matchMedia` and runs timers/Image() on mount, so it is
 // a client-only component. Loading it with `ssr: false` avoids a server/client
@@ -13,19 +12,18 @@ const EbraQuizV2 = dynamic(
   { ssr: false }
 );
 
-const EbraQuizV2Page: NextPage = () => {
+const EbraBoxQuizV1Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Truekind — Find Your Perfect Bra Fit Quiz</title>
+        <title>Shapermint — Find Your Perfect Bra Fit Quiz</title>
         <meta
           name="description"
-          content="Take the 15-second Truekind fit quiz and discover the wireless bra made for your breast shape."
+          content="Take the 15-second Shapermint fit quiz and discover the wireless bra made for your breast shape."
         />
         <meta name="robots" content="noindex" />
         <link rel="canonical" href={`https://www.shapermint.com${EbraQuizV2PagePath}`} />
       </Head>
-      <TruekindFonts />
       <EbraQuizV2 />
     </>
   );
@@ -33,4 +31,4 @@ const EbraQuizV2Page: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = () => ({ props: {} });
 
-export default EbraQuizV2Page;
+export default EbraBoxQuizV1Page;

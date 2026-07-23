@@ -22,8 +22,10 @@
     "spaDrListcicleHint": "Path: /pages/the-spa-dr-listcicle — 1:1 body + shared Webflow CSS from try.thespadr.com",
     "spaDrHairQuizCta": "Open — The Spa Dr Hair Quiz",
     "spaDrHairQuizHint": "Path: /pages/hairserum/tsd-hair-quiz — 7-step hair quiz, desktop welcome mirrors the Spa Dr Figma master file",
-    "ebraQuizV2Cta": "Open — EBRA Fit Quiz V2 (email gate)",
-    "ebraQuizV2Hint": "Path: /pages/ebra-quiz-v2 — bundled HTML export; React migration pending"
+    "ebraQuizV2Cta": "Open — Shapermint EBRA Box Quiz V1",
+    "ebraQuizV2Hint": "Path: /pages/ebra-box-quiz-v1 — Shapermint DS (Avenir, peach CTAs, SHM logo)",
+    "ebraBoxQuizV2Cta": "Open — ShaperBox Preference Quiz V2",
+    "ebraBoxQuizV2Hint": "Path: /pages/box-quiz-v2 — categories + sizes → Club+ TBYB offer"
   },
   "catalog": {
     "title": "Component Catalog"

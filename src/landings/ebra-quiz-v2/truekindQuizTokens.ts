@@ -1,69 +1,88 @@
 /**
- * Truekind design tokens for the breast-shape fit quiz.
- * Mapped to shapermint-design-system/colors_and_type.css + Truekind landings.
+ * Shapermint design tokens for the breast-shape fit quiz.
+ * Mapped to shapermint-design-system/colors_and_type.css.
+ *
+ * Export names keep the TK_ prefix so EbraQuizV2 call sites stay stable.
+ *
+ * Contrast rule: peach (--coral-300) is for fills (CTAs, chips, washes).
+ * Text on light backgrounds uses --coral-500 / --sale so copy stays AA.
  */
 
-export const TK_FONT = '"Circular XX", system-ui, sans-serif';
+export const TK_FONT = '"Avenir Next LT Pro", "Avenir Next", system-ui, sans-serif';
 
-/** Quiz answer chips / shape cards — Demi (600). CTAs stay bold (700). */
+/** Quiz chips + primary CTAs — Avenir Next LT Pro Demi (600). */
 export const TK_QUIZ_BTN_WEIGHT = 600;
 
 export const TK_COLORS = {
-  /** Warm section background — Truekind features (#f7f4ee) */
-  paper: "#f7f4ee",
+  /** Creamy section background — --cream-100 */
+  paper: "#FAF7F2",
   /** Body text — --ink-900 */
   ink: "#292929",
-  /** Headings / CTA fill — Truekind black */
-  inkStrong: "#1c1b1a",
-  /** Brand sale red — --coral-500 / --sale (emphasis copy) */
-  accent: "#C64844",
-  /** CTA hover — --coral-450 */
-  accentHover: "#D4605B",
+  /** Headings — --ink-900 */
+  inkStrong: "#292929",
+  /** Peach fill — --coral-300 (CTA bg, chips, decorative washes) */
+  accent: "#F7A08B",
+  /** Accessible text accent — --coral-500 / --sale (headlines, body emphasis) */
+  accentText: "#C64844",
+  /** CTA / peach hover */
+  accentHover: "#E08F7C",
   /** Soft peach tint — --coral-200 */
   surface: "#FBD0C7",
-  /** TKD DS — TERRA: secondary (borders, icons, checkmarks) */
-  terra: "#EB9F79",
-  /** TKD DS — SAND: canonical background */
-  sand: "#FCD7B8",
-  /** Soft wash — SAND lightened for unselected chip fills */
-  sandSoft: "#FEF4EA",
-  /** Soft wash — TERRA lightened for selected chip fills */
-  terraSoft: "#FAE5D6",
-  /** Rating stars — DS "Attention – Sunlight" */
-  star: "#F2D96F",
-  muted: "rgba(28, 27, 26, 0.65)",
-  border: "rgba(28, 27, 26, 0.12)",
-  /** Subtle border on soft sand chips */
-  chipBorder: "rgba(235, 159, 121, 0.28)",
+  /** Soft peach for rings / icons — --coral-250 */
+  terra: "#F5BAB0",
+  /** Soft wash — --coral-075 */
+  sand: "#FDF1EF",
+  /** Soft wash — section tints — --coral-050 */
+  sandSoft: "#FFF6EF",
+  /** Soft wash — selected chip fills — --coral-100 */
+  terraSoft: "#FCE7E3",
+  /** Rating stars — --gold-500 */
+  star: "#EECC3F",
+  /** Success / confirmation — --mint-600 */
+  mint: "#4CBEA4",
+  muted: "rgba(41, 41, 41, 0.55)",
+  border: "rgba(41, 41, 41, 0.12)",
+  /** Subtle border on soft peach chips (selected / decorative) */
+  chipBorder: "rgba(247, 160, 139, 0.35)",
 } as const;
 
-/** Selected answer chips / shape cards — soft TERRA fill + TERRA ring. */
+/** Selected answer chips / shape cards — soft peach fill + peach ring. */
 export const TK_SELECTED = {
   bg: TK_COLORS.terraSoft,
-  border: TK_COLORS.terra,
+  border: TK_COLORS.accent,
   fg: TK_COLORS.ink,
-  glyph: TK_COLORS.terra,
-  checkBg: TK_COLORS.terra,
-  checkFg: "#ffffff",
+  glyph: TK_COLORS.accentHover,
+  checkBg: TK_COLORS.accent,
+  checkFg: "#292929",
 } as const;
 
-/** Unselected quiz chips — soft SAND fill. */
+/**
+ * Unselected option pills — warm off-white fill, tan border, charcoal text.
+ * Radius stays TK_RADIUS (8px); only colors change.
+ */
 export const TK_CHIP = {
-  bg: TK_COLORS.sandSoft,
-  border: TK_COLORS.chipBorder,
-  fg: TK_COLORS.ink,
+  bg: "#FDFBF9",
+  border: "#DED8D3",
+  fg: "#3A3A3A",
 } as const;
 
-/** Primary quiz CTAs — black pill (matches TruekindPdp .pdp-cta). */
+/**
+ * Primary quiz CTAs — peach fill + dark Demi text (Shapermint DS).
+ * Shared radius for all rectangular components.
+ */
+export const TK_RADIUS = 8;
+
 export const TK_BTN = {
-  primary: TK_COLORS.inkStrong,
-  primaryHover: "#000000",
-  primaryFg: "#ffffff",
+  primary: "#F7A08B",
+  primaryHover: "#E08F7C",
+  primaryFg: "#1B1B1B",
   disabledBg: "#E5E5E5",
   disabledFg: "#A6A6A6",
+  radius: TK_RADIUS,
+  weight: 600,
 } as const;
 
-/** Product swatch hex values — matches TruekindProductsSection TONES. */
+/** Product swatch hex values — wireless bra tones. */
 export const TK_PRODUCT_TONES = {
   black: "#1c1b1a",
   chai: "#d8c4a8",
@@ -72,9 +91,9 @@ export const TK_PRODUCT_TONES = {
   cocoa: "#6f4e38",
 } as const;
 
-export const TK_LOGO = "/truekind/logo.svg";
+export const TK_LOGO = "/ebra-quiz-v2/assets/shapermint-logo-dark.png";
 
-/** Size-chart cell fills — exact hex from the live truekind.com PDP size chart. */
+/** Size-chart cell fills — same palette as the live size chart. */
 export const TK_SIZE_CHART_COLORS: Record<string, string> = {
   S: "#F7A08B",
   M: "#FFE1B8",
@@ -85,5 +104,5 @@ export const TK_SIZE_CHART_COLORS: Record<string, string> = {
   "4XL": "#E7C9B2",
 };
 
-/** Row/column header wash — matches the live chart's cream header cells. */
+/** Row/column header wash — creamy header cells. */
 export const TK_SIZE_CHART_HEAD_BG = "#FFF6EF";

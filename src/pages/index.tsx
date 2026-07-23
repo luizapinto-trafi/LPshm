@@ -12,6 +12,7 @@ import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/g
 import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
 import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
 import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
+import { EbraBoxQuizV2PagePath } from "@/landings/ebra-box-quiz-v2/ebraBoxQuizV2Path";
 import { ShapermintUpsellPagePath, ShapermintUpsellV2PagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
 import { NewLandingPagePath } from "@/landings/new-landing/newLandingPath";
 import { TruekindPagePath } from "@/landings/truekind/truekindPath";
@@ -199,6 +200,11 @@ export const HomePage = () => {
         <StyledLandingCard>
           <StyledCta href={EbraQuizV2PagePath}>{t("home.ebraQuizV2Cta")}</StyledCta>
           <StyledHint>{t("home.ebraQuizV2Hint")}</StyledHint>
+        </StyledLandingCard>
+
+        <StyledLandingCard>
+          <StyledCta href={EbraBoxQuizV2PagePath}>{t("home.ebraBoxQuizV2Cta")}</StyledCta>
+          <StyledHint>{t("home.ebraBoxQuizV2Hint")}</StyledHint>
         </StyledLandingCard>
 
         <StyledLandingCard>
