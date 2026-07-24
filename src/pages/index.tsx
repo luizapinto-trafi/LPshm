@@ -3,27 +3,46 @@ import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import type { GetStaticProps } from "next";
-import { TruekindBraPagePath } from "@/landings/truekind-bra-offer/truekindBraCdn";
-import { GrunsPagePath } from "@/landings/gruns-first-order/grunsCdn";
-import { StraplessPagePath } from "@/landings/strapless-landing/straplessCdn";
-import { StraplessB1g1GiftLpPagePath } from "@/landings/strapless-b1g1-gift-lp/straplessB1g1Cdn";
-import { GrunsOlipopPagePath } from "@/landings/gruns-first-order-olipop/grunsOlipopCdn";
-import { GummiesDuplicatePagePath } from "@/landings/gummies-duplicate-landing/gummiesDuplicateCdn";
-import { WeddingsPagePath } from "@/landings/weddings/weddingsCdn";
-import { SpaDrListciclePagePath } from "@/landings/the-spa-dr-listcicle/spaDrListcicleCdn";
-import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
-import { EbraBoxQuizV2PagePath } from "@/landings/ebra-box-quiz-v2/ebraBoxQuizV2Path";
-import { ShapermintUpsellPagePath, ShapermintUpsellV2PagePath } from "@/landings/shapermint-upsell/shapermintUpsellPath";
-import { NewLandingPagePath } from "@/landings/new-landing/newLandingPath";
-import { TruekindPagePath } from "@/landings/truekind/truekindPath";
+
+/**
+ * Design-lab index — a visual catalog of every landing/screen in this repo.
+ * Each card is a live, scaled-down iframe preview (always current, no captured
+ * thumbnails to maintain) wrapped in a link to the full page.
+ */
+type Landing = { href: string; title: string };
+
+const LANDINGS: Landing[] = [
+  { href: "/pages/truekind/supportive-comfort-wireless-shaping-bra", title: "Truekind — Supportive Comfort PDP" },
+  { href: "/pages/truekind", title: "Truekind — Black Friday in July" },
+  { href: "/pages/truekind-supportive-comfort-wireless-shaping-bra-offer-page-1", title: "Truekind Bra — Offer Page 1" },
+  { href: "/pages/gruns-first-order", title: "Grüns — First Order" },
+  { href: "/pages/gruns-first-order-olipop", title: "Grüns — First Order · Olipop" },
+  { href: "/pages/gummies-duplicate-landing", title: "Gummies — Duplicate Landing" },
+  { href: "/pages/strapless-landing", title: "Strapless — Landing" },
+  { href: "/pages/strapless-b1g1-gift-lp", title: "Strapless — B1G1 + Gift LP" },
+  { href: "/pages/weddings", title: "Weddings" },
+  { href: "/pages/the-spa-dr-listcicle", title: "The Spa Dr — Listicle" },
+  { href: "/pages/hairserum/tsd-hair-quiz", title: "The Spa Dr — Hair Quiz" },
+  { href: "/pages/hairserum/lp1-lead-offershort-list-tox-v2", title: "Hair Serum — LP1 Lead Offer" },
+  { href: "/pages/ebra-quiz-v2", title: "eBra — Quiz V2" },
+  { href: "/pages/shapermint-upsell", title: "Shapermint — Cami Upsell" },
+  { href: "/pages/shapermint-upsell-v2", title: "Shapermint — Cami Upsell V2" },
+  { href: "/pages/shapermint-concept", title: "Shapermint — Concept" },
+  { href: "/pages/shapermint-vs-honeylove-shapewear", title: "Shapermint vs. Honeylove" },
+  { href: "/pages/quiz", title: "Quiz" },
+  { href: "/pages/gamification", title: "Gamification" },
+  { href: "/pages/new-landing", title: "New Landing · blank canvas" },
+  { href: "/pages/blank", title: "Blank page" },
+];
 
 const StyledMain = styled.main`
   min-height: 100vh;
-  max-width: 40rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: var(--space-1200) var(--space-500);
+  padding: var(--space-800) clamp(12px, 4vw, var(--space-500)) var(--space-1200);
   color: var(--ink-900);
   font-family: var(--font-body);
+  overflow-x: hidden;
 `;
 
 const StyledH1 = styled.h1`
@@ -32,46 +51,38 @@ const StyledH1 = styled.h1`
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.2;
-  margin: 0 0 var(--space-400) 0;
+  margin: 0 0 var(--space-200) 0;
 `;
 
 const StyledP = styled.p`
   color: var(--ink-700);
   font-size: 1rem;
   line-height: 1.5;
-  margin: 0 0 var(--space-600) 0;
+  margin: 0 0 var(--space-700) 0;
 `;
 
-const StyledLandings = styled.div`
-  display: flex;
-  flex-direction: column;
+const StyledGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 340px);
+  justify-content: center;
   gap: var(--space-600);
 `;
 
-const StyledLandingCard = styled.div`
-  padding: var(--space-500);
-  background: var(--ink-050);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--ink-200);
-`;
-
-const StyledCta = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: var(--space-300) var(--space-600);
-  background: var(--coral-500);
-  color: var(--white) !important;
-  border-radius: var(--radius-lg);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 14px;
+const StyledCard = styled(Link)`
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
-  text-align: center;
-  letter-spacing: 0.04em;
+  color: inherit;
+  border: 1px solid var(--ink-200);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
   &:hover {
-    background: var(--coral-450);
+    border-color: var(--ink-400);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
@@ -79,159 +90,80 @@ const StyledCta = styled(Link)`
   }
 `;
 
-const StyledGrunsCta = styled(StyledCta)`
-  background: var(--gruns-primary);
-  &:hover {
-    background: var(--gruns-primary-light);
+/* Virtual viewport 1360x850 scaled by 0.25 → a 340x212.5 thumbnail. */
+const StyledThumb = styled.div`
+  position: relative;
+  width: 340px;
+  height: 213px;
+  overflow: hidden;
+  background: var(--ink-050);
+  border-bottom: 1px solid var(--ink-200);
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1360px;
+    height: 850px;
+    border: 0;
+    transform: scale(0.25);
+    transform-origin: top left;
+    pointer-events: none;
+  }
+
+  /* Transparent overlay so the whole card is clickable and mini-page inert. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
   }
 `;
 
-const StyledHint = styled.p`
-  color: var(--ink-500);
-  font-size: 12px;
-  line-height: 1.4;
-  margin: var(--space-400) 0 0 0;
+const StyledMeta = styled.div`
+  padding: var(--space-400) var(--space-400) var(--space-450);
 `;
 
-const StyledB1g1Block = styled.div`
-  margin-top: var(--space-500);
-  padding-top: var(--space-400);
-  border-top: 1px solid var(--ink-200);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-200);
-`;
-
-const StyledB1g1Title = styled.h3`
+const StyledTitle = styled.h2`
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.3;
-  color: var(--ink-900);
+  color: var(--ink-1000);
 `;
 
-const StyledB1g1GiftLpLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--coral-500);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  &:hover {
-    color: var(--coral-450);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--ink-900);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-`;
-
-const StyledB1g1Hint = styled(StyledHint)`
-  margin-top: var(--space-100);
+const StyledPath = styled.p`
+  margin: var(--space-100) 0 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-500);
+  word-break: break-all;
 `;
 
 export const HomePage = () => {
   const { t } = useTranslation("common");
   return (
     <StyledMain>
-      <StyledH1>{t("home.title")}</StyledH1>
-      <StyledP>{t("home.lead")}</StyledP>
+      <StyledH1>{t("home.title", { defaultValue: "Landing Pages Design Lab" })}</StyledH1>
+      <StyledP>
+        {t("home.lead", {
+          defaultValue: `${LANDINGS.length} screens. Each card is a live preview — click to open the full page.`,
+        })}
+      </StyledP>
 
-      <StyledLandings>
-        <StyledLandingCard>
-          <StyledCta href={TruekindBraPagePath}>{t("home.truekindCta")}</StyledCta>
-          <StyledHint>{t("home.truekindHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledGrunsCta href={GrunsPagePath}>{t("home.grunsCta")}</StyledGrunsCta>
-          <StyledHint>{t("home.grunsHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={StraplessPagePath}>{t("home.straplessCta")}</StyledCta>
-          <StyledHint>{t("home.straplessHint")}</StyledHint>
-          <StyledB1g1Block>
-            <StyledB1g1Title>{t("home.straplessB1g1GiftLpTitle", { defaultValue: "B1G1 + Gift LP" })}</StyledB1g1Title>
-            <StyledB1g1GiftLpLink href={StraplessB1g1GiftLpPagePath}>
-              {t("home.straplessB1g1GiftLpCta", { defaultValue: "Open — B1G1 + Gift LP" })}
-            </StyledB1g1GiftLpLink>
-            <StyledB1g1Hint>
-              {t("home.straplessB1g1GiftLpHint", {
-                defaultValue:
-                  "Path: /pages/strapless-b1g1-gift-lp — duplicate of strapless landing (same layout & assets).",
-              })}
-            </StyledB1g1Hint>
-          </StyledB1g1Block>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledGrunsCta href={GrunsOlipopPagePath}>{t("home.grunsOlipopCta")}</StyledGrunsCta>
-          <StyledHint>{t("home.grunsOlipopHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledGrunsCta href={GummiesDuplicatePagePath}>{t("home.gummiesDuplicateCta")}</StyledGrunsCta>
-          <StyledHint>{t("home.gummiesDuplicateHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={WeddingsPagePath}>{t("home.weddingsCta")}</StyledCta>
-          <StyledHint>{t("home.weddingsHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={SpaDrListciclePagePath}>{t("home.spaDrListcicleCta")}</StyledCta>
-          <StyledHint>{t("home.spaDrListcicleHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href="/pages/hairserum/tsd-hair-quiz">{t("home.spaDrHairQuizCta")}</StyledCta>
-          <StyledHint>{t("home.spaDrHairQuizHint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={EbraQuizV2PagePath}>{t("home.ebraQuizV2Cta")}</StyledCta>
-          <StyledHint>{t("home.ebraQuizV2Hint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={EbraBoxQuizV2PagePath}>{t("home.ebraBoxQuizV2Cta")}</StyledCta>
-          <StyledHint>{t("home.ebraBoxQuizV2Hint")}</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={ShapermintUpsellPagePath}>Open — Shapermint Cami Upsell (clone)</StyledCta>
-          <StyledHint>Path: /pages/shapermint-upsell — faithful static clone of the checkout upsell page</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={ShapermintUpsellV2PagePath}>Open — Shapermint Cami Upsell (V2 · savings-first copy)</StyledCta>
-          <StyledHint>Path: /pages/shapermint-upsell-v2 — same layout, rewritten headline (2 for 1 + 20% OFF)</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={NewLandingPagePath}>Open — New Landing (blank canvas)</StyledCta>
-          <StyledHint>Path: /pages/new-landing — empty starting point for a brand-new landing</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href={TruekindPagePath}>Open — Truekind (blank canvas)</StyledCta>
-          <StyledHint>Path: /pages/truekind — empty starting point for the Truekind landing</StyledHint>
-        </StyledLandingCard>
-
-        <StyledLandingCard>
-          <StyledCta href="/pages/blank">Open — Blank page</StyledCta>
-          <StyledHint>Path: /pages/blank — empty canvas for new landing work</StyledHint>
-        </StyledLandingCard>
-      </StyledLandings>
+      <StyledGrid>
+        {LANDINGS.map((l) => (
+          <StyledCard key={l.href} href={l.href} aria-label={l.title}>
+            <StyledThumb>
+              <iframe src={l.href} title={l.title} loading="lazy" scrolling="no" tabIndex={-1} aria-hidden />
+            </StyledThumb>
+            <StyledMeta>
+              <StyledTitle>{l.title}</StyledTitle>
+              <StyledPath>{l.href}</StyledPath>
+            </StyledMeta>
+          </StyledCard>
+        ))}
+      </StyledGrid>
     </StyledMain>
   );
 };
