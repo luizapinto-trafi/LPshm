@@ -46,6 +46,9 @@ const CSS = `
 .shl h1{font-size:40px;line-height:1.15;font-weight:900;letter-spacing:-.01em;margin-bottom:16px;}
 .shl .byline{display:flex;align-items:center;gap:12px;color:var(--ink-faint);font-size:14px;padding-bottom:22px;border-bottom:1px solid var(--line);}
 .shl .byline .avatar-mini{width:34px;height:34px;border-radius:50%;flex:0 0 auto;overflow:hidden;}
+/* Author avatars — circular crop, never squashed */
+.shl .avatar-img{width:34px;height:34px;min-width:34px;border-radius:50%;object-fit:cover;flex:0 0 auto;display:block;}
+.shl .bio-av-img{width:64px;height:64px;min-width:64px;}
 
 /* ---- TOC ---- */
 .shl .toc{background:var(--cream-2);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:26px 0;}
@@ -197,7 +200,7 @@ const HTML = `
     <div class="eyebrow">Shapewear Comparison</div>
     <h1>Shapermint vs. Honeylove: Price, Reviews, and Real-World Value</h1>
     <div class="byline">
-      <div class="img-ph avatar"></div>
+      <img class="avatar-img" src="/shapermint-vs-honeylove/author.webp" alt="Rachel Mercer" width="34" height="34" loading="lazy">
       <span>July&nbsp;18, 2026 &nbsp;·&nbsp; by Rachel Mercer, Style &amp; Fit Editor</span>
     </div>
   </header>
@@ -357,7 +360,7 @@ const HTML = `
     </div>
 
     <div class="bio">
-      <div class="img-ph bio-av"></div>
+      <img class="avatar-img bio-av-img" src="/shapermint-vs-honeylove/author.webp" alt="Rachel Mercer" width="64" height="64" loading="lazy">
       <div>
         <div class="who">Rachel Mercer</div>
         <p>Rachel Mercer is a style and fit writer who covers shapewear, bras, and everyday essentials for real bodies.</p>
