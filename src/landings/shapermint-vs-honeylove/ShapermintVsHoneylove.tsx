@@ -98,9 +98,10 @@ const CSS = `
 
 /* ---- CTA ---- */
 .shl .cta-row{margin:20px 0 6px;}
-.shl .cta{display:inline-block;background:var(--coral);color:#fff;font-weight:700;font-size:15px;letter-spacing:.02em;padding:14px 28px;border-radius:999px;transition:background .15s ease,transform .15s ease;}
-.shl .cta:hover{background:var(--brick);transform:translateY(-1px);}
-.shl .cta.big{display:block;text-align:center;font-size:17px;padding:16px 28px;}
+/* SHM Design System — primary button (default + hover) */
+.shl .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 32px;border:0;border-radius:var(--radius-lg,8px);background:var(--coral-300,#F7A08B);color:var(--ink-700,#3A3A3A);font-family:var(--brand-font);font-weight:600;font-size:16px;line-height:20px;transition:background .15s ease,color .15s ease;}
+.shl .cta:hover{background:var(--coral-200,#FBD0C7);color:var(--ink-700,#3A3A3A);}
+.shl .cta.big{width:100%;}
 
 /* ---- New-launch highlight ---- */
 .shl .spotlight{background:linear-gradient(180deg,var(--cream) 0%,var(--peach) 100%);border:1px solid #f0dcc9;border-radius:16px;padding:26px;margin:56px 0;}
