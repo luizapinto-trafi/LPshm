@@ -281,7 +281,7 @@ const HTML = `
       </div>
     </div>
     <p>Same medium compression. Same breathable, moderate-to-high support. Same anti-roll-down. One costs about a third as much in a 2-pack — with more than fifteen times the reviews, at a higher rating.</p>
-    <div class="cta-row"><a class="cta" href="https://shapermint.com/products/shapermint-essentials-everyday-empower-high-waisted-shaper-short-1">See the Everyday Empower Short »</a></div>
+    <div class="cta-row"><a class="cta" href="https://shapermint.com/products/shapermint-essentials-everyday-empower-high-waisted-shaper-short-1">See the Everyday Empower Short</a></div>
 
     <h3>Head-to-head: the cami</h3>
     <div class="h2h">
@@ -303,14 +303,14 @@ const HTML = `
       </div>
     </div>
     <p>Both smooth and support beautifully. But at $21.99, the Empetua Cami costs less than a quarter of the bodysuit. And it's backed by <strong>18,666 reviews</strong> at 4.5 stars. That's not a marketing number. That's what happens when a product works — at a price women say yes to again and again. More reviews, from more women, in more countries. Shapermint is worn worldwide, and the review count shows it.</p>
-    <div class="cta-row"><a class="cta" href="https://shapermint.com/products/empetua-all-day-every-day-scoop-neck-cami-12">Shop the Empetua Cami »</a></div>
+    <div class="cta-row"><a class="cta" href="https://shapermint.com/products/empetua-all-day-every-day-scoop-neck-cami-12">Shop the Empetua Cami</a></div>
 
     <div class="spotlight">
       <div class="badge">New &amp; worth a look</div>
       <h3>The Sweetheart Built-In Bra Cami</h3>
       <img class="hero-img" src="/shapermint-vs-honeylove/sweetheart-cami.webp" alt="Shapermint Sweetheart Built-In Bra Shaper Cami — worn on its own, a close-up of the built-in bra, and layered under a blazer" width="1600" height="900" loading="lazy">
       <p>Shapermint just launched the <strong>Sweetheart Built-In Bra Shaper Cami</strong> — and it's already one of its most-loved new pieces. <strong>2,242 reviews · 4.5★</strong> out of the gate. It's the Empetua Cami you love, upgraded with a <strong>built-in wireless bra</strong>. No separate bra needed. The <strong>sweetheart neckline</strong> makes it easy to layer under almost anything, or wear on its own. It runs a little higher — <strong>$38.99, or 2 for $32.99 each</strong> — for that added built-in support. And it's fast becoming a best-selling everyday essential.</p>
-      <div class="cta-row"><a class="cta" href="https://shapermint.com/products/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-1">Meet the Sweetheart Cami »</a></div>
+      <div class="cta-row"><a class="cta" href="https://shapermint.com/products/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-1">Meet the Sweetheart Cami</a></div>
     </div>
 
     <h3>Price comparison</h3>
@@ -338,7 +338,7 @@ const HTML = `
       </div>
     </div>
     <div class="core"><p style="margin:0">Core difference: both brands make good shapewear. Honeylove charges a premium for a boutique line. Shapermint uses its retail scale to deliver comparable comfort and support for far less — and lets a mountain of reviews do the talking. <strong>If price and proof matter most to you, Shapermint is the easy call.</strong></p></div>
-    <div class="cta-row"><a class="cta big" href="https://shapermint.com/collections/shapewear">Shop Shapermint shapewear »</a></div>
+    <div class="cta-row"><a class="cta big" href="https://shapermint.com/collections/shapewear">Shop Shapermint shapewear</a></div>
 
     <h2 id="faq">Frequently Asked Questions</h2>
     <div class="faq">
