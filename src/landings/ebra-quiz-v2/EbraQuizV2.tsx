@@ -21,6 +21,9 @@ import { TK_BTN, TK_CHIP, TK_COLORS, TK_FONT, TK_LOGO, TK_PRODUCT_TONES, TK_QUIZ
 
 const IMG = (p: string) => `/ebra-quiz-v2/${p}`;
 
+const SHOP_MATCH_URL =
+  "https://shapermint.com/products/lp2-truekind-supportive-comfort-wireless-shaping-bra-1?variant=42135113007238";
+
 // ─── Tokens (Shapermint DS) ──────────────────────────────────────────────────
 const DEFAULTS = {
   paper: TK_COLORS.paper,
@@ -1147,11 +1150,29 @@ function Spinner({ accent }) {
   return <div style={{ width: 56, height: 56, borderRadius: 9999, border: "2px solid rgba(31,26,23,0.08)", borderTopColor: accent, animation: "qzspin 0.9s linear infinite" }} />;
 }
 
-// ─── Screen 6.5 · Email gate ────────────────────────────────────────────────────
-function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onUnlock, onBack }) {
+// ─── Screen 6 · Email gate (before reveal) ──────────────────────────────────────
+function ScreenEmailGate({ compact, ink, accent, surface, onUnlock, onBack }) {
   const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
   const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
+  const fieldStyle = {
+    width: "100%", boxSizing: "border-box",
+    padding: compact ? "14px 16px" : "16px 18px",
+    borderRadius: TK_RADIUS,
+    border: "1.5px solid rgba(41,41,41,0.18)",
+    background: "#fff",
+    fontFamily: "var(--qz-body-font)",
+    fontSize: compact ? 16 : 17,
+    color: ink,
+    outline: "none",
+    textAlign: "left",
+  };
+
+  const setBorder = (el, active) => {
+    el.style.borderColor = active ? TK_COLORS.inkStrong : "rgba(41,41,41,0.18)";
+  };
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -1159,80 +1180,138 @@ function ScreenEmailGate({ compact, ink, accent, paper, pinkAccent, surface, onU
     setSubmitting(true);
     setTimeout(() => {
       setSubmitting(false);
-      onUnlock(email.trim());
+      onUnlock(email.trim(), phone.trim());
     }, 380);
   };
 
   return (
-    <div style={{
-      flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      padding: compact ? "24px 8px 32px" : "36px 0 56px", maxWidth: compact ? "100%" : 560,
-      margin: "0 auto", width: "100%", textAlign: "center",
-    }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", width: "100%" }}>
+      <ProgressBar step={4} total={4} accent={accent} ink={ink} compact={compact} onBack={onBack} />
+
       <div style={{
-        width: compact ? 56 : 64, height: compact ? 56 : 64, borderRadius: TK_RADIUS,
-        background: surface || "#FCD9D1", color: accent, display: "grid", placeItems: "center",
-        marginBottom: compact ? 22 : 28, animation: "qzunwrap .5s cubic-bezier(.2,.7,.3,1) both",
+        flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+        padding: compact ? "0 0 32px" : "0 0 48px",
+        maxWidth: compact ? "100%" : 520,
+        margin: "0 auto", width: "100%", textAlign: "center",
       }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 12 L 10 18 L 20 6" />
-        </svg>
-      </div>
+        <h1 style={{
+          fontFamily: "var(--qz-headline-font)", fontWeight: 700,
+          fontSize: compact ? 24 : 30, lineHeight: 1.25, letterSpacing: "-0.015em",
+          margin: 0, color: ink, textWrap: "balance",
+        }}>
+          Fill in your details &amp; we&apos;ll email your product match.
+          {" "}You&apos;ll also get the results on the next page.
+        </h1>
 
-      <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: accent, marginBottom: 10 }}>
-        Quiz complete
-      </div>
-
-      <h1 style={{
-        fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 36 : 52,
-        lineHeight: 1.05, letterSpacing: "-0.018em", margin: 0, color: ink, textWrap: "balance",
-      }}>
-        Your results <em style={{ color: accent }}>are ready.</em>
-      </h1>
-
-      <p style={{
-        margin: compact ? "14px 0 28px" : "18px 0 36px", fontSize: compact ? 15 : 17,
-        color: "rgba(31,26,23,0.7)", maxWidth: "40ch", lineHeight: 1.5,
-        marginLeft: "auto", marginRight: "auto", textWrap: "pretty",
-      }}>
-        We'll send your <strong style={{ color: ink, fontWeight: 700 }}>perfect match</strong> to your inbox.
-      </p>
-
-      <form onSubmit={handleSubmit} style={{ width: "100%", display: "flex", flexDirection: "column", gap: compact ? 12 : 14, alignItems: "stretch", maxWidth: 420, marginLeft: "auto", marginRight: "auto" }}>
-        <input type="email" inputMode="email" autoComplete="email" placeholder="Enter your email…" value={email} onChange={(e) => setEmail(e.target.value)} required
+        <form
+          onSubmit={handleSubmit}
           style={{
-            width: "100%", boxSizing: "border-box", padding: compact ? "16px 20px" : "18px 22px",
-            borderRadius: TK_RADIUS, border: "1px solid rgba(31,26,23,0.18)", background: "#fff",
-            fontFamily: "var(--qz-body-font)", fontSize: compact ? 15 : 16, color: ink,
-            outline: "none", textAlign: "center", transition: "border-color .15s, box-shadow .15s",
+            width: "100%", display: "flex", flexDirection: "column",
+            gap: compact ? 14 : 16, alignItems: "stretch",
+            marginTop: compact ? 24 : 28,
           }}
-          onFocus={(e) => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.boxShadow = `0 0 0 3px ${accent}22`; }}
-          onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(31,26,23,0.18)"; e.currentTarget.style.boxShadow = "none"; }}
-        />
-
-        <button type="submit" disabled={!valid || submitting} style={{
-          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-          width: "100%", padding: compact ? "14px 20px" : "16px 24px", borderRadius: TK_RADIUS, border: "none",
-          background: valid ? TK_BTN.primary : TK_BTN.disabledBg,
-          color: valid ? TK_BTN.primaryFg : TK_BTN.disabledFg,
-          fontFamily: TK_BTN_FONT, fontSize: compact ? 14 : 15, fontWeight: TK_BTN.weight,
-          lineHeight: compact ? "20px" : "22px",
-          letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
-          cursor: valid && !submitting ? "pointer" : "not-allowed",
-          transition: "background .15s, transform .12s",
-        }}
-          onMouseEnter={(e) => { if (valid && !submitting) e.currentTarget.style.background = TK_BTN.primaryHover; }}
-          onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; if (valid) e.currentTarget.style.background = TK_BTN.primary; }}
-          onMouseDown={(e) => { if (valid && !submitting) e.currentTarget.style.transform = "translateY(1px)"; }}
-          onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
         >
-          {submitting ? "Unlocking…" : "Unlock my match & gift"}
-        </button>
+          <label style={{ display: "block" }}>
+            <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>Email</span>
+            <input
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your Email"
+              style={fieldStyle}
+              onFocus={(e) => setBorder(e.currentTarget, true)}
+              onBlur={(e) => setBorder(e.currentTarget, false)}
+              onMouseEnter={(e) => { if (document.activeElement !== e.currentTarget) setBorder(e.currentTarget, true); }}
+              onMouseLeave={(e) => { if (document.activeElement !== e.currentTarget) setBorder(e.currentTarget, false); }}
+            />
+          </label>
 
-        <div style={{ marginTop: 4, fontSize: 11.5, color: "rgba(31,26,23,0.55)", lineHeight: 1.45, textWrap: "pretty" }}>
-          By entering your email, you agree to receive marketing emails from Shapermint. Unsubscribe anytime.
+          <div style={{ position: "relative" }}>
+            <span style={{
+              position: "absolute", left: 14, top: -8, zIndex: 1,
+              padding: "0 6px", background: TK_COLORS.paper,
+              fontFamily: "var(--qz-body-font)", fontSize: 10, fontWeight: 700,
+              letterSpacing: "0.12em", textTransform: "uppercase", color: accent,
+            }}>
+              Optional
+            </span>
+            <label style={{ display: "block" }}>
+              <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>Phone</span>
+              <input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Your Phone"
+                style={fieldStyle}
+                onFocus={(e) => setBorder(e.currentTarget, true)}
+                onBlur={(e) => setBorder(e.currentTarget, false)}
+                onMouseEnter={(e) => { if (document.activeElement !== e.currentTarget) setBorder(e.currentTarget, true); }}
+                onMouseLeave={(e) => { if (document.activeElement !== e.currentTarget) setBorder(e.currentTarget, false); }}
+              />
+            </label>
+          </div>
+
+          <div style={{
+            display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+            padding: compact ? "12px 14px" : "14px 16px",
+            borderRadius: TK_RADIUS,
+            background: surface || TK_COLORS.surface,
+            border: `1px solid ${TK_COLORS.chipBorder}`,
+          }}>
+            <span style={{
+              flex: "0 0 auto", width: 28, height: 28, borderRadius: TK_RADIUS,
+              background: "#fff", color: accent, display: "grid", placeItems: "center",
+            }}>
+              <GiftSvg size={16} />
+            </span>
+            <p style={{ margin: 0, fontSize: compact ? 14 : 15, lineHeight: 1.45, color: ink, textWrap: "pretty" }}>
+              Get <strong style={{ fontWeight: 700 }}>40% off</strong> your first order when you sign up for text messages.
+            </p>
+          </div>
+
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45, color: "rgba(41,41,41,0.7)" }}>
+            By continuing, you agree to our{" "}
+            <a href="https://www.shapermint.com/pages/terms-of-service" target="_blank" rel="noreferrer" style={{ color: ink, textDecoration: "underline" }}>Terms</a>
+            {" "}and{" "}
+            <a href="https://www.shapermint.com/pages/privacy-policy" target="_blank" rel="noreferrer" style={{ color: ink, textDecoration: "underline" }}>Privacy Policy</a>
+          </p>
+
+          <button
+            type="submit"
+            disabled={!valid || submitting}
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+              width: "100%", padding: compact ? "14px 20px" : "16px 24px",
+              borderRadius: TK_RADIUS, border: "none",
+              background: valid ? TK_BTN.primary : TK_BTN.disabledBg,
+              color: valid ? TK_BTN.primaryFg : TK_BTN.disabledFg,
+              fontFamily: TK_BTN_FONT, fontSize: compact ? 14 : 15, fontWeight: TK_BTN.weight,
+              lineHeight: compact ? "20px" : "22px",
+              letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
+              cursor: valid && !submitting ? "pointer" : "not-allowed",
+              transition: "background .15s",
+            }}
+            onMouseEnter={(e) => { if (valid && !submitting) e.currentTarget.style.background = TK_BTN.primaryHover; }}
+            onMouseLeave={(e) => { if (valid) e.currentTarget.style.background = TK_BTN.primary; }}
+          >
+            {submitting ? "Loading…" : "Find my match"}
+          </button>
+        </form>
+
+        <div style={{
+          marginTop: compact ? 22 : 28,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+          fontSize: 12, lineHeight: 1.4, color: "rgba(41,41,41,0.55)", flexWrap: "wrap",
+        }}>
+          <TruekindStarIcon size={12} color={TK_COLORS.star} />
+          <span>4.8 · Trusted by 100k+ women · 60-day fit guarantee</span>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -1246,12 +1325,14 @@ const PRODUCT_COLORS = [
   { id: "cocoa", name: "Cocoa", hex: TK_PRODUCT_TONES.cocoa, fit: IMG("assets/fit-pink.jpg"), bra: IMG("assets/bra-chocolate.jpg") },
 ];
 
-function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answers, onClaim, onRestart }) {
+function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answers, onClaim, onRestart, offerVariant = "box" }) {
   const shape = SHAPE_LIST.find((x) => x.id === answers.shape);
   const shapeLabel = shape ? shape.name.toLowerCase() : "your shape";
   const problems = answers.problems || [];
   const wants = answers.wants || [];
   const [selectedColor, setSelectedColor] = React.useState("black");
+  const isShop = offerVariant === "shop" || offerVariant === "shop-email";
+  const showEmailBonus = offerVariant === "shop";
 
   const color = PRODUCT_COLORS.find((c) => c.id === selectedColor) || PRODUCT_COLORS[0];
   const why = buildWhy(shapeLabel, problems, wants);
@@ -1269,7 +1350,11 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
         <em style={{ color: accent }}>Supportive Comfort Wireless Shaping Bra.</em>
       </h1>
 
-      <TryBeforeYouBuyBanner accent={accent} surface={surface} ink={ink} compact={compact} />
+      {isShop ? (
+        <GiftUnlockBanner accent={accent} surface={surface} ink={ink} compact={compact} />
+      ) : (
+        <TryBeforeYouBuyBanner accent={accent} surface={surface} ink={ink} compact={compact} />
+      )}
 
       {/* Two-column PDP layout: images left, info right (stacks on mobile) */}
       <div style={{
@@ -1289,11 +1374,38 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          gap: 16,
+          gap: isShop ? (compact ? 20 : 24) : 16,
           height: "100%",
         }}>
           <ProductHeader compact={compact} />
           <ColorSelector colors={PRODUCT_COLORS} value={selectedColor} onChange={setSelectedColor} ink={ink} accent={accent} compact={compact} />
+          {showEmailBonus ? (
+            <EmailBonusCapture
+              compact={compact}
+              ink={ink}
+              accent={accent}
+            />
+          ) : isShop ? (
+            <button onClick={() => { window.location.href = SHOP_MATCH_URL; }} style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+              padding: compact ? "14px 24px" : "16px 32px", borderRadius: TK_RADIUS, border: "none",
+              background: TK_BTN.primary, color: TK_BTN.primaryFg, fontFamily: TK_BTN_FONT,
+              fontWeight: TK_BTN.weight, fontSize: compact ? 14 : 15, lineHeight: compact ? "20px" : "22px",
+              letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
+              cursor: "pointer", transition: "background .15s, transform .12s",
+              width: "100%",
+            }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = TK_BTN.primaryHover)}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = TK_BTN.primary; }}
+              onMouseDown={(e) => (e.currentTarget.style.transform = "translateY(1px)")}
+              onMouseUp={(e) => (e.currentTarget.style.transform = "none")}
+            >
+              Shop now
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
+              </svg>
+            </button>
+          ) : (
           <div>
             <p style={{
               margin: "0 0 12px",
@@ -1330,10 +1442,11 @@ function ScreenReveal({ compact, ink, accent, paper, pinkAccent, surface, answer
               By clicking &quot;Yes,&quot; you agree to our Terms and join Shapermint Club+: box (up to 4 items, max $100+tax) ships in 15, then every 90 days, until cancelled. Free returns within 7 days. Keep past 14, we charge you. Cancel in My Account.
             </p>
           </div>
+          )}
         </div>
       </div>
 
-      <HowItWorksSection compact={compact} ink={ink} accent={accent} />
+      {!isShop && <HowItWorksSection compact={compact} ink={ink} accent={accent} />}
 
       <div style={{ marginTop: compact ? 24 : 32 }}>
         <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(31,26,23,0.55)", marginBottom: 12 }}>
@@ -1584,6 +1697,231 @@ function HowItWorksSection({
             );
           })}
         </ol>
+      </div>
+    </div>
+  );
+}
+
+function GiftUnlockBanner({ accent, surface, ink, compact }) {
+  return (
+    <div style={{
+      marginTop: compact ? 22 : 28, position: "relative",
+      padding: compact ? "14px 16px 14px 56px" : "16px 22px 16px 72px", borderRadius: TK_RADIUS,
+      background: surface || TK_COLORS.surface, color: ink, overflow: "hidden",
+      animation: "qzunwrap .5s cubic-bezier(.2,.7,.3,1) both",
+    }}>
+      <div style={{
+        position: "absolute", left: compact ? 14 : 18, top: "50%", transform: "translateY(-50%)",
+        width: compact ? 32 : 40, height: compact ? 32 : 40, borderRadius: TK_RADIUS,
+        background: "#fff", display: "grid", placeItems: "center", color: accent,
+      }}>
+        <GiftSvg size={compact ? 16 : 20} />
+      </div>
+      <div style={{ fontFamily: "var(--qz-body-font)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: accent, marginBottom: 4 }}>
+        First-purchase gift unlocked
+      </div>
+      <div style={{ fontFamily: "var(--qz-headline-font)", fontWeight: 700, fontSize: compact ? 18 : 24, lineHeight: 1.25, letterSpacing: "-0.01em", color: ink, textWrap: "pretty" }}>
+        <span style={{ color: accent }}>40% OFF</span> your first order · applied at checkout
+      </div>
+    </div>
+  );
+}
+
+function EmailBonusCapture({ compact, ink, accent }) {
+  const [email, setEmail] = React.useState("");
+
+  const goToShop = () => {
+    window.location.href = SHOP_MATCH_URL;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    goToShop();
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: compact ? 16 : 18, width: "100%" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "#FFFFFF",
+          border: `1px solid ${TK_COLORS.surface}`,
+          borderRadius: TK_RADIUS,
+          padding: compact ? "18px 16px" : "22px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: compact ? 12 : 14,
+        }}
+      >
+        <div>
+          <h3 style={{
+            margin: 0,
+            fontFamily: "var(--qz-headline-font)",
+            fontWeight: 700,
+            fontSize: compact ? 17 : 18,
+            lineHeight: 1.25,
+            letterSpacing: "-0.01em",
+            color: ink,
+            textWrap: "balance",
+          }}>
+            Add your email for{" "}
+            <span style={{ color: accent }}>40% off</span>
+          </h3>
+          <p style={{
+            margin: "8px 0 0",
+            fontSize: compact ? 13 : 14,
+            lineHeight: 1.45,
+            color: "rgba(41,41,41,0.65)",
+            textWrap: "pretty",
+          }}>
+            Applied automatically at checkout.
+          </p>
+        </div>
+
+        <label style={{ position: "relative", display: "block" }}>
+          <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>Email</span>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your Email"
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: compact ? "14px 44px 14px 14px" : "15px 48px 15px 16px",
+              borderRadius: TK_RADIUS,
+              border: `1.5px solid rgba(41,41,41,0.18)`,
+              background: "#fff",
+              fontFamily: "var(--qz-body-font)",
+              fontSize: compact ? 15 : 16,
+              color: ink,
+              outline: "none",
+            }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = TK_COLORS.inkStrong; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(41,41,41,0.18)"; }}
+            onMouseEnter={(e) => { if (document.activeElement !== e.currentTarget) e.currentTarget.style.borderColor = TK_COLORS.inkStrong; }}
+            onMouseLeave={(e) => { if (document.activeElement !== e.currentTarget) e.currentTarget.style.borderColor = "rgba(41,41,41,0.18)"; }}
+          />
+          <span
+            aria-hidden
+            style={{
+              position: "absolute",
+              right: compact ? 14 : 16,
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: "rgba(41,41,41,0.4)",
+              display: "grid",
+              placeItems: "center",
+              pointerEvents: "none",
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M3 7l9 7 9-7" />
+            </svg>
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            padding: compact ? "14px 18px" : "16px 22px",
+            borderRadius: TK_RADIUS,
+            border: "none",
+            background: TK_COLORS.inkStrong,
+            color: "#FFFFFF",
+            fontFamily: TK_BTN_FONT,
+            fontWeight: TK_BTN.weight,
+            fontSize: compact ? 13 : 14,
+            lineHeight: compact ? "18px" : "20px",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            transition: "background .15s, opacity .15s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+        >
+          Get my 40% off
+        </button>
+
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          fontSize: 12,
+          lineHeight: 1.4,
+          color: "rgba(41,41,41,0.55)",
+        }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <rect x="5" y="11" width="14" height="10" rx="2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+          </svg>
+          <span>No spam — just your gift and your matches.</span>
+        </div>
+      </form>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }} aria-hidden>
+        <span style={{ flex: 1, height: 1, background: "rgba(41,41,41,0.12)" }} />
+        <span style={{
+          fontFamily: "var(--qz-body-font)",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          color: "rgba(41,41,41,0.45)",
+        }}>
+          OR
+        </span>
+        <span style={{ flex: 1, height: 1, background: "rgba(41,41,41,0.12)" }} />
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "stretch" }}>
+        <button
+          type="button"
+          onClick={goToShop}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            width: "100%",
+            padding: compact ? "14px 18px" : "16px 22px",
+            borderRadius: TK_RADIUS,
+            border: "none",
+            background: TK_BTN.primary,
+            color: TK_BTN.primaryFg,
+            fontFamily: TK_BTN_FONT,
+            fontWeight: TK_BTN.weight,
+            fontSize: compact ? 13 : 14,
+            lineHeight: compact ? "18px" : "20px",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            transition: "background .15s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = TK_BTN.primaryHover)}
+          onMouseLeave={(e) => (e.currentTarget.style.background = TK_BTN.primary)}
+        >
+          Shop now
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M2 7 H 12 M 8 3 L 12 7 L 8 11" />
+          </svg>
+        </button>
+        <p style={{
+          margin: 0,
+          textAlign: "center",
+          fontSize: 12,
+          lineHeight: 1.4,
+          color: "rgba(41,41,41,0.55)",
+        }}>
+          No email needed — keep your 40% off.
+        </p>
       </div>
     </div>
   );
@@ -2072,14 +2410,17 @@ function ClockSvg({ color }) {
 }
 
 // ─── Quiz controller ───────────────────────────────────────────────────────────
-function QuizApp({ compact, tokens, onBgChange }) {
+function QuizApp({ compact, tokens, onBgChange, offerVariant = "box" }) {
   const [screen, setScreen] = React.useState(0);
   const [answers, setAnswers] = React.useState({
     shape: null,
     problems: [],
     wants: [],
     size: null,
+    email: null,
+    phone: null,
   });
+  const requireEmailGate = offerVariant === "shop-email";
 
   const go = (n) => setScreen(Math.max(0, Math.min(7, n)));
   const setAns = (key, value) => setAnswers((a) => ({ ...a, [key]: value }));
@@ -2090,8 +2431,9 @@ function QuizApp({ compact, tokens, onBgChange }) {
     2: <QuestionPills compact={compact} {...tokens} step={2} title="What's your biggest" titleEm="issue with your current bra?" sub="Pick as many as you want." options={PROBLEMS} answer={answers.problems} multi onSelect={(v) => setAns("problems", v)} onAdvance={() => go(3)} onBack={() => go(1)} />,
     3: <QuestionPills compact={compact} {...tokens} step={3} title="What do you want" titleEm="most from your bra?" sub="Pick as many as you want." options={WANTS} answer={answers.wants} multi onSelect={(v) => setAns("wants", v)} onAdvance={() => go(4)} onBack={() => go(2)} />,
     4: <ScreenSize compact={compact} {...tokens} answer={answers.size} onSelect={(v) => setAns("size", v)} onAdvance={() => go(5)} onBack={() => go(3)} />,
-    5: <ScreenLoader compact={compact} {...tokens} answers={answers} onDone={() => go(7)} />,
-    7: <ScreenReveal compact={compact} {...tokens} answers={answers} onClaim={() => {}} onRestart={() => go(0)} />,
+    5: <ScreenLoader compact={compact} {...tokens} answers={answers} onDone={() => go(requireEmailGate ? 6 : 7)} />,
+    6: <ScreenEmailGate compact={compact} {...tokens} onUnlock={(email, phone) => { setAns("email", email); setAns("phone", phone || null); go(7); }} onBack={() => go(4)} />,
+    7: <ScreenReveal compact={compact} {...tokens} answers={answers} offerVariant={offerVariant} onClaim={() => {}} onRestart={() => go(0)} />,
   };
 
   // Reveal ("Your match") screen uses a white background; the rest use paper.
@@ -2121,7 +2463,7 @@ const QUIZ_CSS = `
  * Top-level entry: picks compact (mobile) vs full (desktop) by viewport,
  * applies brand tokens, and renders the quiz directly into the page DOM.
  */
-export const EbraQuizV2 = () => {
+export const EbraQuizV2 = ({ offerVariant = "box" }: { offerVariant?: "box" | "shop" | "shop-email" } = {}) => {
   const tokens = {
     accent: DEFAULTS.accent,
     paper: DEFAULTS.paper,
@@ -2163,7 +2505,7 @@ export const EbraQuizV2 = () => {
           flex: 1, display: "flex", flexDirection: "column",
         }}
       >
-        <QuizApp compact={compact} tokens={tokens} onBgChange={setRootBg} />
+        <QuizApp compact={compact} tokens={tokens} onBgChange={setRootBg} offerVariant={offerVariant} />
       </div>
     </div>
   );

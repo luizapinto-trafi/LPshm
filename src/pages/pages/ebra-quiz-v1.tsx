@@ -1,18 +1,14 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import type { GetStaticProps, NextPage } from "next";
-import { EbraQuizV2PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV2Path";
+import { EbraQuizV1PagePath } from "@/landings/ebra-quiz-v2/ebraQuizV1Path";
 
-// The quiz reads `window.matchMedia` and runs timers/Image() on mount, so it is
-// a client-only component. Loading it with `ssr: false` avoids a server/client
-// mismatch on the responsive `compact` flag and keeps the markup in the page
-// DOM (so the visual element selector can reach it — unlike the old iframe).
 const EbraQuizV2 = dynamic(
   () => import("@/landings/ebra-quiz-v2/EbraQuizV2").then((m) => m.EbraQuizV2),
   { ssr: false }
 );
 
-const EbraBoxQuizV1Page: NextPage = () => {
+const EbraQuizV1Page: NextPage = () => {
   return (
     <>
       <Head>
@@ -22,13 +18,13 @@ const EbraBoxQuizV1Page: NextPage = () => {
           content="Take the 15-second Shapermint fit quiz and discover the wireless bra made for your breast shape."
         />
         <meta name="robots" content="noindex" />
-        <link rel="canonical" href={`https://www.shapermint.com${EbraQuizV2PagePath}`} />
+        <link rel="canonical" href={`https://www.shapermint.com${EbraQuizV1PagePath}`} />
       </Head>
-      <EbraQuizV2 offerVariant="box" />
+      <EbraQuizV2 offerVariant="shop" />
     </>
   );
 };
 
 export const getStaticProps: GetStaticProps = () => ({ props: {} });
 
-export default EbraBoxQuizV1Page;
+export default EbraQuizV1Page;
