@@ -7,10 +7,10 @@ const ShapermintVsHoneylovePage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Shapermint vs. Honeylove: Price, Reviews, and Real-World Value | Shapermint</title>
+        <title>Shapermint vs. Honeylove: Which Wireless Bra Wins on Price & Reviews? | Shapermint</title>
         <meta
           name="description"
-          content="Both brands make great shapewear — so what actually decides it? An honest look at Shapermint vs. Honeylove on price, reviews, comfort, and real-world value."
+          content="Both brands make great wireless bras — so what actually decides it? An honest look at Shapermint vs. Honeylove bras on price, reviews, comfort, and real-world value."
         />
         <meta name="robots" content="noindex" />
         <link rel="canonical" href={`https://www.shapermint.com${ShapermintVsHoneylovePagePath}`} />
