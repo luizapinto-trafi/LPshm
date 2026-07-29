@@ -80,13 +80,15 @@ export const SHL_CSS = `
 
 /* ---- Head-to-head cards ---- */
 .shl .h2h{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 8px;}
-.shl .card{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;}
+.shl .card{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;color:inherit;text-decoration:none;}
+.shl a.card{display:block;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
 .shl .card.win{border-color:var(--coral);box-shadow:0 6px 22px rgba(247,160,139,.18);}
+.shl a.card.win:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(247,160,139,.28);border-color:var(--brick);}
 .shl .card .kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);margin-bottom:8px;}
 .shl .card.win .kicker{color:var(--brick);}
 .shl .card .pname{font-size:16px;font-weight:700;line-height:1.3;margin-bottom:10px;min-height:42px;}
-.shl .card .pname a{color:inherit;border-bottom:2px solid var(--coral);padding-bottom:1px;transition:color .15s ease,border-color .15s ease;}
-.shl .card .pname a:hover{color:var(--brick);border-color:var(--brick);}
+.shl .card.win .pname{text-decoration:underline;text-decoration-color:var(--coral);text-decoration-thickness:2px;text-underline-offset:3px;}
+.shl a.card.win:hover .pname{color:var(--brick);text-decoration-color:var(--brick);}
 .shl .plink{color:var(--brick);font-weight:600;border-bottom:1px solid var(--coral);transition:border-color .15s ease;}
 .shl .plink:hover{border-color:var(--brick);}
 .shl .card .price{font-size:24px;font-weight:900;color:var(--ink);}

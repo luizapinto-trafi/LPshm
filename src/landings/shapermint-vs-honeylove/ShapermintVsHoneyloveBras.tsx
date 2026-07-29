@@ -80,14 +80,14 @@ const HTML = `
 
     <h3>Head-to-head: the everyday support bra</h3>
     <div class="h2h">
-      <div class="card win">
+      <a class="card win" href="https://shapermint.com/products/truekind-supportive-comfort-wireless-shaping-bra-1">
         <div class="kicker">Shapermint</div>
-        <div class="pname"><a href="https://shapermint.com/products/truekind-supportive-comfort-wireless-shaping-bra-1">TrueKind Supportive Comfort Wireless Shaping Bra</a></div>
+        <div class="pname">TrueKind Supportive Comfort Wireless Shaping Bra</div>
         <div class="price">$29.99<small>each in a 2-pack · single $32.99</small></div>
         <div class="stars">${starRow(4.5, "shm-support")}</div>
         <div class="rev">19,476 reviews · 4.5★ · #1 best seller in America</div>
         <ul class="perks"><li>Wire-free support</li><li>Flattering contour neckline</li><li>Premium fabric · all-day comfort</li></ul>
-      </div>
+      </a>
       <div class="card">
         <div class="kicker">Honeylove</div>
         <div class="pname">Crossover Bra</div>
@@ -102,14 +102,14 @@ const HTML = `
 
     <h3>Head-to-head: the everyday comfort bra</h3>
     <div class="h2h">
-      <div class="card win">
+      <a class="card win" href="https://shapermint.com/products/truekind-everyday-comfort-wireless-shaping-bra-1">
         <div class="kicker">Shapermint</div>
-        <div class="pname"><a href="https://shapermint.com/products/truekind-everyday-comfort-wireless-shaping-bra-1">Everyday Comfort Wireless Shaping Bra</a></div>
+        <div class="pname">Everyday Comfort Wireless Shaping Bra</div>
         <div class="price">$23.99<small>each in a 2-pack · single $27.99</small></div>
         <div class="stars">${starRow(4.5, "shm-everyday")}</div>
         <div class="rev">18,348 reviews · 4.5★</div>
         <ul class="perks"><li>Wire-free, all-day comfort</li><li>Adjustable straps (racerback option)</li><li>Premium soft fabric</li></ul>
-      </div>
+      </a>
       <div class="card">
         <div class="kicker">Honeylove</div>
         <div class="pname">Softform Bra</div>

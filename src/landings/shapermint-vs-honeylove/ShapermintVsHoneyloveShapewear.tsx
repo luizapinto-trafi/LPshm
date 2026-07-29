@@ -81,14 +81,14 @@ const HTML = `
 
     <h3>Head-to-head: the shaper short</h3>
     <div class="h2h">
-      <div class="card win">
+      <a class="card win" href="https://shapermint.com/products/shapermint-essentials-everyday-empower-high-waisted-shaper-short-1">
         <div class="kicker">Shapermint</div>
-        <div class="pname"><a href="https://shapermint.com/products/shapermint-essentials-everyday-empower-high-waisted-shaper-short-1">Everyday Empower High-Waisted Shaper Short</a></div>
+        <div class="pname">Everyday Empower High-Waisted Shaper Short</div>
         <div class="price">$28.99<small>each in a 2-pack · free shipping + free gift</small></div>
         <div class="stars">${starRow(4.5, "shm-short")}</div>
         <div class="rev">2,988 reviews · 4.5★</div>
         <ul class="perks"><li>Medium, breathable compression</li><li>Moderate-to-high support</li><li>Anti-roll-down · bathroom friendly</li></ul>
-      </div>
+      </a>
       <div class="card">
         <div class="kicker">Honeylove</div>
         <div class="pname">SuperPower Short</div>
@@ -103,14 +103,14 @@ const HTML = `
 
     <h3>Head-to-head: the cami</h3>
     <div class="h2h">
-      <div class="card win">
+      <a class="card win" href="https://shapermint.com/products/empetua-all-day-every-day-scoop-neck-cami-12">
         <div class="kicker">Shapermint</div>
-        <div class="pname"><a href="https://shapermint.com/products/empetua-all-day-every-day-scoop-neck-cami-12">Empetua All Day Every Day Scoop Neck Cami</a></div>
+        <div class="pname">Empetua All Day Every Day Scoop Neck Cami</div>
         <div class="price">$21.99<small>2 for $39.99</small></div>
         <div class="stars">${starRow(4.5, "shm-cami")}</div>
         <div class="rev">18,666 reviews · 4.5★</div>
         <ul class="perks"><li>360° tummy control + bust support</li><li>Premium breathable fabric</li><li>A cami — bathroom friendly</li></ul>
-      </div>
+      </a>
       <div class="card">
         <div class="kicker">Honeylove</div>
         <div class="pname">Cami Bodysuit</div>
