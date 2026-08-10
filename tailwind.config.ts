@@ -48,6 +48,7 @@ const config: Config = {
           50: "var(--coral-050)",
           100: "var(--coral-100)",
           200: "var(--coral-200)",
+          250: "var(--coral-250)",
           300: "var(--coral-300)",
           400: "var(--coral-400)",
           450: "var(--coral-450)",
