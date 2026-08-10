@@ -1,0 +1,273 @@
+{
+  "metaTitle": "Lorem Ipsum — Shapermint Lab",
+  "metaDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder copy for landing structure.",
+  "a11y": {
+    "skipToContent": "Skip to Content",
+    "logoHome": "Shapermint — Home",
+    "cart": "Open cart",
+    "account": "Account",
+    "galleryPrev": "Previous image",
+    "galleryNext": "Next image",
+    "galleryDot": "Go to image {{n}}",
+    "closeCart": "Close cart",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity",
+    "removeItem": "Remove item"
+  },
+  "announcement": {
+    "line1": "Summer Sale",
+    "line2": "Up to 61% off w/ free gifts",
+    "hrs": "Hrs",
+    "min": "Min",
+    "sec": "Sec",
+    "timerAria": "Sale ends in {{hrs}} hours, {{min}} minutes, {{sec}} seconds",
+    "tooltipAria": "Shipping information",
+    "tooltip": "Order by 1 PM Eastern Time (ET) for same-day shipping. Orders after 1 PM ET will ship the following business day."
+  },
+  "header": {
+    "shop": "Lorem",
+    "menuToggle": "Open or close menu",
+    "mobileNavAria": "Mobile navigation",
+    "search": "Search"
+  },
+  "hero": {
+    "ratingLine": "Lorem · Ipsum · Dolor",
+    "title": "Lorem Ipsum Dolor Sit Amet",
+    "titleAside": "(Consectetur Adipiscing)",
+    "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.",
+    "sold": "Lorem Ipsum",
+    "cta": "Save XX% + Free Gift",
+    "riskIntro": "Lorem ",
+    "riskHighlight": "ipsum dolor sit amet",
+    "galleryAlt": "Lorem ipsum gallery image {{n}}"
+  },
+  "scrollCta": {
+    "proof": "4.8 stars | 100K+ reviews | 1M+ members",
+    "badge": "2B+ Camis Sold",
+    "cta": "Save XX% + Free Gift"
+  },
+  "reasons": {
+    "swipeHint": "Swipe For Benefits",
+    "prev": "Previous benefit",
+    "next": "Next benefit",
+    "goTo": "Go to benefit {{n}}",
+    "items": [
+      {
+        "num": "01",
+        "title": "Lorem Ipsum Dolor",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      {
+        "num": "02",
+        "title": "Sit Amet Consectetur",
+        "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      },
+      {
+        "num": "03",
+        "title": "Adipiscing Elit Sed",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet."
+      },
+      {
+        "num": "04",
+        "title": "Eiusmod Tempor",
+        "body": "Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra."
+      },
+      {
+        "num": "05",
+        "title": "Incididunt Ut Labore",
+        "body": "Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem."
+      },
+      {
+        "num": "06",
+        "title": "Dolore Magna Aliqua",
+        "body": "Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel."
+      }
+    ]
+  },
+  "reviews": {
+    "ratingSummary": "4.8/5.0 · 100K+ customers",
+    "quotesTitle": "Real Customers. Real Results.",
+    "quotes": [
+      {
+        "headline": "Relief within a few days",
+        "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "author": "Laura",
+        "verified": "Verified Customer"
+      },
+      {
+        "headline": "Helps me feel supported",
+        "quote": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "author": "Darice",
+        "verified": "Verified Customer"
+      },
+      {
+        "headline": "Best everyday comfort",
+        "quote": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "author": "Jenn",
+        "verified": "Verified Customer"
+      },
+      {
+        "headline": "I actually stick with it",
+        "quote": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "author": "Jennifer",
+        "verified": "Verified Customer"
+      },
+      {
+        "headline": "They feel great",
+        "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.",
+        "author": "Missy",
+        "verified": "Verified Customer"
+      },
+      {
+        "headline": "Finally found my fit",
+        "quote": "Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.",
+        "author": "Alex",
+        "verified": "Verified Customer"
+      }
+    ],
+    "feedTitle": "Customer Reviews",
+    "feedScore": "4.74",
+    "feedCount": "16,120 reviews",
+    "filter": "Filter",
+    "sortLabel": "Sort by",
+    "sortLatest": "Sort by: Latest",
+    "sortRating": "Sort by: Rating",
+    "ratingBars": [
+      { "stars": 5, "pct": 82 },
+      { "stars": 4, "pct": 12 },
+      { "stars": 3, "pct": 4 },
+      { "stars": 2, "pct": 1 },
+      { "stars": 1, "pct": 1 }
+    ],
+    "feed": [
+      {
+        "initials": "AK",
+        "name": "Angela K",
+        "verified": "Verified buyer",
+        "stars": 5,
+        "time": "5 minutes ago",
+        "title": "They have helped me tremendously !!",
+        "body": "Absolutely love the fit and feel. Soft, supportive, and stays put all day.",
+        "product": "Truekind® Supportive Comfort Wireless Shaping Bra — Black / M"
+      },
+      {
+        "initials": "MG",
+        "name": "Michelle G",
+        "verified": "Verified buyer",
+        "stars": 5,
+        "time": "2 hours ago",
+        "title": "Worth every penny",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+        "product": "Truekind® Supportive Comfort Wireless Shaping Bra — Nude / L"
+      },
+      {
+        "initials": "SR",
+        "name": "Sara R",
+        "verified": "Verified buyer",
+        "stars": 4,
+        "time": "Yesterday",
+        "title": "Comfortable all day",
+        "body": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "product": "Truekind® Supportive Comfort Wireless Shaping Bra — Chai / S"
+      },
+      {
+        "initials": "TL",
+        "name": "Tanya L",
+        "verified": "Verified buyer",
+        "stars": 5,
+        "time": "3 days ago",
+        "title": "My new everyday bra",
+        "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "product": "Truekind® Supportive Comfort Wireless Shaping Bra — White / XL"
+      }
+    ]
+  },
+  "offers": {
+    "title": "Truekind® Supportive Comfort Wireless Shaping Bra",
+    "reviewsLink": "16120 reviews",
+    "saleBadge": "Mother's Day Sale",
+    "sellingFast": "Selling Fast",
+    "savingsLabel": "Choose your savings",
+    "mostPopular": "Most Popular",
+    "seeInYourSize": "See In Your Size",
+    "pack1Units": "1 unit",
+    "pack2Units": "2-pack",
+    "pack1Save": "Save ${{amount}}",
+    "pack2Save": "Save ${{amount}}",
+    "gwpTitle": "Free gift included with this order",
+    "gwpBody": "Your purchase includes a complimentary gift with this offer. Yours to keep.",
+    "gwpCartTitle": "Free gift included with this order",
+    "colorLabelSingle": "Color: {{a}}",
+    "colorLabelDual": "Color: {{a}}, {{b}}",
+    "sizeHeading": "Size: {{size}}",
+    "sizeGuide": "Size and Fit Guide",
+    "addToCart": "Save XX% + Free Gift",
+    "returnTitle": "60-Day Return Policy",
+    "returnBody": "Enjoy hassle-free exchanges within 60 days! Swap your product for any size, color, or style you love. No questions asked!",
+    "longTitle": "What Makes It Shapermint?",
+    "longBody": "This wireless shaping bra features modern foam cup technology that delivers the support of an underwire without the dig or discomfort. The wide band construction smooths your sides and back for a seamless silhouette under any top. No-slip adjustable straps stay put all day and keep you lifted without constant readjusting. With convertible strap options and an adjustable hook-and-eye closure, this bra adapts to your body's natural changes.",
+    "accSizeTitle": "Size & Fit",
+    "accSizeBody": "True to size. Use our sizing tool to find your perfect fit.",
+    "accFabricTitle": "Fabric",
+    "accFabricBody": "91% Nylon, 9% Spandex",
+    "accCareTitle": "Care Instructions",
+    "accCareBody": "Hand wash cold to preserve the foam cups and shape. Do not bleach. Lay flat to dry. Do not iron. Do not dry clean.",
+    "lineTotalHint": "Order total preview: ${{price}}"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty.",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout Securely",
+    "secure": "Encrypted · Free returns within 60 days",
+    "gwpNote": "Free gift included with your order",
+    "lineMeta": "{{color}} · Size {{size}} · {{pack}} pack"
+  },
+  "trust": {
+    "title": "Lorem Ipsum Dolor",
+    "items": [
+      {
+        "title": "Lorem Ipsum",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."
+      },
+      {
+        "title": "Dolor Sit Amet",
+        "body": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
+      },
+      {
+        "title": "Consectetur Elit",
+        "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Lorem Ipsum?",
+    "items": [
+      {
+        "q": "Lorem ipsum dolor sit amet?",
+        "a": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "q": "Consectetur adipiscing elit?",
+        "a": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      {
+        "q": "Sed do eiusmod tempor?",
+        "a": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      },
+      {
+        "q": "Ut labore et dolore?",
+        "a": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      },
+      {
+        "q": "Magna aliqua?",
+        "a": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."
+      }
+    ]
+  },
+  "footer": {
+    "disclaimer": "*Lorem ipsum dolor sit amet, consectetur adipiscing elit. Demo page - Shapermint design lab.",
+    "copyright": "© Shapermint design lab",
+    "shapermint": "Shapermint.com"
+  }
+}
