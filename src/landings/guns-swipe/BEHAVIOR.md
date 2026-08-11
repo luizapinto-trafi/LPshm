@@ -140,8 +140,8 @@ Follows Shapermint PDP offer anatomy (DS website kit + Strapless buybox pattern)
 
 ### Header bag
 
-- Bag control opens the side cart (same drawer).
-- Badge count = sum of product line qtys (gift line excluded from badge if modeled as $0 gift).
+- Site chrome is non-functional Grüns-style: centered Shapermint logo only (no category nav / utility icons).
+- Side cart still opens from PDP **Add to Cart**.
 
 ---
 

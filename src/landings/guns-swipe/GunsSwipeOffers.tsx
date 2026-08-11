@@ -269,16 +269,66 @@ export function GunsSwipeOffers() {
             </div>
           </div>
 
-          <div
-            className="rounded-lg bg-[var(--mint-100,#DFEFEB)] px-4 py-3"
-            data-behavior="gwp-callout"
-          >
-            <p className="m-0 font-display text-sm font-bold text-ink-900">
-              {t("offers.gwpTitle")}
-            </p>
-            <p className="mt-1 m-0 text-sm leading-snug text-ink-700">
-              {t("offers.gwpBody")}
-            </p>
+          <div className="flex flex-col gap-3" data-behavior="gwp-callout">
+            <div className="flex items-center gap-4">
+              <span className="h-px flex-1 bg-ink-200" aria-hidden />
+              <p className="m-0 shrink-0 whitespace-nowrap text-center font-body text-[11px] font-bold uppercase tracking-[0.08em] text-ink-900">
+                Congrats! 🎉 You have unlocked:
+              </p>
+              <span className="h-px flex-1 bg-ink-200" aria-hidden />
+            </div>
+
+            <div className="flex items-center gap-3 rounded-lg border border-dashed border-[color:var(--mint-500)] bg-[#FAFCFB] px-3 py-3 shadow-none">
+              <svg
+                viewBox="0 0 32 32"
+                width="28"
+                height="28"
+                fill="none"
+                className="shrink-0 text-[color:var(--sale)]"
+                aria-hidden
+              >
+                <path
+                  d="M6 12.5h20v14a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 6 26.5v-14z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                />
+                <path d="M6 12.5h20v3.5H6v-3.5z" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M16 12.5v15.5" stroke="currentColor" strokeWidth="1.6" />
+                <path
+                  d="M16 12.5c-2.8-3.8-6.5-3.2-6.5-.6 0 2 2.6 2.8 6.5 5.1 3.9-2.3 6.5-3.1 6.5-5.1 0-2.6-3.7-3.2-6.5.6z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinejoin="round"
+                />
+              </svg>
+
+              <div className="min-w-0 flex-1">
+                <p className="m-0 font-display text-sm font-bold leading-tight text-ink-900">
+                  {t("offers.shippingTitle", { defaultValue: "Free shipping" })}
+                </p>
+                <p className="mt-1 m-0 flex items-baseline gap-2 text-sm">
+                  <span className="text-ink-600 line-through">
+                    {t("offers.shippingCompare", { defaultValue: "$10.00" })}
+                  </span>
+                  <span className="font-bold uppercase text-[color:var(--sale)]">
+                    {t("offers.shippingFree", { defaultValue: "FREE" })}
+                  </span>
+                </p>
+              </div>
+
+              <svg
+                viewBox="0 0 48 44"
+                width="44"
+                height="40"
+                className="shrink-0"
+                aria-hidden
+              >
+                <path d="M8 16h28l4 6v16a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V16z" fill="#F0C94A" />
+                <path d="M8 16l4-6h24l4 6H8z" fill="#E5B83A" />
+                <path d="M20 10h8v30h-8V10z" fill="#C64844" />
+                <path d="M12 28h8M12 32h6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </div>
           </div>
 
           {/* Color rows — one per unit when 2-pack */}
