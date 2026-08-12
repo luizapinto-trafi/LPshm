@@ -10,9 +10,9 @@ import { JellybraPrimaryButton } from "./JellybraPrimaryButton";
  */
 const StyledSection = styled.section`
   background: var(--white);
-  padding: var(--space-1000) 0;
+  padding: var(--space-800) 0;
   @media (max-width: 899px) {
-    padding: var(--space-800) 0;
+    padding: var(--space-600) 0;
   }
 `;
 

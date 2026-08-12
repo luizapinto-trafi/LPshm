@@ -7,9 +7,9 @@ import { JellybraCdn } from "./jellybraCdn";
 const StyledWrap = styled.div`
   width: 100%;
   background: var(--white);
-  padding: var(--space-600) 0 var(--space-800);
+  padding: var(--space-400) 0 var(--space-600);
   @media (max-width: 899px) {
-    padding: var(--space-500) 0 var(--space-800);
+    padding: var(--space-300) 0 var(--space-500);
   }
 `;
 

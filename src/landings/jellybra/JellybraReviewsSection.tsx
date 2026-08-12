@@ -37,7 +37,7 @@ const StyledMeta = styled.div`
 `;
 
 const StyledStars = styled.span`
-  color: var(--coral-300);
+  color: var(--gold-500);
   font-size: 18px;
   letter-spacing: 2px;
 `;
@@ -56,7 +56,7 @@ const StyledCard = styled.article`
 `;
 
 const StyledCardStars = styled.div`
-  color: var(--coral-300);
+  color: var(--gold-500);
   font-size: 15px;
   letter-spacing: 2px;
   span {

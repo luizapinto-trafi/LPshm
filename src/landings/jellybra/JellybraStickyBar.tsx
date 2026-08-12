@@ -35,6 +35,9 @@ const StyledThumb = styled.div`
 const StyledCopy = styled.div`
   flex: 1;
   min-width: 0;
+`;
+
+const StyledProduct = styled.div`
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
@@ -42,6 +45,30 @@ const StyledCopy = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const StyledPriceRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+`;
+
+const StyledSale = styled.span`
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--sale);
+  line-height: 1.2;
+`;
+
+const StyledCompare = styled.span`
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-600);
+  text-decoration: line-through;
+  line-height: 1.2;
 `;
 
 const StyledCta = styled.a`
@@ -93,7 +120,13 @@ export const JellybraStickyBar = () => {
           style={{ objectFit: "cover" }}
         />
       </StyledThumb>
-      <StyledCopy>{t("sticky.product")}</StyledCopy>
+      <StyledCopy>
+        <StyledProduct>{t("sticky.product")}</StyledProduct>
+        <StyledPriceRow>
+          <StyledSale>{t("sticky.salePrice")}</StyledSale>
+          <StyledCompare>{t("sticky.comparePrice")}</StyledCompare>
+        </StyledPriceRow>
+      </StyledCopy>
       <StyledCta href={JellybraShopUrl}>{t("sticky.cta")}</StyledCta>
     </StyledBar>
   );

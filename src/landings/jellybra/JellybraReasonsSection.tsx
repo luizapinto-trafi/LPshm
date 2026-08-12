@@ -16,10 +16,10 @@ const REASON_IMAGES = [
 const StyledSection = styled.section`
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-1000) var(--space-400) var(--space-1000);
+  padding: var(--space-800) var(--space-400) var(--space-800);
   text-align: center;
   @media (max-width: 899px) {
-    padding: var(--space-800) var(--space-400);
+    padding: var(--space-600) var(--space-400);
   }
 `;
 
@@ -55,7 +55,7 @@ const StyledCard = styled.div`
 `;
 
 const StyledCardMedia = styled.div`
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4;
   border: 1px solid var(--ink-200);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -110,7 +110,7 @@ export const JellybraReasonsSection = () => {
         {items.map((item, i) => (
           <StyledCard key={item.title}>
             <StyledCardMedia>
-              <Image src={REASON_IMAGES[i]} alt={item.alt} width={280} height={280} unoptimized />
+              <Image src={REASON_IMAGES[i]} alt={item.alt} width={300} height={400} unoptimized />
             </StyledCardMedia>
             <StyledCardTitle>
               <strong>{item.title}</strong>
