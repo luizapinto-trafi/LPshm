@@ -31,6 +31,10 @@ const LANDINGS: Landing[] = [
   { href: "/pages/shapermint-upsell", title: "Shapermint — Cami Upsell" },
   { href: "/pages/shapermint-upsell-v2", title: "Shapermint — Cami Upsell V2" },
   { href: "/pages/shapermint-concept", title: "Shapermint — Concept" },
+  {
+    href: "/pages/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-2",
+    title: "Sweetheart Cami — Built-In Bra Shaper",
+  },
   { href: "/pages/shapermint-vs-honeylove-shapewear", title: "Shapermint vs. Honeylove — Shapewear" },
   { href: "/pages/shapermint-vs-honeylove-bras", title: "Shapermint vs. Honeylove — Bras" },
   { href: "/pages/quiz", title: "Quiz" },
