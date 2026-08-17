@@ -54,16 +54,13 @@ export const SweetheartSplitCta = styled.a<{ $full?: boolean }>`
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   width: 100%;
-  max-width: ${({ $full }) => ($full ? "none" : "420px")};
+  max-width: ${({ $full }) => ($full ? "400px" : "420px")};
   min-height: 48px;
-  padding: 0.75rem 0.75rem;
+  padding: 14px 32px;
   line-height: 1;
   box-sizing: border-box;
   ${ctaType}
   ${ctaChrome}
-  @media (min-width: 900px) {
-    padding: 0.75rem 1.25rem;
-  }
 `;
 
 export const SweetheartSplitCtaPart = styled.span`
@@ -71,13 +68,9 @@ export const SweetheartSplitCtaPart = styled.span`
   align-items: center;
   justify-content: center;
   min-width: 0;
-  padding: 0 4px;
+  padding: 0;
   white-space: nowrap;
-  font-size: 13px;
-  @media (min-width: 900px) {
-    padding: 0 8px;
-    font-size: inherit;
-  }
+  font-size: inherit;
 `;
 
 /** Short divider — text-height only, not full button height */
