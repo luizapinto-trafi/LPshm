@@ -23,6 +23,7 @@ export const SweetheartCdn = {
   iconSizeGuide: `${BASE}/icon-size-guide.svg`,
   iconFit: `${BASE}/icon-fit.png`,
   iconReturn: `${BASE}/icon-return.svg`,
+  iconShipping: `${BASE}/icon-shipping.png`,
   checkmark: `${BASE}/checkmark.svg`,
   galleryFront: `${BASE}/model-black.jpg`,
 } as const;
