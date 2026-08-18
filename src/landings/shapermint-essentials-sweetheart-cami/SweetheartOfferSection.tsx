@@ -74,6 +74,30 @@ const StyledHeadingStrip = styled.div`
   }
 `;
 
+const StyledSaleTag = styled.p`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 14px;
+  background: var(--coral-100);
+  border: 1px dashed var(--coral-600);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.2;
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--coral-500);
+    flex: 0 0 auto;
+  }
+`;
+
 const StyledPromoTitle = styled.h1`
   font-family: var(--font-display);
   font-size: clamp(24px, 4.5vw, 36px);
@@ -997,6 +1021,7 @@ export const SweetheartOfferSection = () => {
   return (
     <StyledOfferHero>
       <StyledHeadingStrip>
+        <StyledSaleTag>{t("offer.saleTag", { defaultValue: "End of Season Sale Special Deal" })}</StyledSaleTag>
         <StyledPromoTitle id="sweetheart-promo-title">{t("offer.promoTitle")}</StyledPromoTitle>
         <StyledSubtitle>{t("offer.subtitle")}</StyledSubtitle>
         <StyledHeroMeta>
