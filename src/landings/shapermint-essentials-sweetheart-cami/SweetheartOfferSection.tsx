@@ -54,24 +54,21 @@ const COLOR_THUMB: Record<ColorId, string> = {
 const StyledOfferHero = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--space-800);
+  gap: var(--space-200);
   @media (min-width: 900px) {
-    gap: var(--space-1000);
+    gap: var(--space-300);
   }
 `;
 
 const StyledHeadingStrip = styled.div`
   background: var(--white);
   text-align: center;
-  padding: var(--space-800) var(--space-400) 0;
+  padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-300);
-  @media (min-width: 900px) {
-    padding: var(--space-1000) var(--space-400) 0;
-    gap: var(--space-400);
-  }
+  gap: 16px;
+  box-sizing: border-box;
 `;
 
 const StyledSaleTag = styled.p`
@@ -79,7 +76,9 @@ const StyledSaleTag = styled.p`
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 6px 14px;
+  height: 44px;
+  padding: 0 16px;
+  box-sizing: border-box;
   background: var(--coral-100);
   border: 1px dashed var(--coral-600);
   border-radius: 6px;
@@ -100,25 +99,22 @@ const StyledSaleTag = styled.p`
 
 const StyledPromoTitle = styled.h1`
   font-family: var(--font-display);
-  font-size: clamp(24px, 4.5vw, 36px);
+  font-size: 28px;
   font-weight: 700;
-  line-height: 1.15;
-  color: var(--ink-900);
+  line-height: 1.3;
+  color: #333333;
   margin: 0;
-  letter-spacing: -0.02em;
-  max-width: 18ch;
-  @media (min-width: 900px) {
-    max-width: 22ch;
-  }
+  letter-spacing: 0;
 `;
 
 const StyledSubtitle = styled.p`
   font-family: var(--font-body);
-  font-size: clamp(14px, 2.2vw, 16px);
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--ink-700);
   margin: 0;
-  max-width: 36rem;
+  max-width: 42rem;
 `;
 
 const StyledHeroMeta = styled.div`
@@ -129,6 +125,7 @@ const StyledHeroMeta = styled.div`
   flex-wrap: wrap;
   font-family: var(--font-body);
   font-size: 14px;
+  font-weight: 700;
   color: var(--ink-900);
 `;
 
@@ -260,9 +257,11 @@ const StyledThumbs = styled.div`
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  height: auto !important;
-  max-height: none !important;
   padding-bottom: 2px;
+  @media (max-width: 899px) {
+    height: auto !important;
+    max-height: none !important;
+  }
   @media (min-width: 900px) {
     flex-direction: column;
     grid-column: 1;
@@ -272,8 +271,7 @@ const StyledThumbs = styled.div`
     align-self: start;
     overflow-x: hidden;
     overflow-y: auto;
-    height: auto;
-    max-height: none;
+    overscroll-behavior: contain;
     padding-bottom: 0;
   }
 `;
@@ -569,7 +567,7 @@ const StyledOfferSelection = styled.div`
 const StyledUnlockedWrap = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   gap: 8px;
   width: 100%;
   min-width: 0;
@@ -609,12 +607,13 @@ const StyledUnlockedRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: var(--space-150);
-  width: 100%;
+  width: 300px;
   max-width: 100%;
-  min-height: 48px;
+  height: 62px;
+  min-height: 62px;
   padding: 6px 8px;
   border-radius: 8px;
-  background: #f5faf9;
+  background: #F5FAF9;
   border: 1px dashed var(--mint-600);
   box-shadow: none;
   outline: none;
@@ -629,17 +628,6 @@ const StyledUnlockedMain = styled.div`
   gap: var(--space-300);
   min-width: 0;
   flex: 1 1 auto;
-`;
-
-const StyledUnlockedIcon = styled.span`
-  display: inline-flex;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-  background: transparent;
 `;
 
 const StyledUnlockedThumb = styled.div`
@@ -691,9 +679,10 @@ const StyledLockedRow = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 100%;
+  width: 300px;
   max-width: 100%;
-  min-height: 48px;
+  height: 62px;
+  min-height: 62px;
   padding: 6px 12px;
   border-radius: 8px;
   background: var(--ink-100);
@@ -730,10 +719,12 @@ const LockIcon = () => (
 
 const StyledColorRow = styled.div`
   font-size: 14px;
-  padding: 0;
+  padding: 0 0 12px;
+  margin: 0 0 4px;
   color: var(--ink-900);
   width: 100%;
   max-width: 400px;
+  border-bottom: 1px solid var(--ink-200);
 `;
 
 const StyledColorPickers = styled.div`
@@ -1022,8 +1013,14 @@ export const SweetheartOfferSection = () => {
     <StyledOfferHero>
       <StyledHeadingStrip>
         <StyledSaleTag>{t("offer.saleTag", { defaultValue: "End of Season Sale Special Deal" })}</StyledSaleTag>
-        <StyledPromoTitle id="sweetheart-promo-title">{t("offer.promoTitle")}</StyledPromoTitle>
-        <StyledSubtitle>{t("offer.subtitle")}</StyledSubtitle>
+        <StyledPromoTitle id="sweetheart-promo-title">
+          {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + Free Gift" })}
+        </StyledPromoTitle>
+        <StyledSubtitle>
+          {t("offer.subtitle", {
+            defaultValue: "Join 1 million+ women who ditched underwires for all-day comfort and full shape.",
+          })}
+        </StyledSubtitle>
         <StyledHeroMeta>
           <StyledHeroScore>{t("offer.ratingScore")}</StyledHeroScore>
           <StyledStars aria-label={t("offer.starsAria")}>★★★★★</StyledStars>
@@ -1189,67 +1186,51 @@ export const SweetheartOfferSection = () => {
 
             <StyledUnlockedWrap
               role={pack === 2 ? "list" : undefined}
-              aria-label={pack === 2 ? t("offer.unlockedTitle") : t("offer.lockedTitle")}
+              aria-label={
+                pack === 2
+                  ? t("offer.unlockedTitle", { defaultValue: "Congrats! You've unlocked 1 gift" })
+                  : t("offer.lockedTitle", { defaultValue: "Buy a 2-pack to unlock a free gift" })
+              }
             >
               <StyledUnlockedDivider>
                 <StyledUnlockedRule aria-hidden />
                 <StyledUnlockedLabel>
-                  {pack === 2 ? t("offer.unlockedTitle") : t("offer.lockedTitle")}
+                  {pack === 2
+                    ? t("offer.unlockedTitle", { defaultValue: "Congrats! You've unlocked 1 gift" })
+                    : t("offer.lockedTitle", { defaultValue: "Buy a 2-pack to unlock a free gift" })}
                 </StyledUnlockedLabel>
                 <StyledUnlockedRule aria-hidden />
               </StyledUnlockedDivider>
 
               {pack === 2 ? (
-                <>
-                  <StyledUnlockedRow role="listitem" aria-label={t("offer.unlockedShippingName")}>
-                    <StyledUnlockedMain>
-                      <StyledUnlockedIcon aria-hidden>
-                        <Image
-                          src={SweetheartCdn.iconShipping}
-                          alt=""
-                          width={28}
-                          height={28}
-                          unoptimized
-                          style={{ width: 28, height: 28, objectFit: "contain" }}
-                        />
-                      </StyledUnlockedIcon>
-                      <StyledUnlockedName>{t("offer.unlockedShippingName")}</StyledUnlockedName>
-                    </StyledUnlockedMain>
-                    <StyledUnlockedPrice>
-                      <s>{t("offer.unlockedShippingWas")}</s>
-                      <strong>{t("offer.giftPriceNow")}</strong>
-                    </StyledUnlockedPrice>
-                  </StyledUnlockedRow>
-
-                  <StyledUnlockedRow role="listitem" aria-label={t("offer.giftName")}>
-                    <StyledUnlockedMain>
-                      <StyledUnlockedThumb>
-                        <Image
-                          src={SweetheartCdn.giftBottom}
-                          alt=""
-                          fill
-                          sizes="36px"
-                          unoptimized
-                          style={{ objectFit: "cover" }}
-                        />
-                      </StyledUnlockedThumb>
-                      <StyledUnlockedName>{t("offer.giftName")}</StyledUnlockedName>
-                    </StyledUnlockedMain>
-                    <StyledUnlockedPrice>
-                      <s>{t("offer.giftPriceWas")}</s>
-                      <strong>{t("offer.giftPriceNow")}</strong>
-                    </StyledUnlockedPrice>
-                  </StyledUnlockedRow>
-                </>
+                <StyledUnlockedRow role="listitem" aria-label={t("offer.giftName")}>
+                  <StyledUnlockedMain>
+                    <StyledUnlockedThumb>
+                      <Image
+                        src={SweetheartCdn.giftBottom}
+                        alt=""
+                        fill
+                        sizes="36px"
+                        unoptimized
+                        style={{ objectFit: "cover" }}
+                      />
+                    </StyledUnlockedThumb>
+                    <StyledUnlockedName>{t("offer.giftName")}</StyledUnlockedName>
+                  </StyledUnlockedMain>
+                  <StyledUnlockedPrice>
+                    <s>{t("offer.giftPriceWas")}</s>
+                    <strong>{t("offer.giftPriceNow")}</strong>
+                  </StyledUnlockedPrice>
+                </StyledUnlockedRow>
               ) : (
                 <StyledLockedRow
                   type="button"
-                  aria-label={t("offer.lockedAria")}
+                  aria-label={t("offer.lockedAria", { defaultValue: "Select the 2-pack to unlock a free gift" })}
                   onClick={() => setPack(2)}
                   onKeyDown={(e) => handleKeyDown(e, () => setPack(2), ["Enter", " "])}
                 >
                   <LockIcon />
-                  {t("offer.lockedLabel")}
+                  {t("offer.lockedLabel", { defaultValue: "2-pack" })}
                 </StyledLockedRow>
               )}
             </StyledUnlockedWrap>

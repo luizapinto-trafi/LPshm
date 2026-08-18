@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next/pages";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import type { GetStaticProps, NextPage } from "next";
 import { SweetheartAnnouncementBar } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartAnnouncementBar";
-import { SweetheartSiteHeader } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartSiteHeader";
+import { SweetheartSiteHeader, SweetheartBreadcrumb } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartSiteHeader";
 import { SweetheartOfferSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartOfferSection";
 import { SweetheartBenefitsSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartBenefitsSection";
 import { SweetheartCompareSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartCompareSection";
@@ -56,6 +56,7 @@ const SweetheartCamiPage: NextPage = () => {
         <SweetheartAnnouncementBar />
         <SweetheartSiteHeader />
       </StyledStickyTop>
+      <SweetheartBreadcrumb />
       <StyledSkip href="#main-content">{t("a11y.skipToMain")}</StyledSkip>
       <StyledMain id="main-content" tabIndex={-1} style={{ outline: "none" }}>
         <SweetheartOfferSection />

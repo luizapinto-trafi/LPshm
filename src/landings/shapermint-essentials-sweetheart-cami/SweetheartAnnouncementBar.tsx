@@ -9,18 +9,18 @@ const StyledBar = styled.div`
   background: var(--ink-900);
   color: var(--white);
   text-align: center;
-  min-height: 24px;
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px var(--space-200);
+  padding: 6px var(--space-200);
   box-sizing: border-box;
   font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 16px;
-  letter-spacing: 0;
-  text-transform: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 `;
 
 export const SweetheartAnnouncementBar = () => {
