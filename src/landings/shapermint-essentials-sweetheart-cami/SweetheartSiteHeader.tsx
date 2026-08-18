@@ -21,10 +21,10 @@ const StyledInner = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: var(--space-300);
-  padding: 18px 26px;
+  padding: 24px 16px;
   @media (max-width: 1023px) {
     min-height: 48px;
-    padding: 12px 15px;
+    padding: 12px 16px;
     box-sizing: border-box;
     gap: 0;
   }
@@ -71,28 +71,42 @@ const StyledLogo = styled(Image)`
 const StyledDesktopMenu = styled.ul`
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: 14px;
   list-style: none;
   margin: 0;
   padding: 0;
+  min-width: 0;
   @media (max-width: 1023px) {
     display: none;
   }
 `;
 
-const StyledMenuLink = styled.a`
-  color: var(--ink-900);
+const StyledMenuLink = styled.a<{ $sale?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: ${({ $sale }) => ($sale ? "var(--sale)" : "var(--ink-900)")};
   text-decoration: none;
-  font-size: 14px;
-  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  white-space: nowrap;
   &:hover {
-    color: var(--coral-500);
+    color: ${({ $sale }) => ($sale ? "var(--coral-700)" : "var(--coral-500)")};
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
   }
+`;
+
+const StyledCaret = styled.svg`
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
 `;
 
 const StyledActions = styled.div`
@@ -203,12 +217,110 @@ const StyledMobilePanel = styled.nav<{ $open: boolean }>`
   }
 `;
 
-const navKeys = ["nav0", "nav1", "nav2", "nav3", "nav4", "nav5", "nav6", "nav7"] as const;
+const StyledLocale = styled.span`
+  display: none;
+  @media (min-width: 1024px) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 4px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-900);
+    white-space: nowrap;
+  }
+`;
+
+const StyledFlag = styled.span`
+  font-size: 16px;
+  line-height: 1;
+`;
+
+const StyledLocaleDivider = styled.span`
+  color: var(--ink-400);
+`;
+
+const StyledCartHost = styled.span`
+  position: relative;
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledCartBadge = styled.span`
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--sale);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+`;
+
+const StyledBreadcrumb = styled.nav`
+  background: var(--white);
+  border-top: 1px solid var(--ink-200);
+  padding: 24px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-700);
+`;
+
+const StyledCrumbLink = styled.a`
+  color: var(--ink-700);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--ink-900);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+`;
+
+const StyledCrumbCurrent = styled.span`
+  color: var(--ink-900);
+  font-weight: 700;
+`;
+
+const NAV = [
+  { key: "nav0" },
+  { key: "nav1", hasMenu: true },
+  { key: "nav2", hasMenu: true },
+  { key: "nav3" },
+  { key: "nav4", hasMenu: true },
+  { key: "nav5" },
+  { key: "nav6" },
+  { key: "nav7", hasMenu: true },
+  { key: "nav8", sale: true },
+] as const;
+
+const Caret = () => (
+  <StyledCaret viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+  </StyledCaret>
+);
 
 export const SweetheartSiteHeader = () => {
   const { t } = useTranslation("sweetheartCami");
   const [menuOpen, setMenuOpen] = useState(false);
   const badge = t("header.accountNotificationCount");
+  const cartCount = t("header.cartCount");
 
   return (
     <StyledHeader>
@@ -239,13 +351,21 @@ export const SweetheartSiteHeader = () => {
           </StyledLogoLink>
         </StyledStart>
         <StyledDesktopMenu>
-          {navKeys.map((k) => (
-            <li key={k}>
-              <StyledMenuLink href="https://shapermint.com">{t(`header.${k}`)}</StyledMenuLink>
+          {NAV.map((item) => (
+            <li key={item.key}>
+              <StyledMenuLink href="https://shapermint.com" $sale={"sale" in item && item.sale}>
+                {t(`header.${item.key}`)}
+                {"hasMenu" in item && item.hasMenu ? <Caret /> : null}
+              </StyledMenuLink>
             </li>
           ))}
         </StyledDesktopMenu>
         <StyledActions>
+          <StyledLocale>
+            <StyledFlag aria-hidden>🇺🇸</StyledFlag>
+            <StyledLocaleDivider aria-hidden>|</StyledLocaleDivider>
+            {t("header.locale")}
+          </StyledLocale>
           <StyledIconLink
             href="https://shapermint.com"
             aria-label={t("header.search")}
@@ -270,24 +390,57 @@ export const SweetheartSiteHeader = () => {
             </UserIconHost>
           </StyledIconLink>
           <StyledIconLink
+            href="https://help.shapermint.com/hc/en-us"
+            aria-label={t("header.help")}
+            data-testid="header-help"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <circle cx="12" cy="12" r="9" />
+              <path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1.2.8-1.2 1.7" strokeLinecap="round" />
+              <circle cx="12" cy="17" r="0.8" fill="currentColor" stroke="none" />
+            </svg>
+          </StyledIconLink>
+          <StyledIconLink
             href="https://shapermint.com/cart"
             aria-label={t("header.cart")}
             data-testid="header-cart"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M6 7V6a6 6 0 1 1 12 0v1" />
-              <rect x="4" y="7" width="16" height="14" rx="1.5" />
-            </svg>
+            <StyledCartHost>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M6 7V6a6 6 0 1 1 12 0v1" />
+                <rect x="4" y="7" width="16" height="14" rx="1.5" />
+              </svg>
+              <StyledCartBadge aria-hidden>{cartCount}</StyledCartBadge>
+            </StyledCartHost>
           </StyledIconLink>
         </StyledActions>
       </StyledInner>
       <StyledMobilePanel aria-label={t("header.mobileNavAria")} $open={menuOpen}>
-        {navKeys.map((k) => (
-          <StyledMenuLink key={k} href="https://shapermint.com" onClick={() => setMenuOpen(false)}>
-            {t(`header.${k}`)}
+        {NAV.map((item) => (
+          <StyledMenuLink
+            key={item.key}
+            href="https://shapermint.com"
+            $sale={"sale" in item && item.sale}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t(`header.${item.key}`)}
+            {"hasMenu" in item && item.hasMenu ? <Caret /> : null}
           </StyledMenuLink>
         ))}
       </StyledMobilePanel>
     </StyledHeader>
+  );
+};
+
+export const SweetheartBreadcrumb = () => {
+  const { t } = useTranslation("sweetheartCami");
+  return (
+    <StyledBreadcrumb aria-label="Breadcrumb">
+      <StyledCrumbLink href="https://shapermint.com">{t("header.crumbHome")}</StyledCrumbLink>
+      {" > "}
+      <StyledCrumbLink href="https://shapermint.com">{t("header.crumbCategory")}</StyledCrumbLink>
+      {" > "}
+      <StyledCrumbCurrent>{t("header.crumbCurrent")}</StyledCrumbCurrent>
+    </StyledBreadcrumb>
   );
 };
