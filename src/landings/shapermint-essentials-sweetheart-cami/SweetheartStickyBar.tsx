@@ -51,6 +51,7 @@ const StyledCtaWrap = styled.div`
 export const SweetheartStickyBar = () => {
   const { t } = useTranslation("sweetheartCami");
   const [visible, setVisible] = useState(false);
+  const [ctaLabel, setCtaLabel] = useState(t("sticky.cta"));
 
   useEffect(() => {
     const sync = () => {
@@ -60,22 +61,26 @@ export const SweetheartStickyBar = () => {
         return;
       }
       setVisible(pdpCta.getBoundingClientRect().bottom < 0);
+      const label = pdpCta.querySelector("a")?.textContent?.trim();
+      if (label) setCtaLabel(label);
     };
 
     sync();
     window.addEventListener("scroll", sync, { passive: true });
     window.addEventListener("resize", sync);
+    const id = window.setInterval(sync, 500);
     return () => {
       window.removeEventListener("scroll", sync);
       window.removeEventListener("resize", sync);
+      window.clearInterval(id);
     };
   }, []);
 
   return (
-    <StyledBar $visible={visible} role="region" aria-label={t("sticky.cta")}>
+    <StyledBar $visible={visible} role="region" aria-label={ctaLabel}>
       <StyledCtaWrap>
         <SweetheartPrimaryButton $wide href={SweetheartShopUrl}>
-          {t("sticky.cta")}
+          {ctaLabel}
         </SweetheartPrimaryButton>
       </StyledCtaWrap>
     </StyledBar>

@@ -4,7 +4,6 @@ import { useTranslation } from "next-i18next/pages";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import type { GetStaticProps, NextPage } from "next";
 import { SweetheartAnnouncementBar } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartAnnouncementBar";
-import { SweetheartSiteHeader, SweetheartBreadcrumb } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartSiteHeader";
 import { SweetheartOfferSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartOfferSection";
 import { SweetheartBenefitsSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartBenefitsSection";
 import { SweetheartCompareSection } from "@/landings/shapermint-essentials-sweetheart-cami/SweetheartCompareSection";
@@ -31,13 +30,6 @@ const StyledSkip = styled.a`
   }
 `;
 
-const StyledStickyTop = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--white);
-`;
-
 const StyledMain = styled.main`
   padding-bottom: 0;
 `;
@@ -52,11 +44,7 @@ const SweetheartCamiPage: NextPage = () => {
         <meta name="description" content={t("metaDescription")} />
         <link rel="canonical" href={`https://shapermint.com${SweetheartPagePath}`} />
       </Head>
-      <StyledStickyTop>
-        <SweetheartAnnouncementBar />
-        <SweetheartSiteHeader />
-      </StyledStickyTop>
-      <SweetheartBreadcrumb />
+      <SweetheartAnnouncementBar />
       <StyledSkip href="#main-content">{t("a11y.skipToMain")}</StyledSkip>
       <StyledMain id="main-content" tabIndex={-1} style={{ outline: "none" }}>
         <SweetheartOfferSection />
