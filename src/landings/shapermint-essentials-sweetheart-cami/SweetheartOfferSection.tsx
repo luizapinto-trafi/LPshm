@@ -180,7 +180,7 @@ const StyledCtaBlock = styled.div`
 const StyledProductTitle = styled.h2`
   font-family: var(--font-body);
   font-size: clamp(22px, 3vw, 28px);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.25;
   color: var(--ink-900);
   margin: 0;
