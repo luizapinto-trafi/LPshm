@@ -5,6 +5,10 @@ import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
 import { SweetheartCdn, SweetheartShopUrl, SweetheartSizeGuideUrl } from "./sweetheartCamiCdn";
 import { SweetheartPrimaryButton } from "./SweetheartPrimaryButton";
+import {
+  SweetheartSeeInYourSizeModal,
+  type SweetheartSiysSize,
+} from "./SweetheartSeeInYourSizeModal";
 
 /**
  * Offer aligned to Carpe Bundle reference:
@@ -680,15 +684,6 @@ const StyledSizeGuideLink = styled.a`
 const StyledSizePicker = styled.div`
   width: 100%;
   scroll-margin-top: 72px;
-  border-radius: 8px;
-  outline: 2px solid transparent;
-  outline-offset: 4px;
-  transition: outline-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-
-  &[data-flash="true"] {
-    outline-color: var(--coral-500);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--coral-300) 55%, transparent);
-  }
 `;
 
 const StyledSizeLabel = styled.div`
@@ -799,6 +794,7 @@ export const SweetheartOfferSection = () => {
   const { t } = useTranslation("sweetheartCami");
   const [packQty, setPackQty] = useState<PackQty>(2);
   const [size, setSize] = useState<SizeId>("S");
+  const [siysOpen, setSiysOpen] = useState(false);
   const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
   const [thumbsHeight, setThumbsHeight] = useState(0);
@@ -870,20 +866,7 @@ export const SweetheartOfferSection = () => {
     setActiveThumb((i) => (i + delta + GALLERY.length) % GALLERY.length);
   };
 
-  const scrollToSizes = () => {
-    const el = document.getElementById("sweetheart-size-picker");
-    if (!el) return;
-
-    const stickyOffset = 64;
-    const top = el.getBoundingClientRect().top + window.scrollY - stickyOffset;
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-
-    el.setAttribute("data-flash", "true");
-    window.setTimeout(() => el.removeAttribute("data-flash"), 1200);
-
-    const firstChip = el.querySelector<HTMLButtonElement>("button");
-    firstChip?.focus({ preventScroll: true });
-  };
+  const openSeeInYourSize = () => setSiysOpen(true);
 
   const selectPack = (tier: PackTier) => {
     if (tier.oos) return;
@@ -892,6 +875,21 @@ export const SweetheartOfferSection = () => {
 
   return (
     <StyledOfferHero>
+      <SweetheartSeeInYourSizeModal
+        open={siysOpen}
+        initialSize={size as SweetheartSiysSize}
+        onClose={() => setSiysOpen(false)}
+        onSelect={(next) => {
+          setSize(next);
+          setSiysOpen(false);
+          window.requestAnimationFrame(() => {
+            document.getElementById("sweetheart-size-picker")?.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+            });
+          });
+        }}
+      />
       <StyledHeadingStrip>
         <StyledPromoTitle id="sweetheart-promo-title">
           {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + a Free Gift" })}
@@ -987,7 +985,7 @@ export const SweetheartOfferSection = () => {
                 </StyledNewIn>
               </StyledMainImage>
               <StyledSeeSizeWrap>
-                <StyledSeeSize type="button" onClick={scrollToSizes}>
+                <StyledSeeSize type="button" onClick={openSeeInYourSize}>
                   {t("offer.seeInYourSize")}
                 </StyledSeeSize>
               </StyledSeeSizeWrap>
