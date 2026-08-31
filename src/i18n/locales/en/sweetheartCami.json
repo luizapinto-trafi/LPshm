@@ -104,6 +104,15 @@
     "title": "Free gift with your order",
     "body": "A Best-Selling Shaper Bottom ($26 value) is added automatically at checkout. Pick your size when you check out, while supplies last."
   },
+  "siys": {
+    "title": "SEE IN YOUR SIZE",
+    "lead": "Select your size below to see the closest size available",
+    "close": "Close",
+    "sizesAria": "Select a size",
+    "caption": "{{name}} is {{height}} and wears {{size}} in {{color}}",
+    "imageAlt": "{{name}} wearing size {{size}} in {{color}}",
+    "selectCta": "SELECT SIZE {{size}}"
+  },
   "benefits": {
     "zones": "BUST • WAIST • BACK • TUMMY",
     "title": "One layer does the work of three.",

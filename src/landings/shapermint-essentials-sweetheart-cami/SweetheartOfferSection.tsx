@@ -5,6 +5,10 @@ import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
 import { SweetheartCdn, SweetheartShopUrl, SweetheartSizeGuideUrl } from "./sweetheartCamiCdn";
 import { SweetheartPrimaryButton } from "./SweetheartPrimaryButton";
+import {
+  SweetheartSeeInYourSizeModal,
+  type SweetheartSiysSize,
+} from "./SweetheartSeeInYourSizeModal";
 
 /**
  * Offer aligned to Carpe Bundle reference:
@@ -176,7 +180,7 @@ const StyledCtaBlock = styled.div`
 const StyledProductTitle = styled.h2`
   font-family: var(--font-body);
   font-size: clamp(22px, 3vw, 28px);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.25;
   color: var(--ink-900);
   margin: 0;
@@ -677,6 +681,11 @@ const StyledSizeGuideLink = styled.a`
   }
 `;
 
+const StyledSizePicker = styled.div`
+  width: 100%;
+  scroll-margin-top: 72px;
+`;
+
 const StyledSizeLabel = styled.div`
   font-size: 14px;
   margin: 12px 0 8px;
@@ -785,6 +794,7 @@ export const SweetheartOfferSection = () => {
   const { t } = useTranslation("sweetheartCami");
   const [packQty, setPackQty] = useState<PackQty>(2);
   const [size, setSize] = useState<SizeId>("S");
+  const [siysOpen, setSiysOpen] = useState(false);
   const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
   const [thumbsHeight, setThumbsHeight] = useState(0);
@@ -856,9 +866,7 @@ export const SweetheartOfferSection = () => {
     setActiveThumb((i) => (i + delta + GALLERY.length) % GALLERY.length);
   };
 
-  const scrollToSizes = () => {
-    document.getElementById("sweetheart-size-picker")?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
+  const openSeeInYourSize = () => setSiysOpen(true);
 
   const selectPack = (tier: PackTier) => {
     if (tier.oos) return;
@@ -867,6 +875,21 @@ export const SweetheartOfferSection = () => {
 
   return (
     <StyledOfferHero>
+      <SweetheartSeeInYourSizeModal
+        open={siysOpen}
+        initialSize={size as SweetheartSiysSize}
+        onClose={() => setSiysOpen(false)}
+        onSelect={(next) => {
+          setSize(next);
+          setSiysOpen(false);
+          window.requestAnimationFrame(() => {
+            document.getElementById("sweetheart-size-picker")?.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+            });
+          });
+        }}
+      />
       <StyledHeadingStrip>
         <StyledPromoTitle id="sweetheart-promo-title">
           {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + a Free Gift" })}
@@ -962,7 +985,7 @@ export const SweetheartOfferSection = () => {
                 </StyledNewIn>
               </StyledMainImage>
               <StyledSeeSizeWrap>
-                <StyledSeeSize type="button" onClick={scrollToSizes}>
+                <StyledSeeSize type="button" onClick={openSeeInYourSize}>
                   {t("offer.seeInYourSize")}
                 </StyledSeeSize>
               </StyledSeeSizeWrap>
@@ -1133,7 +1156,7 @@ export const SweetheartOfferSection = () => {
                 </StyledSizeGuideLink>
               </StyledSizeGuide>
 
-              <div id="sweetheart-size-picker">
+              <StyledSizePicker id="sweetheart-size-picker">
                 <StyledSizeLabel>
                   {t("offer.sizeHeading")} <strong>{size}</strong>
                 </StyledSizeLabel>
@@ -1149,7 +1172,7 @@ export const SweetheartOfferSection = () => {
                     </StyledSizeChip>
                   ))}
                 </StyledSizes>
-              </div>
+              </StyledSizePicker>
 
               <StyledFits>
                 Fits sizes: <strong>{FIT_CHART[size].range}</strong>
