@@ -1,18 +1,15 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
 import { SweetheartCdn, SweetheartShopUrl, SweetheartSizeGuideUrl } from "./sweetheartCamiCdn";
-import {
-  SweetheartSplitCta,
-  SweetheartSplitCtaDivider,
-  SweetheartSplitCtaPart,
-} from "./SweetheartPrimaryButton";
+import { SweetheartPrimaryButton } from "./SweetheartPrimaryButton";
 
 /**
- * Offer aligned to Truekind/SHM PDP pattern:
- * headline strip above gallery → shipping bar → product title → packs → unlocked gifts → ATC → return card.
+ * Offer aligned to Carpe Bundle reference:
+ * left-aligned headline strip → gallery + buybox with radio pack tiers,
+ * always-on free gift, per-unit color slots, global size, dynamic CTA.
  */
 const GALLERY = [
   SweetheartCdn.modelBlack,
@@ -26,8 +23,21 @@ const GALLERY = [
 
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"] as const;
 type SizeId = (typeof SIZES)[number];
-type PackId = 1 | 2;
+type PackQty = 1 | 2 | 3;
 type ColorId = "black" | "chai" | "white";
+
+type PackTier = {
+  qty: PackQty;
+  per?: number;
+  was?: number;
+  oos?: boolean;
+};
+
+const PACK_TIERS: PackTier[] = [
+  { qty: 2, per: 32.99, was: 60 },
+  { qty: 3, oos: true },
+  { qty: 1, per: 38.99, was: 60 },
+];
 
 const FIT_CHART: Record<SizeId, { range: string; bust: string; waist: string }> = {
   S: { range: "0-2", bust: "30-31", waist: "23-25.5" },
@@ -51,6 +61,10 @@ const COLOR_THUMB: Record<ColorId, string> = {
   white: SweetheartCdn.modelWhite,
 };
 
+const COLORS: ColorId[] = ["black", "chai", "white"];
+
+const packPct = (per: number, was: number) => Math.round((1 - per / was) * 100);
+
 const StyledOfferHero = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,75 +76,46 @@ const StyledOfferHero = styled.div`
 
 const StyledHeadingStrip = styled.div`
   background: var(--white);
-  text-align: center;
-  padding: 24px 16px 8px;
+  text-align: left;
+  padding: 16px 16px 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 6px;
   box-sizing: border-box;
-`;
-
-const StyledSaleTag = styled.p`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  height: 44px;
-  padding: 0 16px;
-  box-sizing: border-box;
-  background: var(--coral-100);
-  border: 1px dashed var(--coral-600);
-  border-radius: 6px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-900);
-  line-height: 1.2;
-  &::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--coral-500);
-    flex: 0 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  @media (min-width: 900px) {
+    padding: 24px var(--space-400) 8px;
   }
 `;
 
 const StyledPromoTitle = styled.h1`
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: clamp(21px, 3vw, 32px);
   font-weight: 700;
-  line-height: 1.3;
-  color: #333333;
+  line-height: 1.08;
+  color: var(--ink-900);
   margin: 0;
   letter-spacing: 0;
+  @media (min-width: 900px) {
+    font-size: clamp(28px, 3.4vw, 42px);
+  }
 `;
 
 const StyledSubtitle = styled.p`
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
-  line-height: 1.5;
-  color: var(--ink-700);
+  line-height: 1.45;
+  color: var(--ink-600);
   margin: 0;
   max-width: 42rem;
-`;
-
-const StyledHeroMeta = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink-900);
-`;
-
-const StyledHeroScore = styled.span`
-  font-weight: 700;
+  strong {
+    font-weight: 700;
+    color: var(--ink-900);
+  }
 `;
 
 const StyledSection = styled.section`
@@ -162,7 +147,7 @@ const StyledGalleryCol = styled.div`
   width: 100%;
   @media (min-width: 900px) {
     position: sticky;
-    top: 96px;
+    top: 56px;
     align-self: start;
   }
 `;
@@ -188,30 +173,6 @@ const StyledCtaBlock = styled.div`
   min-width: 0;
 `;
 
-const StyledShipping = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 10px 12px;
-  background: var(--ink-100);
-  border-radius: var(--radius-md);
-  font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--ink-900);
-`;
-
-const StyledShippingIcon = styled.span`
-  display: inline-flex;
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
-  line-height: 0;
-`;
-
 const StyledProductTitle = styled.h2`
   font-family: var(--font-body);
   font-size: clamp(22px, 3vw, 28px);
@@ -220,14 +181,6 @@ const StyledProductTitle = styled.h2`
   color: var(--ink-900);
   margin: 0;
   letter-spacing: 0;
-`;
-
-const StyledChoose = styled.p`
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 400;
-  margin: 0;
-  color: var(--ink-900);
 `;
 
 const StyledGallery = styled.div`
@@ -443,115 +396,12 @@ const StyledReviewsLink = styled.a`
   }
 `;
 
-const StyledPacks = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 8px;
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-`;
-
-const StyledPack = styled.div<{ $selected?: boolean }>`
-  position: relative;
-  flex: 1 1 196px;
-  width: 196px;
-  max-width: calc(50% - 4px);
-  min-width: 0;
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: 15px 8px;
-  border-radius: 8px;
-  border: ${({ $selected }) =>
-    $selected ? "2px solid var(--mint-500)" : "1px solid #bbbbbb"};
-  background: ${({ $selected }) => ($selected ? "#F5FAF9" : "var(--white)")};
-  outline: none;
-  overflow: visible;
-  &:focus-visible {
-    outline: 2px solid var(--ink-900);
-    outline-offset: 2px;
-  }
-`;
-
-const StyledPackPop = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  background: linear-gradient(93.15deg, #f2d96f -5.81%, #faa540 111.09%);
-  color: var(--ink-900);
-  font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  text-align: center;
-  height: 18px;
-  line-height: 18px;
-  padding: 0 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-`;
-
-const StyledPackUnits = styled.div`
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink-900);
-  line-height: normal;
-  padding-bottom: 6px;
-`;
-
-const StyledPackSave = styled.div<{ $selected?: boolean }>`
-  display: inline-block;
-  box-sizing: border-box;
-  white-space: nowrap;
-  text-transform: none;
-  max-width: 100%;
-  border-radius: 4px;
-  padding: 6px 8px;
-  margin: 2px 0 4px;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 12px;
-  border: 1px solid ${({ $selected }) => ($selected ? "var(--sale)" : "#d1d1d1")};
-  background: ${({ $selected }) => ($selected ? "var(--sale)" : "transparent")};
-  color: ${({ $selected }) => ($selected ? "#fff" : "var(--ink-900)")};
-`;
-
-const StyledStrike = styled.div<{ $muted?: boolean }>`
+const StyledChoose = styled.p`
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
-  color: ${({ $muted }) => ($muted ? "#767676" : "var(--ink-900)")};
-  text-decoration: line-through;
-  line-height: 1.2;
-  padding-bottom: 4px;
-`;
-
-const StyledFinal = styled.div`
-  font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: 700;
+  margin: 0;
   color: var(--ink-900);
-  line-height: 1.2;
-  word-break: break-word;
-  span {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--ink-900);
-  }
 `;
 
 const StyledOfferSelection = styled.div`
@@ -561,249 +411,254 @@ const StyledOfferSelection = styled.div`
   width: 100%;
   max-width: 400px;
   min-width: 0;
-  margin-top: -6px;
 `;
 
-const StyledUnlockedWrap = styled.div`
+const StyledPacks = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  gap: 22px;
+  margin: 14px 0 0;
   width: 100%;
+  padding-top: 4px;
+`;
+
+const StyledPack = styled.div<{ $selected?: boolean; $oos?: boolean; $hasBadge?: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: ${({ $hasBadge }) => ($hasBadge ? "26px 20px 16px" : "16px 20px")};
+  border-radius: 14px;
+  border: 2px solid
+    ${({ $selected, $oos }) =>
+      $oos ? "var(--ink-200)" : $selected ? "var(--coral-500)" : "var(--ink-200)"};
+  background: ${({ $selected, $oos }) =>
+    $oos ? "var(--ink-100)" : $selected ? "var(--coral-050)" : "var(--white)"};
+  cursor: ${({ $oos }) => ($oos ? "not-allowed" : "pointer")};
+  box-sizing: border-box;
+  outline: none;
+  isolation: isolate;
+  &:focus-visible {
+    outline: 2px solid var(--ink-900);
+    outline-offset: 2px;
+  }
+`;
+
+const StyledPackBadge = styled.span<{ $variant: "best" | "oos" }>`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--white);
+  white-space: nowrap;
+  pointer-events: none;
+  background: ${({ $variant }) => ($variant === "best" ? "var(--mint-500)" : "#882A2B")};
+`;
+
+const StyledRadio = styled.span<{ $selected?: boolean; $oos?: boolean }>`
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 2px solid ${({ $selected }) => ($selected ? "var(--coral-500)" : "var(--ink-300)")};
+  flex-shrink: 0;
+  position: relative;
+  opacity: ${({ $oos }) => ($oos ? 0.5 : 1)};
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 999px;
+    background: var(--coral-500);
+    display: ${({ $selected }) => ($selected ? "block" : "none")};
+  }
+`;
+
+const StyledPackText = styled.div`
+  flex: 1;
+  text-align: center;
+  margin-right: 22px;
   min-width: 0;
 `;
 
-const StyledUnlockedDivider = styled.div`
+const StyledPackTitle = styled.div<{ $muted?: boolean }>`
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 800;
+  color: ${({ $muted }) => ($muted ? "var(--ink-500)" : "var(--ink-900)")};
+  line-height: 1.2;
+`;
+
+const StyledPackPrice = styled.div`
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink-900);
+  margin-top: 4px;
+  line-height: 1.2;
+  s {
+    display: block;
+    color: var(--ink-500);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: line-through;
+    margin: 0 0 2px;
+  }
+  span {
+    font-size: 14px;
+    color: var(--ink-500);
+    font-weight: 600;
+  }
+`;
+
+const StyledGiftBlock = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  margin: 0;
-  align-self: stretch;
-`;
-
-const StyledUnlockedRule = styled.span`
-  flex: 1 1 auto;
-  height: 1px;
-  background: var(--ink-200);
-`;
-
-const StyledUnlockedLabel = styled.p`
-  margin: 0;
-  flex: 0 0 auto;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-900);
-  text-align: center;
-  line-height: 1.3;
-  white-space: nowrap;
-`;
-
-const StyledUnlockedRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-150);
-  width: 300px;
-  max-width: 100%;
-  height: 62px;
-  min-height: 62px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: #F5FAF9;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f5faf9;
   border: 1px dashed var(--mint-600);
-  box-shadow: none;
-  outline: none;
   box-sizing: border-box;
-  cursor: default;
-  user-select: none;
 `;
 
-const StyledUnlockedMain = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--space-300);
-  min-width: 0;
-  flex: 1 1 auto;
-`;
-
-const StyledUnlockedThumb = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
+const StyledGiftThumb = styled.div`
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background: var(--white);
-  display: grid;
-  place-items: center;
   flex: 0 0 auto;
+  background: var(--white);
 `;
 
-const StyledUnlockedName = styled.p`
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--ink-900);
+const StyledGiftCopy = styled.div`
+  min-width: 0;
 `;
 
-const StyledUnlockedPrice = styled.p`
-  margin: 0;
+const StyledGiftPrice = styled.p`
+  margin: 0 0 2px;
   display: flex;
   align-items: baseline;
-  justify-content: flex-end;
-  gap: 6px;
-  flex: 0 0 auto;
+  gap: 8px;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.2;
-  white-space: nowrap;
   s {
     color: var(--ink-500);
     font-weight: 400;
-    text-decoration: line-through;
   }
   strong {
     color: var(--sale);
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
   }
 `;
 
-const StyledLockedRow = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 300px;
-  max-width: 100%;
-  height: 62px;
-  min-height: 62px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: var(--ink-100);
-  border: 1px dashed var(--ink-300);
-  box-sizing: border-box;
-  cursor: pointer;
-  appearance: none;
+const StyledGiftName = styled.h4`
+  margin: 0;
   font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--ink-500);
-  &:hover {
-    color: var(--ink-700);
-    border-color: var(--ink-400);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--ink-900);
-    outline-offset: 2px;
-  }
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.25;
 `;
 
-const LockIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.6" />
-    <path
-      d="M8 11V8a4 4 0 0 1 8 0v3"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
-const StyledColorRow = styled.div`
-  font-size: 14px;
-  padding: 0 0 12px;
-  margin: 0 0 4px;
-  color: var(--ink-900);
+const StyledSlotPanels = styled.div`
+  border: 1px solid var(--ink-200);
+  border-radius: 14px;
+  background: var(--white);
+  padding: 14px 16px;
   width: 100%;
   max-width: 400px;
-  border-bottom: 1px solid var(--ink-200);
+  box-sizing: border-box;
 `;
 
-const StyledColorPickers = styled.div`
+const StyledColorSummary = styled.div`
+  font-size: 13.5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ink-200);
+  margin-bottom: 4px;
+  color: var(--ink-900);
+`;
+
+const StyledSlotUnit = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ink-200);
+  &:last-of-type {
+    border-bottom: none;
+  }
+`;
+
+const StyledSlotThumbWrap = styled.div`
+  width: 76px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  max-width: 400px;
-  min-width: 0;
-`;
-
-const StyledColorPicker = styled.div`
-  display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
-  width: 100%;
-  max-width: 400px;
-  min-height: 70px;
-  > div:last-child {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
+  flex-shrink: 0;
 `;
 
-const StyledColorThumb = styled.div`
+const StyledSlotThumb = styled.div`
   width: 52px;
-  height: 70px;
-  border-radius: 2px;
+  height: 66px;
+  border-radius: 8px;
   overflow: hidden;
-  flex: 0 0 auto;
   position: relative;
   background: var(--ink-100);
 `;
 
+const StyledSlotBody = styled.div`
+  min-width: 0;
+  flex: 1 1 auto;
+`;
+
+const StyledSlotUnitLabel = styled.div`
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: var(--ink-900);
+  strong {
+    font-weight: 800;
+  }
+`;
+
 const StyledSwatches = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 8px;
 `;
 
 const StyledSwatch = styled.button<{ $bg: string; $selected?: boolean; $light?: boolean }>`
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-full);
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
   background: ${({ $bg }) => $bg};
-  border: none;
+  border: 2px solid ${({ $selected }) => ($selected ? "var(--ink-900)" : "transparent")};
+  box-shadow: ${({ $light, $selected }) =>
+    !$selected && $light ? "0 0 0 1px var(--ink-300)" : "none"};
   cursor: pointer;
-  box-shadow: ${({ $selected, $light }) =>
-    $selected
-      ? "0 0 0 2px #FFFFFF inset, 0 0 0 3px var(--ink-900)"
-      : $light
-        ? "0 0 0 1px var(--ink-300)"
-        : "0 0 0 1px var(--ink-200)"};
+  padding: 0;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
   }
-`;
-
-const StyledSizeLabel = styled.div`
-  font-size: 14px;
-  margin-bottom: 8px;
-  color: var(--ink-900);
-`;
-
-const StyledSizePicker = styled.div`
-  width: 100%;
-  max-width: 400px;
-  min-width: 0;
 `;
 
 const StyledSizeGuide = styled.div`
   border-top: 1px solid var(--ink-200);
   padding-top: 12px;
-  margin: 0;
+  margin: 8px 0 0;
   width: 100%;
-  max-width: 400px;
 `;
 
 const StyledSizeGuideLink = styled.a`
@@ -818,17 +673,21 @@ const StyledSizeGuideLink = styled.a`
   text-underline-offset: 2px;
   cursor: pointer;
   &:hover {
-    text-decoration: underline;
     color: var(--ink-700);
   }
+`;
+
+const StyledSizeLabel = styled.div`
+  font-size: 14px;
+  margin: 12px 0 8px;
+  color: var(--ink-900);
 `;
 
 const StyledSizes = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 8px 0 0;
+  margin: 0;
   width: 100%;
-  max-width: 400px;
 `;
 
 const StyledSizeChip = styled.button<{ $selected?: boolean }>`
@@ -860,10 +719,35 @@ const StyledSizeChip = styled.button<{ $selected?: boolean }>`
 const StyledFits = styled.div`
   font-size: 12px;
   line-height: 1.5;
-  margin: 8px 0 0;
+  margin: 0;
   width: 100%;
-  max-width: 400px;
   color: var(--ink-900);
+`;
+
+const StyledFineprint = styled.p`
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-600);
+`;
+
+const StyledIconRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 18px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-900);
+  text-align: center;
+`;
+
+const StyledIconItem = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 const StyledReturn = styled.div`
@@ -897,77 +781,21 @@ const StyledReturnBody = styled.div`
 const colorName = (c: ColorId, t: (k: string) => string) =>
   c === "black" ? t("offer.colorBlack") : c === "chai" ? t("offer.colorChai") : t("offer.colorWhite");
 
-const ColorPickerRow = ({
-  label,
-  value,
-  onChange,
-  thumbAlt,
-  blackAria,
-  chaiAria,
-  whiteAria,
-}: {
-  label: string;
-  value: ColorId;
-  onChange: (c: ColorId) => void;
-  thumbAlt: string;
-  blackAria: string;
-  chaiAria: string;
-  whiteAria: string;
-}) => (
-  <StyledColorPicker>
-    <StyledColorThumb>
-      <Image
-        src={COLOR_THUMB[value]}
-        alt={thumbAlt}
-        fill
-        sizes="52px"
-        unoptimized
-        style={{ objectFit: "cover" }}
-      />
-    </StyledColorThumb>
-    <div>
-      <StyledSizeLabel style={{ marginBottom: 6, fontSize: 14 }}>{label}</StyledSizeLabel>
-      <StyledSwatches>
-        <StyledSwatch
-          type="button"
-          $bg={COLOR_HEX.black}
-          $selected={value === "black"}
-          aria-label={blackAria}
-          aria-pressed={value === "black"}
-          onClick={() => onChange("black")}
-        />
-        <StyledSwatch
-          type="button"
-          $bg={COLOR_HEX.chai}
-          $selected={value === "chai"}
-          aria-label={chaiAria}
-          aria-pressed={value === "chai"}
-          onClick={() => onChange("chai")}
-        />
-        <StyledSwatch
-          type="button"
-          $bg={COLOR_HEX.white}
-          $selected={value === "white"}
-          $light
-          aria-label={whiteAria}
-          aria-pressed={value === "white"}
-          onClick={() => onChange("white")}
-        />
-      </StyledSwatches>
-    </div>
-  </StyledColorPicker>
-);
-
 export const SweetheartOfferSection = () => {
   const { t } = useTranslation("sweetheartCami");
-  const [pack, setPack] = useState<PackId>(2);
+  const [packQty, setPackQty] = useState<PackQty>(2);
   const [size, setSize] = useState<SizeId>("S");
-  const [colorA, setColorA] = useState<ColorId>("black");
-  const [colorB, setColorB] = useState<ColorId>("black");
+  const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
   const [thumbsHeight, setThumbsHeight] = useState(0);
   const mainImageRef = useRef<HTMLDivElement>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSlotColors((prev) =>
+      Array.from({ length: packQty }, (_, i) => prev[i] ?? "black"),
+    );
+  }, [packQty]);
 
   useLayoutEffect(() => {
     const el = mainImageRef.current;
@@ -996,10 +824,33 @@ export const SweetheartOfferSection = () => {
   }, [activeThumb]);
 
   const thumbs = t("offer.thumbs", { returnObjects: true }) as string[];
-  const colorSummary =
-    pack === 2
-      ? `${colorName(colorA, t)}, ${colorName(colorB, t)}`
-      : colorName(colorA, t);
+  const activeTier = PACK_TIERS.find((p) => p.qty === packQty && !p.oos) ?? PACK_TIERS[0];
+  const pct = useMemo(() => {
+    if (!activeTier.per || !activeTier.was) return 45;
+    return packPct(activeTier.per, activeTier.was);
+  }, [activeTier]);
+
+  const packLabel =
+    packQty === 1
+      ? t("offer.fineprintCami", { defaultValue: "Cami" })
+      : t("offer.fineprintPack", { qty: packQty, defaultValue: `${packQty} Pack` });
+
+  const fineprint = t("offer.fineprint", {
+    pct,
+    packLabel,
+    defaultValue: `Order today — save ${pct}% on your ${packLabel} + get a free gift.`,
+  });
+
+  const ctaLabel = t("offer.ctaDynamic", {
+    pct,
+    defaultValue: `Add to Cart · ${pct}% OFF`,
+  });
+
+  const colorSummary = slotColors.map((c) => colorName(c, t)).join(", ");
+
+  const setSlotColor = (index: number, color: ColorId) => {
+    setSlotColors((prev) => prev.map((c, i) => (i === index ? color : c)));
+  };
 
   const shiftThumb = (delta: number) => {
     setActiveThumb((i) => (i + delta + GALLERY.length) % GALLERY.length);
@@ -1009,23 +860,22 @@ export const SweetheartOfferSection = () => {
     document.getElementById("sweetheart-size-picker")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  const selectPack = (tier: PackTier) => {
+    if (tier.oos) return;
+    setPackQty(tier.qty);
+  };
+
   return (
     <StyledOfferHero>
       <StyledHeadingStrip>
-        <StyledSaleTag>{t("offer.saleTag", { defaultValue: "End of Season Sale Special Deal" })}</StyledSaleTag>
         <StyledPromoTitle id="sweetheart-promo-title">
-          {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + Free Gift" })}
+          {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + a Free Gift" })}
         </StyledPromoTitle>
         <StyledSubtitle>
-          {t("offer.subtitle", {
-            defaultValue: "Join 1 million+ women who ditched underwires for all-day comfort and full shape.",
-          })}
+          {t("offer.subtitleBefore", { defaultValue: "With today's" })}{" "}
+          <strong>{t("offer.subtitleProduct", { defaultValue: "Sweetheart Cami" })}</strong>{" "}
+          {t("offer.subtitleAfter", { defaultValue: "bundle offer" })}
         </StyledSubtitle>
-        <StyledHeroMeta>
-          <StyledHeroScore>{t("offer.ratingScore")}</StyledHeroScore>
-          <StyledStars aria-label={t("offer.starsAria")}>★★★★★</StyledStars>
-          <span>{t("offer.socialProof")}</span>
-        </StyledHeroMeta>
       </StyledHeadingStrip>
 
       <StyledSection id="offer" aria-labelledby="sweetheart-promo-title">
@@ -1120,22 +970,6 @@ export const SweetheartOfferSection = () => {
           </StyledGalleryCol>
 
           <StyledBuybox>
-            <StyledShipping>
-              <StyledShippingIcon aria-hidden>
-                <Image
-                  src={SweetheartCdn.iconShipping}
-                  alt=""
-                  width={20}
-                  height={20}
-                  unoptimized
-                  style={{ width: 20, height: 20, objectFit: "contain" }}
-                />
-              </StyledShippingIcon>
-              <span>
-                Get <strong>{t("offer.shippingStrong")}</strong> {t("offer.shippingRest")}
-              </span>
-            </StyledShipping>
-
             <StyledProductTitle>{t("offer.productTitle")}</StyledProductTitle>
 
             <StyledMeta>
@@ -1144,166 +978,205 @@ export const SweetheartOfferSection = () => {
             </StyledMeta>
 
             <StyledOfferSelection>
-            <StyledChoose>
-              {t("offer.chooseSavings")} <strong>{pack === 2 ? t("offer.pack2Units") : t("offer.pack1Units")}</strong>
-            </StyledChoose>
+              <StyledChoose>
+                {t("offer.chooseSavings")}{" "}
+                <strong>
+                  {packQty === 1
+                    ? t("offer.pack1Title", { defaultValue: "1 Cami" })
+                    : t("offer.packNTitle", { qty: packQty, defaultValue: `${packQty} Pack` })}
+                </strong>
+              </StyledChoose>
 
-            <StyledPacks>
-              <StyledPack
-                role="button"
-                tabIndex={0}
-                $selected={pack === 1}
-                aria-pressed={pack === 1}
-                aria-label={t("offer.pack1Aria")}
-                onClick={() => setPack(1)}
-                onKeyDown={(e) => handleKeyDown(e, () => setPack(1), ["Enter", " "])}
-              >
-                <StyledPackUnits>{t("offer.pack1Units")}</StyledPackUnits>
-                <StyledPackSave $selected={pack === 1}>{t("offer.pack1Save")}</StyledPackSave>
-                <StyledStrike $muted={pack !== 1}>{t("offer.pack1Strike")}</StyledStrike>
-                <StyledFinal>{t("offer.pack1Final")}</StyledFinal>
-              </StyledPack>
+              <StyledPacks role="radiogroup" aria-label={t("offer.chooseSavings")}>
+                {PACK_TIERS.map((tier) => {
+                  const selected = !tier.oos && packQty === tier.qty;
+                  const hasBadge = tier.qty === 2 || Boolean(tier.oos);
+                  const strike =
+                    tier.qty === 1
+                      ? t("offer.pack1Strike")
+                      : tier.qty === 2
+                        ? t("offer.pack2Strike")
+                        : null;
+                  const final =
+                    tier.qty === 1
+                      ? t("offer.pack1Final")
+                      : tier.qty === 2
+                        ? t("offer.pack2Final")
+                        : null;
+                  const title =
+                    tier.qty === 1
+                      ? t("offer.pack1Title", { defaultValue: "1 Cami" })
+                      : t("offer.packNTitle", { qty: tier.qty, defaultValue: `${tier.qty} Pack` });
 
-              <StyledPack
-                role="button"
-                tabIndex={0}
-                $selected={pack === 2}
-                aria-pressed={pack === 2}
-                aria-label={t("offer.pack2Aria")}
-                onClick={() => setPack(2)}
-                onKeyDown={(e) => handleKeyDown(e, () => setPack(2), ["Enter", " "])}
-              >
-                <StyledPackPop>{t("offer.pack2Popular")}</StyledPackPop>
-                <StyledPackUnits>{t("offer.pack2Units")}</StyledPackUnits>
-                <StyledPackSave $selected={pack === 2}>{t("offer.pack2Save")}</StyledPackSave>
-                <StyledStrike $muted={pack !== 2}>{t("offer.pack2Strike")}</StyledStrike>
-                <StyledFinal>
-                  {t("offer.pack2Final")}
-                  <span>{t("offer.pack2Each")}</span>
-                </StyledFinal>
-              </StyledPack>
-            </StyledPacks>
+                  return (
+                    <StyledPack
+                      key={tier.qty}
+                      role="radio"
+                      tabIndex={tier.oos ? -1 : 0}
+                      $selected={selected}
+                      $oos={tier.oos}
+                      $hasBadge={hasBadge}
+                      aria-checked={selected}
+                      aria-disabled={tier.oos || undefined}
+                      aria-label={
+                        tier.oos
+                          ? t("offer.pack3Aria", { defaultValue: "3 Pack, out of stock" })
+                          : tier.qty === 1
+                            ? t("offer.pack1Aria")
+                            : t("offer.pack2Aria")
+                      }
+                      onClick={() => selectPack(tier)}
+                      onKeyDown={(e) =>
+                        handleKeyDown(e, () => selectPack(tier), ["Enter", " "])
+                      }
+                    >
+                      {tier.qty === 2 ? (
+                        <StyledPackBadge $variant="best">
+                          {t("offer.pack2Badge", { defaultValue: "Best Deal" })}
+                        </StyledPackBadge>
+                      ) : null}
+                      {tier.oos ? (
+                        <StyledPackBadge $variant="oos">
+                          {t("offer.pack3Badge", { defaultValue: "Out of Stock" })}
+                        </StyledPackBadge>
+                      ) : null}
+                      <StyledRadio $selected={selected} $oos={tier.oos} aria-hidden />
+                      <StyledPackText>
+                        <StyledPackTitle $muted={tier.oos}>{title}</StyledPackTitle>
+                        {final && strike ? (
+                          <StyledPackPrice>
+                            <s>{strike}</s>
+                            {final}
+                            {tier.qty === 2 ? <span>{t("offer.pack2Each")}</span> : null}
+                          </StyledPackPrice>
+                        ) : null}
+                      </StyledPackText>
+                    </StyledPack>
+                  );
+                })}
+              </StyledPacks>
 
-            <StyledUnlockedWrap
-              role={pack === 2 ? "list" : undefined}
-              aria-label={
-                pack === 2
-                  ? t("offer.unlockedTitle", { defaultValue: "Congrats! You've unlocked 1 gift" })
-                  : t("offer.lockedTitle", { defaultValue: "Buy a 2-pack to unlock a free gift" })
-              }
-            >
-              <StyledUnlockedDivider>
-                <StyledUnlockedRule aria-hidden />
-                <StyledUnlockedLabel>
-                  {pack === 2
-                    ? t("offer.unlockedTitle", { defaultValue: "Congrats! You've unlocked 1 gift" })
-                    : t("offer.lockedTitle", { defaultValue: "Buy a 2-pack to unlock a free gift" })}
-                </StyledUnlockedLabel>
-                <StyledUnlockedRule aria-hidden />
-              </StyledUnlockedDivider>
-
-              {pack === 2 ? (
-                <StyledUnlockedRow role="listitem" aria-label={t("offer.giftName")}>
-                  <StyledUnlockedMain>
-                    <StyledUnlockedThumb>
-                      <Image
-                        src={SweetheartCdn.giftBottom}
-                        alt=""
-                        fill
-                        sizes="36px"
-                        unoptimized
-                        style={{ objectFit: "cover" }}
-                      />
-                    </StyledUnlockedThumb>
-                    <StyledUnlockedName>{t("offer.giftName")}</StyledUnlockedName>
-                  </StyledUnlockedMain>
-                  <StyledUnlockedPrice>
+              <StyledGiftBlock aria-label={t("offer.giftName")}>
+                <StyledGiftThumb>
+                  <Image
+                    src={SweetheartCdn.giftBottom}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    unoptimized
+                    style={{ objectFit: "cover" }}
+                  />
+                </StyledGiftThumb>
+                <StyledGiftCopy>
+                  <StyledGiftPrice>
                     <s>{t("offer.giftPriceWas")}</s>
                     <strong>{t("offer.giftPriceNow")}</strong>
-                  </StyledUnlockedPrice>
-                </StyledUnlockedRow>
-              ) : (
-                <StyledLockedRow
-                  type="button"
-                  aria-label={t("offer.lockedAria", { defaultValue: "Select the 2-pack to unlock a free gift" })}
-                  onClick={() => setPack(2)}
-                  onKeyDown={(e) => handleKeyDown(e, () => setPack(2), ["Enter", " "])}
-                >
-                  <LockIcon />
-                  {t("offer.lockedLabel", { defaultValue: "2-pack" })}
-                </StyledLockedRow>
-              )}
-            </StyledUnlockedWrap>
+                  </StyledGiftPrice>
+                  <StyledGiftName>{t("offer.giftName")}</StyledGiftName>
+                </StyledGiftCopy>
+              </StyledGiftBlock>
             </StyledOfferSelection>
 
-            <StyledColorRow>
-              {t("offer.colorLabel")} <strong>{colorSummary}</strong>
-            </StyledColorRow>
+            <StyledSlotPanels>
+              <StyledColorSummary>
+                {t("offer.colorLabel")} <strong>{colorSummary}</strong>
+              </StyledColorSummary>
 
-            <StyledColorPickers>
-              <ColorPickerRow
-                label={`${t("offer.colorLabel")} ${colorName(colorA, t)}`}
-                value={colorA}
-                onChange={setColorA}
-                thumbAlt={t("offer.colorThumbAlt")}
-                blackAria={t("offer.swatchBlackAria")}
-                chaiAria={t("offer.swatchChaiAria")}
-                whiteAria={t("offer.swatchWhiteAria")}
-              />
-              {pack === 2 ? (
-                <ColorPickerRow
-                  label={`${t("offer.colorLabel")} ${colorName(colorB, t)}`}
-                  value={colorB}
-                  onChange={setColorB}
-                  thumbAlt={t("offer.colorThumbAlt")}
-                  blackAria={t("offer.swatchBlackAria")}
-                  chaiAria={t("offer.swatchChaiAria")}
-                  whiteAria={t("offer.swatchWhiteAria")}
-                />
-              ) : null}
-            </StyledColorPickers>
-
-            <StyledSizeGuide>
-              <StyledSizeGuideLink href={SweetheartSizeGuideUrl} target="_blank" rel="noopener noreferrer">
-                <Image src={SweetheartCdn.iconSizeGuide} alt="" width={24} height={12} unoptimized />
-                <span>{t("offer.sizeGuide")}</span>
-              </StyledSizeGuideLink>
-            </StyledSizeGuide>
-
-            <StyledSizePicker id="sweetheart-size-picker">
-              <StyledSizeLabel>
-                {t("offer.sizeHeading")} <strong>{size}</strong>
-              </StyledSizeLabel>
-              <StyledSizes>
-                {SIZES.map((s) => (
-                  <StyledSizeChip
-                    key={s}
-                    type="button"
-                    $selected={size === s}
-                    onClick={() => setSize(s)}
-                  >
-                    {s}
-                  </StyledSizeChip>
+              {slotColors.map((color, index) => (
+                  <StyledSlotUnit key={`unit-${index}`}>
+                    <StyledSlotThumbWrap>
+                      <StyledSlotThumb>
+                        <Image
+                          src={COLOR_THUMB[color]}
+                          alt={t("offer.colorThumbAlt")}
+                          fill
+                          sizes="52px"
+                          unoptimized
+                          style={{ objectFit: "cover" }}
+                        />
+                      </StyledSlotThumb>
+                    </StyledSlotThumbWrap>
+                    <StyledSlotBody>
+                      <StyledSlotUnitLabel>
+                        {t("offer.unitLabel", { n: index + 1, defaultValue: `Unit #${index + 1}` })}
+                        {": "}
+                        <strong>{colorName(color, t)}</strong>
+                      </StyledSlotUnitLabel>
+                      <StyledSwatches>
+                        {COLORS.map((c) => (
+                          <StyledSwatch
+                            key={c}
+                            type="button"
+                            $bg={COLOR_HEX[c]}
+                            $selected={color === c}
+                            $light={c === "white" || c === "chai"}
+                            aria-label={
+                              c === "black"
+                                ? t("offer.swatchBlackAria")
+                                : c === "chai"
+                                  ? t("offer.swatchChaiAria")
+                                  : t("offer.swatchWhiteAria")
+                            }
+                            aria-pressed={color === c}
+                            onClick={() => setSlotColor(index, c)}
+                          />
+                        ))}
+                      </StyledSwatches>
+                    </StyledSlotBody>
+                  </StyledSlotUnit>
                 ))}
-              </StyledSizes>
-            </StyledSizePicker>
 
-            <StyledFits>
-              Fits sizes: <strong>{FIT_CHART[size].range}</strong>
-              {" | "}
-              Bust: <strong>{FIT_CHART[size].bust} in</strong>
-              {", "}
-              Waist: <strong>{FIT_CHART[size].waist} in</strong>
-            </StyledFits>
+              <StyledSizeGuide>
+                <StyledSizeGuideLink href={SweetheartSizeGuideUrl} target="_blank" rel="noopener noreferrer">
+                  <Image src={SweetheartCdn.iconSizeGuide} alt="" width={24} height={12} unoptimized />
+                  <span>{t("offer.sizeGuide")}</span>
+                </StyledSizeGuideLink>
+              </StyledSizeGuide>
+
+              <div id="sweetheart-size-picker">
+                <StyledSizeLabel>
+                  {t("offer.sizeHeading")} <strong>{size}</strong>
+                </StyledSizeLabel>
+                <StyledSizes>
+                  {SIZES.map((s) => (
+                    <StyledSizeChip
+                      key={s}
+                      type="button"
+                      $selected={size === s}
+                      onClick={() => setSize(s)}
+                    >
+                      {s}
+                    </StyledSizeChip>
+                  ))}
+                </StyledSizes>
+              </div>
+
+              <StyledFits>
+                Fits sizes: <strong>{FIT_CHART[size].range}</strong>
+                {" | "}
+                Bust: <strong>{FIT_CHART[size].bust} in</strong>
+                {", "}
+                Waist: <strong>{FIT_CHART[size].waist} in</strong>
+              </StyledFits>
+            </StyledSlotPanels>
 
             <StyledCtaBlock>
+              <StyledFineprint>{fineprint}</StyledFineprint>
               <div id="sweetheart-pdp-cta">
-                <SweetheartSplitCta $full href={SweetheartShopUrl}>
-                  <SweetheartSplitCtaPart>{t("offer.ctaLabel")}</SweetheartSplitCtaPart>
-                  <SweetheartSplitCtaDivider aria-hidden />
-                  <SweetheartSplitCtaPart>{t("offer.ctaOffer")}</SweetheartSplitCtaPart>
-                </SweetheartSplitCta>
+                <SweetheartPrimaryButton $wide href={SweetheartShopUrl}>
+                  {ctaLabel}
+                </SweetheartPrimaryButton>
               </div>
+              <StyledIconRow>
+                <StyledIconItem>
+                  <span aria-hidden>🎁</span>
+                  {t("offer.iconGift", { defaultValue: "Free Gift Included" })}
+                </StyledIconItem>
+                <StyledIconItem>
+                  <span aria-hidden>✓</span>
+                  {t("offer.iconCheckout", { defaultValue: "Fast & Easy Checkout" })}
+                </StyledIconItem>
+              </StyledIconRow>
             </StyledCtaBlock>
 
             <StyledReturn>
@@ -1311,8 +1184,10 @@ export const SweetheartOfferSection = () => {
               <div>
                 <StyledReturnTitle>{t("offer.returnTitle")}</StyledReturnTitle>
                 <StyledReturnBody>
-                  {t("offer.returnBodyBefore")} <strong>{t("offer.returnBodyStrong")}</strong>{" "}
-                  {t("offer.returnBodyAfter")}
+                  {t("offer.returnBody", {
+                    defaultValue:
+                      "Hassle-free exchanges for any size, color or style. No questions asked.",
+                  })}
                 </StyledReturnBody>
               </div>
             </StyledReturn>

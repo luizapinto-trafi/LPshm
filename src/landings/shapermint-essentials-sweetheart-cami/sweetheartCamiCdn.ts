@@ -28,8 +28,7 @@ export const SweetheartCdn = {
   galleryFront: `${BASE}/model-black.jpg`,
 } as const;
 
-export const SweetheartPagePath =
-  "/pages/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-2" as const;
+export const SweetheartPagePath = "/pages/sweetheartcami-v2" as const;
 
 export const SweetheartShopUrl =
   "https://shapermint.com/products/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-1";
