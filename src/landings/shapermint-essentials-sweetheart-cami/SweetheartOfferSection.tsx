@@ -677,6 +677,20 @@ const StyledSizeGuideLink = styled.a`
   }
 `;
 
+const StyledSizePicker = styled.div`
+  width: 100%;
+  scroll-margin-top: 72px;
+  border-radius: 8px;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+
+  &[data-flash="true"] {
+    outline-color: var(--coral-500);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--coral-300) 55%, transparent);
+  }
+`;
+
 const StyledSizeLabel = styled.div`
   font-size: 14px;
   margin: 12px 0 8px;
@@ -857,7 +871,18 @@ export const SweetheartOfferSection = () => {
   };
 
   const scrollToSizes = () => {
-    document.getElementById("sweetheart-size-picker")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const el = document.getElementById("sweetheart-size-picker");
+    if (!el) return;
+
+    const stickyOffset = 64;
+    const top = el.getBoundingClientRect().top + window.scrollY - stickyOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+
+    el.setAttribute("data-flash", "true");
+    window.setTimeout(() => el.removeAttribute("data-flash"), 1200);
+
+    const firstChip = el.querySelector<HTMLButtonElement>("button");
+    firstChip?.focus({ preventScroll: true });
   };
 
   const selectPack = (tier: PackTier) => {
@@ -1133,7 +1158,7 @@ export const SweetheartOfferSection = () => {
                 </StyledSizeGuideLink>
               </StyledSizeGuide>
 
-              <div id="sweetheart-size-picker">
+              <StyledSizePicker id="sweetheart-size-picker">
                 <StyledSizeLabel>
                   {t("offer.sizeHeading")} <strong>{size}</strong>
                 </StyledSizeLabel>
@@ -1149,7 +1174,7 @@ export const SweetheartOfferSection = () => {
                     </StyledSizeChip>
                   ))}
                 </StyledSizes>
-              </div>
+              </StyledSizePicker>
 
               <StyledFits>
                 Fits sizes: <strong>{FIT_CHART[size].range}</strong>
