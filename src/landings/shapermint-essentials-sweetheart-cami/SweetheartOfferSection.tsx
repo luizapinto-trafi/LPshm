@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
 import { SweetheartCdn, SweetheartShopUrl } from "./sweetheartCamiCdn";
@@ -28,7 +28,7 @@ const GALLERY = [
 
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"] as const;
 type SizeId = (typeof SIZES)[number];
-type PackQty = 1 | 2 | 3;
+type PackQty = 1 | 2;
 type ColorId = "black" | "chai" | "white";
 
 type PackTier = {
@@ -40,7 +40,6 @@ type PackTier = {
 
 const PACK_TIERS: PackTier[] = [
   { qty: 2, per: 32.99, was: 60 },
-  { qty: 3, oos: true },
   { qty: 1, per: 38.99, was: 60 },
 ];
 
@@ -78,6 +77,14 @@ const GALLERY_BENEFITS = [
 const BENEFIT_HIDDEN_THUMBS = new Set([5, 6]);
 
 const packPct = (per: number, was: number) => Math.round((1 - per / was) * 100);
+
+const packSaveDollars = (tier: PackTier) => {
+  if (!tier.per || !tier.was) return 0;
+  return Math.round(tier.was * tier.qty - tier.per * tier.qty);
+};
+
+/** Display order: 1 unit and 2-pack side by side. */
+const SELECTABLE_PACK_TIERS = [...PACK_TIERS].sort((a, b) => a.qty - b.qty);
 
 const StyledOfferHero = styled.div`
   display: flex;
@@ -183,7 +190,6 @@ const StyledCtaBlock = styled.div`
   align-items: stretch;
   margin-top: 4px;
   width: 100%;
-  max-width: 400px;
   min-width: 0;
 `;
 
@@ -200,75 +206,9 @@ const StyledProductTitle = styled.h2`
 const StyledGallery = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
   align-items: stretch;
-  @media (min-width: 900px) {
-    display: grid;
-    grid-template-columns: 65px minmax(0, 1fr);
-    grid-template-rows: max-content max-content;
-    column-gap: 20px;
-    row-gap: 12px;
-    align-items: start;
-  }
-`;
-
-const StyledThumbs = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 6px;
-  order: 2;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  padding-bottom: 2px;
-  @media (max-width: 899px) {
-    height: auto !important;
-    max-height: none !important;
-  }
-  @media (min-width: 900px) {
-    flex-direction: column;
-    grid-column: 1;
-    grid-row: 1;
-    order: unset;
-    gap: 12px;
-    align-self: start;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding-bottom: 0;
-  }
-`;
-
-const StyledThumbBtn = styled.button<{ $active?: boolean; $hiddenMobile?: boolean }>`
-  list-style: none;
-  display: ${({ $hiddenMobile }) => ($hiddenMobile ? "none" : "flex")};
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  border-radius: 7px;
-  border: 2px solid ${({ $active }) => ($active ? "var(--ink-900)" : "transparent")};
-  overflow: hidden;
-  background: var(--white);
-  cursor: pointer;
-  line-height: 0;
-  flex: 0 0 auto;
-  &:focus-visible {
-    outline: 2px solid var(--ink-900);
-    outline-offset: 2px;
-  }
-  @media (min-width: 900px) {
-    display: flex;
-    width: 65px;
-    height: 86px;
-    border-radius: 4px;
-    border: 1px solid ${({ $active }) => ($active ? "var(--ink-900)" : "var(--ink-200)")};
-  }
 `;
 
 const StyledMainImage = styled.div`
@@ -278,13 +218,8 @@ const StyledMainImage = styled.div`
   aspect-ratio: 3 / 4;
   background: #f0eae0;
   line-height: 0;
-  align-self: start;
-  order: 1;
   border-radius: 14px;
   @media (min-width: 900px) {
-    grid-column: 2;
-    grid-row: 1;
-    order: unset;
     border-radius: 0;
   }
 `;
@@ -310,9 +245,6 @@ const StyledArrow = styled.button<{ $side: "left" | "right" }>`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-  }
-  @media (min-width: 900px) {
-    display: none;
   }
 `;
 
@@ -382,14 +314,6 @@ const StyledSeeSizeWrap = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  order: 3;
-  margin-top: 4px;
-  @media (min-width: 900px) {
-    grid-column: 2;
-    grid-row: 2;
-    order: unset;
-    margin-top: 0;
-  }
 `;
 
 const StyledSeeSize = styled.button`
@@ -461,115 +385,112 @@ const StyledChoose = styled.p`
 const StyledOfferSelection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
-  max-width: 400px;
   min-width: 0;
 `;
 
 const StyledPacks = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  margin: 14px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   width: 100%;
-  padding-top: 4px;
 `;
 
-const StyledPack = styled.div<{ $selected?: boolean; $oos?: boolean; $hasBadge?: boolean }>`
+const StyledPack = styled.div<{ $selected?: boolean; $oos?: boolean; $spanFull?: boolean }>`
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: ${({ $hasBadge }) => ($hasBadge ? "26px 20px 16px" : "16px 20px")};
+  justify-content: center;
+  gap: 8px;
+  padding: ${({ $selected }) => ($selected ? "22px 14px 16px" : "16px 14px")};
   border-radius: 14px;
-  border: 2px solid
+  border: 1.5px solid
     ${({ $selected, $oos }) =>
-      $oos ? "var(--ink-200)" : $selected ? "var(--coral-500)" : "var(--ink-200)"};
+      $oos ? "var(--ink-200)" : $selected ? "var(--mint-500)" : "var(--ink-200)"};
   background: ${({ $selected, $oos }) =>
-    $oos ? "var(--ink-100)" : $selected ? "var(--coral-050)" : "var(--white)"};
+    $oos ? "var(--ink-100)" : $selected ? "var(--mint-050)" : "var(--white)"};
   cursor: ${({ $oos }) => ($oos ? "not-allowed" : "pointer")};
   box-sizing: border-box;
   outline: none;
   isolation: isolate;
+  text-align: center;
+  grid-column: ${({ $spanFull }) => ($spanFull ? "1 / -1" : "auto")};
+  min-height: ${({ $oos }) => ($oos ? "auto" : "148px")};
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
   }
 `;
 
-const StyledPackBadge = styled.span<{ $variant: "best" | "oos" }>`
+const StyledPackBadge = styled.span<{ $variant: "popular" | "oos" }>`
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.04em;
   line-height: 1;
   text-transform: uppercase;
   padding: 5px 12px;
   border-radius: 999px;
-  color: var(--white);
   white-space: nowrap;
   pointer-events: none;
-  background: ${({ $variant }) => ($variant === "best" ? "var(--mint-500)" : "#882A2B")};
-`;
-
-const StyledRadio = styled.span<{ $selected?: boolean; $oos?: boolean }>`
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  border: 2px solid ${({ $selected }) => ($selected ? "var(--coral-500)" : "var(--ink-300)")};
-  flex-shrink: 0;
-  position: relative;
-  opacity: ${({ $oos }) => ($oos ? 0.5 : 1)};
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 4px;
-    border-radius: 999px;
-    background: var(--coral-500);
-    display: ${({ $selected }) => ($selected ? "block" : "none")};
-  }
-`;
-
-const StyledPackText = styled.div`
-  flex: 1;
-  text-align: center;
-  margin-right: 22px;
-  min-width: 0;
+  color: ${({ $variant }) => ($variant === "popular" ? "var(--ink-900)" : "var(--white)")};
+  background: ${({ $variant }) =>
+    $variant === "popular"
+      ? "linear-gradient(93.15deg, var(--gold-400) -5.81%, #faa540 111.09%)"
+      : "#882A2B"};
 `;
 
 const StyledPackTitle = styled.div<{ $muted?: boolean }>`
   font-family: var(--font-body);
-  font-size: 19px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   color: ${({ $muted }) => ($muted ? "var(--ink-500)" : "var(--ink-900)")};
   line-height: 1.2;
 `;
 
-const StyledPackPrice = styled.div`
+const StyledSaveBadge = styled.span<{ $emphasis?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
   font-family: var(--font-body);
-  font-size: 19px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid ${({ $emphasis }) => ($emphasis ? "transparent" : "var(--ink-300)")};
+  background: ${({ $emphasis }) => ($emphasis ? "var(--sale)" : "var(--white)")};
+  color: ${({ $emphasis }) => ($emphasis ? "var(--white)" : "var(--ink-700)")};
+`;
+
+const StyledPackStrike = styled.span`
+  display: block;
+  color: var(--ink-500);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: line-through;
+  line-height: 1.2;
+`;
+
+const StyledPackFinal = styled.span`
+  display: block;
+  font-family: var(--font-body);
+  font-size: 20px;
   font-weight: 800;
   color: var(--ink-900);
-  margin-top: 4px;
-  line-height: 1.2;
-  s {
-    display: block;
-    color: var(--ink-500);
-    font-weight: 600;
+  line-height: 1.15;
+  small {
     font-size: 14px;
-    text-decoration: line-through;
-    margin: 0 0 2px;
-  }
-  span {
-    font-size: 14px;
-    color: var(--ink-500);
     font-weight: 600;
+    color: var(--ink-700);
   }
 `;
 
@@ -631,27 +552,27 @@ const StyledGiftName = styled.h4`
 `;
 
 const StyledSlotPanels = styled.div`
-  border: 1px solid var(--ink-200);
-  border-radius: 14px;
-  background: var(--white);
-  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 400px;
   box-sizing: border-box;
 `;
 
 const StyledColorSummary = styled.div`
-  font-size: 13.5px;
-  padding-bottom: 10px;
+  font-size: 14px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--ink-200);
-  margin-bottom: 4px;
+  margin-bottom: 0;
   color: var(--ink-900);
+  strong {
+    font-weight: 700;
+  }
 `;
 
 const StyledSlotUnit = styled.div`
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  gap: 10px;
+  align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid var(--ink-200);
   &:last-of-type {
@@ -660,11 +581,11 @@ const StyledSlotUnit = styled.div`
 `;
 
 const StyledSlotThumbWrap = styled.div`
-  width: 108px;
-  flex: 0 0 108px;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 4px;
 `;
 
 const StyledSlotThumb = styled.div`
@@ -682,36 +603,38 @@ const StyledSlotThumb = styled.div`
 `;
 
 const StyledColorFlagSlot = styled.div`
-  width: 100%;
-  min-height: 28px;
-  margin-top: 6px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 `;
 
-const StyledColorFlag = styled.span<{ $variant: "bestseller" | "backinstock"; $hidden?: boolean }>`
-  display: inline-block;
-  font-size: 10.5px;
-  font-weight: 800;
+const StyledColorFlag = styled.span<{ $variant: "bestseller" | "backinstock" }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 22px;
   letter-spacing: 0.02em;
-  padding: 3px 10px;
-  border-radius: 999px;
   text-align: center;
+  text-transform: uppercase;
   white-space: nowrap;
-  visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
-  background: ${({ $variant }) => ($variant === "bestseller" ? "#FBE4D8" : "#DDF0E0")};
-  color: ${({ $variant }) => ($variant === "bestseller" ? "#D4605B" : "#3F9754")};
+  background: ${({ $variant }) => ($variant === "bestseller" ? "#FCD9D1" : "#DDF0E0")};
+  color: ${({ $variant }) => ($variant === "bestseller" ? "#231F20" : "#3F9754")};
 `;
 
 const StyledSlotBody = styled.div`
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
 `;
 
 const StyledSlotUnitLabel = styled.div`
   font-size: 13px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--ink-900);
   strong {
     font-weight: 800;
@@ -724,15 +647,19 @@ const StyledSwatches = styled.div`
 `;
 
 const StyledSwatch = styled.button<{ $bg: string; $selected?: boolean; $light?: boolean }>`
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
   background: ${({ $bg }) => $bg};
   border: 2px solid ${({ $selected }) => ($selected ? "var(--ink-900)" : "transparent")};
-  box-shadow: ${({ $light, $selected }) =>
-    !$selected && $light ? "0 0 0 1px var(--ink-300)" : "none"};
+  box-shadow: ${({ $selected, $light }) => {
+    if ($selected) return "0 0 0 2px var(--white), 0 0 0 3px var(--ink-900)";
+    if ($light) return "inset 0 0 0 1px var(--ink-300)";
+    return "none";
+  }};
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
@@ -889,9 +816,6 @@ export const SweetheartOfferSection = () => {
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
-  const [thumbsHeight, setThumbsHeight] = useState(0);
-  const mainImageRef = useRef<HTMLDivElement>(null);
-  const thumbsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSlotColors((prev) =>
@@ -899,33 +823,6 @@ export const SweetheartOfferSection = () => {
     );
   }, [packQty]);
 
-  useLayoutEffect(() => {
-    const el = mainImageRef.current;
-    if (!el) return;
-
-    const sync = () => {
-      const h = Math.round(el.getBoundingClientRect().height);
-      setThumbsHeight((prev) => (h > 0 && h !== prev ? h : prev));
-    };
-
-    sync();
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(sync) : null;
-    ro?.observe(el);
-    window.addEventListener("resize", sync);
-    return () => {
-      ro?.disconnect();
-      window.removeEventListener("resize", sync);
-    };
-  }, [activeThumb]);
-
-  useLayoutEffect(() => {
-    const rail = thumbsRef.current;
-    if (!rail) return;
-    const active = rail.querySelector<HTMLElement>(`[data-thumb-index="${activeThumb}"]`);
-    active?.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
-  }, [activeThumb]);
-
-  const thumbs = t("offer.thumbs", { returnObjects: true }) as string[];
   const activeTier = PACK_TIERS.find((p) => p.qty === packQty && !p.oos) ?? PACK_TIERS[0];
   const pct = useMemo(() => {
     if (!activeTier.per || !activeTier.was) return 45;
@@ -952,6 +849,71 @@ export const SweetheartOfferSection = () => {
   const selectPack = (tier: PackTier) => {
     if (tier.oos) return;
     setPackQty(tier.qty);
+  };
+
+  const packCardTitle = (tier: PackTier) =>
+    tier.qty === 1
+      ? t("offer.pack1Title", { defaultValue: "1 unit" })
+      : t("offer.packNCardTitle", { qty: tier.qty, defaultValue: `${tier.qty}-pack` });
+
+  const renderPackCard = (tier: PackTier, spanFull = false) => {
+    const selected = !tier.oos && packQty === tier.qty;
+    const strike =
+      tier.qty === 1 ? t("offer.pack1Strike") : tier.qty === 2 ? t("offer.pack2Strike") : null;
+    const final =
+      tier.qty === 1 ? t("offer.pack1Final") : tier.qty === 2 ? t("offer.pack2Final") : null;
+    const saveAmount = packSaveDollars(tier);
+
+    return (
+      <StyledPack
+        key={tier.qty}
+        role="radio"
+        tabIndex={tier.oos ? -1 : 0}
+        $selected={selected}
+        $oos={tier.oos}
+        $spanFull={spanFull}
+        aria-checked={selected}
+        aria-disabled={tier.oos || undefined}
+        aria-label={
+          tier.oos
+            ? t("offer.pack3Aria", { defaultValue: "3 Pack, out of stock" })
+            : tier.qty === 1
+              ? t("offer.pack1Aria")
+              : t("offer.pack2Aria")
+        }
+        onClick={() => selectPack(tier)}
+        onKeyDown={(e) => handleKeyDown(e, () => selectPack(tier), ["Enter", " "])}
+      >
+        {tier.qty === 2 && !tier.oos ? (
+          <StyledPackBadge $variant="popular">
+            {t("offer.pack2Badge", { defaultValue: "MOST POPULAR" })}
+          </StyledPackBadge>
+        ) : null}
+        {tier.oos ? (
+          <StyledPackBadge $variant="oos">
+            {t("offer.pack3Badge", { defaultValue: "Out of Stock" })}
+          </StyledPackBadge>
+        ) : null}
+        <StyledPackTitle $muted={tier.oos}>{packCardTitle(tier)}</StyledPackTitle>
+        {!tier.oos && saveAmount > 0 ? (
+          <StyledSaveBadge $emphasis={selected}>
+            {t("offer.packSaveBadge", {
+              amount: saveAmount,
+              defaultValue: `Save $${saveAmount}`,
+            })}
+          </StyledSaveBadge>
+        ) : null}
+        {final && strike ? (
+          <>
+            <StyledPackStrike>{strike}</StyledPackStrike>
+            <StyledPackFinal>
+              {final}
+              {tier.qty === 2 ? <small>{t("offer.pack2Each")}</small> : null}
+            </StyledPackFinal>
+          </>
+        ) : null}
+      </StyledPack>
+    );
   };
 
   return (
@@ -987,35 +949,7 @@ export const SweetheartOfferSection = () => {
         <StyledGrid>
           <StyledGalleryCol>
             <StyledGallery>
-              <StyledThumbs
-                ref={thumbsRef}
-                role="list"
-                aria-label={t("offer.galleryThumbsAria")}
-                style={thumbsHeight > 0 ? { height: thumbsHeight, maxHeight: thumbsHeight } : undefined}
-              >
-                {GALLERY.map((src, i) => (
-                  <StyledThumbBtn
-                    key={src}
-                    type="button"
-                    data-thumb-index={i}
-                    $active={activeThumb === i}
-                    $hiddenMobile={i >= 5}
-                    aria-label={thumbs[i]}
-                    aria-pressed={activeThumb === i}
-                    onClick={() => setActiveThumb(i)}
-                  >
-                    <Image
-                      src={src}
-                      alt=""
-                      width={65}
-                      height={86}
-                      unoptimized
-                      style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                    />
-                  </StyledThumbBtn>
-                ))}
-              </StyledThumbs>
-              <StyledMainImage ref={mainImageRef}>
+              <StyledMainImage>
                 <Image
                   src={GALLERY[activeThumb]}
                   alt={t("offer.galleryMainAlt")}
@@ -1090,80 +1024,11 @@ export const SweetheartOfferSection = () => {
             <StyledOfferSelection>
               <StyledChoose>
                 {t("offer.chooseSavings")}{" "}
-                <strong>
-                  {packQty === 1
-                    ? t("offer.pack1Title", { defaultValue: "1 Cami" })
-                    : t("offer.packNTitle", { qty: packQty, defaultValue: `${packQty} Pack` })}
-                </strong>
+                <strong>{packCardTitle({ qty: packQty } as PackTier)}</strong>
               </StyledChoose>
 
               <StyledPacks role="radiogroup" aria-label={t("offer.chooseSavings")}>
-                {PACK_TIERS.map((tier) => {
-                  const selected = !tier.oos && packQty === tier.qty;
-                  const hasBadge = tier.qty === 2 || Boolean(tier.oos);
-                  const strike =
-                    tier.qty === 1
-                      ? t("offer.pack1Strike")
-                      : tier.qty === 2
-                        ? t("offer.pack2Strike")
-                        : null;
-                  const final =
-                    tier.qty === 1
-                      ? t("offer.pack1Final")
-                      : tier.qty === 2
-                        ? t("offer.pack2Final")
-                        : null;
-                  const title =
-                    tier.qty === 1
-                      ? t("offer.pack1Title", { defaultValue: "1 Cami" })
-                      : t("offer.packNTitle", { qty: tier.qty, defaultValue: `${tier.qty} Pack` });
-
-                  return (
-                    <StyledPack
-                      key={tier.qty}
-                      role="radio"
-                      tabIndex={tier.oos ? -1 : 0}
-                      $selected={selected}
-                      $oos={tier.oos}
-                      $hasBadge={hasBadge}
-                      aria-checked={selected}
-                      aria-disabled={tier.oos || undefined}
-                      aria-label={
-                        tier.oos
-                          ? t("offer.pack3Aria", { defaultValue: "3 Pack, out of stock" })
-                          : tier.qty === 1
-                            ? t("offer.pack1Aria")
-                            : t("offer.pack2Aria")
-                      }
-                      onClick={() => selectPack(tier)}
-                      onKeyDown={(e) =>
-                        handleKeyDown(e, () => selectPack(tier), ["Enter", " "])
-                      }
-                    >
-                      {tier.qty === 2 ? (
-                        <StyledPackBadge $variant="best">
-                          {t("offer.pack2Badge", { defaultValue: "Best Deal" })}
-                        </StyledPackBadge>
-                      ) : null}
-                      {tier.oos ? (
-                        <StyledPackBadge $variant="oos">
-                          {t("offer.pack3Badge", { defaultValue: "Out of Stock" })}
-                        </StyledPackBadge>
-                      ) : null}
-                      <StyledRadio $selected={selected} $oos={tier.oos} aria-hidden />
-                      <StyledPackText>
-                        <StyledPackTitle $muted={tier.oos}>{title}</StyledPackTitle>
-                        {final && strike ? (
-                          <StyledPackPrice>
-                            <s>{strike}</s>
-                            {final}
-                            {tier.qty === 2 ? <span>{t("offer.pack2Each")}</span> : null}
-                          </StyledPackPrice>
-                        ) : null}
-                      </StyledPackText>
-                    </StyledPack>
-                  );
-                })}
+                {SELECTABLE_PACK_TIERS.map((tier) => renderPackCard(tier))}
               </StyledPacks>
 
               <StyledGiftBlock $inactive={packQty === 1} aria-label={t("offer.giftName")}>
@@ -1185,9 +1050,7 @@ export const SweetheartOfferSection = () => {
                   <StyledGiftName>{t("offer.giftName")}</StyledGiftName>
                 </StyledGiftCopy>
               </StyledGiftBlock>
-            </StyledOfferSelection>
 
-            <StyledSlotPanels>
               <StyledColorSummary>
                 {t("offer.colorLabel")} <strong>{colorSummary}</strong>
               </StyledColorSummary>
@@ -1207,20 +1070,15 @@ export const SweetheartOfferSection = () => {
                           style={{ objectFit: "cover" }}
                         />
                       </StyledSlotThumb>
-                      <StyledColorFlagSlot aria-hidden={!flag}>
-                        <StyledColorFlag
-                          $variant={flag?.variant ?? "bestseller"}
-                          $hidden={!flag}
-                        >
-                          {flag?.label ?? t("offer.flagBestSeller")}
-                        </StyledColorFlag>
-                      </StyledColorFlagSlot>
+                      {flag ? (
+                        <StyledColorFlagSlot>
+                          <StyledColorFlag $variant={flag.variant}>{flag.label}</StyledColorFlag>
+                        </StyledColorFlagSlot>
+                      ) : null}
                     </StyledSlotThumbWrap>
                     <StyledSlotBody>
                       <StyledSlotUnitLabel>
-                        {t("offer.unitLabel", { n: index + 1, defaultValue: `Unit #${index + 1}` })}
-                        {": "}
-                        <strong>{colorName(color, t)}</strong>
+                        {t("offer.colorLabel")} <strong>{colorName(color, t)}</strong>
                       </StyledSlotUnitLabel>
                       <StyledSwatches>
                         {COLORS.map((c) => (
@@ -1246,7 +1104,9 @@ export const SweetheartOfferSection = () => {
                   </StyledSlotUnit>
                 );
               })}
+            </StyledOfferSelection>
 
+            <StyledSlotPanels>
               <StyledSizeGuide>
                 <StyledSizeGuideBtn type="button" onClick={() => setSizeGuideOpen(true)}>
                   <Image src={SweetheartCdn.iconSizeGuide} alt="" width={24} height={12} unoptimized />
