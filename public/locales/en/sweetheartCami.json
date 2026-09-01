@@ -80,9 +80,9 @@
     "galleryThumbsAria": "Product photos",
     "galleryPrev": "Previous photo",
     "galleryNext": "Next photo",
-    "fineprint": "Order today — save {{pct}}% on your {{packLabel}} + get a free gift.",
-    "fineprintCami": "Cami",
-    "fineprintPack": "{{qty}} Pack",
+    "galleryBenefitSmoothing": "360° Smoothing",
+    "galleryBenefitAllInOne": "All-in-One",
+    "galleryBenefitSupport": "Bust Support",
     "ctaDynamic": "Add to Cart · {{pct}}% OFF",
     "iconGift": "Free Gift Included",
     "iconCheckout": "Fast & Easy Checkout",
@@ -103,6 +103,22 @@
   "gwp": {
     "title": "Free gift with your order",
     "body": "A Best-Selling Shaper Bottom ($26 value) is added automatically at checkout. Pick your size when you check out, while supplies last."
+  },
+  "sizeGuide": {
+    "title": "Unsure of your size?",
+    "lead": "Use our size chart to ensure the perfect fit for every body type, petite to plus-size.",
+    "close": "Close size guide",
+    "unitAria": "Measurement unit",
+    "unitIn": "By Inches",
+    "unitCm": "By cm",
+    "colSize": "Size",
+    "colDress": "Dress Size (US)",
+    "colBustIn": "Bust (in)",
+    "colBustCm": "Bust (cm)",
+    "colWaistIn": "Waist (in)",
+    "colWaistCm": "Waist (cm)",
+    "colHipsIn": "Hips (in)",
+    "colHipsCm": "Hips (cm)"
   },
   "siys": {
     "title": "SEE IN YOUR SIZE",

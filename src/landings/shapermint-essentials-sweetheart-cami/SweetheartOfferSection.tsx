@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
-import { SweetheartCdn, SweetheartShopUrl, SweetheartSizeGuideUrl } from "./sweetheartCamiCdn";
+import { SweetheartCdn, SweetheartShopUrl } from "./sweetheartCamiCdn";
 import { SweetheartPrimaryButton } from "./SweetheartPrimaryButton";
 import {
   SweetheartSeeInYourSizeModal,
   type SweetheartSiysSize,
 } from "./SweetheartSeeInYourSizeModal";
+import { SweetheartSizeGuideModal } from "./SweetheartSizeGuideModal";
 
 /**
  * Offer aligned to Carpe Bundle reference:
@@ -66,6 +67,15 @@ const COLOR_THUMB: Record<ColorId, string> = {
 };
 
 const COLORS: ColorId[] = ["black", "chai", "white"];
+
+const GALLERY_BENEFITS = [
+  { icon: SweetheartCdn.iconSmoothing, key: "offer.galleryBenefitSmoothing", fallback: "360° Smoothing" },
+  { icon: SweetheartCdn.iconAllInOne, key: "offer.galleryBenefitAllInOne", fallback: "All-in-One" },
+  { icon: SweetheartCdn.iconSupport, key: "offer.galleryBenefitSupport", fallback: "Bust Support" },
+] as const;
+
+/** Before/after slides — hide benefit chips (reference HTML). */
+const BENEFIT_HIDDEN_THUMBS = new Set([5, 6]);
 
 const packPct = (per: number, was: number) => Math.round((1 - per / was) * 100);
 
@@ -151,7 +161,7 @@ const StyledGalleryCol = styled.div`
   width: 100%;
   @media (min-width: 900px) {
     position: sticky;
-    top: 56px;
+    top: 104px;
     align-self: start;
   }
 `;
@@ -233,9 +243,9 @@ const StyledThumbs = styled.div`
   }
 `;
 
-const StyledThumbBtn = styled.button<{ $active?: boolean }>`
+const StyledThumbBtn = styled.button<{ $active?: boolean; $hiddenMobile?: boolean }>`
   list-style: none;
-  display: flex;
+  display: ${({ $hiddenMobile }) => ($hiddenMobile ? "none" : "flex")};
   align-items: center;
   justify-content: center;
   width: 56px;
@@ -253,6 +263,7 @@ const StyledThumbBtn = styled.button<{ $active?: boolean }>`
     outline-offset: 2px;
   }
   @media (min-width: 900px) {
+    display: flex;
     width: 65px;
     height: 86px;
     border-radius: 4px;
@@ -263,9 +274,10 @@ const StyledThumbBtn = styled.button<{ $active?: boolean }>`
 const StyledMainImage = styled.div`
   position: relative;
   overflow: hidden;
-  background: transparent;
-  line-height: 0;
   width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #f0eae0;
+  line-height: 0;
   align-self: start;
   order: 1;
   border-radius: 14px;
@@ -322,10 +334,48 @@ const StyledSeal = styled.div`
 const StyledNewIn = styled.div`
   position: absolute;
   bottom: 12px;
-  left: 12px;
+  left: 0;
   z-index: 2;
   line-height: 0;
-  width: 64px;
+  width: 85px;
+  height: 24px;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const StyledGalleryBenefits = styled.div`
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+`;
+
+const StyledBenefitChip = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-900);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  line-height: 1;
+  img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
 `;
 
 const StyledSeeSizeWrap = styled.div`
@@ -523,7 +573,7 @@ const StyledPackPrice = styled.div`
   }
 `;
 
-const StyledGiftBlock = styled.div`
+const StyledGiftBlock = styled.div<{ $inactive?: boolean }>`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -533,6 +583,9 @@ const StyledGiftBlock = styled.div`
   background: #f5faf9;
   border: 1px dashed var(--mint-600);
   box-sizing: border-box;
+  opacity: ${({ $inactive }) => ($inactive ? 0.5 : 1)};
+  filter: ${({ $inactive }) => ($inactive ? "grayscale(1)" : "none")};
+  transition: opacity 0.2s ease, filter 0.2s ease;
 `;
 
 const StyledGiftThumb = styled.div`
@@ -598,7 +651,7 @@ const StyledColorSummary = styled.div`
 const StyledSlotUnit = styled.div`
   display: flex;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
   padding: 10px 0;
   border-bottom: 1px solid var(--ink-200);
   &:last-of-type {
@@ -607,20 +660,48 @@ const StyledSlotUnit = styled.div`
 `;
 
 const StyledSlotThumbWrap = styled.div`
-  width: 76px;
+  width: 108px;
+  flex: 0 0 108px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
 `;
 
 const StyledSlotThumb = styled.div`
   width: 52px;
   height: 66px;
+  min-width: 52px;
+  min-height: 66px;
+  max-width: 52px;
+  max-height: 66px;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  flex: 0 0 auto;
   background: var(--ink-100);
+`;
+
+const StyledColorFlagSlot = styled.div`
+  width: 100%;
+  min-height: 28px;
+  margin-top: 6px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const StyledColorFlag = styled.span<{ $variant: "bestseller" | "backinstock"; $hidden?: boolean }>`
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-align: center;
+  white-space: nowrap;
+  visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
+  background: ${({ $variant }) => ($variant === "bestseller" ? "#FBE4D8" : "#DDF0E0")};
+  color: ${({ $variant }) => ($variant === "bestseller" ? "#D4605B" : "#3F9754")};
 `;
 
 const StyledSlotBody = styled.div`
@@ -665,19 +746,28 @@ const StyledSizeGuide = styled.div`
   width: 100%;
 `;
 
-const StyledSizeGuideLink = styled.a`
+const StyledSizeGuideBtn = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--ink-900);
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 10px 0 8px;
   &:hover {
     color: var(--ink-700);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--ink-900);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 `;
 
@@ -733,14 +823,6 @@ const StyledFits = styled.div`
   color: var(--ink-900);
 `;
 
-const StyledFineprint = styled.p`
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--ink-600);
-`;
-
 const StyledIconRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -787,14 +869,24 @@ const StyledReturnBody = styled.div`
   line-height: 1.5;
 `;
 
-const colorName = (c: ColorId, t: (k: string) => string) =>
+const colorName = (c: ColorId, t: (k: string, o?: Record<string, unknown>) => string) =>
   c === "black" ? t("offer.colorBlack") : c === "chai" ? t("offer.colorChai") : t("offer.colorWhite");
+
+const colorFlag = (
+  c: ColorId,
+  t: (k: string, o?: Record<string, unknown>) => string,
+): { variant: "bestseller" | "backinstock"; label: string } | null => {
+  if (c === "black") return { variant: "bestseller", label: t("offer.flagBestSeller") };
+  if (c === "white") return { variant: "backinstock", label: t("offer.flagBackInStock") };
+  return null;
+};
 
 export const SweetheartOfferSection = () => {
   const { t } = useTranslation("sweetheartCami");
   const [packQty, setPackQty] = useState<PackQty>(2);
   const [size, setSize] = useState<SizeId>("S");
   const [siysOpen, setSiysOpen] = useState(false);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
   const [thumbsHeight, setThumbsHeight] = useState(0);
@@ -840,17 +932,6 @@ export const SweetheartOfferSection = () => {
     return packPct(activeTier.per, activeTier.was);
   }, [activeTier]);
 
-  const packLabel =
-    packQty === 1
-      ? t("offer.fineprintCami", { defaultValue: "Cami" })
-      : t("offer.fineprintPack", { qty: packQty, defaultValue: `${packQty} Pack` });
-
-  const fineprint = t("offer.fineprint", {
-    pct,
-    packLabel,
-    defaultValue: `Order today — save ${pct}% on your ${packLabel} + get a free gift.`,
-  });
-
   const ctaLabel = t("offer.ctaDynamic", {
     pct,
     defaultValue: `Add to Cart · ${pct}% OFF`,
@@ -890,6 +971,7 @@ export const SweetheartOfferSection = () => {
           });
         }}
       />
+      <SweetheartSizeGuideModal open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} />
       <StyledHeadingStrip>
         <StyledPromoTitle id="sweetheart-promo-title">
           {t("offer.promoTitle", { defaultValue: "Save Up To 45% Off + a Free Gift" })}
@@ -917,6 +999,7 @@ export const SweetheartOfferSection = () => {
                     type="button"
                     data-thumb-index={i}
                     $active={activeThumb === i}
+                    $hiddenMobile={i >= 5}
                     aria-label={thumbs[i]}
                     aria-pressed={activeThumb === i}
                     onClick={() => setActiveThumb(i)}
@@ -936,17 +1019,11 @@ export const SweetheartOfferSection = () => {
                 <Image
                   src={GALLERY[activeThumb]}
                   alt={t("offer.galleryMainAlt")}
-                  width={640}
-                  height={800}
+                  fill
                   unoptimized
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                  priority
-                  onLoad={() => {
-                    const el = mainImageRef.current;
-                    if (!el) return;
-                    const h = Math.round(el.getBoundingClientRect().height);
-                    if (h > 0) setThumbsHeight(h);
-                  }}
+                  priority={activeThumb === 0}
+                  sizes="(max-width: 899px) 100vw, 55vw"
+                  style={{ objectFit: "cover", objectPosition: "center 15%" }}
                 />
                 <StyledArrow
                   type="button"
@@ -978,11 +1055,21 @@ export const SweetheartOfferSection = () => {
                   <Image
                     src={SweetheartCdn.sealNewIn}
                     alt={t("offer.newInAlt")}
-                    width={64}
-                    height={64}
+                    width={85}
+                    height={24}
                     unoptimized
                   />
                 </StyledNewIn>
+                {!BENEFIT_HIDDEN_THUMBS.has(activeThumb) ? (
+                  <StyledGalleryBenefits aria-hidden>
+                    {GALLERY_BENEFITS.map(({ icon, key, fallback }) => (
+                      <StyledBenefitChip key={key}>
+                        <Image src={icon} alt="" width={18} height={18} unoptimized />
+                        {t(key, { defaultValue: fallback })}
+                      </StyledBenefitChip>
+                    ))}
+                  </StyledGalleryBenefits>
+                ) : null}
               </StyledMainImage>
               <StyledSeeSizeWrap>
                 <StyledSeeSize type="button" onClick={openSeeInYourSize}>
@@ -1079,7 +1166,7 @@ export const SweetheartOfferSection = () => {
                 })}
               </StyledPacks>
 
-              <StyledGiftBlock aria-label={t("offer.giftName")}>
+              <StyledGiftBlock $inactive={packQty === 1} aria-label={t("offer.giftName")}>
                 <StyledGiftThumb>
                   <Image
                     src={SweetheartCdn.giftBottom}
@@ -1105,7 +1192,9 @@ export const SweetheartOfferSection = () => {
                 {t("offer.colorLabel")} <strong>{colorSummary}</strong>
               </StyledColorSummary>
 
-              {slotColors.map((color, index) => (
+              {slotColors.map((color, index) => {
+                const flag = colorFlag(color, t);
+                return (
                   <StyledSlotUnit key={`unit-${index}`}>
                     <StyledSlotThumbWrap>
                       <StyledSlotThumb>
@@ -1118,6 +1207,14 @@ export const SweetheartOfferSection = () => {
                           style={{ objectFit: "cover" }}
                         />
                       </StyledSlotThumb>
+                      <StyledColorFlagSlot aria-hidden={!flag}>
+                        <StyledColorFlag
+                          $variant={flag?.variant ?? "bestseller"}
+                          $hidden={!flag}
+                        >
+                          {flag?.label ?? t("offer.flagBestSeller")}
+                        </StyledColorFlag>
+                      </StyledColorFlagSlot>
                     </StyledSlotThumbWrap>
                     <StyledSlotBody>
                       <StyledSlotUnitLabel>
@@ -1147,13 +1244,14 @@ export const SweetheartOfferSection = () => {
                       </StyledSwatches>
                     </StyledSlotBody>
                   </StyledSlotUnit>
-                ))}
+                );
+              })}
 
               <StyledSizeGuide>
-                <StyledSizeGuideLink href={SweetheartSizeGuideUrl} target="_blank" rel="noopener noreferrer">
+                <StyledSizeGuideBtn type="button" onClick={() => setSizeGuideOpen(true)}>
                   <Image src={SweetheartCdn.iconSizeGuide} alt="" width={24} height={12} unoptimized />
                   <span>{t("offer.sizeGuide")}</span>
-                </StyledSizeGuideLink>
+                </StyledSizeGuideBtn>
               </StyledSizeGuide>
 
               <StyledSizePicker id="sweetheart-size-picker">
@@ -1184,7 +1282,6 @@ export const SweetheartOfferSection = () => {
             </StyledSlotPanels>
 
             <StyledCtaBlock>
-              <StyledFineprint>{fineprint}</StyledFineprint>
               <div id="sweetheart-pdp-cta">
                 <SweetheartPrimaryButton $wide href={SweetheartShopUrl}>
                   {ctaLabel}
