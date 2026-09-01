@@ -28,7 +28,7 @@ const GALLERY = [
 
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"] as const;
 type SizeId = (typeof SIZES)[number];
-type PackQty = 1 | 2;
+type PackQty = 1 | 2 | 3;
 type ColorId = "black" | "chai" | "white";
 
 type PackTier = {
@@ -39,9 +39,12 @@ type PackTier = {
 };
 
 const PACK_TIERS: PackTier[] = [
+  { qty: 3, per: 29.99, was: 60 },
   { qty: 2, per: 32.99, was: 60 },
   { qty: 1, per: 38.99, was: 60 },
 ];
+
+const BEST_DEAL_QTY: PackQty = 3;
 
 const FIT_CHART: Record<SizeId, { range: string; bust: string; waist: string }> = {
   S: { range: "0-2", bust: "30-31", waist: "23-25.5" },
@@ -83,8 +86,32 @@ const packSaveDollars = (tier: PackTier) => {
   return Math.round(tier.was * tier.qty - tier.per * tier.qty);
 };
 
-/** Display order: 1 unit and 2-pack side by side. */
 const SELECTABLE_PACK_TIERS = [...PACK_TIERS].sort((a, b) => a.qty - b.qty);
+
+/** Display order: best deal first (3 → 2 → 1). */
+const DISPLAY_PACK_TIERS = [...SELECTABLE_PACK_TIERS].sort((a, b) => b.qty - a.qty);
+
+const packStrikeFor = (tier: PackTier) => {
+  if (!tier.was) return "";
+  return `$${(tier.was * tier.qty).toFixed(2)}`;
+};
+
+const packFinalFor = (tier: PackTier) => {
+  if (!tier.per) return "";
+  return `$${tier.per.toFixed(2)}`;
+};
+
+const packAriaFor = (qty: PackQty, t: (k: string, o?: Record<string, unknown>) => string) => {
+  if (qty === 1) return t("offer.pack1Aria", { defaultValue: "Select 1 unit for $38.99" });
+  if (qty === 2) {
+    return t("offer.pack2Aria", {
+      defaultValue: "Select 2 Pack for $32.99 each, includes a free gift",
+    });
+  }
+  return t("offer.pack3Aria", {
+    defaultValue: "Select 3 units for $29.99 each, includes a free gift",
+  });
+};
 
 const StyledOfferHero = styled.div`
   display: flex;
@@ -377,7 +404,7 @@ const StyledReviewsLink = styled.a`
 const StyledChoose = styled.p`
   font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
   margin: 0;
   color: var(--ink-900);
 `;
@@ -385,170 +412,230 @@ const StyledChoose = styled.p`
 const StyledOfferSelection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
   min-width: 0;
 `;
 
 const StyledPacks = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  width: 100%;
-`;
-
-const StyledPack = styled.div<{ $selected?: boolean; $oos?: boolean; $spanFull?: boolean }>`
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
-  padding: ${({ $selected }) => ($selected ? "22px 14px 16px" : "16px 14px")};
-  border-radius: 14px;
-  border: 1.5px solid
-    ${({ $selected, $oos }) =>
-      $oos ? "var(--ink-200)" : $selected ? "var(--mint-500)" : "var(--ink-200)"};
-  background: ${({ $selected, $oos }) =>
-    $oos ? "var(--ink-100)" : $selected ? "var(--mint-050)" : "var(--white)"};
-  cursor: ${({ $oos }) => ($oos ? "not-allowed" : "pointer")};
+  width: 100%;
+  padding-top: 6px;
+`;
+
+const StyledPackCard = styled.div<{ $selected?: boolean }>`
+  position: relative;
+  border-radius: 10px;
+  border: ${({ $selected }) =>
+    $selected ? "2px solid var(--mint-500)" : "1px solid var(--ink-300)"};
+  background: ${({ $selected }) => ($selected ? "#F5FAF9" : "var(--white)")};
   box-sizing: border-box;
-  outline: none;
-  isolation: isolate;
-  text-align: center;
-  grid-column: ${({ $spanFull }) => ($spanFull ? "1 / -1" : "auto")};
-  min-height: ${({ $oos }) => ($oos ? "auto" : "148px")};
+  overflow: visible;
+  cursor: pointer;
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
   }
 `;
 
-const StyledPackBadge = styled.span<{ $variant: "popular" | "oos" }>`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  text-transform: uppercase;
-  padding: 5px 12px;
+const StyledPackHeader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+`;
+
+const StyledPackRadio = styled.span<{ $selected?: boolean }>`
+  width: 18px;
+  height: 18px;
   border-radius: 999px;
-  white-space: nowrap;
-  pointer-events: none;
-  color: ${({ $variant }) => ($variant === "popular" ? "var(--ink-900)" : "var(--white)")};
-  background: ${({ $variant }) =>
-    $variant === "popular"
-      ? "linear-gradient(93.15deg, var(--gold-400) -5.81%, #faa540 111.09%)"
-      : "#882A2B"};
-`;
-
-const StyledPackTitle = styled.div<{ $muted?: boolean }>`
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 700;
-  color: ${({ $muted }) => ($muted ? "var(--ink-500)" : "var(--ink-900)")};
-  line-height: 1.2;
-`;
-
-const StyledSaveBadge = styled.span<{ $emphasis?: boolean }>`
+  border: 2px solid var(--ink-900);
+  flex: 0 0 auto;
+  margin-top: 1px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
-  border: 1px solid ${({ $emphasis }) => ($emphasis ? "transparent" : "var(--ink-300)")};
-  background: ${({ $emphasis }) => ($emphasis ? "var(--sale)" : "var(--white)")};
-  color: ${({ $emphasis }) => ($emphasis ? "var(--white)" : "var(--ink-700)")};
-`;
-
-const StyledPackStrike = styled.span`
-  display: block;
-  color: var(--ink-500);
-  font-weight: 500;
-  font-size: 14px;
-  text-decoration: line-through;
-  line-height: 1.2;
-`;
-
-const StyledPackFinal = styled.span`
-  display: block;
-  font-family: var(--font-body);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--ink-900);
-  line-height: 1.15;
-  small {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-700);
+  box-sizing: border-box;
+  &::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: ${({ $selected }) => ($selected ? "var(--ink-900)" : "transparent")};
   }
 `;
 
-const StyledGiftBlock = styled.div<{ $inactive?: boolean }>`
+const StyledPackMain = styled.div`
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: #f5faf9;
-  border: 1px dashed var(--mint-600);
-  box-sizing: border-box;
-  opacity: ${({ $inactive }) => ($inactive ? 0.5 : 1)};
-  filter: ${({ $inactive }) => ($inactive ? "grayscale(1)" : "none")};
-  transition: opacity 0.2s ease, filter 0.2s ease;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
 `;
 
-const StyledGiftThumb = styled.div`
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  flex: 0 0 auto;
-  background: var(--white);
-`;
-
-const StyledGiftCopy = styled.div`
+const StyledPackInfo = styled.div`
+  flex-shrink: 0;
   min-width: 0;
 `;
 
-const StyledGiftPrice = styled.p`
-  margin: 0 0 2px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+const StyledPackTitle = styled.div`
   font-family: var(--font-body);
   font-size: 14px;
-  line-height: 1.2;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.15;
+`;
+
+const StyledPackGiftLine = styled.p`
+  margin: 2px 0 0;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--sale);
+  white-space: nowrap;
+`;
+
+const StyledPackPricing = styled.div`
+  flex: 0 0 auto;
+  text-align: right;
+`;
+
+const StyledPackCompareRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px;
+  flex-wrap: nowrap;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.15;
   s {
     color: var(--ink-500);
     font-weight: 400;
+    text-decoration: line-through;
   }
   strong {
-    color: var(--sale);
+    font-size: 14px;
     font-weight: 800;
-    text-transform: uppercase;
+    color: var(--ink-900);
+  }
+  span {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-600);
   }
 `;
 
-const StyledGiftName = styled.h4`
-  margin: 0;
+const StyledPackSaveLine = styled.div`
+  margin-top: 2px;
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--sale);
+`;
+
+const StyledPackDealBadge = styled.span`
+  position: absolute;
+  top: 0;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  color: var(--white);
+  background: var(--sale);
+`;
+
+const StyledPackExpand = styled.div<{ $open?: boolean }>`
+  display: grid;
+  grid-template-rows: ${({ $open }) => ($open ? "1fr" : "0fr")};
+  padding: 0 12px;
+  transition: grid-template-rows 0.28s ease, padding-bottom 0.28s ease;
+  padding-bottom: ${({ $open }) => ($open ? "10px" : "0")};
+`;
+
+const StyledPackExpandInner = styled.div`
+  overflow: hidden;
+  min-height: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--ink-200);
+`;
+
+const StyledUnlockedWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+`;
+
+const StyledPerkRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 24px;
+`;
+
+const StyledPerkIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+`;
+
+const StyledPerkText = styled.div`
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.2;
   color: var(--ink-900);
-  line-height: 1.25;
+  strong {
+    font-weight: 800;
+    margin-right: 4px;
+  }
+`;
+
+const StyledPerkWas = styled.span`
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--ink-500);
+  text-decoration: line-through;
+`;
+
+const StyledColorSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 4px;
 `;
 
 const StyledSlotPanels = styled.div`
@@ -810,11 +897,11 @@ const colorFlag = (
 
 export const SweetheartOfferSection = () => {
   const { t } = useTranslation("sweetheartCami");
-  const [packQty, setPackQty] = useState<PackQty>(2);
+  const [packQty, setPackQty] = useState<PackQty>(3);
   const [size, setSize] = useState<SizeId>("S");
   const [siysOpen, setSiysOpen] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
-  const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black"]);
+  const [slotColors, setSlotColors] = useState<ColorId[]>(["black", "black", "black"]);
   const [activeThumb, setActiveThumb] = useState(0);
 
   useEffect(() => {
@@ -847,72 +934,174 @@ export const SweetheartOfferSection = () => {
   const openSeeInYourSize = () => setSiysOpen(true);
 
   const selectPack = (tier: PackTier) => {
-    if (tier.oos) return;
     setPackQty(tier.qty);
   };
 
-  const packCardTitle = (tier: PackTier) =>
+  const packUnitsTitle = (tier: PackTier) =>
     tier.qty === 1
-      ? t("offer.pack1Title", { defaultValue: "1 unit" })
-      : t("offer.packNCardTitle", { qty: tier.qty, defaultValue: `${tier.qty}-pack` });
+      ? t("offer.pack1UnitsTitle", { defaultValue: "1 Unit" })
+      : t("offer.packNUnitsTitle", { qty: tier.qty, defaultValue: `${tier.qty} Units` });
 
-  const renderPackCard = (tier: PackTier, spanFull = false) => {
-    const selected = !tier.oos && packQty === tier.qty;
-    const strike =
-      tier.qty === 1 ? t("offer.pack1Strike") : tier.qty === 2 ? t("offer.pack2Strike") : null;
-    const final =
-      tier.qty === 1 ? t("offer.pack1Final") : tier.qty === 2 ? t("offer.pack2Final") : null;
+  const renderColorSlots = () => (
+    <>
+      <StyledColorSummary>
+        {t("offer.colorLabel")} <strong>{colorSummary}</strong>
+      </StyledColorSummary>
+
+      {slotColors.map((color, index) => {
+        const flag = colorFlag(color, t);
+        return (
+          <StyledSlotUnit key={`unit-${index}`}>
+            <StyledSlotThumbWrap>
+              <StyledSlotThumb>
+                <Image
+                  src={COLOR_THUMB[color]}
+                  alt={t("offer.colorThumbAlt")}
+                  fill
+                  sizes="52px"
+                  unoptimized
+                  style={{ objectFit: "cover" }}
+                />
+              </StyledSlotThumb>
+              {flag ? (
+                <StyledColorFlagSlot>
+                  <StyledColorFlag $variant={flag.variant}>{flag.label}</StyledColorFlag>
+                </StyledColorFlagSlot>
+              ) : null}
+            </StyledSlotThumbWrap>
+            <StyledSlotBody>
+              <StyledSlotUnitLabel>
+                {t("offer.colorLabel")} <strong>{colorName(color, t)}</strong>
+              </StyledSlotUnitLabel>
+              <StyledSwatches>
+                {COLORS.map((c) => (
+                  <StyledSwatch
+                    key={c}
+                    type="button"
+                    $bg={COLOR_HEX[c]}
+                    $selected={color === c}
+                    $light={c === "white" || c === "chai"}
+                    aria-label={
+                      c === "black"
+                        ? t("offer.swatchBlackAria")
+                        : c === "chai"
+                          ? t("offer.swatchChaiAria")
+                          : t("offer.swatchWhiteAria")
+                    }
+                    aria-pressed={color === c}
+                    onClick={() => setSlotColor(index, c)}
+                  />
+                ))}
+              </StyledSwatches>
+            </StyledSlotBody>
+          </StyledSlotUnit>
+        );
+      })}
+    </>
+  );
+
+  const renderUnlockedPerks = () => (
+    <StyledUnlockedWrap>
+      <StyledPerkRow aria-label={t("offer.giftName")}>
+        <StyledPerkIcon>
+          <Image
+            src={SweetheartCdn.giftBottom}
+            alt=""
+            fill
+            sizes="24px"
+            unoptimized
+            style={{ objectFit: "cover" }}
+          />
+        </StyledPerkIcon>
+        <StyledPerkText>
+          <strong>{t("offer.giftPriceNow", { defaultValue: "FREE" })}</strong>
+          {t("offer.giftName")}
+        </StyledPerkText>
+        <StyledPerkWas>{t("offer.giftPriceWas", { defaultValue: "$26.00" })}</StyledPerkWas>
+      </StyledPerkRow>
+
+      <StyledPerkRow
+        aria-label={t("offer.shippingTitle", { defaultValue: "Free shipping" })}
+      >
+        <StyledPerkIcon>
+          <Image
+            src={SweetheartCdn.iconShipping}
+            alt=""
+            width={20}
+            height={20}
+            unoptimized
+            style={{ objectFit: "contain" }}
+          />
+        </StyledPerkIcon>
+        <StyledPerkText>
+          <strong>{t("offer.shippingFree", { defaultValue: "FREE" })}</strong>
+          {t("offer.shippingTitle", { defaultValue: "Free shipping" })}
+        </StyledPerkText>
+        <StyledPerkWas>{t("offer.shippingCompare", { defaultValue: "$10.00" })}</StyledPerkWas>
+      </StyledPerkRow>
+    </StyledUnlockedWrap>
+  );
+
+  const renderPackCard = (tier: PackTier) => {
+    const selected = packQty === tier.qty;
+    const strike = packStrikeFor(tier);
+    const final = packFinalFor(tier);
     const saveAmount = packSaveDollars(tier);
+    const tierPct = tier.per && tier.was ? packPct(tier.per, tier.was) : pct;
+    const showDealBadge = tier.qty === BEST_DEAL_QTY;
 
     return (
-      <StyledPack
+      <StyledPackCard
         key={tier.qty}
-        role="radio"
-        tabIndex={tier.oos ? -1 : 0}
         $selected={selected}
-        $oos={tier.oos}
-        $spanFull={spanFull}
+        role="radio"
         aria-checked={selected}
-        aria-disabled={tier.oos || undefined}
-        aria-label={
-          tier.oos
-            ? t("offer.pack3Aria", { defaultValue: "3 Pack, out of stock" })
-            : tier.qty === 1
-              ? t("offer.pack1Aria")
-              : t("offer.pack2Aria")
-        }
+        tabIndex={selected ? 0 : -1}
+        aria-label={packAriaFor(tier.qty, t)}
         onClick={() => selectPack(tier)}
         onKeyDown={(e) => handleKeyDown(e, () => selectPack(tier), ["Enter", " "])}
       >
-        {tier.qty === 2 && !tier.oos ? (
-          <StyledPackBadge $variant="popular">
-            {t("offer.pack2Badge", { defaultValue: "MOST POPULAR" })}
-          </StyledPackBadge>
-        ) : null}
-        {tier.oos ? (
-          <StyledPackBadge $variant="oos">
-            {t("offer.pack3Badge", { defaultValue: "Out of Stock" })}
-          </StyledPackBadge>
-        ) : null}
-        <StyledPackTitle $muted={tier.oos}>{packCardTitle(tier)}</StyledPackTitle>
-        {!tier.oos && saveAmount > 0 ? (
-          <StyledSaveBadge $emphasis={selected}>
-            {t("offer.packSaveBadge", {
-              amount: saveAmount,
-              defaultValue: `Save $${saveAmount}`,
+        {showDealBadge ? (
+          <StyledPackDealBadge>
+            {t("offer.packBestDealBadge", {
+              pct: tierPct,
+              defaultValue: `BEST DEAL • ${tierPct}% OFF`,
             })}
-          </StyledSaveBadge>
+          </StyledPackDealBadge>
         ) : null}
-        {final && strike ? (
-          <>
-            <StyledPackStrike>{strike}</StyledPackStrike>
-            <StyledPackFinal>
-              {final}
-              {tier.qty === 2 ? <small>{t("offer.pack2Each")}</small> : null}
-            </StyledPackFinal>
-          </>
-        ) : null}
-      </StyledPack>
+        <StyledPackHeader>
+          <StyledPackRadio $selected={selected} aria-hidden />
+          <StyledPackMain>
+            <StyledPackInfo>
+              <StyledPackTitle>{packUnitsTitle(tier)}</StyledPackTitle>
+              <StyledPackGiftLine>
+                {t("offer.packGiftIncluded", { defaultValue: "1 GIFT INCLUDED" })}
+              </StyledPackGiftLine>
+            </StyledPackInfo>
+            <StyledPackPricing>
+              <StyledPackCompareRow>
+                <s>{strike}</s>
+                <strong>{final}</strong>
+                {tier.qty > 1 ? (
+                  <span>{t("offer.pack2Each", { defaultValue: " /each" })}</span>
+                ) : null}
+              </StyledPackCompareRow>
+              {saveAmount > 0 ? (
+                <StyledPackSaveLine>
+                  {t("offer.packSaveBadge", {
+                    amount: saveAmount,
+                    defaultValue: `Save $${saveAmount}`,
+                  })}
+                </StyledPackSaveLine>
+              ) : null}
+            </StyledPackPricing>
+          </StyledPackMain>
+        </StyledPackHeader>
+
+        <StyledPackExpand $open={selected} aria-hidden={!selected}>
+          <StyledPackExpandInner>{renderUnlockedPerks()}</StyledPackExpandInner>
+        </StyledPackExpand>
+      </StyledPackCard>
     );
   };
 
@@ -1023,87 +1212,14 @@ export const SweetheartOfferSection = () => {
 
             <StyledOfferSelection>
               <StyledChoose>
-                {t("offer.chooseSavings")}{" "}
-                <strong>{packCardTitle({ qty: packQty } as PackTier)}</strong>
+                {t("offer.chooseSavings", { defaultValue: "Buy more save more:" })}
               </StyledChoose>
 
               <StyledPacks role="radiogroup" aria-label={t("offer.chooseSavings")}>
-                {SELECTABLE_PACK_TIERS.map((tier) => renderPackCard(tier))}
+                {DISPLAY_PACK_TIERS.map((tier) => renderPackCard(tier))}
               </StyledPacks>
 
-              <StyledGiftBlock $inactive={packQty === 1} aria-label={t("offer.giftName")}>
-                <StyledGiftThumb>
-                  <Image
-                    src={SweetheartCdn.giftBottom}
-                    alt=""
-                    fill
-                    sizes="56px"
-                    unoptimized
-                    style={{ objectFit: "cover" }}
-                  />
-                </StyledGiftThumb>
-                <StyledGiftCopy>
-                  <StyledGiftPrice>
-                    <s>{t("offer.giftPriceWas")}</s>
-                    <strong>{t("offer.giftPriceNow")}</strong>
-                  </StyledGiftPrice>
-                  <StyledGiftName>{t("offer.giftName")}</StyledGiftName>
-                </StyledGiftCopy>
-              </StyledGiftBlock>
-
-              <StyledColorSummary>
-                {t("offer.colorLabel")} <strong>{colorSummary}</strong>
-              </StyledColorSummary>
-
-              {slotColors.map((color, index) => {
-                const flag = colorFlag(color, t);
-                return (
-                  <StyledSlotUnit key={`unit-${index}`}>
-                    <StyledSlotThumbWrap>
-                      <StyledSlotThumb>
-                        <Image
-                          src={COLOR_THUMB[color]}
-                          alt={t("offer.colorThumbAlt")}
-                          fill
-                          sizes="52px"
-                          unoptimized
-                          style={{ objectFit: "cover" }}
-                        />
-                      </StyledSlotThumb>
-                      {flag ? (
-                        <StyledColorFlagSlot>
-                          <StyledColorFlag $variant={flag.variant}>{flag.label}</StyledColorFlag>
-                        </StyledColorFlagSlot>
-                      ) : null}
-                    </StyledSlotThumbWrap>
-                    <StyledSlotBody>
-                      <StyledSlotUnitLabel>
-                        {t("offer.colorLabel")} <strong>{colorName(color, t)}</strong>
-                      </StyledSlotUnitLabel>
-                      <StyledSwatches>
-                        {COLORS.map((c) => (
-                          <StyledSwatch
-                            key={c}
-                            type="button"
-                            $bg={COLOR_HEX[c]}
-                            $selected={color === c}
-                            $light={c === "white" || c === "chai"}
-                            aria-label={
-                              c === "black"
-                                ? t("offer.swatchBlackAria")
-                                : c === "chai"
-                                  ? t("offer.swatchChaiAria")
-                                  : t("offer.swatchWhiteAria")
-                            }
-                            aria-pressed={color === c}
-                            onClick={() => setSlotColor(index, c)}
-                          />
-                        ))}
-                      </StyledSwatches>
-                    </StyledSlotBody>
-                  </StyledSlotUnit>
-                );
-              })}
+              <StyledColorSection>{renderColorSlots()}</StyledColorSection>
             </StyledOfferSelection>
 
             <StyledSlotPanels>
