@@ -109,7 +109,7 @@ const packAriaFor = (qty: PackQty, t: (k: string, o?: Record<string, unknown>) =
     });
   }
   return t("offer.pack3Aria", {
-    defaultValue: "Select 3 units for $29.99 each, includes a free gift",
+    defaultValue: "Select 3 units for $29.99 each, includes a free gift and free shipping",
   });
 };
 
@@ -596,17 +596,17 @@ const StyledPerkRow = styled.div`
   min-height: 24px;
 `;
 
-const StyledPerkIcon = styled.div`
+const StyledPerkIcon = styled.div<{ $plain?: boolean }>`
   width: 24px;
   height: 24px;
   flex: 0 0 auto;
   position: relative;
-  border-radius: 4px;
-  overflow: hidden;
+  border-radius: ${({ $plain }) => ($plain ? "0" : "4px")};
+  overflow: ${({ $plain }) => ($plain ? "visible" : "hidden")};
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--white);
+  background: ${({ $plain }) => ($plain ? "transparent" : "var(--white)")};
 `;
 
 const StyledPerkText = styled.div`
@@ -1000,7 +1000,7 @@ export const SweetheartOfferSection = () => {
     </>
   );
 
-  const renderUnlockedPerks = () => (
+  const renderUnlockedPerks = (qty: PackQty) => (
     <StyledUnlockedWrap>
       <StyledPerkRow aria-label={t("offer.giftName")}>
         <StyledPerkIcon>
@@ -1020,25 +1020,27 @@ export const SweetheartOfferSection = () => {
         <StyledPerkWas>{t("offer.giftPriceWas", { defaultValue: "$26.00" })}</StyledPerkWas>
       </StyledPerkRow>
 
-      <StyledPerkRow
-        aria-label={t("offer.shippingTitle", { defaultValue: "Free shipping" })}
-      >
-        <StyledPerkIcon>
-          <Image
-            src={SweetheartCdn.iconShipping}
-            alt=""
-            width={20}
-            height={20}
-            unoptimized
-            style={{ objectFit: "contain" }}
-          />
-        </StyledPerkIcon>
-        <StyledPerkText>
-          <strong>{t("offer.shippingFree", { defaultValue: "FREE" })}</strong>
-          {t("offer.shippingTitle", { defaultValue: "Free shipping" })}
-        </StyledPerkText>
-        <StyledPerkWas>{t("offer.shippingCompare", { defaultValue: "$10.00" })}</StyledPerkWas>
-      </StyledPerkRow>
+      {qty === BEST_DEAL_QTY ? (
+        <StyledPerkRow
+          aria-label={t("offer.shippingTitle", { defaultValue: "Free shipping" })}
+        >
+          <StyledPerkIcon $plain>
+            <Image
+              src={SweetheartCdn.iconShipping}
+              alt=""
+              width={20}
+              height={20}
+              unoptimized
+              style={{ objectFit: "contain" }}
+            />
+          </StyledPerkIcon>
+          <StyledPerkText>
+            <strong>{t("offer.shippingFree", { defaultValue: "FREE" })}</strong>
+            {t("offer.shippingTitle", { defaultValue: "Free shipping" })}
+          </StyledPerkText>
+          <StyledPerkWas>{t("offer.shippingCompare", { defaultValue: "$10.00" })}</StyledPerkWas>
+        </StyledPerkRow>
+      ) : null}
     </StyledUnlockedWrap>
   );
 
@@ -1099,7 +1101,7 @@ export const SweetheartOfferSection = () => {
         </StyledPackHeader>
 
         <StyledPackExpand $open={selected} aria-hidden={!selected}>
-          <StyledPackExpandInner>{renderUnlockedPerks()}</StyledPackExpandInner>
+          <StyledPackExpandInner>{renderUnlockedPerks(tier.qty)}</StyledPackExpandInner>
         </StyledPackExpand>
       </StyledPackCard>
     );
