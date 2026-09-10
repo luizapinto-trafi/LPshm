@@ -1,0 +1,118 @@
+{
+  "brand": "Shapermint",
+  "metaTitle": "5 Shapewear Pieces Women Are Actually Wearing Every Day (Not Just for Events)",
+  "metaDescription": "Most shapewear is built for a two hour night out. These five were built for a twelve hour day. Here is what holds up.",
+  "promoBar": "FREE SHIPPING OVER $80 & FREE EXCHANGES",
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "main": "Main content",
+    "cart": "View shopping bag"
+  },
+  "header": {
+    "bestSellers": "Best Sellers",
+    "shapewear": "Shapewear",
+    "bras": "Bras",
+    "home": "https://shapermint.com/",
+    "bestSellersHref": "https://shapermint.com/collections/best-sellers",
+    "shapewearHref": "https://shapermint.com/collections/shapewear",
+    "brasHref": "https://shapermint.com/collections/bras",
+    "cartHref": "https://shapermint.com/cart"
+  },
+  "cover": {
+    "title": "5 Shapewear Pieces Women Are Actually Wearing Every Day (Not Just for Events)",
+    "subtitle": "Most shapewear is built for a two hour night out. These five were built for a twelve hour day. Here is what holds up.",
+    "cta": "Shop the shapewear collection"
+  },
+  "article": {
+    "intro1": "If you have bought shapewear before and it is sitting unused in a drawer, you are not alone. The complaints are always the same. The waistband rolls down by lunch. The cami rides up when you sit. It digs in at the ribs. By mid afternoon you just want it off.",
+    "intro2": "The problem is not your body. It is that most shapewear was designed for a short event, not for a normal day. We looked at which pieces women keep reordering, and five kept coming up. What they have in common is that none of them need to be readjusted.",
+    "close": "The common thread across all five is that they were built to be worn, not endured. If you wrote off shapewear after one bad experience, start with the first piece on this list and see how the day goes.",
+    "closeCta": "Shop the shapewear collection",
+    "reviewsLabel": "{{count}} reviews",
+    "bestForLabel": "Best for",
+    "problemLabel": "Problem it solves",
+    "proofLabel": "Proof",
+    "items": {
+      "cami": {
+        "number": "1",
+        "heading": "The cami that smooths your middle and does not roll up",
+        "sku": "Shapermint Essentials All Day Every Day Scoop Neck Cami",
+        "body": "This is the piece most women start with, and the reason is simple. It gives you 360 degree tummy control and bust support in one lightweight layer, so you smooth your middle without the squeezed, breath holding feeling that makes you want to change at 3pm. It does not roll up when you sit, walk or reach. You can wear it with a bra or skip the bra entirely.",
+        "bestFor": "Under blouses, tees and fitted tops, worn all day",
+        "problem": "Camis that roll up, and shapewear that feels like it is squeezing everywhere",
+        "proof": "{{count}} reviews, over 1 million sold",
+        "cta": "Shop the Scoop Neck Cami",
+        "imageAlt": "Shapermint Essentials All Day Every Day Scoop Neck Cami"
+      },
+      "leggings": {
+        "number": "2",
+        "heading": "The leggings that quietly double as shapewear",
+        "sku": "Shapermint Essentials High-Waisted Shaping Leggings",
+        "body": "Most women think they have to pick one, comfort or shape. These are leggings you would wear on a normal day, with an anti roll silicone strip at the waist that keeps them where you put them and 360 degree smoothing from waist to ankle. The fabric is opaque and non see through, which is the part cheap leggings get wrong. Wear them as pants, or as the smoothing layer under a dress.",
+        "bestFor": "Daily wear as pants, travel, or as a smoothing layer under dresses",
+        "problem": "Having to choose between comfortable and shaping, and leggings that show everything",
+        "proof": "{{count}} reviews",
+        "cta": "Shop the Shaping Leggings",
+        "imageAlt": "Shapermint Essentials High-Waisted Shaping Leggings"
+      },
+      "sweetheart": {
+        "number": "3",
+        "heading": "The all in one that replaces three layers",
+        "sku": "Shapermint Essentials Sweetheart Built-In Bra Shaper Cami",
+        "body": "Stop layering. Stop adjusting. This one has a built in wireless bra with light foam cups, so there is no bra underneath, no strap chaos, no third layer to fight with in the morning. It sculpts 360 degrees from bust to tummy, and the sweetheart neckline is finished enough that it works as a top on its own rather than something you hide.",
+        "bestFor": "Days you do not want to wear a bra, and as a standalone top",
+        "problem": "Wearing a bra, a cami and a shaper at the same time",
+        "proof": "{{count}} reviews",
+        "cta": "Shop the Sweetheart Cami",
+        "imageAlt": "Shapermint Essentials Sweetheart Built-In Bra Shaper Cami"
+      },
+      "shorts": {
+        "number": "4",
+        "heading": "The shorts that do not roll down or ride up",
+        "sku": "Shapermint Essentials All Day Every Day High-Waisted Shaper Shorts",
+        "body": "The waistband has an anti slip silicone strip, which is the whole reason these stay put. No roll down, no chub rub, no readjusting in the bathroom, even if you sit through a long meeting, stretch or dance. You get a smooth line from tummy to thigh, the fabric is non see through, and you can wear them with or without underwear.",
+        "bestFor": "Dresses, skirts, work outfits and warm weather",
+        "problem": "Waistbands that fold over by lunch, and thigh chafing",
+        "proof": "{{count}} reviews",
+        "cta": "Shop the Shaper Shorts",
+        "imageAlt": "Shapermint Essentials All Day Every Day High-Waisted Shaper Shorts"
+      },
+      "empower": {
+        "number": "5",
+        "heading": "The one for when you want more shape, not more squeeze",
+        "sku": "Shapermint Essentials Everyday Empower High-Waisted Shaper Short",
+        "body": "This is the step up for the days that ask for more. Targeted bonded panels on the belly and sides give you an instant snatch without the bulk or the stiffness, so it is firm where you want it and soft everywhere else. Laser cut edges are fully seamless, which means no visible line under a thin or tight dress. Women report wearing them 12 to 14 hours at weddings and forgetting they had them on.",
+        "bestFor": "Fitted dresses, weddings, photos and long days on your feet",
+        "problem": "Compression that squeezes everywhere instead of shaping, and visible edges under tight clothes",
+        "proof": "{{count}} reviews",
+        "cta": "Shop the Empower Short",
+        "imageAlt": "Shapermint Essentials Everyday Empower High-Waisted Shaper Short"
+      }
+    }
+  },
+  "sticky": {
+    "offer": "Shapewear built for all day",
+    "cta": "Shop Now"
+  },
+  "footer": {
+    "info": "Shapermint Info",
+    "care": "Customer Care",
+    "newsletter": "Join Us & Get 10% OFF",
+    "newsletterHint": "By signing up you agree to subscribe to our newsletter for first access to sales and offers.",
+    "emailPlaceholder": "Email address",
+    "signUp": "Sign up",
+    "copyright": "© 2026 Shapermint. All rights reserved.",
+    "links": {
+      "about": "About Us",
+      "ambassador": "Ambassador Program",
+      "blog": "The Blog",
+      "help": "Help Center",
+      "track": "Track your Order",
+      "returns": "Exchanges & Returns",
+      "shipping": "Shipping",
+      "contact": "Contact Us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    }
+  }
+}
