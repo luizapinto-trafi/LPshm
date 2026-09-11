@@ -10,15 +10,15 @@ const StyledCtaButton = styled.a`
   justify-content: center;
   min-height: 48px;
   min-width: 180px;
-  width: 100%;
-  padding: 12px 36px;
+  width: auto;
+  padding: 12px 28px;
   background: var(--coral-300);
   color: var(--ink-1000);
   border: none;
   border-radius: 8px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.04em;
   line-height: 1.2;
   text-align: center;

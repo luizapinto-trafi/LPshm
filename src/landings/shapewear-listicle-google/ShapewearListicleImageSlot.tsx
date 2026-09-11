@@ -20,7 +20,7 @@ type ShapewearListicleImageSlotProps = {
   priority?: boolean;
 };
 
-/** Fills parent (absolute). Parent height comes from the text column. */
+/** Fills parent (absolute). Parent sets rectangular aspect-ratio. */
 export const ShapewearListicleImageSlot = ({
   src,
   alt,
