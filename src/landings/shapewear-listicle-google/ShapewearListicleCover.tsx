@@ -10,8 +10,8 @@ import {
 const STAR_COLOR = "#F5D76E";
 
 /**
- * Desktop: photo as background + left copy + CTA.
- * Mobile: centered stack (title → lead → proof → image → CTA).
+ * Desktop: photo as background + left copy + author + CTA.
+ * Mobile: title → author → dek → proof → image → CTA.
  */
 const StyledSection = styled.section`
   position: relative;
@@ -44,50 +44,90 @@ const StyledInner = styled.div`
     flex-direction: column;
     align-items: stretch;
     text-align: left;
-    padding: 28px 20px 0;
+    padding: 28px 20px 24px;
     max-width: 100%;
   }
 `;
 
 const StyledCopy = styled.div`
   max-width: 36rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+
+  @media (min-width: 901px) {
+    gap: 24px;
+  }
 
   @media (max-width: 900px) {
     max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 16px;
   }
 `;
 
 const StyledH1 = styled.h1`
-  margin: 0 0 var(--space-400);
+  margin: 0;
   color: var(--ink-1000);
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.4vw, 2.75rem);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.22;
   letter-spacing: -0.02em;
 
   @media (max-width: 900px) {
-    margin-bottom: 14px;
     font-size: 26px;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 `;
 
+const StyledByline = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 0;
+`;
+
+const StyledAvatar = styled(Image)`
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+`;
+
+const StyledBylineBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const StyledAuthor = styled.span`
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-1000);
+  line-height: 1.2;
+`;
+
+const StyledDate = styled.span`
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-600);
+  line-height: 1.2;
+`;
+
 const StyledLead = styled.p`
-  margin: 0 0 var(--space-600);
+  margin: 0;
   color: var(--ink-800);
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   max-width: 34rem;
 
   @media (max-width: 900px) {
-    margin-bottom: 18px;
     font-size: 15px;
-    line-height: 1.45;
+    line-height: 1.5;
     max-width: 100%;
   }
 `;
@@ -101,7 +141,6 @@ const StyledProof = styled.div`
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 20px;
     font-family: var(--font-display);
     font-size: 14px;
     font-weight: 700;
@@ -120,6 +159,7 @@ const StyledStars = styled.span`
 const StyledDesktopCta = styled.div`
   display: block;
   width: auto;
+  margin-top: 8px;
 
   & > a {
     width: auto;
@@ -139,7 +179,7 @@ const StyledMobileCta = styled.div`
     display: flex;
     width: 100%;
     justify-content: stretch;
-    margin: 20px 0 28px;
+    margin: 18px 0 0;
     padding: 0;
     box-sizing: border-box;
 
@@ -159,7 +199,7 @@ const StyledMobileImage = styled.div`
     margin: 0 -20px;
     line-height: 0;
     overflow: hidden;
-    border-radius: 20px 20px 0 0;
+    border-radius: 16px 16px 0 0;
   }
 `;
 
@@ -210,6 +250,7 @@ export const ShapewearListicleCover = () => {
       <StyledInner>
         <StyledCopy>
           <StyledH1>{t("cover.title")}</StyledH1>
+
           <StyledLead>{t("cover.subtitle")}</StyledLead>
 
           <StyledProof>
@@ -223,6 +264,19 @@ export const ShapewearListicleCover = () => {
             </StyledStars>
             <span>Over 1 million sold</span>
           </StyledProof>
+
+          <StyledByline>
+            <StyledAvatar
+              src={ShapewearListicleCdn.authorAvatar}
+              width={88}
+              height={88}
+              alt={t("cover.authorAlt")}
+            />
+            <StyledBylineBody>
+              <StyledAuthor>{t("cover.byline")}</StyledAuthor>
+              <StyledDate>{t("cover.bylineDate")}</StyledDate>
+            </StyledBylineBody>
+          </StyledByline>
 
           <StyledDesktopCta>{cta}</StyledDesktopCta>
         </StyledCopy>

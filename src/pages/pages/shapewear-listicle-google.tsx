@@ -13,7 +13,6 @@ import { ShapewearListicleHeader } from "@/landings/shapewear-listicle-google/Sh
 import { ShapewearListicleCover } from "@/landings/shapewear-listicle-google/ShapewearListicleCover";
 import { ShapewearListicleArticle } from "@/landings/shapewear-listicle-google/ShapewearListicleArticle";
 import { ShapewearListicleFooter } from "@/landings/shapewear-listicle-google/ShapewearListicleFooter";
-import { ShapewearListicleStickyBar } from "@/landings/shapewear-listicle-google/ShapewearListicleStickyBar";
 
 const StyledSkip = styled.a`
   position: absolute;
@@ -51,7 +50,6 @@ const ShapewearListicleGooglePage: NextPage = () => {
         <ShapewearListicleArticle />
       </main>
       <ShapewearListicleFooter />
-      <ShapewearListicleStickyBar />
     </>
   );
 };
