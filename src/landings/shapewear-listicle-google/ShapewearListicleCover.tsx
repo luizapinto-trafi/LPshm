@@ -85,7 +85,7 @@ const StyledByline = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 4px 0 0;
+  margin: 0;
 `;
 
 const StyledAvatar = styled(Image)`
@@ -251,6 +251,19 @@ export const ShapewearListicleCover = () => {
         <StyledCopy>
           <StyledH1>{t("cover.title")}</StyledH1>
 
+          <StyledByline>
+            <StyledAvatar
+              src={ShapewearListicleCdn.authorAvatar}
+              width={88}
+              height={88}
+              alt={t("cover.authorAlt")}
+            />
+            <StyledBylineBody>
+              <StyledAuthor>{t("cover.byline")}</StyledAuthor>
+              <StyledDate>{t("cover.bylineDate")}</StyledDate>
+            </StyledBylineBody>
+          </StyledByline>
+
           <StyledLead>{t("cover.subtitle")}</StyledLead>
 
           <StyledProof>
@@ -264,19 +277,6 @@ export const ShapewearListicleCover = () => {
             </StyledStars>
             <span>Over 1 million sold</span>
           </StyledProof>
-
-          <StyledByline>
-            <StyledAvatar
-              src={ShapewearListicleCdn.authorAvatar}
-              width={88}
-              height={88}
-              alt={t("cover.authorAlt")}
-            />
-            <StyledBylineBody>
-              <StyledAuthor>{t("cover.byline")}</StyledAuthor>
-              <StyledDate>{t("cover.bylineDate")}</StyledDate>
-            </StyledBylineBody>
-          </StyledByline>
 
           <StyledDesktopCta>{cta}</StyledDesktopCta>
         </StyledCopy>
