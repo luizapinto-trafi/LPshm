@@ -35,6 +35,22 @@ const LANDINGS: Landing[] = [
     href: "/pages/shapermint-essentials-sweetheart-built-in-bra-shaper-cami-2",
     title: "Sweetheart Cami — Built-In Bra Shaper",
   },
+  {
+    href: "/pages/shapermint-essentials-high-waisted-shaping-leggings-b2g3-offer-high-anchor",
+    title: "Leggings B2G3 — V1 Offer · High Anchor",
+  },
+  {
+    href: "/pages/shapermint-essentials-high-waisted-shaping-leggings-b2g3-offer-unit-anchor",
+    title: "Leggings B2G3 — V2 Offer · Unit Anchor",
+  },
+  {
+    href: "/pages/shapermint-essentials-high-waisted-shaping-leggings-b2g3-selector-high-anchor",
+    title: "Leggings B2G3 — V3 Selector · High Anchor",
+  },
+  {
+    href: "/pages/shapermint-essentials-high-waisted-shaping-leggings-b2g3-selector-unit-anchor",
+    title: "Leggings B2G3 — V4 Selector · Unit Anchor",
+  },
   { href: "/pages/shapermint-vs-honeylove-shapewear", title: "Shapermint vs. Honeylove — Shapewear" },
   { href: "/pages/shapermint-vs-honeylove-bras", title: "Shapermint vs. Honeylove — Bras" },
   { href: "/pages/quiz", title: "Quiz" },
