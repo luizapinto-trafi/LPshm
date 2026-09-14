@@ -67,6 +67,13 @@ const TSD_HAIR_QUIZ_GOOGLE_FONTS: PageStylesheet = {
     "&display=swap",
 };
 
+const DENISE_ADV_GOOGLE_FONTS: PageStylesheet = {
+  href:
+    "https://fonts.googleapis.com/css2" +
+    "?family=Poppins:wght@400;600;700;800" +
+    "&display=swap",
+};
+
 const SPA_DR_LISTCICLE_STYLESHEETS: ReadonlyArray<PageStylesheet> = [
   SPA_DR_GOOGLE_FONTS,
   SPA_DR_LISTCICLE_WEBFLOW_CSS,
@@ -81,6 +88,7 @@ const PAGE_STYLESHEETS: Record<string, ReadonlyArray<PageStylesheet>> = {
   "/hairserum/bty-7459-lp1-lead-offershort-list-tox": SPA_DR_LISTCICLE_STYLESHEETS,
   "/pages/hairserum/lp1-lead-offershort-list-tox-v2": SPA_DR_LP1_V2_STYLESHEETS,
   "/pages/hairserum/tsd-hair-quiz": [TSD_HAIR_QUIZ_GOOGLE_FONTS],
+  "/pages/lp1-denise-plus-size-bra": [DENISE_ADV_GOOGLE_FONTS],
 };
 
 export default class MyDocument extends Document {

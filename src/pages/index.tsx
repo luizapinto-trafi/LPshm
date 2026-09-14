@@ -53,6 +53,7 @@ const LANDINGS: Landing[] = [
   },
   { href: "/pages/shapermint-vs-honeylove-shapewear", title: "Shapermint vs. Honeylove — Shapewear" },
   { href: "/pages/shapermint-vs-honeylove-bras", title: "Shapermint vs. Honeylove — Bras" },
+  { href: "/pages/lp1-denise-plus-size-bra", title: "Style Insiders — Denise Plus Size Bra" },
   { href: "/pages/quiz", title: "Quiz" },
   { href: "/pages/gamification", title: "Gamification" },
   { href: "/pages/new-landing", title: "New Landing · blank canvas" },
