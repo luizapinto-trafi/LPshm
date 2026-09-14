@@ -61,7 +61,7 @@ const StyledLogoLink = styled.a`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -82,7 +82,7 @@ const StyledNavLink = styled.a<{ $promo?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: ${({ $promo }) => ($promo ? "#c64844" : "#1a1a1a")};
+  color: ${({ $promo }) => ($promo ? "var(--coral-500)" : "var(--ink-900)")};
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: ${({ $promo }) => ($promo ? 600 : 500)};
@@ -90,12 +90,12 @@ const StyledNavLink = styled.a<{ $promo?: boolean }>`
   text-decoration: none;
   white-space: nowrap;
   &:hover {
-    color: #c64844;
+    color: var(--coral-500);
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -112,7 +112,7 @@ const StyledActions = styled.div`
   gap: 14px;
   flex-shrink: 0;
   z-index: 1;
-  color: #1a1a1a;
+  color: var(--ink-900);
   svg {
     width: 22px;
     height: 22px;
@@ -125,7 +125,7 @@ const StyledLocale = styled.a`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: #1a1a1a;
+    color: var(--ink-900);
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
@@ -133,7 +133,7 @@ const StyledLocale = styled.a`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -154,7 +154,7 @@ const StyledIconLink = styled.a`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -195,7 +195,7 @@ const StyledHamb = styled.button`
   padding: 0;
   border: none;
   background: transparent;
-  color: #1a1a1a;
+  color: var(--ink-900);
   cursor: pointer;
   @media (min-width: ${NAV_DESKTOP}) {
     display: none;
@@ -207,7 +207,7 @@ const StyledHamb = styled.button`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
