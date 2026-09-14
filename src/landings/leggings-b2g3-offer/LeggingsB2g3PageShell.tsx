@@ -8,14 +8,22 @@ import { LeggingsB2g3PdpRest } from "./LeggingsB2g3PdpRest";
 import { LeggingsB2g3SiteFooter } from "./LeggingsB2g3SiteFooter";
 import type { AnchorId, LayoutId } from "./leggingsB2g3Config";
 
+const StyledPage = styled.div`
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+`;
+
 const StyledSkip = styled.a`
   position: absolute;
   left: -10000px;
   top: 0;
   z-index: 200;
   padding: var(--space-200) var(--space-400);
-  background: var(--coral-500);
-  color: var(--white);
+  background: var(--coral-300);
+  color: var(--ink-900);
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
   border-radius: var(--radius-md);
@@ -48,7 +56,7 @@ export const LeggingsB2g3PageShell = ({
   const { t } = useTranslation("leggingsB2g3");
 
   return (
-    <>
+    <StyledPage>
       <Head>
         <title>
           {t("metaTitle")} — {variantLabel} | Shapermint
@@ -67,6 +75,6 @@ export const LeggingsB2g3PageShell = ({
         <LeggingsB2g3PdpRest />
       </main>
       <LeggingsB2g3SiteFooter />
-    </>
+    </StyledPage>
   );
 };

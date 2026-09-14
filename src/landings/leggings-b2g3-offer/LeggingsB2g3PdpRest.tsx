@@ -29,8 +29,9 @@ const StyledYmalTitle = styled.h2`
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
+  line-height: 32px;
   text-align: center;
-  color: #292929;
+  color: var(--ink-900);
 `;
 
 const StyledYmalGrid = styled.div`
@@ -49,6 +50,7 @@ const StyledYmalCard = styled.a`
   gap: 8px;
   text-decoration: none;
   color: inherit;
+  font-family: var(--font-body);
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
@@ -58,16 +60,16 @@ const StyledYmalCard = styled.a`
 const StyledYmalImg = styled.div`
   position: relative;
   aspect-ratio: 3 / 4;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: #efefef;
+  background: var(--ink-150);
 `;
 
 const StyledYmalName = styled.span`
   font-size: 13px;
   line-height: 1.35;
   font-weight: 600;
-  color: #292929;
+  color: var(--ink-900);
 `;
 
 export const LeggingsB2g3PdpRest = () => {

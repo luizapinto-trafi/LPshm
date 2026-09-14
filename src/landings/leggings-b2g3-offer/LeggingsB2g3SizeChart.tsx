@@ -11,18 +11,19 @@ const StyledWrap = styled.div`
 
 const StyledTitle = styled.h2`
   margin: 0 0 8px;
-  font-family: var(--font-body);
-  font-size: 22px;
+  font-family: var(--font-display);
+  font-size: 24px;
   font-weight: 700;
-  line-height: 1.25;
-  color: #292929;
+  line-height: 32px;
+  color: var(--ink-900);
 `;
 
 const StyledLead = styled.p`
   margin: 0 0 16px;
+  font-family: var(--font-body);
   font-size: 14px;
-  line-height: 1.45;
-  color: #292929;
+  line-height: 22px;
+  color: var(--ink-900);
   max-width: 42ch;
 `;
 
@@ -45,19 +46,19 @@ const StyledUnitBtn = styled.button<{ $active?: boolean }>`
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
-  color: #292929;
+  color: var(--ink-900);
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
 const StyledRadio = styled.span<{ $active?: boolean }>`
   width: 16px;
   height: 16px;
-  border-radius: 50%;
-  border: 1.5px solid #292929;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--ink-900);
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -66,39 +67,40 @@ const StyledRadio = styled.span<{ $active?: boolean }>`
     content: "";
     width: 8px;
     height: 8px;
-    border-radius: 50%;
-    background: ${({ $active }) => ($active ? "#292929" : "transparent")};
+    border-radius: var(--radius-full);
+    background: ${({ $active }) => ($active ? "var(--ink-900)" : "transparent")};
   }
 `;
 
 const StyledTableWrap = styled.div`
   overflow-x: auto;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border: 1px solid var(--ink-200);
+  border-radius: var(--radius-lg);
 `;
 
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
+  font-family: var(--font-body);
   font-size: 13px;
   line-height: 1.35;
-  color: #292929;
+  color: var(--ink-900);
   th,
   td {
     padding: 10px 8px;
     text-align: center;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid var(--ink-200);
     white-space: nowrap;
   }
   th {
     font-weight: 700;
-    background: #f7f1eb;
+    background: var(--coral-050);
   }
   td:first-child {
     font-weight: 700;
   }
   tbody tr:nth-child(even) {
-    background: #fbf7f3;
+    background: var(--coral-075);
   }
   tbody tr:last-child td {
     border-bottom: none;
@@ -110,24 +112,26 @@ const StyledFaq = styled.a`
   align-items: center;
   gap: 8px;
   margin-top: 14px;
-  color: #292929;
+  color: var(--ink-900);
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
+  line-height: 22px;
   text-decoration: underline;
   text-underline-offset: 2px;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
 const StyledFaqIcon = styled.span`
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: #e8a39a;
-  color: #fff;
+  border-radius: var(--radius-full);
+  background: var(--coral-300);
+  color: var(--white);
   display: inline-flex;
   align-items: center;
   justify-content: center;

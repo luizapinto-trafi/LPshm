@@ -28,22 +28,24 @@ export type LeggingsB2g3OfferSectionProps = {
 };
 
 const StyledSection = styled.section`
-  max-width: 1200px;
+  max-width: 1170px;
   margin: 0 auto;
-  padding: 16px 12px 24px;
+  padding: var(--space-200) var(--space-200) var(--space-400);
   box-sizing: border-box;
+  font-family: var(--font-body);
+  color: var(--ink-900);
   @media (min-width: 900px) {
-    padding: 24px 24px 32px;
+    padding: var(--space-300) var(--space-400) var(--space-500);
   }
 `;
 
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: var(--space-300);
   @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
+    gap: var(--space-500);
     align-items: start;
   }
 `;
@@ -51,20 +53,20 @@ const StyledGrid = styled.div`
 const StyledBelowGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
-  margin-top: 28px;
+  gap: var(--space-400);
+  margin-top: var(--space-400);
   @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
+    gap: var(--space-500);
     align-items: start;
-    margin-top: 8px;
+    margin-top: var(--space-200);
   }
 `;
 
 const StyledGallery = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-150);
   min-width: 0;
 `;
 
@@ -72,56 +74,57 @@ const StyledHero = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--ink-100);
 `;
 
 const StyledThumbs = styled.div`
   display: flex;
-  gap: 8px;
+  gap: var(--space-100);
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: var(--space-050);
 `;
 
 const StyledThumbBtn = styled.button<{ $active?: boolean }>`
   flex: 0 0 auto;
-  width: 64px;
-  height: 80px;
+  width: 65px;
+  height: 86px;
   padding: 0;
-  border: 2px solid ${({ $active }) => ($active ? "var(--ink-900)" : "transparent")};
-  border-radius: 8px;
+  border: ${({ $active }) => ($active ? "1.5px solid var(--ink-900)" : "1.5px solid transparent")};
+  border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
   background: var(--ink-100);
+  box-sizing: border-box;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
   }
 `;
 
-
 const StyledBuybox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-200);
   min-width: 0;
+  width: 100%;
 `;
 
 const StyledTitle = styled.h1`
   margin: 0;
-  font-family: var(--font-body);
-  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #292929;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 36px);
+  font-weight: 400;
+  line-height: 1.24;
+  color: var(--ink-900);
+  letter-spacing: 0;
 `;
 
 const StyledReviewsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-100);
   margin: 0;
 `;
 
@@ -129,47 +132,49 @@ const StyledStars = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  color: #f5a623;
+  color: var(--gold-600);
   line-height: 0;
 `;
 
 const StyledStar = styled.span<{ $fill: number }>`
   position: relative;
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  line-height: 16px;
-  color: #e5e5e5;
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--ink-200);
   &::before {
     content: "★";
     position: absolute;
     inset: 0;
-    color: #e5e5e5;
+    color: var(--ink-200);
   }
   &::after {
     content: "★";
     position: absolute;
     inset: 0;
-    color: #f5a623;
+    color: var(--gold-600);
     width: ${({ $fill }) => `${Math.max(0, Math.min(1, $fill)) * 100}%`};
     overflow: hidden;
   }
 `;
 
 const StyledReviewsLink = styled.a`
+  font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 500;
-  color: #292929;
+  font-weight: 400;
+  line-height: 14px;
+  color: var(--ink-900);
   text-decoration: underline;
   text-underline-offset: 2px;
   &:hover {
-    color: #c64844;
+    color: var(--coral-500);
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -177,7 +182,7 @@ const StyledPriceBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 10px;
+  gap: var(--space-100) var(--space-150);
 `;
 
 const StyledCompareWrap = styled.span`
@@ -187,8 +192,10 @@ const StyledCompareWrap = styled.span`
 `;
 
 const StyledCompare = styled.s`
+  font-family: var(--font-body);
   font-size: 16px;
-  color: #9b9b9b;
+  line-height: 24px;
+  color: var(--ink-500);
   font-weight: 400;
   text-decoration: line-through;
 `;
@@ -202,57 +209,59 @@ const StyledInfoBtn = styled.button`
   padding: 0;
   border: none;
   background: transparent;
-  color: #9b9b9b;
+  color: var(--ink-500);
   cursor: help;
   line-height: 0;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
   }
 `;
 
 const StyledSale = styled.span`
   display: inline-flex;
   align-items: flex-start;
-  font-family: var(--font-body);
-  font-weight: 800;
-  color: #1a1a1a;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--ink-900);
+  letter-spacing: 0;
   line-height: 1;
 `;
 
 const StyledSaleCurrency = styled.span`
   font-size: 22px;
   line-height: 1;
-  margin-top: 2px;
+  margin-top: 6px;
+  margin-right: 2px;
 `;
 
 const StyledSaleDollars = styled.span`
-  font-size: 36px;
-  line-height: 1;
+  font-size: clamp(36px, 4vw, 42px);
+  line-height: 1.1;
 `;
 
 const StyledSaleCents = styled.sup`
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 400;
   line-height: 1;
   margin-left: 1px;
-  top: 0.15em;
+  top: 0.35em;
 `;
 
 const StyledBadge = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.5rem;
-  min-height: 1.25rem;
-  border-radius: 0.25rem;
-  background: #c64844;
-  color: #fff;
+  padding: 0 var(--space-100);
+  min-height: 20px;
+  border-radius: var(--radius-md);
+  background: var(--sale);
+  color: var(--white);
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  line-height: 1rem;
+  line-height: 16px;
   white-space: nowrap;
 `;
 
@@ -260,32 +269,33 @@ const StyledCallout = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 17px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background: #f5faf9;
   border: 1px dashed #d7e3d6;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--space-100);
 `;
 
 const StyledCalloutTitleRow = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-100);
+  font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 24px;
   letter-spacing: 0.02em;
-  color: #c64844;
+  color: var(--coral-500);
 `;
 
 const StyledPulseDot = styled.span`
   display: inline-block;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
-  background-color: #4cbea4;
+  border-radius: var(--radius-full);
+  background-color: var(--mint-500, #4cbea4);
   opacity: 0.5;
   flex-shrink: 0;
   animation: b2g3-offer-dot-blink 1.6s ease-in-out infinite;
@@ -307,16 +317,17 @@ const StyledPulseDot = styled.span`
 const StyledCalloutTitle = styled.span`
   font-size: 16px;
   font-weight: 700;
-  color: #c64844;
+  color: var(--coral-500);
   letter-spacing: 0.02em;
 `;
 
 const StyledCalloutBody = styled.p`
   margin: 0;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
-  color: #1a1a1a;
+  line-height: 22px;
+  color: var(--ink-900);
   b,
   strong {
     font-weight: 700;
@@ -328,7 +339,7 @@ const StyledIncludesNest = styled.div`
   box-sizing: border-box;
   margin-top: 6px;
   padding-top: 13px;
-  border-top: 0.56px dashed #d7e3d6;
+  border-top: 1px dashed #d7e3d6;
 `;
 
 const StyledIncludes = styled.div`
@@ -342,7 +353,7 @@ const StyledIncludesLabel = styled.p`
   margin: 0 0 10px;
   font-size: 12px;
   font-weight: 600;
-  color: #6e7b72;
+  color: var(--ink-600);
   letter-spacing: 0.2px;
 `;
 
@@ -352,7 +363,7 @@ const StyledIncludeRow = styled.div`
   gap: 10px;
   padding: 5px 0;
   & + & {
-    border-top: 0.56px dashed #d7e3d6;
+    border-top: 1px dashed #d7e3d6;
   }
 `;
 
@@ -360,10 +371,10 @@ const StyledIncludeThumb = styled.div`
   width: 50px;
   height: 50px;
   flex: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: #fff;
-  border: 1px solid #ecefec;
+  background: var(--white);
+  border: 1px solid var(--ink-150);
   position: relative;
   display: flex;
   align-items: center;
@@ -373,7 +384,8 @@ const StyledIncludeThumb = styled.div`
 const StyledIncludeName = styled.span`
   font-size: 14px;
   font-weight: 700;
-  color: #292929;
+  line-height: 22px;
+  color: var(--ink-900);
   min-width: 0;
 `;
 
@@ -381,23 +393,26 @@ const StyledIncludePrice = styled.span`
   margin-left: auto;
   padding-left: 12px;
   font-size: 14px;
+  line-height: 22px;
   white-space: nowrap;
-  color: #292929;
+  color: var(--ink-900);
   s {
-    color: #9aa39c;
+    color: var(--ink-500);
     font-weight: 400;
     margin-right: 5px;
   }
   b {
-    color: #c64844;
+    color: var(--sale);
     font-weight: 700;
   }
 `;
 
 const StyledPackHeader = styled.p`
   margin: 0;
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
+  line-height: 22px;
   color: var(--ink-900);
 `;
 
@@ -409,13 +424,12 @@ const StyledPacks = styled.div`
 
 const StyledPackCard = styled.div<{ $selected?: boolean; $hasBadge?: boolean }>`
   position: relative;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   border: ${({ $selected }) =>
     $selected ? "2px solid var(--mint-500, #3f9754)" : "1px solid var(--ink-300)"};
   background: ${({ $selected }) => ($selected ? "#f5faf9" : "var(--white)")};
   cursor: pointer;
   overflow: visible;
-  /* Room under floating BEST VALUE so it doesn't cover price */
   padding-top: ${({ $hasBadge }) => ($hasBadge ? "10px" : "0")};
   transition: border-color 0.2s ease, background-color 0.2s ease;
   &:focus-visible {
@@ -430,14 +444,15 @@ const StyledBestValue = styled.span`
   right: 12px;
   transform: translateY(-50%);
   z-index: 2;
+  font-family: var(--font-display);
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   color: var(--white);
-  background: #c64844;
+  background: var(--sale);
   pointer-events: none;
   white-space: nowrap;
 `;
@@ -523,17 +538,18 @@ const StyledUnitGroup = styled.div`
 `;
 
 const StyledUnitsHead = styled.div`
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
   line-height: 22px;
-  color: #292929;
+  color: var(--ink-900);
   padding-bottom: 8px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--ink-200);
 `;
 
 const StyledSlot = styled.div`
   display: flex;
-  gap: 16px;
+  gap: var(--space-200);
   align-items: flex-start;
   padding: 12px 0;
 `;
@@ -541,7 +557,7 @@ const StyledSlot = styled.div`
 const StyledSlotThumb = styled.div`
   width: 60px;
   height: 80px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
   flex: none;
@@ -559,7 +575,8 @@ const StyledSlotBody = styled.div`
 
 const StyledSlotLabel = styled.div`
   margin: 0;
-  color: #292929;
+  font-family: var(--font-body);
+  color: var(--ink-900);
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
@@ -577,17 +594,16 @@ const StyledSwatches = styled.div`
 const StyledSwatch = styled.button<{ $bg: string; $selected?: boolean; $light?: boolean }>`
   width: 32px;
   height: 32px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0;
   cursor: pointer;
   background: ${({ $bg }) => $bg};
   border: ${({ $selected, $light }) => {
-    if ($selected) return "2px solid #1a1a1a";
-    if ($light) return "1px solid #d0d0d0";
+    if ($selected) return "2px solid var(--ink-900)";
+    if ($light) return "1px solid var(--ink-300)";
     return "1px solid transparent";
   }};
-  box-shadow: ${({ $selected }) =>
-    $selected ? "inset 0 0 0 2px #fff" : "none"};
+  box-shadow: ${({ $selected }) => ($selected ? "inset 0 0 0 2px #fff" : "none")};
   box-sizing: border-box;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
@@ -603,12 +619,14 @@ const StyledSizeRow = styled.div`
 
 const StyledSizeLabel = styled.p`
   margin: 0;
+  font-family: var(--font-body);
   font-size: 14px;
-  color: #292929;
+  line-height: 22px;
+  color: var(--ink-900);
   span {
     font-weight: 400;
-    color: rgb(128, 128, 128);
-    font-size: 0.875rem;
+    color: var(--ink-500);
+    font-size: 14px;
   }
 `;
 
@@ -619,16 +637,19 @@ const StyledSizes = styled.div`
 `;
 
 const StyledSizeBtn = styled.button<{ $selected?: boolean }>`
-  min-width: 44px;
-  height: 40px;
-  padding: 0 10px;
-  border-radius: 8px;
-  border: 1px solid ${({ $selected }) => ($selected ? "var(--ink-900)" : "var(--ink-300)")};
+  min-width: 4rem;
+  height: auto;
+  padding: 0.75rem 1rem 0.625rem;
+  border-radius: 0.375rem;
+  border: ${({ $selected }) => ($selected ? "none" : "1px solid var(--ink-300)")};
   background: ${({ $selected }) => ($selected ? "var(--ink-900)" : "var(--white)")};
   color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--ink-900)")};
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
+  box-sizing: border-box;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
@@ -636,21 +657,25 @@ const StyledSizeBtn = styled.button<{ $selected?: boolean }>`
 `;
 
 const StyledCta = styled.button`
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  min-height: 52px;
+  min-height: unset;
+  padding: 0.875rem 2rem;
   border: none;
-  border-radius: 10px;
-  background: var(--coral-500);
-  color: var(--white);
+  border-radius: var(--radius-lg);
+  background: var(--coral-300);
+  color: var(--ink-900);
   font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: normal;
+  text-transform: none;
   cursor: pointer;
   &:hover {
-    background: var(--coral-450, #e86a5e);
+    background: var(--coral-250);
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
@@ -660,11 +685,11 @@ const StyledCta = styled.button`
 
 const StyledPolicy = styled.div`
   margin: 0;
-  padding: 20px 22px;
+  padding: var(--space-300);
   width: 100%;
   box-sizing: border-box;
-  background: #f7f7f7;
-  border-radius: 8px;
+  background: var(--ink-050);
+  border-radius: var(--radius-lg);
   text-align: left;
 `;
 
@@ -680,8 +705,8 @@ const StyledPolicyTitle = styled.p`
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.25;
-  color: #1a1a1a;
+  line-height: 28px;
+  color: var(--ink-900);
 `;
 
 const StyledPolicyBody = styled.p`
@@ -689,8 +714,8 @@ const StyledPolicyBody = styled.p`
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
-  color: #1a1a1a;
+  line-height: 22px;
+  color: var(--ink-900);
   strong {
     font-weight: 700;
   }
@@ -971,7 +996,7 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
                           </s>
                           <strong>{money(pricing.salePrice)}</strong>
                         </div>
-                        <div style={{ color: "#c64844", fontWeight: 700, fontSize: 12, marginTop: 2 }}>
+                        <div style={{ color: "var(--coral-500)", fontWeight: 700, fontSize: 12, marginTop: 2 }}>
                           {pricing.badge}
                         </div>
                       </StyledPackPricing>

@@ -16,10 +16,10 @@ const StyledWrap = styled.div`
 `;
 
 const StyledItem = styled.div`
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--ink-200);
   padding: 10px 0;
   &:last-of-type {
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--ink-200);
   }
 `;
 
@@ -35,12 +35,12 @@ const StyledBtn = styled.button`
   background: transparent;
   cursor: pointer;
   text-align: left;
-  color: #292929;
-  font-family: var(--font-body);
+  color: var(--ink-900);
+  font-family: var(--font-display);
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -57,7 +57,7 @@ const StyledChevron = styled.span<{ $open?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #292929;
+  color: var(--ink-900);
   transform: rotate(${({ $open }) => ($open ? "180deg" : "0deg")});
   transition: transform 0.18s ease;
   svg {
@@ -72,9 +72,10 @@ const StyledPanel = styled.div`
 
 const StyledLead = styled.p`
   margin: 0 0 20px;
+  font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.55;
-  color: #292929;
+  line-height: 24px;
+  color: var(--ink-900);
   strong {
     font-weight: 700;
   }
@@ -93,10 +94,11 @@ const StyledBenefit = styled.li`
   display: flex;
   align-items: center;
   gap: 12px;
+  font-family: var(--font-body);
   font-size: 15px;
-  line-height: 1.35;
+  line-height: 22px;
   font-weight: 700;
-  color: #292929;
+  color: var(--ink-900);
 `;
 
 const StyledBenefitIcon = styled.div`
@@ -127,7 +129,7 @@ const StyledPolicyP = styled.p`
   margin: 0 0 12px;
   font-size: 16px;
   line-height: 1.55;
-  color: #292929;
+  color: var(--ink-900);
   &:last-child {
     margin-bottom: 0;
   }
@@ -156,7 +158,7 @@ const StyledDetailRow = styled.li`
 const StyledDetailChevron = styled.span`
   display: inline-flex;
   margin-top: 3px;
-  color: #c64844;
+  color: var(--coral-500);
   line-height: 0;
   svg {
     width: 10px;
@@ -168,14 +170,14 @@ const StyledDetailLabel = styled.p`
   margin: 0;
   font-size: 14px;
   font-weight: 700;
-  color: #292929;
+  color: var(--ink-900);
 `;
 
 const StyledDetailValue = styled.div`
   grid-column: 2;
   font-size: 14px;
   line-height: 1.45;
-  color: #292929;
+  color: var(--ink-900);
 `;
 
 const ChevronIcon = () => (

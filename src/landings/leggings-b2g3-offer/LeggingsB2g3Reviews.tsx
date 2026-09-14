@@ -20,10 +20,11 @@ const StyledSection = styled.section`
 const StyledHeading = styled.h2`
   margin: 0 0 28px;
   text-align: center;
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: 28px;
   font-weight: 700;
-  color: #1a1a1a;
+  line-height: 36px;
+  color: var(--ink-900);
 `;
 
 const StyledSummaryRow = styled.div`
@@ -46,16 +47,17 @@ const StyledRatingBlock = styled.div`
 `;
 
 const StyledRatingValue = styled.div`
+  font-family: var(--font-display);
   font-size: 48px;
   font-weight: 700;
   line-height: 1;
-  color: #1a1a1a;
+  color: var(--ink-900);
 `;
 
 const StyledStars = styled.div<{ $size?: number }>`
   display: inline-flex;
   gap: 2px;
-  color: #f5a623;
+  color: var(--gold-600);
   font-size: ${({ $size }) => ($size ? `${$size}px` : "18px")};
   letter-spacing: 1px;
   line-height: 1;
@@ -63,8 +65,10 @@ const StyledStars = styled.div<{ $size?: number }>`
 
 const StyledReviewCount = styled.p`
   margin: 0;
+  font-family: var(--font-body);
   font-size: 14px;
-  color: #666;
+  line-height: 22px;
+  color: var(--ink-600);
 `;
 
 const StyledPhotoGrid = styled.div`
@@ -77,7 +81,7 @@ const StyledPhotoCell = styled.div`
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #efefef;
+  background: var(--ink-150);
 `;
 
 const StyledActions = styled.div`
@@ -92,10 +96,11 @@ const StyledActionBtn = styled.button<{ $primary?: boolean }>`
   min-width: 160px;
   height: 44px;
   padding: 0 20px;
-  border-radius: 4px;
-  border: 1px solid #1a1a1a;
-  background: ${({ $primary }) => ($primary ? "#1a1a1a" : "#fff")};
-  color: ${({ $primary }) => ($primary ? "#fff" : "#1a1a1a")};
+  border-radius: var(--radius-md);
+  border: 1px solid var(--ink-900);
+  background: ${({ $primary }) => ($primary ? "var(--ink-900)" : "var(--white)")};
+  color: ${({ $primary }) => ($primary ? "var(--white)" : "var(--ink-900)")};
+  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -112,7 +117,7 @@ const StyledTabsRow = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--ink-200);
   margin-bottom: 8px;
 `;
 
@@ -125,9 +130,10 @@ const StyledTab = styled.button<{ $active?: boolean }>`
   margin: 0;
   padding: 12px 0 10px;
   border: none;
-  border-bottom: 3px solid ${({ $active }) => ($active ? "#c64844" : "transparent")};
+  border-bottom: 3px solid ${({ $active }) => ($active ? "var(--coral-500)" : "transparent")};
   background: transparent;
-  color: #1a1a1a;
+  color: var(--ink-900);
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: ${({ $active }) => ($active ? 700 : 500)};
   cursor: pointer;
@@ -143,9 +149,10 @@ const StyledSort = styled.div`
   align-items: center;
   gap: 6px;
   padding-bottom: 10px;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--ink-900);
   select {
     border: none;
     background: transparent;
@@ -166,7 +173,7 @@ const StyledReview = styled.article`
   grid-template-columns: 1fr;
   gap: 16px;
   padding: 24px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--ink-200);
   @media (min-width: 720px) {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 24px;
@@ -186,29 +193,34 @@ const StyledReviewHead = styled.div`
 `;
 
 const StyledAuthor = styled.span`
+  font-family: var(--font-display);
   font-size: 15px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--ink-900);
 `;
 
 const StyledDate = styled.span`
+  font-family: var(--font-body);
   font-size: 13px;
-  color: #777;
+  color: var(--ink-600);
   white-space: nowrap;
 `;
 
 const StyledReviewTitle = styled.h3`
   margin: 8px 0 6px;
+  font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  color: #1a1a1a;
+  line-height: 24px;
+  color: var(--ink-900);
 `;
 
 const StyledReviewBody = styled.p`
   margin: 0 0 14px;
+  font-family: var(--font-body);
   font-size: 15px;
-  line-height: 1.5;
-  color: #292929;
+  line-height: 24px;
+  color: var(--ink-900);
   white-space: pre-line;
 `;
 
@@ -216,9 +228,10 @@ const StyledHelpful = styled.button`
   height: 28px;
   padding: 0 12px;
   border: none;
-  border-radius: 3px;
-  background: #1a1a1a;
-  color: #fff;
+  border-radius: var(--radius-md);
+  background: var(--ink-900);
+  color: var(--white);
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -251,7 +264,7 @@ const StyledReviewThumb = styled.div`
   width: 88px;
   height: 88px;
   overflow: hidden;
-  background: #efefef;
+  background: var(--ink-150);
   @media (min-width: 720px) {
     width: 120px;
     height: 120px;
@@ -260,8 +273,9 @@ const StyledReviewThumb = styled.div`
 
 const StyledVariant = styled.p`
   margin: 0;
+  font-family: var(--font-body);
   font-size: 12px;
-  color: #666;
+  color: var(--ink-600);
 `;
 
 const formatDate = (iso: string) => {
@@ -287,7 +301,7 @@ const Stars = ({ value, size }: { value: number; size?: number }) => {
                   top: 0,
                   width: "50%",
                   overflow: "hidden",
-                  color: "#f5a623",
+                  color: "var(--gold-600)",
                 }}
               >
                 ★
