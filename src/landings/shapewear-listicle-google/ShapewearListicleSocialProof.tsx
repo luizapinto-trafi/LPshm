@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const STAR_COLOR = "#F5D76E";
-const STAR_EMPTY = "#E5E5E5";
+const STAR_COLOR = "var(--gold-600)";
+const STAR_EMPTY = "var(--ink-200)";
 
 const StyledRow = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-100);
 `;
 
 const StyledStars = styled.span`
@@ -21,7 +21,7 @@ const StyledLink = styled.a`
   font-size: 14px;
   font-weight: 400;
   line-height: 1.2;
-  color: var(--ink-1000);
+  color: var(--ink-900);
   text-decoration: underline;
   text-underline-offset: 2px;
 

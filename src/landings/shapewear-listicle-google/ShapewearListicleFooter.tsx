@@ -7,7 +7,8 @@ import { ShapewearListicleCdn } from "./shapewearListicleCdn";
 const StyledFooter = styled.footer`
   background: var(--ink-100);
   color: var(--ink-800);
-  padding: var(--space-1000) clamp(16px, 4vw, 64px) calc(var(--space-1000) + 72px);
+  padding: var(--space-1000) clamp(var(--space-200), 4vw, var(--space-800))
+    var(--space-1000);
   border-top: 1px solid var(--ink-200);
 `;
 
@@ -30,7 +31,7 @@ const StyledLogo = styled.div`
 `;
 
 const StyledH3 = styled.h3`
-  color: var(--ink-1000);
+  color: var(--ink-900);
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 600;
@@ -61,7 +62,7 @@ const StyledLink = styled.a`
 
 const StyledHint = styled.p`
   margin: 0 0 var(--space-300);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.45;
   color: var(--ink-600);
 `;
@@ -85,7 +86,7 @@ const StyledButton = styled.button`
   background: var(--coral-500);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 600;
