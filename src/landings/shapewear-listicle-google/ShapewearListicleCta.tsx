@@ -16,9 +16,9 @@ const StyledCtaButton = styled.a`
   border: none;
   border-radius: var(--radius-lg);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
