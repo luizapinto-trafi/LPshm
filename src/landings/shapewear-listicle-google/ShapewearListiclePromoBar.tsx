@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { useTranslation } from "next-i18next/pages";
 
-/** Black VIP announcement bar — matches live Shapermint site chrome. */
+/** Black VIP / promo announcement bar — Shapermint site chrome. */
 const StyledBar = styled.div`
   position: relative;
   z-index: 30;
@@ -18,10 +19,11 @@ const StyledBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px var(--space-400);
+  padding: var(--space-100) var(--space-400);
   box-sizing: border-box;
 `;
 
-export const ShapewearListiclePromoBar = () => (
-  <StyledBar role="status">YOU HAVE VIP BENEFITS! ENJOY YOUR FREE SHIPPING!</StyledBar>
-);
+export const ShapewearListiclePromoBar = () => {
+  const { t } = useTranslation("shapewearListicleGoogle");
+  return <StyledBar role="status">{t("promoBar")}</StyledBar>;
+};

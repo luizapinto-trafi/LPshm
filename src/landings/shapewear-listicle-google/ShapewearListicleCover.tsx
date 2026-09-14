@@ -7,7 +7,8 @@ import {
   ShapewearListicleCollectionUrl,
 } from "./shapewearListicleCdn";
 
-const STAR_COLOR = "#F5D76E";
+const STAR_COLOR = "var(--gold-600)";
+const STAR_EMPTY = "var(--ink-200)";
 
 /**
  * Desktop: photo as background + left copy + author + CTA.
@@ -16,13 +17,13 @@ const STAR_COLOR = "#F5D76E";
 const StyledSection = styled.section`
   position: relative;
   overflow: hidden;
-  background: var(--white);
+  background: var(--coral-050);
 
   @media (min-width: 901px) {
     min-height: min(560px, 78vh);
     display: flex;
     align-items: flex-end;
-    background-color: var(--coral-100);
+    background-color: var(--coral-050);
     background-image: url(${ShapewearListicleCdn.coverDesk});
     background-size: cover;
     background-position: center;
@@ -36,7 +37,9 @@ const StyledInner = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(48px, 8vw, 96px) clamp(16px, 4vw, 64px) clamp(40px, 6vw, 72px);
+  padding: clamp(var(--space-600), 8vw, var(--space-1200))
+    clamp(var(--space-200), 4vw, var(--space-800))
+    clamp(var(--space-500), 6vw, var(--space-1000));
   box-sizing: border-box;
 
   @media (max-width: 900px) {
@@ -44,8 +47,9 @@ const StyledInner = styled.div`
     flex-direction: column;
     align-items: stretch;
     text-align: left;
-    padding: 28px 20px 24px;
+    padding: var(--space-300) var(--space-250) var(--space-300);
     max-width: 100%;
+    background: var(--white);
   }
 `;
 
@@ -54,29 +58,29 @@ const StyledCopy = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
+  gap: var(--space-250);
 
   @media (min-width: 901px) {
-    gap: 24px;
+    gap: var(--space-300);
   }
 
   @media (max-width: 900px) {
     max-width: 100%;
-    gap: 16px;
+    gap: var(--space-200);
   }
 `;
 
 const StyledH1 = styled.h1`
   margin: 0;
-  color: var(--ink-1000);
+  color: var(--ink-900);
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  font-size: clamp(24px, 3.2vw, 40px);
   font-weight: 700;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 
   @media (max-width: 900px) {
-    font-size: 26px;
+    font-size: 24px;
     line-height: 1.25;
   }
 `;
@@ -84,14 +88,14 @@ const StyledH1 = styled.h1`
 const StyledByline = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-150);
   margin: 0;
 `;
 
 const StyledAvatar = styled(Image)`
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   object-fit: cover;
   flex-shrink: 0;
 `;
@@ -99,14 +103,14 @@ const StyledAvatar = styled(Image)`
 const StyledBylineBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-050);
 `;
 
 const StyledAuthor = styled.span`
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  color: var(--ink-1000);
+  color: var(--ink-900);
   line-height: 1.2;
 `;
 
@@ -122,12 +126,12 @@ const StyledLead = styled.p`
   color: var(--ink-800);
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.5;
   max-width: 34rem;
 
   @media (max-width: 900px) {
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 22px;
     max-width: 100%;
   }
 `;
@@ -140,11 +144,11 @@ const StyledProof = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--space-100);
     font-family: var(--font-display);
     font-size: 14px;
     font-weight: 700;
-    color: var(--ink-1000);
+    color: var(--ink-900);
     line-height: 1;
   }
 `;
@@ -159,7 +163,7 @@ const StyledStars = styled.span`
 const StyledDesktopCta = styled.div`
   display: block;
   width: auto;
-  margin-top: 8px;
+  margin-top: var(--space-100);
 
   & > a {
     width: auto;
@@ -179,7 +183,7 @@ const StyledMobileCta = styled.div`
     display: flex;
     width: 100%;
     justify-content: stretch;
-    margin: 18px 0 0;
+    margin: var(--space-200) 0 0;
     padding: 0;
     box-sizing: border-box;
 
@@ -199,7 +203,7 @@ const StyledMobileImage = styled.div`
     margin: 0 -20px;
     line-height: 0;
     overflow: hidden;
-    border-radius: 16px 16px 0 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   }
 `;
 
@@ -216,7 +220,7 @@ const Star = ({ fill }: { fill: "full" | "half" }) => {
         <defs>
           <linearGradient id="coverHalfStar" x1="0" x2="1" y1="0" y2="0">
             <stop offset="50%" stopColor={STAR_COLOR} />
-            <stop offset="50%" stopColor="#E5E5E5" />
+            <stop offset="50%" stopColor={STAR_EMPTY} />
           </linearGradient>
         </defs>
         <path

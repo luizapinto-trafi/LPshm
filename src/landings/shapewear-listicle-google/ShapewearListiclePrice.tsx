@@ -4,7 +4,7 @@ const StyledRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 10px 12px;
+  gap: var(--space-100) var(--space-150);
 `;
 
 const StyledSale = styled.p`
@@ -14,12 +14,12 @@ const StyledSale = styled.p`
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 28px;
-  color: var(--ink-1000);
+  font-size: 30px;
+  color: var(--sale);
   line-height: 1;
 
   @media (max-width: 600px) {
-    font-size: 26px;
+    font-size: 24px;
   }
 `;
 
@@ -43,7 +43,7 @@ const StyledCents = styled.span`
 
 const StyledCompare = styled.span`
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--ink-500);
   text-decoration: line-through;
@@ -53,11 +53,11 @@ const StyledCompare = styled.span`
 const StyledOff = styled.span`
   display: inline-flex;
   align-items: center;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: var(--space-050) var(--space-100);
+  border-radius: var(--radius-md);
   background: var(--sale);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;

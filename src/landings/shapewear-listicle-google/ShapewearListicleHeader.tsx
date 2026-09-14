@@ -86,7 +86,7 @@ const StyledLogoLink = styled.a`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 `;
 
@@ -110,7 +110,7 @@ const StyledNavLink = styled.a<{ $promo?: boolean }>`
   gap: 4px;
   color: ${({ $promo }) => ($promo ? "var(--coral-650)" : "var(--ink-900)")};
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: ${({ $promo }) => ($promo ? 600 : 500)};
   line-height: 1.2;
   text-decoration: none;
@@ -177,7 +177,7 @@ const StyledIconLink = styled.a`
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
   }
 
   svg {

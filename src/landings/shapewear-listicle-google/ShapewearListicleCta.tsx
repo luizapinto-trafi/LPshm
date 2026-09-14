@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 /**
- * Item CTA matches the listicle section reference:
- * soft peach fill, dark label, rounded rect, "SHOP NOW".
+ * Primary peach CTA — Shapermint DS: coral-300 fill, ink-900 label, radius-lg.
  */
 const StyledCtaButton = styled.a`
   display: inline-flex;
@@ -11,24 +10,25 @@ const StyledCtaButton = styled.a`
   min-height: 48px;
   min-width: 180px;
   width: auto;
-  padding: 12px 28px;
+  padding: var(--space-150) var(--space-300);
   background: var(--coral-300);
-  color: var(--ink-1000);
+  color: var(--ink-900);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
   box-sizing: border-box;
   cursor: pointer;
+  transition: background var(--dur-base, 160ms) var(--ease-out, ease);
 
   &:hover {
-    background: var(--coral-350);
+    background: var(--coral-250);
   }
 
   &:focus-visible {

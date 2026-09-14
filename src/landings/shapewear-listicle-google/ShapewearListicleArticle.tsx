@@ -19,18 +19,18 @@ const ITEM_ORDER: ShapewearListicleItemId[] = [
 
 const StyledArticle = styled.article`
   background: var(--white);
-  color: var(--ink-1000);
+  color: var(--ink-900);
   padding: 0 0 var(--space-800);
 `;
 
 const StyledInner = styled.div`
   max-width: 1040px;
   margin: 0 auto;
-  padding: 0 clamp(24px, 6vw, 64px);
+  padding: 0 clamp(var(--space-300), 6vw, var(--space-800));
   box-sizing: border-box;
 
   @media (max-width: 768px) {
-    padding: 0 20px;
+    padding: 0 var(--space-250);
   }
 `;
 
@@ -39,20 +39,20 @@ const StyledItem = styled.section`
   grid-template-columns: minmax(240px, 320px) minmax(0, 28rem);
   justify-content: center;
   align-items: stretch;
-  column-gap: clamp(40px, 5vw, 72px);
-  padding: clamp(48px, 7vw, 80px) 0;
+  column-gap: clamp(var(--space-500), 5vw, var(--space-800));
+  padding: clamp(var(--space-600), 7vw, var(--space-1000)) 0;
   border-top: 1px solid var(--ink-200);
 
   &:first-of-type {
     border-top: none;
-    padding-top: clamp(40px, 6vw, 64px);
+    padding-top: clamp(var(--space-500), 6vw, var(--space-800));
   }
 
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 28px 0;
+    gap: var(--space-150);
+    padding: var(--space-400) 0;
     align-items: stretch;
   }
 `;
@@ -63,7 +63,7 @@ const StyledMedia = styled.div`
   aspect-ratio: 3 / 4;
   align-self: start;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background: var(--coral-050);
 
   @media (max-width: 768px) {
@@ -80,8 +80,8 @@ const StyledCopy = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
-  padding-top: 6px;
+  gap: var(--space-150);
+  padding-top: var(--space-050);
   max-width: 28rem;
   min-height: 100%;
 
@@ -96,11 +96,11 @@ const StyledCopy = styled.div`
 const StyledTitle = styled.h2`
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-size: clamp(20px, 2.2vw, 24px);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  color: var(--ink-1000);
+  color: var(--ink-900);
 
   @media (max-width: 768px) {
     order: 1;
@@ -112,33 +112,28 @@ const StyledTitle = styled.h2`
 const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-100);
 
   p {
     margin: 0;
     font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 22px;
     color: var(--ink-800);
     overflow-wrap: break-word;
   }
 
   @media (max-width: 768px) {
     order: 4;
-    gap: 8px;
+    gap: var(--space-100);
     margin-top: 0;
-
-    p {
-      font-size: 15px;
-      line-height: 1.55;
-    }
   }
 `;
 
 const StyledFacts = styled.dl`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-100);
   margin: 0;
   width: 100%;
 
@@ -156,10 +151,10 @@ const StyledFact = styled.div`
 const StyledFactLabel = styled.dt`
   margin: 0;
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--ink-1000);
+  color: var(--ink-900);
   line-height: 1.3;
 `;
 
@@ -175,9 +170,9 @@ const StyledOffer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
+  gap: var(--space-150);
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: var(--space-250);
   width: 100%;
 
   @media (max-width: 768px) {
@@ -190,12 +185,12 @@ const StyledOffer = styled.div`
 const StyledMeta = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-150);
 
   @media (max-width: 768px) {
     order: 6;
-    margin-top: 4px;
-    gap: 10px;
+    margin-top: var(--space-050);
+    gap: var(--space-100);
     width: 100%;
     align-items: flex-start;
     text-align: left;
@@ -219,8 +214,8 @@ const StyledCtaWrap = styled.div`
     & > a {
       width: 100%;
       min-width: 0;
-      padding: 14px 20px;
-      font-size: 13px;
+      padding: var(--space-150) var(--space-250);
+      font-size: 14px;
     }
   }
 `;
