@@ -61,13 +61,15 @@
     "sizeAppliesAll": "Apply to all 3 units",
     "sizeAppliesSingle": "Apply to this unit",
     "ctaSave": "ADD TO CART | SAVE {{savings}}",
+    "ctaSaveShort": "SAVE {{savings}}",
     "ctaAddOnly": "ADD TO CART",
     "policy": "90-Day Return Policy — hassle-free exchanges for any size, color, or style.",
     "policyTitle": "90-Day Return Policy",
     "policyBodyBefore": "Enjoy ",
     "policyBodyBold": "hassle-free exchanges within 90 days!",
     "policyBodyAfter": " Swap your product for any size, color, or style you love. No questions asked!",
-    "galleryThumb": "Product image {{n}}"
+    "galleryThumb": "Product image {{n}}",
+    "seeInYourSize": "See In Your Size"
   },
   "pdp": {
     "whyTitle": "Why you'll love it!",

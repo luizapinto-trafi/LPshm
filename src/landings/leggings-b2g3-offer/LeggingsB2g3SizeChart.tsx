@@ -24,7 +24,6 @@ const StyledLead = styled.p`
   font-size: 14px;
   line-height: 22px;
   color: var(--ink-900);
-  max-width: 42ch;
 `;
 
 const StyledUnitRow = styled.div`
