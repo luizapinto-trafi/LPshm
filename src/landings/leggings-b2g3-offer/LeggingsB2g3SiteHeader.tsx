@@ -6,6 +6,8 @@ import { LeggingsB2g3Cdn } from "./leggingsB2g3Cdn";
 
 /**
  * Full shapermint.com header chrome (announcement sits above this).
+ * Spacing matched to live PDP header (`styles_header__Q_XTl`): 80px tall,
+ * container padding 0 2rem, logo 164px, nav link padding 32px 4px.
  * Copy is inline (not i18n) so HMR/locale cache can't show raw keys.
  */
 
@@ -18,32 +20,39 @@ const NAV = [
   { label: "Bodysuits", href: "https://shapermint.com/collections/bodysuits" },
   { label: "Packs & Bundles", href: "https://shapermint.com/collections/packs-bundles" },
   { label: "Community", href: "https://shapermint.com/pages/community", chevron: true },
-  {
-    label: "Warehouse Clearance",
-    href: "https://shapermint.com/collections/warehouse-sale",
-    promo: true,
-  },
 ] as const;
 
-const StyledHeader = styled.header`
-  background: var(--white);
-  border-bottom: 1px solid #e8e8e8;
-`;
+/** Live desktop header stays until ~1024; below that mobile chrome. */
+const NAV_DESKTOP = "1024px";
 
-/** Full desktop nav needs ~9 labels — keep compact chrome until wide enough. */
-const NAV_DESKTOP = "1320px";
+const StyledHeader = styled.header`
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: ${NAV_DESKTOP}) {
+    height: 58px;
+    box-shadow: 0 2px 6px #00000029;
+  }
+`;
 
 const StyledInner = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 24px;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 2rem;
   box-sizing: border-box;
-  max-width: 1440px;
-  margin: 0 auto;
+  @media (max-width: 1450px) {
+    padding: 0 1rem;
+  }
   @media (max-width: ${NAV_DESKTOP}) {
-    padding: 12px 16px;
+    padding: 0 15px;
   }
 `;
 
@@ -51,13 +60,20 @@ const StyledStart = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-shrink: 0;
+  flex: 0 1 15%;
+  max-width: 16.5%;
+  min-width: 0;
   z-index: 1;
+  @media (max-width: ${NAV_DESKTOP}) {
+    flex: 0 0 auto;
+    max-width: none;
+  }
 `;
 
 const StyledLogoLink = styled.a`
-  display: inline-flex;
+  display: block;
   line-height: 0;
+  max-width: 100%;
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
@@ -69,33 +85,57 @@ const StyledDesktopNav = styled.nav`
   display: none;
   @media (min-width: ${NAV_DESKTOP}) {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 66.666%;
+    max-width: 66.666%;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     min-width: 0;
-    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 1280px) and (max-width: 1370px) {
+    justify-content: flex-start;
+    gap: 3px;
+  }
+  @media (min-width: 1370px) and (max-width: 1500px) {
+    gap: 5px;
+  }
+  @media (min-width: 1500px) {
+    gap: 12px;
   }
 `;
 
 const StyledNavLink = styled.a<{ $promo?: boolean }>`
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: ${({ $promo }) => ($promo ? "var(--coral-500)" : "var(--ink-900)")};
+  padding: ${({ $promo }) => ($promo ? "8px 14px" : "32px 4px")};
+  color: ${({ $promo }) => ($promo ? "var(--white)" : "#1b1b1b")};
+  background: ${({ $promo }) => ($promo ? "#1b1b1b" : "transparent")};
+  border-radius: ${({ $promo }) => ($promo ? "4px" : "0")};
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: ${({ $promo }) => ($promo ? 600 : 500)};
+  font-size: ${({ $promo }) => ($promo ? "12px" : "14px")};
+  font-weight: ${({ $promo }) => ($promo ? 600 : 400)};
+  letter-spacing: ${({ $promo }) => ($promo ? "0.04em" : "normal")};
   line-height: 1.2;
   text-decoration: none;
+  text-transform: ${({ $promo }) => ($promo ? "uppercase" : "none")};
   white-space: nowrap;
+  box-sizing: border-box;
   &:hover {
-    color: var(--coral-500);
+    color: ${({ $promo }) => ($promo ? "var(--white)" : "var(--coral-300)")};
+    background: ${({ $promo }) => ($promo ? "#000" : "transparent")};
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
     border-radius: var(--radius-md);
+  }
+  @media (max-width: 1200px) {
+    font-size: ${({ $promo }) => ($promo ? "12px" : "12px")};
   }
 `;
 
@@ -104,18 +144,23 @@ const StyledChevron = styled.span`
   font-size: 9px;
   line-height: 1;
   opacity: 0.85;
+  margin-left: 4px;
 `;
 
 const StyledActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
+  justify-content: flex-end;
+  flex: 0 1 16.5%;
+  max-width: 18.8%;
+  min-width: 0;
   z-index: 1;
   color: var(--ink-900);
-  svg {
-    width: 22px;
-    height: 22px;
+  gap: 0;
+  @media (max-width: ${NAV_DESKTOP}) {
+    flex: 0 0 auto;
+    max-width: none;
+    gap: 16px;
   }
 `;
 
@@ -125,6 +170,7 @@ const StyledLocale = styled.a`
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    padding: 5px;
     color: var(--ink-900);
     text-decoration: none;
     font-size: 13px;
@@ -149,8 +195,25 @@ const StyledIconLink = styled.a`
   color: inherit;
   text-decoration: none;
   line-height: 0;
-  width: 24px;
-  height: 24px;
+  padding: 5px;
+  box-sizing: border-box;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  @media (max-width: 1040px) {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  @media (max-width: ${NAV_DESKTOP}) {
+    padding: 0;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
@@ -161,33 +224,31 @@ const StyledIconLink = styled.a`
 const StyledCartHost = styled.span`
   position: relative;
   display: inline-flex;
-  width: 24px;
-  height: 24px;
   align-items: center;
   justify-content: center;
 `;
 
 const StyledCartBadge = styled.span`
   position: absolute;
-  top: -5px;
+  top: -7px;
   right: -7px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
+  width: 15px;
+  height: 15px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  background: #e8a39a;
+  border-radius: 50%;
+  background: var(--coral-300);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 16px;
+  text-align: center;
 `;
 
 const StyledHamb = styled.button`
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 24px;
@@ -197,8 +258,8 @@ const StyledHamb = styled.button`
   background: transparent;
   color: var(--ink-900);
   cursor: pointer;
-  @media (min-width: ${NAV_DESKTOP}) {
-    display: none;
+  @media (max-width: ${NAV_DESKTOP}) {
+    display: inline-flex;
   }
   svg {
     width: 22px;
@@ -214,12 +275,22 @@ const StyledHamb = styled.button`
 const StyledMobilePanel = styled.nav<{ $open?: boolean }>`
   display: ${({ $open }) => ($open ? "flex" : "none")};
   flex-direction: column;
-  gap: 12px;
-  padding: 12px 16px 18px;
+  gap: 0;
+  padding: 0;
   border-top: 1px solid #e8e8e8;
   background: var(--white);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   @media (min-width: ${NAV_DESKTOP}) {
     display: none;
+  }
+  a {
+    padding: 20px 16px;
+    border-bottom: 1px solid #efefef;
   }
 `;
 
@@ -250,11 +321,11 @@ export const LeggingsB2g3SiteHeader = () => {
             <Image
               src={LeggingsB2g3Cdn.logo}
               alt="Shapermint"
-              width={150}
-              height={32}
+              width={164}
+              height={35}
               priority
               unoptimized
-              style={{ width: 150, height: "auto", maxHeight: 28 }}
+              style={{ width: 164, height: "auto", maxWidth: "100%" }}
             />
           </StyledLogoLink>
         </StyledStart>

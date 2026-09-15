@@ -83,11 +83,11 @@ const StyledLead = styled.p`
 
 const StyledBenefitList = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 0 0 20px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 `;
 
 const StyledBenefit = styled.li`

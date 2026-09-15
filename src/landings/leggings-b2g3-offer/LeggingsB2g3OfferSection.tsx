@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next/pages";
 import { handleKeyDown } from "@/shared/utils/KeyEvent";
@@ -21,6 +21,7 @@ import {
 import { buildCheckoutUrl, resolveVariantId } from "./leggingsB2g3Content";
 import { LeggingsB2g3SizeChart } from "./LeggingsB2g3SizeChart";
 import { LeggingsB2g3PdpAccordion } from "./LeggingsB2g3PdpAccordion";
+import { LeggingsB2g3SeeInYourSizeModal } from "./LeggingsB2g3SeeInYourSizeModal";
 
 export type LeggingsB2g3OfferSectionProps = {
   layout: LayoutId;
@@ -28,62 +29,121 @@ export type LeggingsB2g3OfferSectionProps = {
 };
 
 const StyledSection = styled.section`
+  width: 100%;
   max-width: 1170px;
-  margin: 0 auto;
-  padding: var(--space-200) var(--space-200) var(--space-400);
+  margin: 24px auto;
+  padding: 0;
   box-sizing: border-box;
   font-family: var(--font-body);
   color: var(--ink-900);
-  @media (min-width: 900px) {
-    padding: var(--space-300) var(--space-400) var(--space-500);
-  }
 `;
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-300);
-  @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
-    gap: var(--space-500);
-    align-items: start;
+  grid-template-columns: auto;
+  grid-gap: 20px;
+  align-items: start;
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: 0.55fr 0.45fr;
+    grid-gap: 10px;
   }
 `;
 
 const StyledBelowGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-400);
-  margin-top: var(--space-400);
-  @media (min-width: 900px) {
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
-    gap: var(--space-500);
-    align-items: start;
-    margin-top: var(--space-200);
+  grid-template-columns: auto;
+  grid-gap: 20px;
+  margin-top: 32px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: 0.55fr 0.45fr;
+    grid-gap: 10px;
+  }
+  @media (max-width: 767px) {
+    padding: 0 15px;
+  }
+`;
+
+const StyledBelowRight = styled.div`
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  /* Same horizontal inset as #product-details-summary (50px). */
+  padding: 0 50px;
+  @media (max-width: 1200px) {
+    padding: 0 15px 15px;
   }
 `;
 
 const StyledGallery = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-150);
-  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(6rem, max-content) minmax(0, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 16px;
+  align-items: start;
+  width: 100%;
+  max-width: 670px;
+  max-height: 50rem;
+  box-sizing: border-box;
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: none;
+    gap: 12px;
+  }
 `;
 
 const StyledHero = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  border-radius: var(--radius-lg);
+  border-radius: 8px;
   overflow: hidden;
   background: var(--ink-100);
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  @media (max-width: 767px) {
+    order: 1;
+    grid-column: auto;
+    grid-row: auto;
+  }
 `;
 
 const StyledThumbs = styled.div`
-  display: flex;
-  gap: var(--space-100);
-  overflow-x: auto;
-  padding-bottom: var(--space-050);
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  grid-row-gap: 20px;
+  align-content: start;
+  align-self: start;
+  max-height: calc(530px / (3 / 4));
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  box-sizing: border-box;
+  @media (max-width: 767px) {
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
+  }
 `;
 
 const StyledThumbBtn = styled.button<{ $active?: boolean }>`
@@ -92,7 +152,7 @@ const StyledThumbBtn = styled.button<{ $active?: boolean }>`
   height: 86px;
   padding: 0;
   border: ${({ $active }) => ($active ? "1.5px solid var(--ink-900)" : "1.5px solid transparent")};
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   background: var(--ink-100);
@@ -103,28 +163,96 @@ const StyledThumbBtn = styled.button<{ $active?: boolean }>`
   }
 `;
 
-const StyledBuybox = styled.div`
+const StyledSeeSizeWrap = styled.div`
+  grid-column: 2;
+  grid-row: 2;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-200);
+  justify-content: center;
+  width: 100%;
+  @media (max-width: 767px) {
+    order: 3;
+    margin-top: 12px;
+  }
+`;
+
+const StyledSeeSize = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 0.688rem 2rem;
+  border: 1px solid #292929;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #292929;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: capitalize;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background: #292929;
+    color: #fff;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--ink-900);
+    outline-offset: 2px;
+  }
+  @media (max-width: 992px) {
+    margin-top: 4px;
+  }
+`;
+
+const StyledBuybox = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 16px;
   min-width: 0;
   width: 100%;
+  /* Live #product-details-summary: 522px column, padding 0 50px */
+  padding: 0 50px;
+  box-sizing: border-box;
+  @media (max-width: 1200px) {
+    padding: 0 15px 15px;
+    grid-gap: 20px;
+  }
+  @media (max-width: 767px) {
+    padding: 0 15px 15px;
+    grid-gap: 8px;
+  }
+`;
+
+const StyledTitleBlock = styled.div`
+  display: grid;
+  grid-gap: 16px;
+  @media (max-width: 767px) {
+    grid-gap: 8px;
+  }
 `;
 
 const StyledTitle = styled.h1`
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 36px);
+  font-size: 20px;
   font-weight: 400;
-  line-height: 1.24;
+  line-height: 28px;
   color: var(--ink-900);
   letter-spacing: 0;
+  @media (min-width: 768px) {
+    font-size: 30px;
+    line-height: 38px;
+  }
 `;
 
 const StyledReviewsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--space-100);
+  gap: 8px;
   margin: 0;
 `;
 
@@ -182,7 +310,7 @@ const StyledPriceBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-100) var(--space-150);
+  gap: 8px 12px;
 `;
 
 const StyledCompareWrap = styled.span`
@@ -193,9 +321,9 @@ const StyledCompareWrap = styled.span`
 
 const StyledCompare = styled.s`
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--ink-500);
+  font-size: 14px;
+  line-height: 22px;
+  color: #767676;
   font-weight: 400;
   text-decoration: line-through;
 `;
@@ -223,43 +351,45 @@ const StyledSale = styled.span`
   display: inline-flex;
   align-items: flex-start;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--ink-900);
   letter-spacing: 0;
   line-height: 1;
 `;
 
 const StyledSaleCurrency = styled.span`
-  font-size: 22px;
+  font-size: 16px;
   line-height: 1;
-  margin-top: 6px;
+  margin-top: 4px;
   margin-right: 2px;
+  font-weight: 700;
 `;
 
 const StyledSaleDollars = styled.span`
-  font-size: clamp(36px, 4vw, 42px);
+  font-size: 28px;
   line-height: 1.1;
+  font-weight: 700;
 `;
 
 const StyledSaleCents = styled.sup`
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1;
   margin-left: 1px;
-  top: 0.35em;
+  top: 0.25em;
 `;
 
 const StyledBadge = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 var(--space-100);
+  padding: 0 8px;
   min-height: 20px;
-  border-radius: var(--radius-md);
+  border-radius: 4px;
   background: var(--sale);
   color: var(--white);
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 16px;
   white-space: nowrap;
@@ -660,27 +790,66 @@ const StyledCta = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
+  min-width: unset;
   min-height: unset;
   padding: 0.875rem 2rem;
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: 0.5rem;
   background: var(--coral-300);
   color: var(--ink-900);
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
   letter-spacing: normal;
   line-height: normal;
-  text-transform: none;
+  text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
-    background: var(--coral-250);
+    background: var(--coral-200, #fcd9d1);
   }
   &:focus-visible {
     outline: 2px solid var(--ink-900);
     outline-offset: 2px;
   }
+`;
+
+const StyledCtaInner = styled.span`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+  gap: 0;
+  line-height: 1;
+`;
+
+const StyledCtaPart = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  @media (max-width: 424px) {
+    padding: 0 4px;
+    font-size: 12px;
+  }
+`;
+
+const StyledCtaDivider = styled.span`
+  display: inline-block;
+  height: 1.25em;
+  width: 1px;
+  background-color: currentColor;
+  opacity: 0.55;
+  border-radius: 1px;
 `;
 
 const StyledPolicy = styled.div`
@@ -817,6 +986,7 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
   const [pack, setPack] = useState<PackId>("b2g3");
   const [heroSrc, setHeroSrc] = useState<string>(LeggingsB2g3Cdn.hero);
   const [size, setSize] = useState<SizeId>("S");
+  const [siysOpen, setSiysOpen] = useState(false);
   const [unitColors, setUnitColors] = useState<[ColorId, ColorId, ColorId]>([
     "black",
     "black",
@@ -830,12 +1000,8 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
   const showSinglePicker = isSelector && pack === "single";
   const showMultiUnits = !showSinglePicker;
 
-  const ctaLabel = useMemo(() => {
-    if (isSelector && pack === "single") {
-      return t("offer.ctaAddOnly");
-    }
-    return t("offer.ctaSave", { savings: money(pricing.savings) });
-  }, [isSelector, pack, pricing.savings, t]);
+  const ctaShowSave = !(isSelector && pack === "single");
+  const ctaSavings = money(pricing.savings);
 
   const showColorOnGallery = (color: ColorId) => {
     setHeroSrc(LeggingsB2g3Cdn.colorImages[color]);
@@ -924,18 +1090,6 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
     <StyledSection aria-labelledby="b2g3-title">
       <StyledGrid>
         <StyledGallery>
-          <StyledHero>
-            <Image
-              key={heroSrc}
-              src={heroSrc}
-              alt={PRODUCT.title}
-              fill
-              priority
-              unoptimized
-              sizes="(max-width: 900px) 100vw, 560px"
-              style={{ objectFit: "cover" }}
-            />
-          </StyledHero>
           <StyledThumbs>
             {LeggingsB2g3Cdn.gallery.map((src) => (
               <StyledThumbBtn
@@ -945,23 +1099,42 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
                 aria-label={t("offer.galleryThumb", { n: LeggingsB2g3Cdn.gallery.indexOf(src) + 1 })}
                 onClick={() => setHeroSrc(src)}
               >
-                <Image src={src} alt="" width={64} height={80} unoptimized style={{ objectFit: "cover" }} />
+                <Image src={src} alt="" width={65} height={86} unoptimized style={{ objectFit: "cover" }} />
               </StyledThumbBtn>
             ))}
           </StyledThumbs>
+          <StyledHero>
+            <Image
+              key={heroSrc}
+              src={heroSrc}
+              alt={PRODUCT.title}
+              fill
+              priority
+              unoptimized
+              sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 530px"
+              style={{ objectFit: "cover" }}
+            />
+          </StyledHero>
+          <StyledSeeSizeWrap>
+            <StyledSeeSize type="button" onClick={() => setSiysOpen(true)}>
+              {t("offer.seeInYourSize", { defaultValue: "See In Your Size" })}
+            </StyledSeeSize>
+          </StyledSeeSizeWrap>
         </StyledGallery>
 
         <StyledBuybox>
-          <StyledTitle id="b2g3-title">{PRODUCT.title}</StyledTitle>
-          <StyledReviewsRow>
-            <StarRating
-              value={PRODUCT.rating}
-              label={t("offer.starsAria", { rating: PRODUCT.rating })}
-            />
-            <StyledReviewsLink href="#reviews">
-              {t("offer.reviews", { count: PRODUCT.reviewCount.toLocaleString("en-US") })}
-            </StyledReviewsLink>
-          </StyledReviewsRow>
+          <StyledTitleBlock>
+            <StyledTitle id="b2g3-title">{PRODUCT.title}</StyledTitle>
+            <StyledReviewsRow>
+              <StarRating
+                value={PRODUCT.rating}
+                label={t("offer.starsAria", { rating: PRODUCT.rating })}
+              />
+              <StyledReviewsLink href="#reviews">
+                {t("offer.reviews", { count: PRODUCT.reviewCount.toLocaleString("en-US") })}
+              </StyledReviewsLink>
+            </StyledReviewsRow>
+          </StyledTitleBlock>
 
           {!isSelector ? (
             <>
@@ -1132,7 +1305,7 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
             </StyledUnitGroup>
           ) : null}
 
-          <StyledSizeRow>
+          <StyledSizeRow id="b2g3-sizes">
             <StyledSizeLabel>
               {t("offer.sizeLabel")} <strong>{size}</strong>
               <span>
@@ -1158,7 +1331,22 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
           {/* Explicitly no Length selector — not on this PDP. */}
 
           <StyledCta type="button" onClick={onAdd}>
-            {ctaLabel}
+            {ctaShowSave ? (
+              <StyledCtaInner data-testid="atc-discount-text">
+                <StyledCtaPart>
+                  {t("offer.ctaAddOnly", { defaultValue: "ADD TO CART" })}
+                </StyledCtaPart>
+                <StyledCtaDivider aria-hidden />
+                <StyledCtaPart aria-live="polite">
+                  {t("offer.ctaSaveShort", {
+                    defaultValue: "SAVE {{savings}}",
+                    savings: ctaSavings,
+                  })}
+                </StyledCtaPart>
+              </StyledCtaInner>
+            ) : (
+              t("offer.ctaAddOnly", { defaultValue: "ADD TO CART" })
+            )}
           </StyledCta>
           <StyledPolicy>
             <StyledPolicyHead>
@@ -1192,8 +1380,20 @@ export const LeggingsB2g3OfferSection = ({ layout, anchor }: LeggingsB2g3OfferSe
 
       <StyledBelowGrid>
         <LeggingsB2g3SizeChart />
-        <LeggingsB2g3PdpAccordion />
+        <StyledBelowRight>
+          <LeggingsB2g3PdpAccordion />
+        </StyledBelowRight>
       </StyledBelowGrid>
+
+      <LeggingsB2g3SeeInYourSizeModal
+        open={siysOpen}
+        initialSize={size}
+        onClose={() => setSiysOpen(false)}
+        onSelect={(next) => {
+          setSize(next);
+          setSiysOpen(false);
+        }}
+      />
     </StyledSection>
   );
 };
