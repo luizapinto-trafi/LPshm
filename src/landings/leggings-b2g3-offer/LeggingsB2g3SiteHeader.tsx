@@ -332,7 +332,7 @@ export const LeggingsB2g3SiteHeader = () => {
 
         <StyledDesktopNav aria-label="Primary">
           {NAV.map((item) => (
-            <StyledNavLink key={item.label} href={item.href} $promo={"promo" in item && item.promo}>
+            <StyledNavLink key={item.label} href={item.href} $promo={"promo" in item && Boolean(item.promo)}>
               {item.label}
               {"chevron" in item && item.chevron ? <StyledChevron aria-hidden>▾</StyledChevron> : null}
             </StyledNavLink>
@@ -381,7 +381,7 @@ export const LeggingsB2g3SiteHeader = () => {
           <StyledNavLink
             key={item.label}
             href={item.href}
-            $promo={"promo" in item && item.promo}
+            $promo={"promo" in item && Boolean(item.promo)}
             onClick={() => setMenuOpen(false)}
           >
             {item.label}
